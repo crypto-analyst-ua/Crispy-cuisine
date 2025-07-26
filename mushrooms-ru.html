@@ -1,0 +1,1028 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Хрустящая кухня - Грибы на зиму</title>
+    
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
+    
+    <style>
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-label {
+            display: block;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        .file-input-label:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .file-input-label input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .file-name {
+            display: block;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        
+        .recipe-preview {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .recipe-card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: transform 0.3s ease;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .user-recipe-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .menu-image-wrap {
+            position: relative;
+        }
+        
+        .recipe-form {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        
+        .form-title {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #198754;
+        }
+        
+        /* Добавленные стили для кликабельных слайдов */
+        .carousel-link {
+            display: block;
+            position: relative;
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .carousel-link:hover {
+            text-decoration: none;
+        }
+        
+        .carousel-link .carousel-caption {
+            z-index: 10;
+        }
+        
+        .carousel-link::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        
+        /* Добавим спиннер загрузки */
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            display: none;
+        }
+        
+        #loadingRecipes {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Улучшенный вид модального окна */
+        .recipe-modal .modal-content {
+            border-radius: 0.8rem;
+            overflow: hidden;
+        }
+        
+        .recipe-modal .modal-header {
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+            border-bottom: none;
+        }
+        
+        .recipe-modal .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .recipe-modal .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .recipe-ingredients {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        
+        .recipe-instructions {
+            white-space: pre-line;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-white shadow-lg">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <a class="navbar-brand" href="index-ru.html">
+                Хрустящая кухня
+            </a>
+
+            <div class="d-lg-none"></div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index-ru.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="top-ru.html">Первое</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="top2-ru.html">Второе</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="desert-ru.html">Десерт</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="mushrooms-ua.html" <span class="category-tag me-3 bg-info">UA</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <header class="site-header site-news-detail-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Грибы на зиму</h2>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="news-detail section-padding pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12">
+                        <img src="images/news/news-detail-header15.jpg" class="img-fluid news-detail-image" alt="Грибы">
+                        
+                        <div class="col-lg-10 col-10 mx-auto mt-5">
+                            <h4 class="mb-3">Грибы</h4>
+                            <p>
+                                Осенью у грибников наступает горячая пора, когда можно увести душу в поисках сокровищ. 
+                                Однако в этом году следует помнить о безопасности и запрете ходить в лес там, где есть специальные знаки и предупреждения. 
+                                Принеся домой ароматные грибочки, возникает вопрос, как правильно их приготовить, чтобы сохранить на зиму. 
+                                Как мариновать грибы, чтобы они сохранили цвет и вкус? 
+                                <a href="mush-ru.html"> ЧИТАЙТЕ ТАКЖЕ: Как не отравиться грибами: советы.</a>
+                            </p>
+
+                            <h4 class="mb-3">Рецепт маринованных грибов на зиму.</h4>
+                            <ul class="list">
+                                <li class="list-item">Ингредиенты.</li>
+                                <li class="list-item">Грибы – 1 кг.</li>
+                                <li class="list-item">Вода для приготовления маринада – 1 л.</li>
+                                <li class="list-item">Растительное (оливковое) масло - 50 мл. Уксус для приготовления маринада - 50 мл.</li>
+                                <li class="list-item">Чеснок - 5 зубчиков. Соль, сахар – по 1 ст. л. Гвоздика – 5 шт. Лавровый лист – 4 шт.</li>
+                                <li class="list-item">
+                                    Рецепт маринада для грибов. Для приготовления маринада для консервирования нужно смешать в емкости воды, соль, сахар, 
+                                    чеснок, лавровый лист и гвоздику в указанных пропорциях и довести до кипения. После закипания добавить в воду 9% уксус.
+                                </li>
+                            </ul>
+
+                            <p>
+                                Маринованные грибы: рецепт приготовления<br>
+                                ►Грибы перебрать, убрать все испорченные и очень мягкие, замочить в теплой воде на 15-20 минут.<br>
+                                ►Срезать остатки грибницы с ножки и нарезать грибы на большие кусочки.<br>
+                                ►Подготовить рассол — добавить в холодную воду 1ч. л. соли на 1л воды.<br>
+                                ►Залить грибы подготовленным рассолом и варить 5 минут. После этого отвар необходимо слить.<br>
+                                ►Проваренные грибы промыть под холодной водой, залить еще раз подсоленной водой, довести до кипения и варить второй раз примерно 25-30 мин.<br>
+                                ► Промыть холодной водой проваренные грибы и постоять, чтобы взошла лишняя жидкость.<br>
+                                ►В приготовленный ранее маринад для консервирования перекладываем отварные грибы, доводим до кипения и варим 5-10 минут.<br>
+                                ► Проваренные в маринаде грибы разложить по чистым стерилизованным банкам, сверху залить маслом или оливковым маслом.<br>
+                                ►Закатать банки стерилизованными крышками, перевернуть вверх дном, укутать в теплое и дать отстояться до охлаждения.
+                            </p>
+                            
+                            <h4 class="mb-3">Шампиньоны маринованные самые вкусные.</h4>
+                            <ul class="list">
+                                <li class="list-item">Продукты.</li>
+                                <li class="list-item">Шампиньоны - 1 кг.</li>
+                                <li class="list-item">
+                                    Для маринада:<br>
+                                    Вода – 1 л.<br>
+                                    Уксус винный белый 6% - 150 мл.<br>
+                                    Соль – 2 ст.л.<br>
+                                    Сахар – 2 ч.л.<br>
+                                    Перец черный и белый горошком – 15 шт.<br>
+                                    Гвоздика – 5 шт.<br>
+                                    Лавровый лист – 3-5 шт.<br>
+                                    Чеснок – 5 зуб.
+                                </li>
+                            </ul>
+
+                            <p>
+                                Приготовление маринованных шампиньонов:<br>
+                                Грибы почистить, вымыть.<br>
+                                Отварить 5 мин. в кипящей воде, слить воду.<br>
+                                Приготовить маринад, довести до кипения.<br>
+                                Отварить шампиньоны в маринаде 7-10 мин.<br>
+                                Оставить в маринаде до полного остывания.<br>
+                                Переложить грибы в стерильные баночки, добавить чеснок, залить маринадом, закрыть крышками. 
+                                Хранить маринованные шампиньоны в холодильнике.<br>
+                                Можно есть за 5-7 дней. Сохраняются спокойно 30 дней, дольше не пробовала.<br>
+                                Можно подавать с лучком и сбрызнуть оливковым маслом.<br>
+                                Приятного аппетита!
+                            </p>
+
+                            <h4 class="mb-3">Наконец-то могу предложить вам рецепт одной грибной заготовки – салат с грибами на зиму.</h4>
+                            <ul class="list">
+                                <li class="list-item">Продукты.</li>
+                                <li class="list-item">Грибы – 1,5 кг (на семейном совете пришли к выводу, что с трубчатыми грибами получается вкуснее, чем с пластинчатыми).</li>
+                                <li class="list-item">Помидоры – 1 кг. Красный болгарский перец – 1 кг.</li>
+                                <li class="list-item">Лук - 0,5 кг. Морковь – 700 г.</li>
+                                <li class="list-item">Сахар - 150 г. Соль – 50 г.</li>
+                                <li class="list-item">Уксус 9% – 100 мл. Растительное масло - 300 мл.</li>
+                            </ul>
+                            
+                            <p>
+                                Чтобы салат с грибами на зиму был и вкусным и красивым, собранные грибы должны быть крепкие, молоденькие, без червоточин.<br>
+                                Очищаем их (если нужно), промываем, нарезаем кусочками среднего размера, заливаем водой и отвариваем в течение 5-10 минут.<br>
+                                Далее через дуршлаг полностью отцеживаем отвар, а грибы промываем холодной водой.<br>
+                                Выкладываем грибы в сухую сковороду и держим их на огне, часто помешивая, пока вся лишняя вода не испарится.<br>
+                                Все, грибы подготовлены, снимаем их с огня.<br>
+                                Затем обмываем помидоры и нарезаем их небольшими кусочками.<br>
+                                У сладкого перца нужно вырезать сердцевину с плодоножкой и нарезать мякоть кусочками или соломкой.<br>
+                                Очередь лука мы ее очистили и нарезали полукольцами. Морковь натерли на крупной тертке.<br>
+                                Берем большую кастрюлю, литров на 5-7. Выливаем в кастрюлю 300 мл масла, хорошо его нагреваем и высыпаем в раскаленное масло помидоры.<br>
+                                Через минут 5 помидоры выделят немного сока, выкладываем в кастрюлю сладкий перец, лук, затем грибы и морковь.<br>
+                                Засыпаем 3/4 стакана сахара, половинку 100 мл стакана соли, делаем средний огонь и все аккуратно перемешиваем.<br>
+                                Как только начнется кипение, нужно сделать минимальным огонь и варить салат, постоянно помешивая, 45-60 минут под крышкой.<br>
+                                Для остроты можно добавить мелко нарезанный стручок горького перца.<br>
+                                За 5 минут до готовности снимите пробу, возможно вам захочется добавить еще соли или сахара, каких-нибудь специй.<br>
+                                Добавляем 100 мл 9% уксуса, хорошо перемешиваем, варим еще 5 минут и получаем готовый салат с грибами на зиму.<br>
+                                За то время, пока он варился, вы должны были подготовить 7-8 полулитровых баночек.<br>
+                                В теплые банки закладываем горячий кипящий салат.<br>
+                                Немедленно закатываем, накрываем чем-то теплым и оставляем до следующего дня.
+                            </p>
+
+                            <h4 class="mb-3">Грибы на зиму без стерилизации. Время приготовления: 50 мин. Количество порций: 6.</h4>
+                            <ul class="list">
+                                <li class="list-item">Составляющие.</li>
+                                <li class="list-item">Грибы: 1 кг.</li>
+                                <li class="list-item">Уксус (9%): 100 мл. Сахар: 1 ст.л. Соль (мелкая): 4 ч.л.</li>
+                                <li class="list-item">Лавровый лист: 1 шт. Гвоздика: 7 шт. Перец горошком: 7 шт. Чеснок: 4 зубч.</li>
+                            </ul>
+                            
+                            <p>
+                                Как приготовить<br>
+                                Шаг 1:<br>
+                                Как сделать грибы на зиму без стерилизации? Подготовьте нужные ингредиенты.<br>
+                                Шаг 2:<br>
+                                Прежде грибы нужно почистить и хорошо промыть.<br>
+                                Шаг 3:<br>
+                                Чистые, вымытые грибы нарежьте средними кусочками. Отправьте грибочки в кастрюлю, залейте водой и поставьте на сильный огонь.<br>
+                                Шаг 4:<br>
+                                Пока варятся грибы, приготовим маринад. Для этого в отдельную кастрюлю налейте 1 л воды.<br>
+                                Шаг 5:<br>
+                                Грибы после отварки откиньте на дуршлаг и промойте под проточной водой несколько раз.<br>
+                                Шаг 6:<br>
+                                Выложите грибы в кипящий маринад и варите на среднем огне около 15-20 минут.<br>
+                                Шаг 7:<br>
+                                Затем разложите все по простерилизованным баночкам вместе с маринадом, закройте горячими крышками и уберите остывать.<br>
+                                Шаг 8:<br>
+                                Можно приготовить шикарный вкусный салат из маринованных грибов.
+                            </p>
+                            
+                            <h4 class="mb-3">Ассорти из грибов и овощей на зиму. Пожалуй, мой любимый рецепт с грибами!</h4>
+                            <ul class="list">
+                                <li class="list-item">Продукты.</li>
+                                <li class="list-item">Грибы – 2 кг. Капуста белокочанная - 2 кг. Морковь – 1 кг. Лук репчатый - 1 кг.</li>
+                                <li class="list-item">Масло - 1 стакан. Томатная паста - 1 стакан. Вода – 1 л.</li>
+                                <li class="list-item">Соль – 3 ст. ложки. Сахар – 4 ст. ложки.</li>
+                                <li class="list-item">Уксус 9% – 2 ст. ложки.</li>
+                                <li class="list-item">Лавровый лист – 4 шт. Перец горошком – 10 шт.</li>
+                            </ul>
+                            
+                            <p>
+                                Грибная солянка на зиму.<br>
+                                Шаг №1<br>
+                                Готовим все овощи и грибы – чистим, моем.<br>
+                                Шаг №2<br>
+                                Грибники из нас плохие, собрать можем только шампиньоны на рынке. Итак, начнем с капусты.<br>
+                                Шаг №3<br>
+                                Морковь натираем на крупной терке. Лук нарезаем перьями.<br>
+                                Шаг №4<br>
+                                Грибы нарезаем средними кусочками, чтобы они хорошо чувствовались в заготовке.<br>
+                                Шаг №5<br>
+                                Вливаем уксус (9%), хорошо перемешиваем, даем прокипеть еще 5 минут и раскладываем грибную солянку по баночкам.<br>
+                                Шаг №6<br>
+                                Из этого количества продуктов получилось 10 банок объемом 450 мл.
+                            </p>
+                            <div class="recipe">
+                                <h2>1. Маринованные грибы (с уксусом)</h2>
+                                <p><strong>Подходят:</strong> опята, маслята, лисички, шампиньоны, белые</p>
+                                <ul>
+                                    <li>Грибы — 1 кг</li>
+                                    <li>Вода — 500 мл</li>
+                                    <li>Уксус 9% — 2 ст. л.</li>
+                                    <li>Сахар — 1 ст. л.</li>
+                                    <li>Соль — 1,5 ч. л.</li>
+                                    <li>Лавровый лист — 2 шт.</li>
+                                    <li>Перец горошком — 5–7 шт.</li>
+                                    <li>Гвоздика — 2 шт. (по желанию)</li>
+                                </ul>
+                                <ol>
+                                    <li>Грибы очистить, промыть, отварить 15–30 минут в подсоленной воде. Слить воду.</li>
+                                    <li>Смешать ингредиенты для маринада, довести до кипения.</li>
+                                    <li>Добавить грибы, варить 15–20 минут.</li>
+                                    <li>Разложить по стерилизованным банкам, залить маринадом, закатать.</li>
+                                </ol>
+                            </div>
+
+                            <div class="recipe">
+                                <h2>2. Солёные грибы (холодный способ)</h2>
+                                <p><strong>Подходят:</strong> грузди, волнушки, рыжики</p>
+                                <ul>
+                                    <li>Грибы — 1 кг</li>
+                                    <li>Соль — 2 ст. л.</li>
+                                    <li>Чеснок, листья хрена, укроп, смородина — по вкусу</li>
+                                </ul>
+                                <ol>
+                                    <li>Грибы вымочить (если нужно), не варить.</li>
+                                    <li>В ёмкость уложить грибы шляпками вниз, пересыпая солью и специями.</li>
+                                    <li>Накрыть марлей, установить гнёт, оставить в прохладном месте на 2–3 недели.</li>
+                                </ol>
+                            </div>
+
+                            <div class="recipe">
+                                <h2>3. Жареные грибы в масле (без уксуса)</h2>
+                                <p><strong>Подходят:</strong> белые, подберёзовики, маслята, опята</p>
+                                <ul>
+                                    <li>Грибы — 1 кг</li>
+                                    <li>Растительное масло — 300 мл</li>
+                                    <li>Соль — по вкусу</li>
+                                </ul>
+                                <ol>
+                                    <li>Грибы отварить, обжарить до выпаривания жидкости.</li>
+                                    <li>Добавить масло, посолить, жарить до румяной корочки.</li>
+                                    <li>Разложить по стерильным банкам, залить горячим маслом, стерилизовать и закатать.</li>
+                                </ol>
+                            </div>
+
+                            <div class="recipe">
+                                <h2>4. Грибная икра</h2>
+                                <p><strong>Подходят:</strong> любые лесные грибы</p>
+                                <ul>
+                                    <li>Грибы — 1 кг</li>
+                                    <li>Морковь — 1 шт.</li>
+                                    <li>Лук — 1 шт.</li>
+                                    <li>Чеснок — 2–3 зубчика</li>
+                                    <li>Масло — 4–5 ст. л.</li>
+                                    <li>Соль, перец — по вкусу</li>
+                                    <li>Уксус 9% — 1 ст. л.</li>
+                                </ul>
+                                <ol>
+                                    <li>Грибы отварить и измельчить блендером или через мясорубку.</li>
+                                    <li>Обжарить лук и морковь, добавить грибы.</li>
+                                    <li>Тушить 30–40 минут, приправить, добавить уксус.</li>
+                                    <li>Разложить по банкам, закатать.</li>
+                                </ol>
+                            </div>
+
+                            <div class="recipe">
+                                <h2>5. Грибы в собственном соку</h2>
+                                <p><strong>Подходят:</strong> подберёзовики, подосиновики, белые, маслята</p>
+                                <ul>
+                                    <li>Грибы — любое количество</li>
+                                    <li>Соль — 1 ч. л. на 1 кг грибов</li>
+                                </ul>
+                                <ol>
+                                    <li>Грибы порезать и тушить без воды в кастрюле 30–40 минут, пока не выделится сок.</li>
+                                    <li>Добавить соль.</li>
+                                    <li>Разложить по банкам, залить соком, стерилизовать и закатать.</li>
+                                </ol>
+                                <div class="note">Хранить в холодильнике или погребе.</div>
+                            </div>
+
+                            <div class="recipe">
+                                <h2>6. Заморозка грибов</h2>
+                                <ul>
+                                    <li><strong>Свежие:</strong> промыть, обсушить, порезать и заморозить в пакетах.</li>
+                                    <li><strong>Отварные:</strong> отварить 10–15 минут, остудить, заморозить.</li>
+                                    <li><strong>Жареные:</strong> обжарить до готовности, остудить, заморозить порциями.</li>
+                                </ul>
+                            </div>
+
+                            <div class="recipe">
+                                <h2>7. Грибы в сметане (для заморозки)</h2>
+                                <ul>
+                                    <li>Грибы — 1 кг</li>
+                                    <li>Лук — 1–2 шт.</li>
+                                    <li>Сметана — 200 мл</li>
+                                    <li>Соль, перец — по вкусу</li>
+                                    <li>Масло для жарки</li>
+                                </ul>
+                                <ol>
+                                    <li>Обжарить грибы с луком до готовности.</li>
+                                    <li>Добавить сметану, тушить 10 минут.</li>
+                                    <li>Остудить, разложить по контейнерам и заморозить.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       <section class="BgImage"></section>
+        
+        <!-- Секция для добавления рецептов -->
+        <section id="add-recipe" class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-12">
+                        <div class="recipe-form">
+                            <h2 class="form-title">Добавить свой рецепт</h2>
+                            <form id="recipeForm">
+                                <div class="mb-3">
+                                    <label for="recipeTitle" class="form-label">Название рецепта*</label>
+                                    <input type="text" class="form-control" id="recipeTitle" required 
+                                        placeholder="Введите название вашего рецепта">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeCategory" class="form-label">Категория*</label>
+                                    <select class="form-select" id="recipeCategory" required>
+                                        <option value="">Выберите категорию</option>
+                                        <option value="Завтрак">Завтрак</option>
+                                        <option value="Обед">Обед</option>
+                                        <option value="Ужин">Ужин</option>
+                                        <option value="Десерт">Десерт</option>
+                                        <option value="Постное">Постное</option>
+                                        <option value="Консервация">Консервация</option>
+                                        <option value="Выпечка">Выпечка</option>
+                                        <option value="Напитки">Напитки</option>
+                                        <option value="Салаты">Салаты</option>
+                                        <option value="Закуски">Закуски</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Изображение (опционально)</label>
+                                    <div class="file-input-wrapper">
+                                        <div class="file-input-label">
+                                            <i class="bi bi-upload me-2"></i>Выбрать файл
+                                            <input type="file" class="form-control" id="recipeImageFile" accept="image/*">
+                                        </div>
+                                        <span id="fileName" class="file-name">Файл не выбран</span>
+                                    </div>
+                                    <div class="form-text">Максимальный размер: 1MB (JPG, PNG)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeIngredients" class="form-label">Ингредиенты*</label>
+                                    <textarea class="form-control" id="recipeIngredients" rows="4" required 
+                                        placeholder="Перечислите ингредиенты, каждый с новой строки"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeInstructions" class="form-label">Инструкция приготовления*</label>
+                                    <textarea class="form-control" id="recipeInstructions" rows="6" required 
+                                        placeholder="Опишите шаги приготовления"></textarea>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <span id="submitSpinner" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                        Добавить рецепт
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div id="recipePreview" class="recipe-preview mt-4">
+                                <h4>Предварительный просмотр:</h4>
+                                <div class="card recipe-card">
+                                    <img id="previewImage" src="images/default-recipe.jpg" class="card-img-top" 
+                                        alt="Предварительный просмотр">
+                                    <div class="card-body">
+                                        <h5 id="previewTitle" class="card-title">Название рецепта</h5>
+                                        <p id="previewCategory" class="card-text text-muted">Категория: не выбрано</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел для отображения пользовательских рецептов -->
+        <section id="user-recipes" class="section-padding bg-white">
+            <div class="container">
+                <div class="row">
+                    <h2 class="text-center mb-lg-5 mb-4">Рецепты от пользователей</h2>
+                    
+                    <div id="loadingRecipes">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Загрузка...</span>
+                        </div>
+                        <p class="mt-3">Загружаем рецепты...</p>
+                    </div>
+                    
+                    <div id="recipesContainer" class="row">
+                        <!-- Сюда будут добавляться рецепты через JS -->
+                    </div>
+                    
+                    <div id="noRecipesMessage" class="col-12 text-center d-none">
+                        <p>Пока нет добавленных рецептов. Будьте первым!</p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button id="loadMoreBtn" class="btn btn-outline-success d-none">Показать еще</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="text-white mb-4 me-5">Хрустящая кухня</h4>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+    
+    <script>
+        // Конфигурация Firebase (ЗАМЕНИТЕ НА ВАШУ КОНФИГУРАЦИЮ)
+        const firebaseConfig = {
+            apiKey: "ВАШ_API_KEY",
+            authDomain: "ВАШ_PROJECT.firebaseapp.com",
+            projectId: "ВАШ_PROJECT",
+            storageBucket: "ВАШ_PROJECT.appspot.com",
+            messagingSenderId: "ВАШ_SENDER_ID",
+            appId: "ВАШ_APP_ID"
+        };
+
+        // Инициализация Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        
+        // Глобальные переменные
+        let lastVisible = null;
+        let selectedFile = null;
+        const PAGE_SIZE = 6; // Количество рецептов за одну загрузку
+
+        $(document).ready(function() {
+            // Загрузка первых рецептов
+            loadRecipes();
+            
+            // Обработчики событий
+            $('#recipeForm').submit(handleFormSubmit);
+            $('#recipeImageFile').on('change', handleImageUpload);
+            $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
+            $('#loadMoreBtn').on('click', loadMoreRecipes);
+        });
+
+        // Обработка загрузки изображения
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) {
+                $('#fileName').text('Файл не выбран');
+                selectedFile = null;
+                return;
+            }
+
+            // Проверка типа файла
+            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                alert('Пожалуйста, выберите файл в формате JPG или PNG.');
+                resetFileInput();
+                return;
+            }
+
+            // Проверка размера файла
+            if (file.size > 1048576) {
+                alert('Файл слишком большой. Максимальный размер 1MB.');
+                resetFileInput();
+                return;
+            }
+
+            $('#fileName').text(file.name);
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                selectedFile = event.target.result;
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetFileInput() {
+            $('#recipeImageFile').val('');
+            $('#fileName').text('Файл не выбран');
+        }
+
+        function updatePreview() {
+            const title = $('#recipeTitle').val() || 'Название рецепта';
+            const category = $('#recipeCategory').val() || 'не выбрано';
+            
+            if (selectedFile) {
+                $('#previewImage').attr('src', selectedFile);
+            }
+            
+            $('#previewTitle').text(title);
+            $('#previewCategory').text('Категория: ' + category);
+            $('#recipePreview').show();
+        }
+
+        // Сжатие изображения для уменьшения размера
+        function compressImage(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Максимальные размеры
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 600;
+                        
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        // Изменяем размеры пропорционально
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        // Рисуем сжатое изображение
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Конвертируем в Blob с качеством 75%
+                        canvas.toBlob(blob => {
+                            resolve(blob);
+                        }, 'image/jpeg', 0.75);
+                    };
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Загрузка изображения в Firebase Storage
+        async function uploadImage(file) {
+            try {
+                // Сжимаем изображение
+                const compressedBlob = await compressImage(file);
+                
+                // Создаем уникальное имя файла
+                const fileName = `recipe-${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`;
+                const storageRef = storage.ref();
+                const fileRef = storageRef.child(`recipe-images/${fileName}`);
+                
+                // Загружаем файл
+                await fileRef.put(compressedBlob);
+                
+                // Получаем URL для скачивания
+                return await fileRef.getDownloadURL();
+            } catch (error) {
+                console.error("Ошибка загрузки изображения:", error);
+                throw new Error("Не удалось загрузить изображение");
+            }
+        }
+
+        // Обработка отправки формы
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Показываем спиннер
+            $('#submitSpinner').show();
+            $('#recipeForm button').prop('disabled', true);
+            
+            try {
+                const fileInput = document.getElementById('recipeImageFile');
+                const file = fileInput.files[0];
+                
+                let imageUrl = 'images/default-recipe.jpg';
+                
+                // Загружаем изображение, если оно есть
+                if (file) {
+                    imageUrl = await uploadImage(file);
+                }
+                
+                // Создаем объект рецепта
+                const recipe = {
+                    title: $('#recipeTitle').val(),
+                    category: $('#recipeCategory').val(),
+                    image: imageUrl,
+                    ingredients: $('#recipeIngredients').val(),
+                    instructions: $('#recipeInstructions').val(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                // Сохраняем в Firestore
+                await db.collection("recipes").add(recipe);
+                
+                // Сброс формы
+                $('#recipeForm')[0].reset();
+                $('#recipePreview').hide();
+                resetFileInput();
+                selectedFile = null;
+                
+                // Перезагружаем рецепты
+                await loadRecipes();
+                
+                alert('Рецепт успешно добавлен!');
+                
+                // Прокрутка к новому рецепту
+                $('html, body').animate({
+                    scrollTop: $('#user-recipes').offset().top - 100
+                }, 800);
+            } catch (error) {
+                console.error("Ошибка сохранения рецепта:", error);
+                alert('Произошла ошибка: ' + error.message);
+            } finally {
+                // Скрываем спиннер и активируем кнопку
+                $('#submitSpinner').hide();
+                $('#recipeForm button').prop('disabled', false);
+            }
+        }
+
+        // Загрузка рецептов
+        async function loadRecipes() {
+            try {
+                // Показываем индикатор загрузки
+                $('#loadingRecipes').show();
+                $('#recipesContainer').empty();
+                $('#noRecipesMessage').addClass('d-none');
+                $('#loadMoreBtn').addClass('d-none');
+                
+                // Запрос к Firestore
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                // Скрываем индикатор загрузки
+                $('#loadingRecipes').hide();
+                
+                if (snapshot.empty) {
+                    $('#noRecipesMessage').removeClass('d-none');
+                    return;
+                }
+                
+                // Сохраняем последний документ для пагинации
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Отображаем рецепты
+                displayRecipes(snapshot);
+                
+                // Показываем кнопку "Загрузить еще", если есть еще рецепты
+                if (snapshot.size === PAGE_SIZE) {
+                    $('#loadMoreBtn').removeClass('d-none');
+                }
+            } catch (error) {
+                console.error("Ошибка загрузки рецептов:", error);
+                $('#loadingRecipes').html('<p class="text-danger">Ошибка загрузки рецептов. Попробуйте обновить страницу.</p>');
+            }
+        }
+
+        // Загрузка дополнительных рецептов
+        async function loadMoreRecipes() {
+            try {
+                $('#loadMoreBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Загрузка...');
+                
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .startAfter(lastVisible)
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                if (snapshot.empty) {
+                    $('#loadMoreBtn').hide();
+                    return;
+                }
+                
+                // Обновляем последний документ
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Добавляем новые рецепты
+                displayRecipes(snapshot);
+                
+                // Скрываем кнопку, если больше нет рецептов
+                if (snapshot.size < PAGE_SIZE) {
+                    $('#loadMoreBtn').hide();
+                } else {
+                    $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
+                }
+            } catch (error) {
+                console.error("Ошибка загрузки рецептов:", error);
+                $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
+                alert('Ошибка загрузки дополнительных рецептов');
+            }
+        }
+
+        // Отображение рецептов на странице
+        function displayRecipes(snapshot) {
+            const container = $('#recipesContainer');
+            
+            snapshot.forEach(doc => {
+                const recipe = doc.data();
+                const recipeId = doc.id;
+                
+                // Форматируем дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    }) : 'Дата не указана';
+                
+                const recipeHtml = `
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="menu-thumb recipe-card">
+                        <div class="menu-image-wrap position-relative">
+                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
+                                <img src="${recipe.image}" class="img-fluid menu-image" alt="${recipe.title}" loading="lazy">
+                                <span class="user-recipe-tag bg-success">Пользовательский</span>
+                            </a>
+                        </div>
+                        <div class="menu-info d-flex flex-wrap align-items-center">
+                            <h4 class="mb-0">${recipe.title}</h4>
+                            <span class="text-muted small ms-2">${date}</span>
+                        </div>
+                    </div>
+                </div>`;
+                
+                container.append(recipeHtml);
+            });
+        }
+
+        // Показ деталей рецепта
+        window.showRecipeDetails = async function(recipeId) {
+            try {
+                const doc = await db.collection("recipes").doc(recipeId).get();
+                
+                if (!doc.exists) {
+                    alert('Рецепт не найден');
+                    return;
+                }
+                
+                const recipe = doc.data();
+                
+                // Форматируем дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) : 'Дата не указана';
+                
+                // Создаем HTML для модального окна
+                const modalHtml = `
+                <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">${recipe.title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-5 mb-3 mb-md-0">
+                                        <img src="${recipe.image}" class="img-fluid rounded mb-3" alt="${recipe.title}">
+                                        <div class="recipe-meta">
+                                            <p><strong>Категория:</strong> ${recipe.category || 'Не указана'}</p>
+                                            <p><strong>Добавлено:</strong> ${date}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="mb-4">
+                                            <h5>Ингредиенты:</h5>
+                                            <div class="recipe-ingredients">${formatText(recipe.ingredients)}</div>
+                                        </div>
+                                        <div>
+                                            <h5>Инструкция:</h5>
+                                            <div class="recipe-instructions">${formatText(recipe.instructions)}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                
+                // Добавляем модальное окно в DOM
+                $('body').append(modalHtml);
+                
+                // Показываем модальное окно
+                const modal = new bootstrap.Modal(document.getElementById('recipeDetailModal'));
+                modal.show();
+                
+                // Удаляем модальное окно после закрытия
+                $('#recipeDetailModal').on('hidden.bs.modal', function() {
+                    $(this).remove();
+                });
+            } catch (error) {
+                console.error("Ошибка загрузки рецепта:", error);
+                alert('Не удалось загрузить рецепт');
+            }
+        }
+
+        // Форматирование текста (замена переносов строк)
+        function formatText(text) {
+            return text.replace(/\n/g, '<br>');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,895 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Хрустящая кухня - Рецепты выпечки</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
+<style>
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-label {
+            display: block;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        .file-input-label:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .file-input-label input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .file-name {
+            display: block;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        
+        .recipe-preview {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .recipe-card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: transform 0.3s ease;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .user-recipe-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .menu-image-wrap {
+            position: relative;
+        }
+        
+        .recipe-form {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        
+        .form-title {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #198754;
+        }
+        
+        /* Добавленные стили для кликабельных слайдов */
+        .carousel-link {
+            display: block;
+            position: relative;
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .carousel-link:hover {
+            text-decoration: none;
+        }
+        
+        .carousel-link .carousel-caption {
+            z-index: 10;
+        }
+        
+        .carousel-link::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        
+        /* Добавим спиннер загрузки */
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            display: none;
+        }
+        
+        #loadingRecipes {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Улучшенный вид модального окна */
+        .recipe-modal .modal-content {
+            border-radius: 0.8rem;
+            overflow: hidden;
+        }
+        
+        .recipe-modal .modal-header {
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+            border-bottom: none;
+        }
+        
+        .recipe-modal .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .recipe-modal .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .recipe-ingredients {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        
+        .recipe-instructions {
+            white-space: pre-line;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+    
+<body>
+    <nav class="navbar navbar-expand-lg bg-white shadow-lg">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <a class="navbar-brand" href="index-ru.html">Хрустящая кухня</a>
+
+            <div class="d-lg-none"></div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index-ru.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="top-ru.html">Первое</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="top2-ru.html">Второе</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="desert-ru.html">Десерт</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="Bakery-ua.html"><span class="category-tag me-3 bg-info">UA</span></a>                  
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <header class="site-header site-news-detail-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Рецепты выпечки</h2>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="news-detail section-padding pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12">
+                        <img src="images/news/Screenshot_20250719-162419~2.png" class="img-fluid news-detail-image" alt="Выпечка">
+
+                        <div class="col-lg-10 col-10 mx-auto mt-5">
+                            <h4 class="mb-3">Ароматная домашняя выпечка</h4>
+                            <p>
+                                Домашняя выпечка - это особое искусство, которое дарит уют и тепло вашему дому. От классических пирогов до изысканных десертов - каждый рецепт несёт в себе частичку души. В этой подборке вы найдёте как традиционные рецепты, так и новые интересные варианты выпечки для любого случая.
+                            </p>
+
+                            <h4 class="mb-3">Шоколадный брауни</h4>
+                            <ul class="list">
+                                <li class="list-item">200 г темного шоколада</li>
+                                <li class="list-item">180 г сливочного масла</li>
+                                <li class="list-item">200 г сахара</li>
+                                <li class="list-item">3 яйца</li>
+                                <li class="list-item">100 г муки</li>
+                                <li class="list-item">50 г какао-порошка</li>
+                            </ul>
+                            <p>
+                                Растопить шоколад с маслом на водяной бане. Взбить яйца с сахаром до пышности. Смешать шоколадную массу с яичной. Просеять муку и какао, аккуратно перемешать. Вылить тесто в форму, застеленную пергаментом. Выпекать при 180°C 25-30 минут. Дать остыть перед нарезкой.
+                            </p>
+
+                            <h4 class="mb-3">Яблочный штрудель</h4>
+                            <ul class="list">
+                                <li class="list-item">250 г слоёного теста</li>
+                                <li class="list-item">4 яблока</li>
+                                <li class="list-item">100 г сахара</li>
+                                <li class="list-item">1 ч. ложка корицы</li>
+                                <li class="list-item">50 г изюма</li>
+                                <li class="list-item">50 г грецких орехов</li>
+                            </ul>
+                            <p>
+                                Яблоки очистить и нарезать тонкими дольками. Смешать с сахаром, корицей, изюмом и измельчёнными орехами. Раскатать тесто в прямоугольник. Выложить начинку, оставив края. Свернуть рулетом, защипнуть края. Смазать яйцом, посыпать сахаром. Выпекать при 200°C 30-35 минут до золотистого цвета.
+                            </p>
+
+                            <h4 class="mb-3">Песочное печенье</h4>
+                            <ul class="list">
+                                <li class="list-item">200 г сливочного масла</li>
+                                <li class="list-item">150 г сахарной пудры</li>
+                                <li class="list-item">1 яйцо</li>
+                                <li class="list-item">350 г муки</li>
+                                <li class="list-item">1 ч. ложка ванилина</li>
+                                <li class="list-item">Щепотка соли</li>
+                            </ul>
+                            <p>
+                                Масло растереть с сахарной пудрой. Добавить яйцо, ванилин, соль. Постепенно всыпать муку, замесить тесто. Убрать в холодильник на 30 минут. Раскатать пласт толщиной 5 мм. Вырезать формочками фигурки. Выпекать при 180°C 12-15 минут до лёгкого румянца.
+                            </p>
+
+                            <h4 class="mb-3">Медовик</h4>
+                            <ul class="list">
+                                <li class="list-item">100 г мёда</li>
+                                <li class="list-item">150 г сахара</li>
+                                <li class="list-item">3 яйца</li>
+                                <li class="list-item">1 ч. ложка соды</li>
+                                <li class="list-item">400 г муки</li>
+                                <li class="list-item">500 г сметаны</li>
+                                <li class="list-item">200 г сахарной пудры</li>
+                            </ul>
+                            <p>
+                                Мёд и сахар нагреть на водяной бане до растворения. Добавить соду, размешать. Снять с огня, добавить яйца. Всыпать муку, замесить тесто. Разделить на 6 частей. Раскатать коржи, выпекать при 180°C по 5-7 минут каждый. Для крема взбить сметану с сахарной пудрой. Собрать торт, смазывая коржи кремом. Дать пропитаться 8 часов.
+                            </p>
+
+                            <h4 class="mb-3">Булочки с корицей</h4>
+                            <ul class="list">
+                                <li class="list-item">500 г муки</li>
+                                <li class="list-item">250 мл молока</li>
+                                <li class="list-item">10 г сухих дрожжей</li>
+                                <li class="list-item">80 г сахара</li>
+                                <li class="list-item">1 яйцо</li>
+                                <li class="list-item">70 г сливочного масла</li>
+                                <li class="list-item">2 ст. ложки корицы</li>
+                                <li class="list-item">100 г коричневого сахара</li>
+                            </ul>
+                            <p>
+                                Дрожжи растворить в тёплом молоке с 1 ст. ложкой сахара. Добавить яйцо, растопленное масло. Всыпать муку, замесить тесто. Дать подойти 1 час. Раскатать прямоугольник. Смазать растопленным маслом, посыпать смесью коричневого сахара и корицы. Свернуть рулетом, нарезать на 12 частей. Выложить в форму, дать подойти 30 минут. Выпекать при 180°C 25 минут.
+                            </p>
+
+                            <h4 class="mb-3">Сырные лепёшки</h4>
+                            <ul class="list">
+                                <li class="list-item">250 г творога</li>
+                                <li class="list-item">200 г твёрдого сыра</li>
+                                <li class="list-item">2 яйца</li>
+                                <li class="list-item">150 г муки</li>
+                                <li class="list-item">1 ч. ложка разрыхлителя</li>
+                                <li class="list-item">Зелень укропа</li>
+                                <li class="list-item">Соль, перец по вкусу</li>
+                            </ul>
+                            <p>
+                                Творог размять вилкой. Добавить натёртый сыр, яйца, мелко нарезанный укроп. Муку смешать с разрыхлителем, добавить к сырной массе. Посолить, поперчить. Сформировать лепёшки. Жарить на сковороде с маслом по 3-4 минуты с каждой стороны до золотистой корочки.
+                            </p>
+                            
+                            <div class="col-12">
+                                <h2>Сладкая выпечка</h2>
+                            </div>
+                            
+                            <h4 class="mb-3">Классический бисквит</h4>
+                            <ul class="list">
+                                <li class="list-item">6 яиц</li>
+                                <li class="list-item">180 г сахара</li>
+                                <li class="list-item">180 г муки</li>
+                                <li class="list-item">1 ч. ложка ванилина</li>
+                            </ul>
+                            <p>
+                                Яйца взбить с сахаром на водяной бане до увеличения объёма в 3 раза. Снять с бани, продолжать взбивать до остывания. Муку просеять с ванилином. Постепенно ввести муку в яичную массу, аккуратно перемешивая. Вылить в форму, выпекать при 180°C 25-30 минут. Не открывать духовку первые 20 минут.
+                            </p>
+                            
+                            <h4 class="mb-3">Пирог с вишней</h4>
+                            <ul class="list">
+                                <li class="list-item">150 г сливочного масла</li>
+                                <li class="list-item">150 г сахара</li>
+                                <li class="list-item">3 яйца</li>
+                                <li class="list-item">200 г муки</li>
+                                <li class="list-item">1 ч. ложка разрыхлителя</li>
+                                <li class="list-item">500 г вишни (свежей или замороженной)</li>
+                                <li class="list-item">Ванилин по вкусу</li>
+                            </ul>
+                            <p>
+                                Масло растереть с сахаром. Добавить яйца по одному. Муку смешать с разрыхлителем и ванилином. Добавить к масляной смеси. Тесто вылить в форму. Сверху выложить вишню. Выпекать при 180°C 40-45 минут. Проверить готовность зубочисткой. Посыпать сахарной пудрой перед подачей.
+                            </p>
+                            
+                            <h4 class="mb-3">Маффины с шоколадом</h4>
+                            <ul class="list">
+                                <li class="list-item">200 г муки</li>
+                                <li class="list-item">150 г сахара</li>
+                                <li class="list-item">2 яйца</li>
+                                <li class="list-item">100 мл растительного масла</li>
+                                <li class="list-item">100 мл молока</li>
+                                <li class="list-item">2 ч. ложки разрыхлителя</li>
+                                <li class="list-item">150 г шоколадных капель</li>
+                                <li class="list-item">Щепотка соли</li>
+                            </ul>
+                            <p>
+                                Яйца взбить с сахаром и солью. Добавить масло и молоко. Муку смешать с разрыхлителем. Соединить жидкие и сухие ингредиенты, перемешать. Добавить шоколадные капли. Разложить по формочкам для маффинов. Выпекать при 200°C 20-25 минут. Проверить готовность зубочисткой.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="BgImage"></section>
+        
+        <!-- Секция для добавления рецептов -->
+        <section id="add-recipe" class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-12">
+                        <div class="recipe-form">
+                            <h2 class="form-title">Добавить свой рецепт</h2>
+                            <form id="recipeForm">
+                                <div class="mb-3">
+                                    <label for="recipeTitle" class="form-label">Название рецепта*</label>
+                                    <input type="text" class="form-control" id="recipeTitle" required 
+                                        placeholder="Введите название вашего рецепта">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeCategory" class="form-label">Категория*</label>
+                                    <select class="form-select" id="recipeCategory" required>
+                                        <option value="">Выберите категорию</option>
+                                        <option value="Завтрак">Завтрак</option>
+                                        <option value="Обед">Обед</option>
+                                        <option value="Ужин">Ужин</option>
+                                        <option value="Десерт">Десерт</option>
+                                        <option value="Постное">Постное</option>
+                                        <option value="Консервация">Консервация</option>
+                                        <option value="Выпечка">Выпечка</option>
+                                        <option value="Напитки">Напитки</option>
+                                        <option value="Салаты">Салаты</option>
+                                        <option value="Закуски">Закуски</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Изображение (опционально)</label>
+                                    <div class="file-input-wrapper">
+                                        <div class="file-input-label">
+                                            <i class="bi bi-upload me-2"></i>Выбрать файл
+                                            <input type="file" class="form-control" id="recipeImageFile" accept="image/*">
+                                        </div>
+                                        <span id="fileName" class="file-name">Файл не выбран</span>
+                                    </div>
+                                    <div class="form-text">Максимальный размер: 1MB (JPG, PNG)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeIngredients" class="form-label">Ингредиенты*</label>
+                                    <textarea class="form-control" id="recipeIngredients" rows="4" required 
+                                        placeholder="Перечислите ингредиенты, каждый с новой строки"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeInstructions" class="form-label">Инструкция приготовления*</label>
+                                    <textarea class="form-control" id="recipeInstructions" rows="6" required 
+                                        placeholder="Опишите шаги приготовления"></textarea>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <span id="submitSpinner" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                        Добавить рецепт
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div id="recipePreview" class="recipe-preview mt-4">
+                                <h4>Предварительный просмотр:</h4>
+                                <div class="card recipe-card">
+                                    <img id="previewImage" src="images/default-recipe.jpg" class="card-img-top" 
+                                        alt="Предварительный просмотр">
+                                    <div class="card-body">
+                                        <h5 id="previewTitle" class="card-title">Название рецепта</h5>
+                                        <p id="previewCategory" class="card-text text-muted">Категория: не выбрано</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел для отображения пользовательских рецептов -->
+        <section id="user-recipes" class="section-padding bg-white">
+            <div class="container">
+                <div class="row">
+                    <h2 class="text-center mb-lg-5 mb-4">Рецепты от пользователей</h2>
+                    
+                    <div id="loadingRecipes">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Загрузка...</span>
+                        </div>
+                        <p class="mt-3">Загружаем рецепты...</p>
+                    </div>
+                    
+                    <div id="recipesContainer" class="row">
+                        <!-- Сюда будут добавляться рецепты через JS -->
+                    </div>
+                    
+                    <div id="noRecipesMessage" class="col-12 text-center d-none">
+                        <p>Пока нет добавленных рецептов. Будьте первым!</p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button id="loadMoreBtn" class="btn btn-outline-success d-none">Показать еще</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="text-white mb-4 me-5">Хрустящая кухня</h4>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+    
+    <script>
+        // Конфигурация Firebase (ЗАМЕНИТЕ НА ВАШУ КОНФИГУРАЦИЮ)
+        const firebaseConfig = {
+            apiKey: "ВАШ_API_KEY",
+            authDomain: "ВАШ_PROJECT.firebaseapp.com",
+            projectId: "ВАШ_PROJECT",
+            storageBucket: "ВАШ_PROJECT.appspot.com",
+            messagingSenderId: "ВАШ_SENDER_ID",
+            appId: "ВАШ_APP_ID"
+        };
+
+        // Инициализация Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        
+        // Глобальные переменные
+        let lastVisible = null;
+        let selectedFile = null;
+        const PAGE_SIZE = 6; // Количество рецептов за одну загрузку
+
+        $(document).ready(function() {
+            // Загрузка первых рецептов
+            loadRecipes();
+            
+            // Обработчики событий
+            $('#recipeForm').submit(handleFormSubmit);
+            $('#recipeImageFile').on('change', handleImageUpload);
+            $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
+            $('#loadMoreBtn').on('click', loadMoreRecipes);
+        });
+
+        // Обработка загрузки изображения
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) {
+                $('#fileName').text('Файл не выбран');
+                selectedFile = null;
+                return;
+            }
+
+            // Проверка типа файла
+            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                alert('Пожалуйста, выберите файл в формате JPG или PNG.');
+                resetFileInput();
+                return;
+            }
+
+            // Проверка размера файла
+            if (file.size > 1048576) {
+                alert('Файл слишком большой. Максимальный размер 1MB.');
+                resetFileInput();
+                return;
+            }
+
+            $('#fileName').text(file.name);
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                selectedFile = event.target.result;
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetFileInput() {
+            $('#recipeImageFile').val('');
+            $('#fileName').text('Файл не выбран');
+        }
+
+        function updatePreview() {
+            const title = $('#recipeTitle').val() || 'Название рецепта';
+            const category = $('#recipeCategory').val() || 'не выбрано';
+            
+            if (selectedFile) {
+                $('#previewImage').attr('src', selectedFile);
+            }
+            
+            $('#previewTitle').text(title);
+            $('#previewCategory').text('Категория: ' + category);
+            $('#recipePreview').show();
+        }
+
+        // Сжатие изображения для уменьшения размера
+        function compressImage(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Максимальные размеры
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 600;
+                        
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        // Изменяем размеры пропорционально
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        // Рисуем сжатое изображение
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Конвертируем в Blob с качеством 75%
+                        canvas.toBlob(blob => {
+                            resolve(blob);
+                        }, 'image/jpeg', 0.75);
+                    };
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Загрузка изображения в Firebase Storage
+        async function uploadImage(file) {
+            try {
+                // Сжимаем изображение
+                const compressedBlob = await compressImage(file);
+                
+                // Создаем уникальное имя файла
+                const fileName = `recipe-${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`;
+                const storageRef = storage.ref();
+                const fileRef = storageRef.child(`recipe-images/${fileName}`);
+                
+                // Загружаем файл
+                await fileRef.put(compressedBlob);
+                
+                // Получаем URL для скачивания
+                return await fileRef.getDownloadURL();
+            } catch (error) {
+                console.error("Ошибка загрузки изображения:", error);
+                throw new Error("Не удалось загрузить изображение");
+            }
+        }
+
+        // Обработка отправки формы
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Показываем спиннер
+            $('#submitSpinner').show();
+            $('#recipeForm button').prop('disabled', true);
+            
+            try {
+                const fileInput = document.getElementById('recipeImageFile');
+                const file = fileInput.files[0];
+                
+                let imageUrl = 'images/default-recipe.jpg';
+                
+                // Загружаем изображение, если оно есть
+                if (file) {
+                    imageUrl = await uploadImage(file);
+                }
+                
+                // Создаем объект рецепта
+                const recipe = {
+                    title: $('#recipeTitle').val(),
+                    category: $('#recipeCategory').val(),
+                    image: imageUrl,
+                    ingredients: $('#recipeIngredients').val(),
+                    instructions: $('#recipeInstructions').val(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                // Сохраняем в Firestore
+                await db.collection("recipes").add(recipe);
+                
+                // Сброс формы
+                $('#recipeForm')[0].reset();
+                $('#recipePreview').hide();
+                resetFileInput();
+                selectedFile = null;
+                
+                // Перезагружаем рецепты
+                await loadRecipes();
+                
+                alert('Рецепт успешно добавлен!');
+                
+                // Прокрутка к новому рецепту
+                $('html, body').animate({
+                    scrollTop: $('#user-recipes').offset().top - 100
+                }, 800);
+            } catch (error) {
+                console.error("Ошибка сохранения рецепта:", error);
+                alert('Произошла ошибка: ' + error.message);
+            } finally {
+                // Скрываем спиннер и активируем кнопку
+                $('#submitSpinner').hide();
+                $('#recipeForm button').prop('disabled', false);
+            }
+        }
+
+        // Загрузка рецептов
+        async function loadRecipes() {
+            try {
+                // Показываем индикатор загрузки
+                $('#loadingRecipes').show();
+                $('#recipesContainer').empty();
+                $('#noRecipesMessage').addClass('d-none');
+                $('#loadMoreBtn').addClass('d-none');
+                
+                // Запрос к Firestore
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                // Скрываем индикатор загрузки
+                $('#loadingRecipes').hide();
+                
+                if (snapshot.empty) {
+                    $('#noRecipesMessage').removeClass('d-none');
+                    return;
+                }
+                
+                // Сохраняем последний документ для пагинации
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Отображаем рецепты
+                displayRecipes(snapshot);
+                
+                // Показываем кнопку "Загрузить еще", если есть еще рецепты
+                if (snapshot.size === PAGE_SIZE) {
+                    $('#loadMoreBtn').removeClass('d-none');
+                }
+            } catch (error) {
+                console.error("Ошибка загрузки рецептов:", error);
+                $('#loadingRecipes').html('<p class="text-danger">Ошибка загрузки рецептов. Попробуйте обновить страницу.</p>');
+            }
+        }
+
+        // Загрузка дополнительных рецептов
+        async function loadMoreRecipes() {
+            try {
+                $('#loadMoreBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Загрузка...');
+                
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .startAfter(lastVisible)
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                if (snapshot.empty) {
+                    $('#loadMoreBtn').hide();
+                    return;
+                }
+                
+                // Обновляем последний документ
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Добавляем новые рецепты
+                displayRecipes(snapshot);
+                
+                // Скрываем кнопку, если больше нет рецептов
+                if (snapshot.size < PAGE_SIZE) {
+                    $('#loadMoreBtn').hide();
+                } else {
+                    $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
+                }
+            } catch (error) {
+                console.error("Ошибка загрузки рецептов:", error);
+                $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
+                alert('Ошибка загрузки дополнительных рецептов');
+            }
+        }
+
+        // Отображение рецептов на странице
+        function displayRecipes(snapshot) {
+            const container = $('#recipesContainer');
+            
+            snapshot.forEach(doc => {
+                const recipe = doc.data();
+                const recipeId = doc.id;
+                
+                // Форматируем дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    }) : 'Дата не указана';
+                
+                const recipeHtml = `
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="menu-thumb recipe-card">
+                        <div class="menu-image-wrap position-relative">
+                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
+                                <img src="${recipe.image}" class="img-fluid menu-image" alt="${recipe.title}" loading="lazy">
+                                <span class="user-recipe-tag bg-success">Пользовательский</span>
+                            </a>
+                        </div>
+                        <div class="menu-info d-flex flex-wrap align-items-center">
+                            <h4 class="mb-0">${recipe.title}</h4>
+                            <span class="text-muted small ms-2">${date}</span>
+                        </div>
+                    </div>
+                </div>`;
+                
+                container.append(recipeHtml);
+            });
+        }
+
+        // Показ деталей рецепта
+        window.showRecipeDetails = async function(recipeId) {
+            try {
+                const doc = await db.collection("recipes").doc(recipeId).get();
+                
+                if (!doc.exists) {
+                    alert('Рецепт не найден');
+                    return;
+                }
+                
+                const recipe = doc.data();
+                
+                // Форматируем дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) : 'Дата не указана';
+                
+                // Создаем HTML для модального окна
+                const modalHtml = `
+                <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">${recipe.title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-5 mb-3 mb-md-0">
+                                        <img src="${recipe.image}" class="img-fluid rounded mb-3" alt="${recipe.title}">
+                                        <div class="recipe-meta">
+                                            <p><strong>Категория:</strong> ${recipe.category || 'Не указана'}</p>
+                                            <p><strong>Добавлено:</strong> ${date}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="mb-4">
+                                            <h5>Ингредиенты:</h5>
+                                            <div class="recipe-ingredients">${formatText(recipe.ingredients)}</div>
+                                        </div>
+                                        <div>
+                                            <h5>Инструкция:</h5>
+                                            <div class="recipe-instructions">${formatText(recipe.instructions)}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                
+                // Добавляем модальное окно в DOM
+                $('body').append(modalHtml);
+                
+                // Показываем модальное окно
+                const modal = new bootstrap.Modal(document.getElementById('recipeDetailModal'));
+                modal.show();
+                
+                // Удаляем модальное окно после закрытия
+                $('#recipeDetailModal').on('hidden.bs.modal', function() {
+                    $(this).remove();
+                });
+            } catch (error) {
+                console.error("Ошибка загрузки рецепта:", error);
+                alert('Не удалось загрузить рецепт');
+            }
+        }
+
+        // Форматирование текста (замена переносов строк)
+        function formatText(text) {
+            return text.replace(/\n/g, '<br>');
+        }
+    </script>
+</body>
+</html>

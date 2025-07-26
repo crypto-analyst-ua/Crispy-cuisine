@@ -1,0 +1,950 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Хрустящая кухня - Топ рецептов</title>
+    
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
+    <style>
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-label {
+            display: block;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        .file-input-label:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .file-input-label input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .file-name {
+            display: block;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        
+        .recipe-preview {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .recipe-card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: transform 0.3s ease;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .user-recipe-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .menu-image-wrap {
+            position: relative;
+        }
+        
+        .recipe-form {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        
+        .form-title {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #198754;
+        }
+        
+        /* Добавленные стили для кликабельных слайдов */
+        .carousel-link {
+            display: block;
+            position: relative;
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .carousel-link:hover {
+            text-decoration: none;
+        }
+        
+        .carousel-link .carousel-caption {
+            z-index: 10;
+        }
+        
+        .carousel-link::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        
+        /* Добавим спиннер загрузки */
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            display: none;
+        }
+        
+        #loadingRecipes {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Улучшенный вид модального окна */
+        .recipe-modal .modal-content {
+            border-radius: 0.8rem;
+            overflow: hidden;
+        }
+        
+        .recipe-modal .modal-header {
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+            border-bottom: none;
+        }
+        
+        .recipe-modal .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .recipe-modal .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .recipe-ingredients {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        
+        .recipe-instructions {
+            white-space: pre-line;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-white shadow-lg">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <a class="navbar-brand" href="index-ru.html">
+                Хрустящая кухня
+            </a>
+
+            <div class="d-lg-none"></div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index-ru.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="top-ru.html">Первые</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="top2-ru.html">Вторые</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="desert-ru.html">Десерты</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="top-ua.html"><span class="category-tag me-3 bg-info">UA</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <header class="site-header site-news-detail-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>ПЕРВЫЕ БЛЮДА</h2>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="news-detail section-padding pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12">
+                        <img src="images/news/pablo-merchan-montes-Orz90t6o0e4-unsplash1.jpg" class="img-fluid news-detail-image" alt="Борщ">
+                        
+                        <div class="col-lg-10 col-10 mx-auto mt-5">
+                            <h4 class="mb-3">Борщ</h4>
+                            <p>Неотъемлемый компонент борща - свекла. Она придает ему основной вкус и цвет. Как правило, борщи готовят на мясном, костном или смешанном мясо-костном бульоне. Правильно подготовленный бульон - основа хорошего борща. Бульон для борща обычно готовят из грудинки, реже из тонкого и толстого края или завитка. Кости всегда предварительно раскалывают вдоль, а хрящевые части разнимают. Продолжительность варки костей 4-6 часов, мяса - 2-2,5 часа. После закипания воды бульон продолжают варить на слабом огне. При варке мясо-костного бульона сначала варят кости, затем, за два часа до окончания их варки, добавляют мясо и варят до готовности, после чего мясо вынимают из бульона и начинают готовить на бульоне овощную часть борща, куда снова закладывают мясо только за 10-15 минут до полной готовности борща. К концу варки в борще должно оставаться не более 1,5 стакана чистого бульона на порцию, поэтому воды в начале варки следует наливать как минимум вдвое больше, чем предполагается получить бульона.</p>
+                            <p>Несколько слов о соотношении мяса в борщах. Говяжью грудинку и свинину обычно закладывают в пропорции 2:1 или 1:1. Кроме того, уже после окончания варки основного бульона некоторые виды борщей иногда добавляют небольшие количества баранины, ветчины, сосисок, домашней колбасы в мелко нарезанном виде из расчета 1:4 по отношению к основному мясу борща. Борщ может быть приготовлен также на гусином или курином бульоне (полтавский и одесский). В этом случае добавление другого мяса исключается.</p>
+                            <p>Особенностью подготовки овощной части борща является предварительная раздельная обработка овощей. Свеклу, например, всегда тушат отдельно от других овощей. Предварительно ее сбрызгивают уксусом (или добавляют лимонной кислоты, лимонного сока), что необходимо для сохранения красного цвета, кладут в разогретый жир (сало, масло) и тушат до готовности. Иногда свеклу запекают или варят до полуготовности в кожуре, а затем очищают, режут и опускают в бульон.</p>
+                            <p>Мелко нарезанный лук, нарезанную соломкой морковь и петрушку пассеруют вместе 15 минут, при этом овощи должны быть покрыты жиром. Перед окончанием пассерования в овощи добавляют томат-пюре или мелко нарезанные помидоры и продолжают пассеровать до тех пор, пока жир не окрасится под цвет помидоров.</p>
+                            <p>Очень важно последовательно закладывать овощи в бульон - в строгой зависимости от продолжительности их варки. Картофель закладывают за 30 минут до готовности борща, капусту - за 20 минут, свеклу в подготовленном тушеном виде - за 15 минут, пассерованные овощи (лук, морковь, петрушку) - за 15 минут, пряности - за 5-8 минут, чеснок (отдельно от других пряностей) - за 2 минуты.</p>
+                            <p>Основной вид жира, который используется для борщей, - свиное сало. Его толкут или растирают в ступке с чесноком, луком и зеленью петрушки до образования гладкой массы и заправляют им борщ за 2-3 минуты до готовности.</p>
+                            <p>Большинство борщей для придания им своеобразного кисловатого вкуса готовят не только на воде, а на квасе-сыворотке, на соке квашеной свеклы и на свекольной закваске (настоях), добавляя их в основном после варки мяса в готовый бульон, стараясь не подвергать длительному кипячению.</p>
+                            <p>Доведенный до готовности борщ ставят на очень слабый огонь газовой плиты, чтобы он не слишком остыл, и дают настояться еще 20 минут, после чего подают на стол. Таким образом, приготовление борща занимает минимум 3 часа, а при варке на костном бульоне - даже 5-6 часов.</p>
+                            <p>Различные варианты борщей чаще всего называются по местности, где они появились: борщ киевский, полтавский, львовский, волынский, черниговский, галицкий и др. В чем заключается разница между ними? Во-первых, в характере бульона: костный, мясной, мясо-костный, из разных сортов и сочетаний мяса (говядина, свинина, домашняя птица); во-вторых, в способе тепловой обработки свеклы (тушеная, печеная, полувареная). Кроме того, набор овощей для борща может быть разным. Обязательными ингредиентами в борще, кроме свеклы, являются капуста, морковь, картофель, петрушка, лук, помидоры, дополнительными - фасоль, яблоки (кислые, лучше незрелые), кабачки, репа. Овощи в борщ режут соломкой, за исключением кабачков и картофеля, которые нарезаются соответственно кубиками и крупными кусочками. Фасоль отваривают предварительно отдельно, потому что она варится долго - больше часа, и заправляют ею борщ за 15 минут до готовности. Репу пассеруют с морковью. Яблоки и кабачки не пассеруют, их закладывают после остальных овощей как наиболее скороваркие, но не позднее чем за 10 минут до готовности.</p>
+                            <p>Наконец, некоторые виды борщей заправляют еще поджаренной мукой для придания жидкости борща более густой консистенции. Однако это не обязательно и даже нежелательно для хорошей кухни, потому что может испортить при неумелом поджаривании аромат борща. А вот заправка борща сметаной после подачи на стол является обязательной. В представленных здесь нескольких рецептах борщей указаны примерные нормы и ассортимент используемых продуктов. Количество бульона в готовом борще везде составляет 1,5-1,75 л. Это означает, что нужно брать 3 л воды изначально.</p>
+
+                            <h4 class="mb-3">Борщ украинский простой.</h4>
+                            <ul class="list">
+                                <li class="list-item">500 г говядины, 1/4 кочана капусты, 4 картофелины, 1 крупная свекла, 25 г свиного жира.</li>
+                                <li class="list-item">25 г сливочного масла, 0,5 стакана томатной пасты или 2 помидора, 0,5 стакана сметаны.</li>
+                                <li class="list-item">1 морковь, 1 корень петрушки, 2 луковицы.</li>
+                                <li class="list-item">1 ст. ложка 3%-ного уксуса, 2 ч. ложки сахара, 3 лавровых листа, 4-5 зубчиков чеснока.</li>
+                                <li class="list-item">3 горошины душистого перца, 5-6 горошин черного перца, 1 ст. ложка зелени петрушки.</li>
+                            </ul>
+                            <p>Борщ готовят на костном и мясном бульоне, мясо подают вместе с борщом.</p>
+                            <p>1. Свеклу потушить с уксусом, частью сала (или жиром, снятым с поверхности бульона), сахаром и томатной пастой.</p>
+                            <p>2. Лук, морковь, корень петрушки, нарезанные соломкой, обжарить на сливочном масле.</p>
+                            <p>3. Картофель и капусту варить в бульоне 15 минут, затем добавить к ним продукты, указанные в пунктах 1 и 2, варить еще 10 минут, добавить масло и пряности, а затем заправить борщ зеленью петрушки и чесноком, растертым с салом. Перед подачей на стол заправить сметаной.</p>
+
+                            <h4 class="mb-3">Борщ украинский сборный.</h4>
+                            <ul class="list">
+                                <li class="list-item">500 г говядины, 200 г свинины, 100 г ветчины, 50 г сала.</li>
+                                <li class="list-item">2 л кваса-сыворотки <a href="adjika-ru.html">(см. Заправки для борща)</a></li>
+                                <li class="list-item">2 свеклы, 1/4 кочана капусты, 3 помидора, 0,5 стакана сметаны.</li>
+                                <li class="list-item">0,5 стакана вареной фасоли, 4 картофелины, 1 репа, 1 морковь, 1 петрушка, 2 луковицы.</li>
+                                <li class="list-item">3 лавровых листа, 2 горошины душистого перца, 6 горошин черного перца, 4 зубчика чеснока, по 1 ч. ложке сельдерея, укропа, майорана, зелени петрушки, 1 ч. ложка соли.</li>
+                            </ul>
+                            <p>Бульон из говядины и свинины приготовить на квасе-сыворотке полностью или частично. Затем в него вместе с первыми овощами заложить мелко нарезанную ветчину. Последовательность закладки та же, что для борща простого (последней закладывается фасоль). Свеклу не тушить, а запекать отдельно в кожуре, а затем почистить и нашинковать.</p>
+
+                            <h4 class="mb-3">Борщ киевский.</h4>
+                            <ul class="list">
+                                <li class="list-item">250 г говядины, 250 г баранины, 1/4 кочана капусты, 4 картофелины.</li>
+                                <li class="list-item">1 крупная свекла, 0,5 л свекольного кваса <a href="adjika-ru.html">(см. Заправки для борща)</a></li>
+                                <li class="list-item">2 ст. ложки фасоли, 2 кислых яблока, 2—3 помидора.</li>
+                                <li class="list-item">2 ст. ложки масла, 1 ст. ложка мелко нарезанного сала, 1-2 луковицы, 1 морковь, 1 петрушка.</li>
+                                <li class="list-item">1 ст. ложка зелени петрушки, 1 ч. ложка зелени сельдерея, 3 лавровых листа, 3 горошины душистого перца, 1/4 ч. ложки красного молотого перца, 0,5 головки чеснока.</li>
+                            </ul>
+                            <p>Говядину опустить в кипяток, залить свекольным квасом и сварить бульон. Отдельно тушить:</p>
+                            <p>1) свеклу вместе с бараньей грудинкой, нарезанной мелкими кусочками; 2) помидоры на масле; 3) лук, морковь, корень петрушки. Затем отварить в бульоне до полуготовности капусту и картофель, добавить тушеные овощи и варить еще 10-15 минут, заправить вареной фасолью, а в самом конце - тертым чесноком с нутряным салом и нарезанной зеленью петрушки.</p>
+                            <p>Если к концу варки борщ окажется недостаточно кислым, добавить еще один стакан свекольного кваса.</p>
+
+                            <h4 class="mb-3">Борщ полтавский.</h4>
+                            <ul class="list">
+                                <li class="list-item">600 г гуся или утки, 1 свекла, 1/4 кочана капусты, 3 картофелины, 50 г сала, 25 г масла.</li>
+                                <li class="list-item">0,5 стакана гречневой муки, 1 яйцо, 0,5 стакана томатной пасты или 2—3 помидора, 1 морковь.</li>
+                                <li class="list-item">1 петрушка, 1-2 луковицы, 1 ст. ложка уксуса, 2-3 лавровых листа.</li>
+                                <li class="list-item">1 головка чеснока, 5 горошин черного перца, 0,5 стакана сметаны.</li>
+                            </ul>
+                            <p>Борщ полтавский готовят на бульоне из домашней птицы, от других украинских борщей он отличается еще тем, что его заправляют не только овощами, но и галушками.</p>
+                            <p>Приготовление галушек. В четверти стакана кипятка развести 1 ст. ложку муки, тщательно растереть ее, охладить, добавить яйцо, остальную муку и замесить тесто; если оно получится крутоватым, добавить немного воды - тесто должно быть не круче, чем густая сметана. Это тесто брать чайной ложкой и опускать в кипящую подсоленную воду; варить в ней галушки до тех пор, пока они не всплывут, затем откинуть на дуршлаг. Заправить борщ галушками за 5-7 минут до готовности.</p>
+                            <p>В остальном порядок варки полтавского борща тот же, что и простого украинского.</p>
+                            
+                            <h4 class="mb-3">Борщ черниговский.</h4>
+                            <ul class="list">
+                                <li class="list-item">500 г говядины или свинины, 1/4 кочана капусты, 1 свекла, 1 небольшой кабачок.</li>
+                                <li class="list-item">0,5 стакана вареной фасоли, 3-4 помидора, 2 кислых яблока, 2 ст. ложки сливочного масла.</li>
+                                <li class="list-item">1 луковица, 1 корень петрушки, 1 морковь.</li>
+                                <li class="list-item">5—6 горошин черного перца, 2—3 лавровых листа, 4 зубчика чеснока, 0,5 стакана сметаны.</li>
+                            </ul>
+                            <p>Борщ готовить на мясо-костном бульоне. Свеклу тушить на масле. Саловой заправки в этом борще нет. Особенностью черниговского борща является наличие кабачков, которые, как и помидоры, не пассеруют. Уксус и мука для заправки также отсутствуют. Вся кислота поступает от помидоров и яблок. Порядок заправки овощами обычный. Помидоры, кабачки и яблоки кладут в борщ последними, перед пряностями.</p>
+                            
+                            <h4 class="mb-3">Борщ львовский.</h4>
+                            <ul class="list">
+                                <li class="list-item">0,5—1 кг костей (мозговых, «сахарных»), 2 крупные свеклы, 5 картофелин, 2—3 сосиски, 2 луковицы.</li>
+                                <li class="list-item">2 ст. ложки томата-пюре, 2 ст. ложки 3% уксуса, 1 морковь, 1 петрушка.</li>
+                                <li class="list-item">1 ст. ложка сливочного масла, 1—2 ч. ложки сахара, 6 горошин черного перца.</li>
+                                <li class="list-item">2 лавровых листа, 1 ст. ложка зелени петрушки, 0,5 стакана сметаны.</li>
+                            </ul>
+                            <p>Готовить на костном бульоне. Свеклу отварить до полуготовности в кожуре, затем добавить уксус, очистить, нарезать соломкой и тушить с томатом-пюре 20-30 минут на масле. Морковь, лук, петрушку пассеровать отдельно. В бульон положить картофель, затем свеклу и другие коренья, пряности и сахар. В почти готовый борщ добавить обжаренные на масле или сале сосиски, нарезанные маленькими кусочками.</p>
+                            
+                            <div class="row mb-5">
+                                <div class="col-12">
+                                    <h3 class="mb-4 text-success">Другие вкусные первые блюда</h3>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4">
+                                    <div class="recipe-card p-4 bg-light">
+                                        <h5>Том Ям (Тайский суп)</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Креветки, лимонграсс, галангал, лайм, чили, кокосовое молоко, рыбный соус, грибы, кинза.
+                                        </p>
+                                        <p><strong>Приготовление:</strong><br>
+                                            Вскипятить бульон с травами, добавить креветки и грибы, влить кокосовое молоко, приправить лаймом, соусом и чили. Подавать горячим.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4">
+                                    <div class="recipe-card p-4 bg-light">
+                                        <h5>Солянка мясная сборная</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Говядина, копчёности, колбаса, солёные огурцы, маслины, томатная паста, лук, лимон, специи.
+                                        </p>
+                                        <p><strong>Приготовление:</strong><br>
+                                            Обжарить лук с томатом, добавить мясо, огурцы, воду и варить. В конце — маслины, лимон и зелень. Подаётся горячей со сметаной.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4">
+                                    <div class="recipe-card p-4 bg-light">
+                                        <h5>Французский луковый суп</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Лук (много!), говяжий бульон, сливочное масло, белое вино, багет, сыр (грюйер или эмменталь).
+                                        </p>
+                                        <p><strong>Приготовление:</strong><br>
+                                            Лук карамелизовать, добавить вино и бульон, томить. Подавать с гренками и расплавленным сыром сверху.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4">
+                                    <div class="recipe-card p-4 bg-light">
+                                        <h5>Крем-суп из тыквы</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Тыква, морковь, картофель, лук, сливки, масло, специи, гренки.
+                                        </p>
+                                        <p><strong>Приготовление:</strong><br>
+                                            Отварить овощи, взбить в пюре, добавить сливки и специи. Подавать с гренками или семечками.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-5">
+                                <div class="col-12">
+                                    <h3 class="mb-4 text-success">Легкие летние первые блюда</h3>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4">
+                                    <div class="recipe-card p-4 bg-light">
+                                        <h5>Окрошка на кефире или квасе</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            2–3 картофелины, 3–4 яйца, 200 г колбасы или курицы, 2–3 огурца, зелень, 1.5 л кефира/кваса, 1–2 ст.л. сметаны/майонеза, горчица или хрен, соль и перец.
+                                        </p>
+                                        <p><strong>Приготовление:</strong><br>
+                                            Нарезать ингредиенты, смешать с зеленью, залить кефиром/квасом с заправкой, охладить.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4">
+                                    <div class="recipe-card p-4 bg-light">
+                                        <h5>Холодный свекольник</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            2–3 свёклы, 2–3 огурца, 2–3 яйца, зелень, 1–1.5 л кефира или воды с лимонным соком, уксус, соль, сахар, сметана.
+                                        </p>
+                                        <p><strong>Приготовление:</strong><br>
+                                            Нарезать ингредиенты, залить охлаждённым кефиром или водой с кислотой, охладить.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4">
+                                    <div class="recipe-card p-4 bg-light">
+                                        <h5>Украинский постный борщ</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Свёкла, картофель, морковь, лук, капуста, томатная паста, чеснок, уксус, масло, специи.
+                                        </p>
+                                        <p><strong>Приготовление:</strong><br>
+                                            Обжарить овощи, добавить в воду, варить до готовности, добавить специи и чеснок.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4">
+                                    <div class="recipe-card p-4 bg-light">
+                                        <h5>Грибной суп-пюре</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            500 г шампиньонов, лук, чеснок, 1 л бульона, 200 мл сливок, масло, специи.
+                                        </p>
+                                        <p><strong>Приготовление:</strong><br>
+                                            Обжарить грибы и овощи, варить, затем пюрировать и добавить сливки. Подавать с сухариками.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="BgImage"></section>
+        
+        <!-- Секция для добавления рецептов -->
+        <section id="add-recipe" class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-12">
+                        <div class="recipe-form">
+                            <h2 class="form-title">Добавить свой рецепт</h2>
+                            <form id="recipeForm">
+                                <div class="mb-3">
+                                    <label for="recipeTitle" class="form-label">Название рецепта*</label>
+                                    <input type="text" class="form-control" id="recipeTitle" required 
+                                        placeholder="Введите название вашего рецепта">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeCategory" class="form-label">Категория*</label>
+                                    <select class="form-select" id="recipeCategory" required>
+                                        <option value="">Выберите категорию</option>
+                                        <option value="Завтрак">Завтрак</option>
+                                        <option value="Обед">Обед</option>
+                                        <option value="Ужин">Ужин</option>
+                                        <option value="Десерт">Десерт</option>
+                                        <option value="Постное">Постное</option>
+                                        <option value="Консервация">Консервация</option>
+                                        <option value="Выпечка">Выпечка</option>
+                                        <option value="Напитки">Напитки</option>
+                                        <option value="Салаты">Салаты</option>
+                                        <option value="Закуски">Закуски</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Изображение (опционально)</label>
+                                    <div class="file-input-wrapper">
+                                        <div class="file-input-label">
+                                            <i class="bi bi-upload me-2"></i>Выбрать файл
+                                            <input type="file" class="form-control" id="recipeImageFile" accept="image/*">
+                                        </div>
+                                        <span id="fileName" class="file-name">Файл не выбран</span>
+                                    </div>
+                                    <div class="form-text">Максимальный размер: 1MB (JPG, PNG)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeIngredients" class="form-label">Ингредиенты*</label>
+                                    <textarea class="form-control" id="recipeIngredients" rows="4" required 
+                                        placeholder="Перечислите ингредиенты, каждый с новой строки"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeInstructions" class="form-label">Инструкция приготовления*</label>
+                                    <textarea class="form-control" id="recipeInstructions" rows="6" required 
+                                        placeholder="Опишите шаги приготовления"></textarea>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <span id="submitSpinner" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                        Добавить рецепт
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div id="recipePreview" class="recipe-preview mt-4">
+                                <h4>Предварительный просмотр:</h4>
+                                <div class="card recipe-card">
+                                    <img id="previewImage" src="images/default-recipe.jpg" class="card-img-top" 
+                                        alt="Предварительный просмотр">
+                                    <div class="card-body">
+                                        <h5 id="previewTitle" class="card-title">Название рецепта</h5>
+                                        <p id="previewCategory" class="card-text text-muted">Категория: не выбрано</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел для отображения пользовательских рецептов -->
+        <section id="user-recipes" class="section-padding bg-white">
+            <div class="container">
+                <div class="row">
+                    <h2 class="text-center mb-lg-5 mb-4">Рецепты от пользователей</h2>
+                    
+                    <div id="loadingRecipes">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Загрузка...</span>
+                        </div>
+                        <p class="mt-3">Загружаем рецепты...</p>
+                    </div>
+                    
+                    <div id="recipesContainer" class="row">
+                        <!-- Сюда будут добавляться рецепты через JS -->
+                    </div>
+                    
+                    <div id="noRecipesMessage" class="col-12 text-center d-none">
+                        <p>Пока нет добавленных рецептов. Будьте первым!</p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button id="loadMoreBtn" class="btn btn-outline-success d-none">Показать еще</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="text-white mb-4 me-5">Хрустящая кухня</h4>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+    
+    <script>
+        // Конфигурация Firebase (ЗАМЕНИТЕ НА ВАШУ КОНФИГУРАЦИЮ)
+        const firebaseConfig = {
+            apiKey: "ВАШ_API_KEY",
+            authDomain: "ВАШ_PROJECT.firebaseapp.com",
+            projectId: "ВАШ_PROJECT",
+            storageBucket: "ВАШ_PROJECT.appspot.com",
+            messagingSenderId: "ВАШ_SENDER_ID",
+            appId: "ВАШ_APP_ID"
+        };
+
+        // Инициализация Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        
+        // Глобальные переменные
+        let lastVisible = null;
+        let selectedFile = null;
+        const PAGE_SIZE = 6; // Количество рецептов за одну загрузку
+
+        $(document).ready(function() {
+            // Загрузка первых рецептов
+            loadRecipes();
+            
+            // Обработчики событий
+            $('#recipeForm').submit(handleFormSubmit);
+            $('#recipeImageFile').on('change', handleImageUpload);
+            $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
+            $('#loadMoreBtn').on('click', loadMoreRecipes);
+        });
+
+        // Обработка загрузки изображения
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) {
+                $('#fileName').text('Файл не выбран');
+                selectedFile = null;
+                return;
+            }
+
+            // Проверка типа файла
+            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                alert('Пожалуйста, выберите файл в формате JPG или PNG.');
+                resetFileInput();
+                return;
+            }
+
+            // Проверка размера файла
+            if (file.size > 1048576) {
+                alert('Файл слишком большой. Максимальный размер 1MB.');
+                resetFileInput();
+                return;
+            }
+
+            $('#fileName').text(file.name);
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                selectedFile = event.target.result;
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetFileInput() {
+            $('#recipeImageFile').val('');
+            $('#fileName').text('Файл не выбран');
+        }
+
+        function updatePreview() {
+            const title = $('#recipeTitle').val() || 'Название рецепта';
+            const category = $('#recipeCategory').val() || 'не выбрано';
+            
+            if (selectedFile) {
+                $('#previewImage').attr('src', selectedFile);
+            }
+            
+            $('#previewTitle').text(title);
+            $('#previewCategory').text('Категория: ' + category);
+            $('#recipePreview').show();
+        }
+
+        // Сжатие изображения для уменьшения размера
+        function compressImage(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Максимальные размеры
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 600;
+                        
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        // Изменяем размеры пропорционально
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        // Рисуем сжатое изображение
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Конвертируем в Blob с качеством 75%
+                        canvas.toBlob(blob => {
+                            resolve(blob);
+                        }, 'image/jpeg', 0.75);
+                    };
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Загрузка изображения в Firebase Storage
+        async function uploadImage(file) {
+            try {
+                // Сжимаем изображение
+                const compressedBlob = await compressImage(file);
+                
+                // Создаем уникальное имя файла
+                const fileName = `recipe-${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`;
+                const storageRef = storage.ref();
+                const fileRef = storageRef.child(`recipe-images/${fileName}`);
+                
+                // Загружаем файл
+                await fileRef.put(compressedBlob);
+                
+                // Получаем URL для скачивания
+                return await fileRef.getDownloadURL();
+            } catch (error) {
+                console.error("Ошибка загрузки изображения:", error);
+                throw new Error("Не удалось загрузить изображение");
+            }
+        }
+
+        // Обработка отправки формы
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Показываем спиннер
+            $('#submitSpinner').show();
+            $('#recipeForm button').prop('disabled', true);
+            
+            try {
+                const fileInput = document.getElementById('recipeImageFile');
+                const file = fileInput.files[0];
+                
+                let imageUrl = 'images/default-recipe.jpg';
+                
+                // Загружаем изображение, если оно есть
+                if (file) {
+                    imageUrl = await uploadImage(file);
+                }
+                
+                // Создаем объект рецепта
+                const recipe = {
+                    title: $('#recipeTitle').val(),
+                    category: $('#recipeCategory').val(),
+                    image: imageUrl,
+                    ingredients: $('#recipeIngredients').val(),
+                    instructions: $('#recipeInstructions').val(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                // Сохраняем в Firestore
+                await db.collection("recipes").add(recipe);
+                
+                // Сброс формы
+                $('#recipeForm')[0].reset();
+                $('#recipePreview').hide();
+                resetFileInput();
+                selectedFile = null;
+                
+                // Перезагружаем рецепты
+                await loadRecipes();
+                
+                alert('Рецепт успешно добавлен!');
+                
+                // Прокрутка к новому рецепту
+                $('html, body').animate({
+                    scrollTop: $('#user-recipes').offset().top - 100
+                }, 800);
+            } catch (error) {
+                console.error("Ошибка сохранения рецепта:", error);
+                alert('Произошла ошибка: ' + error.message);
+            } finally {
+                // Скрываем спиннер и активируем кнопку
+                $('#submitSpinner').hide();
+                $('#recipeForm button').prop('disabled', false);
+            }
+        }
+
+        // Загрузка рецептов
+        async function loadRecipes() {
+            try {
+                // Показываем индикатор загрузки
+                $('#loadingRecipes').show();
+                $('#recipesContainer').empty();
+                $('#noRecipesMessage').addClass('d-none');
+                $('#loadMoreBtn').addClass('d-none');
+                
+                // Запрос к Firestore
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                // Скрываем индикатор загрузки
+                $('#loadingRecipes').hide();
+                
+                if (snapshot.empty) {
+                    $('#noRecipesMessage').removeClass('d-none');
+                    return;
+                }
+                
+                // Сохраняем последний документ для пагинации
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Отображаем рецепты
+                displayRecipes(snapshot);
+                
+                // Показываем кнопку "Загрузить еще", если есть еще рецепты
+                if (snapshot.size === PAGE_SIZE) {
+                    $('#loadMoreBtn').removeClass('d-none');
+                }
+            } catch (error) {
+                console.error("Ошибка загрузки рецептов:", error);
+                $('#loadingRecipes').html('<p class="text-danger">Ошибка загрузки рецептов. Попробуйте обновить страницу.</p>');
+            }
+        }
+
+        // Загрузка дополнительных рецептов
+        async function loadMoreRecipes() {
+            try {
+                $('#loadMoreBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Загрузка...');
+                
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .startAfter(lastVisible)
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                if (snapshot.empty) {
+                    $('#loadMoreBtn').hide();
+                    return;
+                }
+                
+                // Обновляем последний документ
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Добавляем новые рецепты
+                displayRecipes(snapshot);
+                
+                // Скрываем кнопку, если больше нет рецептов
+                if (snapshot.size < PAGE_SIZE) {
+                    $('#loadMoreBtn').hide();
+                } else {
+                    $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
+                }
+            } catch (error) {
+                console.error("Ошибка загрузки рецептов:", error);
+                $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
+                alert('Ошибка загрузки дополнительных рецептов');
+            }
+        }
+
+        // Отображение рецептов на странице
+        function displayRecipes(snapshot) {
+            const container = $('#recipesContainer');
+            
+            snapshot.forEach(doc => {
+                const recipe = doc.data();
+                const recipeId = doc.id;
+                
+                // Форматируем дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    }) : 'Дата не указана';
+                
+                const recipeHtml = `
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="menu-thumb recipe-card">
+                        <div class="menu-image-wrap position-relative">
+                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
+                                <img src="${recipe.image}" class="img-fluid menu-image" alt="${recipe.title}" loading="lazy">
+                                <span class="user-recipe-tag bg-success">Пользовательский</span>
+                            </a>
+                        </div>
+                        <div class="menu-info d-flex flex-wrap align-items-center">
+                            <h4 class="mb-0">${recipe.title}</h4>
+                            <span class="text-muted small ms-2">${date}</span>
+                        </div>
+                    </div>
+                </div>`;
+                
+                container.append(recipeHtml);
+            });
+        }
+
+        // Показ деталей рецепта
+        window.showRecipeDetails = async function(recipeId) {
+            try {
+                const doc = await db.collection("recipes").doc(recipeId).get();
+                
+                if (!doc.exists) {
+                    alert('Рецепт не найден');
+                    return;
+                }
+                
+                const recipe = doc.data();
+                
+                // Форматируем дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) : 'Дата не указана';
+                
+                // Создаем HTML для модального окна
+                const modalHtml = `
+                <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">${recipe.title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-5 mb-3 mb-md-0">
+                                        <img src="${recipe.image}" class="img-fluid rounded mb-3" alt="${recipe.title}">
+                                        <div class="recipe-meta">
+                                            <p><strong>Категория:</strong> ${recipe.category || 'Не указана'}</p>
+                                            <p><strong>Добавлено:</strong> ${date}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="mb-4">
+                                            <h5>Ингредиенты:</h5>
+                                            <div class="recipe-ingredients">${formatText(recipe.ingredients)}</div>
+                                        </div>
+                                        <div>
+                                            <h5>Инструкция:</h5>
+                                            <div class="recipe-instructions">${formatText(recipe.instructions)}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                
+                // Добавляем модальное окно в DOM
+                $('body').append(modalHtml);
+                
+                // Показываем модальное окно
+                const modal = new bootstrap.Modal(document.getElementById('recipeDetailModal'));
+                modal.show();
+                
+                // Удаляем модальное окно после закрытия
+                $('#recipeDetailModal').on('hidden.bs.modal', function() {
+                    $(this).remove();
+                });
+            } catch (error) {
+                console.error("Ошибка загрузки рецепта:", error);
+                alert('Не удалось загрузить рецепт');
+            }
+        }
+
+        // Форматирование текста (замена переносов строк)
+        function formatText(text) {
+            return text.replace(/\n/g, '<br>');
+        }
+    </script>
+</body>
+</html>

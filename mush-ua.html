@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Хрустка кухня - Як не отруїтися грибами</title>
+    
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
+    
+    <style>
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-label {
+            display: block;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        .file-input-label:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .file-input-label input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .file-name {
+            display: block;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        
+        .recipe-preview {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .recipe-card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: transform 0.3s ease;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .user-recipe-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .menu-image-wrap {
+            position: relative;
+        }
+        
+        .recipe-form {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        
+        .form-title {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #198754;
+        }
+        
+        /* Добавленные стили для кликабельных слайдов */
+        .carousel-link {
+            display: block;
+            position: relative;
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .carousel-link:hover {
+            text-decoration: none;
+        }
+        
+        .carousel-link .carousel-caption {
+            z-index: 10;
+        }
+        
+        .carousel-link::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        
+        /* Добавим спиннер загрузки */
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            display: none;
+        }
+        
+        #loadingRecipes {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Улучшенный вид модального окна */
+        .recipe-modal .modal-content {
+            border-radius: 0.8rem;
+            overflow: hidden;
+        }
+        
+        .recipe-modal .modal-header {
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+            border-bottom: none;
+        }
+        
+        .recipe-modal .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .recipe-modal .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .recipe-ingredients {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        
+        .recipe-instructions {
+            white-space: pre-line;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-white shadow-lg">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <a class="navbar-brand" href="index.html">
+                Хрустка кухня
+            </a>
+
+            <div class="d-lg-none"></div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Головна</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="top-ua.html">Перше</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="top2-ua.html">Друге</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="desert-ua.html">Десерт</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="mush-ru.html" class="nav-link"><span class="category-tag me-3 bg-info">RU</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <header class="site-header site-news-detail-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Як не отруїтися грибами</h2>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="news-detail section-padding pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12">
+                        <img src="images/news/news-detail-header15.jpg" class="img-fluid news-detail-image" alt="Безпека грибів">
+                        
+                        <div class="col-lg-10 col-10 mx-auto mt-5">
+                            <h4 class="mb-3">Важливі правила безпеки</h4>
+                            <p>
+                                Збирання грибів - захоплююче заняття, але воно вимагає серйозного підходу до безпеки. 
+                                Щороку тисячі людей потрапляють до лікарень з важкими отруєннями через неправильне збирання та приготування грибів. 
+                                Дотримуючись цих простих правил, ви зможете насолоджуватися грибами без ризику для здоров'я.
+                            </p>
+
+                            <h4 class="mb-3">Основні правила збирання грибів</h4>
+                            <ul class="list">
+                                <li class="list-item"><strong>Збирайте лише знайомі гриби</strong> - якщо є найменші сумніви, залиште гриб у лісі</li>
+                                <li class="list-item"><strong>Уникайте старих та червивих грибів</strong> - у них накопичуються токсини</li>
+                                <li class="list-item"><strong>Не збирайте гриби біля доріг та промислових зон</strong> - вони вбирають важкі метали</li>
+                                <li class="list-item"><strong>Використовуйте плетені кошики</strong> - у поліетиленових пакетах гриби швидко псуються</li>
+                                <li class="list-item"><strong>Зрізайте гриби з ніжкою</strong> - це допоможе точніше визначити вид</li>
+                                <li class="list-item"><strong>Не пробуйте сирі гриби</strong> - навіть їстівні гриби в сирому вигляді можуть спричинити отруєння</li>
+                            </ul>
+
+                            <h4 class="mb-3">10 смертельно небезпечних грибів України</h4>
+                            <div class="alert alert-danger">
+                                <p>Ці гриби категорично не можна збирати та вживати в їжу:</p>
+                                <ol>
+                                    <li><strong>Бліда поганка</strong> - смертельно отруйна, спричиняє незворотні ураження печінки</li>
+                                    <li><strong>Мухомор смердючий</strong> - містить смертельні аматоксини</li>
+                                    <li><strong>Галерина окаймлена</strong> - містить ті ж токсини, що й бліда поганка</li>
+                                    <li><strong>Опеньки ложні сірожовті</strong> - спричиняють важкі шлунково-кишкові розлади</li>
+                                    <li><strong>Сатанинський гриб</strong> - отруйний у сирому вигляді, спричиняє сильні отруєння</li>
+                                    <li><strong>Павутинник найкрасивіший</strong> - смертельно отруйний, уражає нирки</li>
+                                    <li><strong>Свинушка тонка</strong> - накопичує важкі метали, спричиняє аутоімунні реакції</li>
+                                    <li><strong>Ентолома отруйна</strong> - спричиняє найсильніші шлункові розлади</li>
+                                    <li><strong>Лепіота коричнево-червона</strong> - містить смертельні ціаніди</li>
+                                    <li><strong>Зеленуха</strong> - нещодавно визнана умовно-отруйною через токсичний мускарин</li>
+                                </ol>
+                            </div>
+
+                            <h4 class="mb-3">Ознаки отруєння грибами</h4>
+                            <p>Симптоми можуть з'явитися через 30 хвилин до 48 годин після вживання:</p>
+                            <ul class="list">
+                                <li class="list-item">Нудота, блювання, діарея</li>
+                                <li class="list-item">Сильний біль у животі</li>
+                                <li class="list-item">Запаморочення, втрата орієнтації</li>
+                                <li class="list-item">Підвищена температура</li>
+                                <li class="list-item">Зниження артеріального тиску</li>
+                                <li class="list-item">Пожовтіння шкіри та очей (при ураженні печінки)</li>
+                                <li class="list-item">Утруднене дихання</li>
+                                <li class="list-item">Порушення зору ("мушки" перед очима)</li>
+                            </ul>
+
+                            <h4 class="mb-3">Перша допога при отруєнні грибами</h4>
+                            <div class="alert alert-warning">
+                                <p>При перших ознаках отруєння негайно:</p>
+                                <ol>
+                                    <li>Викличте швидку допомогу (103 або 112)</li>
+                                    <li>Випийте 4-6 склянок теплої води</li>
+                                    <li>Викликайте блювання, натиснувши на корінь язика</li>
+                                    <li>Прийміть активоване вугілля (1 таблетка на 10 кг ваги)</li>
+                                    <li>Збережіть залишки грибів для аналізу</li>
+                                    <li>Не вживайте алкоголь, молоко чи ліки без призначення лікаря</li>
+                                    <li>Не залишайте постраждалого одного до приїзду лікарів</li>
+                                </ol>
+                            </div>
+
+                            <h4 class="mb-3">Безпечне приготування грибів</h4>
+                            <ul class="list">
+                                <li class="list-item"><strong>Завжди відварюйте гриби перед основним приготуванням</strong> - перший відвар зливайте</li>
+                                <li class="list-item"><strong>Не зберігайте свіжі гриби більше 24 годин</strong></li>
+                                <li class="list-item"><strong>Дітям до 7 років гриби протипоказані</strong></li>
+                                <li class="list-item"><strong>Вагітним та літнім людям слід обмежити споживання</strong></li>
+                                <li class="list-item"><strong>Не поєднуйте гриби з алкоголем</strong> - це посилює інтоксикацію</li>
+                                <li class="list-item"><strong>При консервуванні строго дотримуйтесь правил стерилізації</strong></li>
+                                <li class="list-item"><strong>Не купуйте гриби у випадкових продавців</strong></li>
+                            </ul>
+
+                            <h4 class="mb-3">Пам'ятайте!</h4>
+                            <div class="alert alert-info">
+                                <p>Будь-яке отруєння грибами вимагає медичної допомоги. Не самолікуйтесь! 
+                                Смертельно отруйні гриби можуть не викликати симптомів у перші добі, коли допомога ще ефективна.</p>
+                                <p>При збиранні грибів керуйтесь правилом: <strong>"Не впевнен - не бери!"</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="BgImage"></section>
+        
+        <!-- Секція для додавання рецептів -->
+        <section id="add-recipe" class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-12">
+                        <div class="recipe-form">
+                            <h2 class="form-title">Додати свій рецепт</h2>
+                            <form id="recipeForm">
+                                <div class="mb-3">
+                                    <label for="recipeTitle" class="form-label">Назва рецепту*</label>
+                                    <input type="text" class="form-control" id="recipeTitle" required 
+                                        placeholder="Введіть назву вашого рецепту">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeCategory" class="form-label">Категорія*</label>
+                                    <select class="form-select" id="recipeCategory" required>
+                                        <option value="">Виберіть категорію</option>
+                                        <option value="Сніданок">Сніданок</option>
+                                        <option value="Обід">Обід</option>
+                                        <option value="Вечеря">Вечеря</option>
+                                        <option value="Десерт">Десерт</option>
+                                        <option value="Пістне">Пістне</option>
+                                        <option value="Консервація">Консервація</option>
+                                        <option value="Випічка">Випічка</option>
+                                        <option value="Напої">Напої</option>
+                                        <option value="Салати">Салати</option>
+                                        <option value="Закуски">Закуски</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Зображення (опціонально)</label>
+                                    <div class="file-input-wrapper">
+                                        <div class="file-input-label">
+                                            <i class="bi bi-upload me-2"></i>Обрати файл
+                                            <input type="file" class="form-control" id="recipeImageFile" accept="image/*">
+                                        </div>
+                                        <span id="fileName" class="file-name">Файл не обрано</span>
+                                    </div>
+                                    <div class="form-text">Максимальний розмір: 1MB (JPG, PNG)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeIngredients" class="form-label">Інгредієнти*</label>
+                                    <textarea class="form-control" id="recipeIngredients" rows="4" required 
+                                        placeholder="Перелічіть інгредієнти, кожен з нового рядка"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeInstructions" class="form-label">Інструкція приготування*</label>
+                                    <textarea class="form-control" id="recipeInstructions" rows="6" required 
+                                        placeholder="Опишіть кроки приготування"></textarea>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <span id="submitSpinner" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                        Додати рецепт
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div id="recipePreview" class="recipe-preview mt-4">
+                                <h4>Попередній перегляд:</h4>
+                                <div class="card recipe-card">
+                                    <img id="previewImage" src="images/default-recipe.jpg" class="card-img-top" 
+                                        alt="Попередній перегляд">
+                                    <div class="card-body">
+                                        <h5 id="previewTitle" class="card-title">Назва рецепту</h5>
+                                        <p id="previewCategory" class="card-text text-muted">Категорія: не вибрано</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Розділ для відображення рецептів користувачів -->
+        <section id="user-recipes" class="section-padding bg-white">
+            <div class="container">
+                <div class="row">
+                    <h2 class="text-center mb-lg-5 mb-4">Рецепти від користувачів</h2>
+                    
+                    <div id="loadingRecipes">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Завантаження...</span>
+                        </div>
+                        <p class="mt-3">Завантажуємо рецепти...</p>
+                    </div>
+                    
+                    <div id="recipesContainer" class="row">
+                        <!-- Сюди додаватимуться рецепти через JS -->
+                    </div>
+                    
+                    <div id="noRecipesMessage" class="col-12 text-center d-none">
+                        <p>Поки немає доданих рецептів. Будьте першим!</p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button id="loadMoreBtn" class="btn btn-outline-success d-none">Показати ще</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="text-white mb-4 me-5">Хрустка кухня</h4>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+    
+    <script>
+        // Конфігурація Firebase (ЗАМІНІТЬ НА ВАШУ КОНФІГУРАЦІЮ)
+        const firebaseConfig = {
+            apiKey: "ВАШ_API_KEY",
+            authDomain: "ВАШ_PROJECT.firebaseapp.com",
+            projectId: "ВАШ_PROJECT",
+            storageBucket: "ВАШ_PROJECT.appspot.com",
+            messagingSenderId: "ВАШ_SENDER_ID",
+            appId: "ВАШ_APP_ID"
+        };
+
+        // Ініціалізація Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        
+        // Глобальні змінні
+        let lastVisible = null;
+        let selectedFile = null;
+        const PAGE_SIZE = 6; // Кількість рецептів за одне завантаження
+
+        $(document).ready(function() {
+            // Завантаження перших рецептів
+            loadRecipes();
+            
+            // Обробники подій
+            $('#recipeForm').submit(handleFormSubmit);
+            $('#recipeImageFile').on('change', handleImageUpload);
+            $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
+            $('#loadMoreBtn').on('click', loadMoreRecipes);
+        });
+
+        // Обробка завантаження зображення
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) {
+                $('#fileName').text('Файл не обрано');
+                selectedFile = null;
+                return;
+            }
+
+            // Перевірка типу файлу
+            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                alert('Будь ласка, виберіть файл у форматі JPG або PNG.');
+                resetFileInput();
+                return;
+            }
+
+            // Перевірка розміру файлу
+            if (file.size > 1048576) {
+                alert('Файл занадто великий. Максимальний розмір 1MB.');
+                resetFileInput();
+                return;
+            }
+
+            $('#fileName').text(file.name);
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                selectedFile = event.target.result;
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetFileInput() {
+            $('#recipeImageFile').val('');
+            $('#fileName').text('Файл не обрано');
+        }
+
+        function updatePreview() {
+            const title = $('#recipeTitle').val() || 'Назва рецепту';
+            const category = $('#recipeCategory').val() || 'не вибрано';
+            
+            if (selectedFile) {
+                $('#previewImage').attr('src', selectedFile);
+            }
+            
+            $('#previewTitle').text(title);
+            $('#previewCategory').text('Категорія: ' + category);
+            $('#recipePreview').show();
+        }
+
+        // Стиснення зображення для зменшення розміру
+        function compressImage(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Максимальні розміри
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 600;
+                        
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        // Змінюємо розміри пропорційно
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        // Малюємо стиснуте зображення
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Конвертуємо у Blob з якістю 75%
+                        canvas.toBlob(blob => {
+                            resolve(blob);
+                        }, 'image/jpeg', 0.75);
+                    };
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Завантаження зображення в Firebase Storage
+        async function uploadImage(file) {
+            try {
+                // Стискаємо зображення
+                const compressedBlob = await compressImage(file);
+                
+                // Створюємо унікальне ім'я файлу
+                const fileName = `recipe-${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`;
+                const storageRef = storage.ref();
+                const fileRef = storageRef.child(`recipe-images/${fileName}`);
+                
+                // Завантажуємо файл
+                await fileRef.put(compressedBlob);
+                
+                // Отримуємо URL для завантаження
+                return await fileRef.getDownloadURL();
+            } catch (error) {
+                console.error("Помилка завантаження зображення:", error);
+                throw new Error("Не вдалося завантажити зображення");
+            }
+        }
+
+        // Обробка відправлення форми
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Показуємо спінер
+            $('#submitSpinner').show();
+            $('#recipeForm button').prop('disabled', true);
+            
+            try {
+                const fileInput = document.getElementById('recipeImageFile');
+                const file = fileInput.files[0];
+                
+                let imageUrl = 'images/default-recipe.jpg';
+                
+                // Завантажуємо зображення, якщо воно є
+                if (file) {
+                    imageUrl = await uploadImage(file);
+                }
+                
+                // Створюємо об'єкт рецепту
+                const recipe = {
+                    title: $('#recipeTitle').val(),
+                    category: $('#recipeCategory').val(),
+                    image: imageUrl,
+                    ingredients: $('#recipeIngredients').val(),
+                    instructions: $('#recipeInstructions').val(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                // Зберігаємо в Firestore
+                await db.collection("recipes").add(recipe);
+                
+                // Скидання форми
+                $('#recipeForm')[0].reset();
+                $('#recipePreview').hide();
+                resetFileInput();
+                selectedFile = null;
+                
+                // Перезавантажуємо рецепти
+                await loadRecipes();
+                
+                alert('Рецепт успішно додано!');
+                
+                // Прокрутка до нового рецепту
+                $('html, body').animate({
+                    scrollTop: $('#user-recipes').offset().top - 100
+                }, 800);
+            } catch (error) {
+                console.error("Помилка збереження рецепту:", error);
+                alert('Сталася помилка: ' + error.message);
+            } finally {
+                // Ховаємо спінер і активуємо кнопку
+                $('#submitSpinner').hide();
+                $('#recipeForm button').prop('disabled', false);
+            }
+        }
+
+        // Завантаження рецептів
+        async function loadRecipes() {
+            try {
+                // Показуємо індикатор завантаження
+                $('#loadingRecipes').show();
+                $('#recipesContainer').empty();
+                $('#noRecipesMessage').addClass('d-none');
+                $('#loadMoreBtn').addClass('d-none');
+                
+                // Запит до Firestore
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                // Ховаємо індикатор завантаження
+                $('#loadingRecipes').hide();
+                
+                if (snapshot.empty) {
+                    $('#noRecipesMessage').removeClass('d-none');
+                    return;
+                }
+                
+                // Зберігаємо останній документ для пагінації
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Відображаємо рецепти
+                displayRecipes(snapshot);
+                
+                // Показуємо кнопку "Завантажити ще", якщо є ще рецепти
+                if (snapshot.size === PAGE_SIZE) {
+                    $('#loadMoreBtn').removeClass('d-none');
+                }
+            } catch (error) {
+                console.error("Помилка завантаження рецептів:", error);
+                $('#loadingRecipes').html('<p class="text-danger">Помилка завантаження рецептів. Спробуйте оновити сторінку.</p>');
+            }
+        }
+
+        // Завантаження додаткових рецептів
+        async function loadMoreRecipes() {
+            try {
+                $('#loadMoreBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Завантаження...');
+                
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .startAfter(lastVisible)
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                if (snapshot.empty) {
+                    $('#loadMoreBtn').hide();
+                    return;
+                }
+                
+                // Оновлюємо останній документ
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Додаємо нові рецепти
+                displayRecipes(snapshot);
+                
+                // Ховаємо кнопку, якщо більше немає рецептів
+                if (snapshot.size < PAGE_SIZE) {
+                    $('#loadMoreBtn').hide();
+                } else {
+                    $('#loadMoreBtn').prop('disabled', false).text('Показати ще');
+                }
+            } catch (error) {
+                console.error("Помилка завантаження рецептів:", error);
+                $('#loadMoreBtn').prop('disabled', false).text('Показати ще');
+                alert('Помилка завантаження додаткових рецептів');
+            }
+        }
+
+        // Відображення рецептів на сторінці
+        function displayRecipes(snapshot) {
+            const container = $('#recipesContainer');
+            
+            snapshot.forEach(doc => {
+                const recipe = doc.data();
+                const recipeId = doc.id;
+                
+                // Форматуємо дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('uk-UA', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    }) : 'Дата не вказана';
+                
+                const recipeHtml = `
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="menu-thumb recipe-card">
+                        <div class="menu-image-wrap position-relative">
+                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
+                                <img src="${recipe.image}" class="img-fluid menu-image" alt="${recipe.title}" loading="lazy">
+                                <span class="user-recipe-tag bg-success">Користувацький</span>
+                            </a>
+                        </div>
+                        <div class="menu-info d-flex flex-wrap align-items-center">
+                            <h4 class="mb-0">${recipe.title}</h4>
+                            <span class="text-muted small ms-2">${date}</span>
+                        </div>
+                    </div>
+                </div>`;
+                
+                container.append(recipeHtml);
+            });
+        }
+
+        // Показ деталей рецепту
+        window.showRecipeDetails = async function(recipeId) {
+            try {
+                const doc = await db.collection("recipes").doc(recipeId).get();
+                
+                if (!doc.exists) {
+                    alert('Рецепт не знайдено');
+                    return;
+                }
+                
+                const recipe = doc.data();
+                
+                // Форматуємо дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('uk-UA', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) : 'Дата не вказана';
+                
+                // Створюємо HTML для модального вікна
+                const modalHtml = `
+                <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">${recipe.title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-5 mb-3 mb-md-0">
+                                        <img src="${recipe.image}" class="img-fluid rounded mb-3" alt="${recipe.title}">
+                                        <div class="recipe-meta">
+                                            <p><strong>Категорія:</strong> ${recipe.category || 'Не вказана'}</p>
+                                            <p><strong>Додано:</strong> ${date}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="mb-4">
+                                            <h5>Інгредієнти:</h5>
+                                            <div class="recipe-ingredients">${formatText(recipe.ingredients)}</div>
+                                        </div>
+                                        <div>
+                                            <h5>Інструкція:</h5>
+                                            <div class="recipe-instructions">${formatText(recipe.instructions)}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                
+                // Додаємо модальне вікно в DOM
+                $('body').append(modalHtml);
+                
+                // Показуємо модальне вікно
+                const modal = new bootstrap.Modal(document.getElementById('recipeDetailModal'));
+                modal.show();
+                
+                // Видаляємо модальне вікно після закриття
+                $('#recipeDetailModal').on('hidden.bs.modal', function() {
+                    $(this).remove();
+                });
+            } catch (error) {
+                console.error("Помилка завантаження рецепту:", error);
+                alert('Не вдалося завантажити рецепт');
+            }
+        }
+
+        // Форматування тексту (заміна переносів рядків)
+        function formatText(text) {
+            return text.replace(/\n/g, '<br>');
+        }
+    </script>
+</body>
+</html>

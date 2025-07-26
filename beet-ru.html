@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Хрустящая кухня - Свекла на зиму</title>
+
+        <!-- CSS FILES -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-icons.css" rel="stylesheet">
+        <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
+        <style>
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-label {
+            display: block;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        .file-input-label:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .file-input-label input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .file-name {
+            display: block;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        
+        .recipe-preview {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .recipe-card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: transform 0.3s ease;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .user-recipe-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .menu-image-wrap {
+            position: relative;
+        }
+        
+        .recipe-form {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        
+        .form-title {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #198754;
+        }
+        
+        /* Добавленные стили для кликабельных слайдов */
+        .carousel-link {
+            display: block;
+            position: relative;
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .carousel-link:hover {
+            text-decoration: none;
+        }
+        
+        .carousel-link .carousel-caption {
+            z-index: 10;
+        }
+        
+        .carousel-link::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        
+        /* Добавим спиннер загрузки */
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            display: none;
+        }
+        
+        #loadingRecipes {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Улучшенный вид модального окна */
+        .recipe-modal .modal-content {
+            border-radius: 0.8rem;
+            overflow: hidden;
+        }
+        
+        .recipe-modal .modal-header {
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+            border-bottom: none;
+        }
+        
+        .recipe-modal .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .recipe-modal .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .recipe-ingredients {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        
+        .recipe-instructions {
+            white-space: pre-line;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+    
+    <body>
+    <nav class="navbar navbar-expand-lg bg-white shadow-lg">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <a class="navbar-brand" href="index-ru.html">
+                Хрустящая кухня
+            </a>
+
+            <div class="d-lg-none"></div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index-ru.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="top-ru.html">Первое</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="top2-ru.html">Второе</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="desert-ru.html">Десерт</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="beet-ua.html"><span class="category-tag me-3 bg-info">UA</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+        <main>
+            <header class="site-header site-news-detail-header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Свекла на зиму</h2>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="news-detail section-padding pt-0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-12">
+                            <img src="images/news/news-detail-header11.jpg" class="img-fluid news-detail-image" alt="Свекла на зиму">
+
+                            <div class="col-lg-10 col-10 mx-auto mt-5">
+                                <h4 class="mb-3">О полезности свёклы можно говорить много.</h4>
+                                <p>Правильно приготовленные блюда из этого ценнейшего корнеплода получаются всегда вкусными и аппетитными. Наши рецепты помогут вам законсервировать маринованную свёклу на зиму. Такая заготовка придется всегда кстати.</p>
+                                
+                                <h4 class="mb-3">Квасы и свекольные настои для борщей.</h4>
+                                <p>Лучшие украинские борщи готовят на свекольных настоях и квасах. Ниже приводятся несколько рецептов таких квасов и настоев.</p>
+
+                                <h4 class="mb-3">Свекольный настой простой.</h4>
+                                <p>Очищенную свеклу натереть на терке, залить кипяченой водой и поставить в теплое место на 3—4 дня. Соотношение свеклы и воды (по весу) 1:2.</p>
+                                
+                                <h4 class="mb-3">Свекольный настой заварной.</h4>
+                                <p>Очищенную свеклу натереть на крупной терке, залить стаканом горячего мясного бульона, добавить лимонной кислоты и довести до кипения на сильном огне. Дать настояться 30 мин.</p>
+                                
+                                <h4 class="mb-3">Квас свекольно-хлебный.</h4>
+                                <p>0,5 кг черного хлеба нарезать кусочками, залить 1,5 л теплой кипяченой воды, положить 6 шт. очищенной и нарезанной ломтями свеклы, дать настояться 2 дня (днем на солнце, ночью в теплом месте), часто помешивать. На третий день процедить, после чего квас будет готов для употребления в борщ.</p>
+                                
+                                <h4 class="mb-3">Квас-сировец.</h4>
+                                <p>Для приготовления этого кваса на 2 л воды берут 0,5 кг ржаной муки и 10 г дрожжей. 1—2 ст. ложки муки развести с дрожжами в теплой воде (примерно 1 — 1,5 стакана) и дать перебродить (закваска). Оставшуюся муку залить горячей водой, замесить тесто до густоты сметаны и поставить в теплое место. 
+                                Добавить закваску в тесто, развести теплой водой (до консистенции густого кваса). По мере использования доливать водой (0,5 л на 1 л использованной жидкости).</p>
+                                
+                                <h4 class="mb-3">Борщевая заправка на зиму.</h4>
+                                <p>Вкусный борщ можно сварить зимой быстро и легко, если осенью приготовить борщевую заправку. Борщовая заправка – очень нужна консервация на зиму для всех хороших хозяек. Наш рецепт классической заправки для борща включает в себя знакомые всем ингредиенты: свеклу, морковь, помидоры, лук. Заправка получается вкусной, яркой и сохраняет большую часть полезных веществ, которыми славится красная свекла. Благодаря этой заправке ароматный, наваристый борщ можно сварить за 25 минут. Так что зимой времени на приготовление борща заботливым хозяйкам понадобится меньше. Борщевая заправка на зиму – это идеальный способ сохранить питательность, витамины, вкус, аромат пожилых овощей.</p>
+
+                                <h4 class="mb-3">Борщевая заправка.</h4>
+                                <ul class="list">
+                                    <li class="list-item">5 кг свеклы 10 луковиц.</li>
+                                    <li class="list-item">1 кг помидоров 1 кг моркови.</li>
+                                    <li class="list-item">1,50 ст. масла 1,50 ст. уксуса.</li>
+                                    <li class="list-item">2 ст. л. соли 1 ст. л. сахара.</li>
+                                </ul>
+                                <p>Свекла сварить и потереть на терке (для свеклы).
+                                В кастрюлю налить подсолнечное масло, поставить на плиту, порезать туда лук.
+                                Потереть морковь и добавить в лук.
+                                Потереть помидоры (1 кг) и добавить в кастрюлю. Можно также дать томатную пасту, пропорция – 50:50 (500г помидоров и 500 гр томатной пасты).
+                                Добавить свеклу, соль, сахар, уксус и хорошо перемешать.
+                                Тушить 40 мин.
+                                Разложить в банки и стерилизовать 25 мин.
+                                Закрутить крышки, банки перевернуть вверх дном, закутать и оставить до полного остывания.
+                                Ваша заправка готова! Вкусного борщика!</p>
+                                
+                                <h4 class="mb-3">Заправка для борща из помидоров на зиму.</h4>
+                                <ul class="list">
+                                    <li class="list-item">ИНГРЕДИЕНТЫ</li>
+                                    <li class="list-item">Помидоры 1 Килограмм.</li>
+                                    <li class="list-item">Перец сладкий 200 Грамм.</li>
+                                    <li class="list-item">Соль 2 Ст. ложки.</li>
+                                </ul>
+                                <p>Простой вариант вкусной заготовки, которая зимой пригодится точно - заправка для борща из помидоров на зиму. Заправка хорошо стоит в кладовке всю зиму. Использовать помидоры можно для соуса, пасты.Помидоры 1 Килограмм
+                                Перец сладкий 200 Грамм
+                                Соль 2 Ст. ложки
+                                Подготовьте ингредиенты.
+                                Помидоры вымойте и просушите, нарежьте дольками.
+                                Помидоры измельчите в блендере.
+                                Перелейте помидоры в кастрюлю, добавьте нарезанный перец и соль.
+                                Варите томат 15 минут. Тем временем простерилизуйте две полулитровые банки.
+                                Разлейте томат по стерильным банкам, закатайте и поставьте дном вверх, укройте и оставьте на сутки. После перенесите томат в кладовку. Приятного аппетита!</p>
+                              
+                                <h4 class="mb-3">Заправка для борща с свеклой и помидорами.</h4>
+                                <ul class="list">
+                                    <li class="list-item">Свёкла - 2 шт. Помидоры - 2 шт. Морковь - 2 шт. Лук - 2 шт.</li>
+                                    <li class="list-item">Подсолнечное масло - 650 г. Сахар - 200 г. Соль - 130 г. Уксус 9% - 100 мл.</li>
+                                    <li class="list-item">Душистый перец - 15 шт. Лавровый лист - 5 шт. Вода - 150 г.</li>
+                                </ul>
+                                <p>Свеклу, морковь и лук измельчить в кухонном комбайне. Все овощи выложить в большую кастрюлю, залить маслом и половиной уксуса. Перемешать, чтобы масло равномерно покрыло овощи. Добавить воду, накрыть крышку и тушить овощи 15 минут. 
+                                Помидоры измельчить в блендере. В кастрюлю с овощами вылить томатное пюре и остальной уксус. Добавить сахар, соль, перец и лавровый лист. Накрыть крышкой и тушить всё вместе 40 минут, периодически помешивая овощи. Заправку переложить в стерилизованные банки, перевернуть вверх дном и остудить. После этого она готова.</p>
+
+                                <h4 class="mb-3">Заправка для борща с капустой.</h4>
+                                <ul class="list">
+                                    <li class="list-item">Свекла - 3 кг. Лук - 1 кг.</li>
+                                    <li class="list-item">Морковь - 1 кг. Капуста - 1 кг. Помидоры - 1 кг.</li>
+                                    <li class="list-item">Сахар - 200 г. Соль - 3 ст. л.</li>
+                                    <li class="list-item">Растительное масло - 250 г. Уксус 9% - 125 г.</li>
+                                </ul>
+                                <p>Свеклу и морковь измельчить в кухонном комбайне, лук мелко нарезать. Помидоры перемолоть блендером. Капусту нашинковать. Все овощи переложить в большую кастрюлю. К овощам добавить сахар, растительное масло, соль, уксус. Довести до закипания на большом огне, затем убавить огонь до среднего и тушить 30 минут. Готовую заправку разложить по стерилизованным банкам, укутать одеялом и дать остыть.</p>
+                                
+                                <h4 class="mb-3">Заправка для борща с перцем.</h4>
+                                <ul class="list">
+                                    <li class="list-item">Свекла - 3 кг. Морковь - 1 кг. Лук - 1 кг.</li>
+                                    <li class="list-item">Помидоры - 1 кг. Болгарский перец - 5 шт.</li>
+                                    <li class="list-item">Растительное масло - 220 г.</li>
+                                    <li class="list-item">Соль - 3 ст.л. Сахар - 200 г. Уксус 9% - 125 г.</li>
+                                </ul>
+                                <p>Морковь и свеклы натереть на терке или измельчить в кухонном комбайне. Переложить в кастрюлю, посыпать сахаром и солью. Влить в кастрюлю масло и поставить кастрюлю на средний огонь. Тушить 15 минут. Нарезать лук полукольцами и выложить к овощам, тушить ещё 5 минут. Помидоры нарезать полукольцами, перец - соломкой. Все овощи тушить вместе 25 минут на небольшом огне.
+                                Готовую горячую заправку разложить по стерилизованным банкам. Закрыть крышками, накрыть банки пледом и оставить до полного остывания.</p>
+                                
+                                <div class="col-12">
+                                    <h2>Свекла на зиму</h2>
+                                </div>
+                                
+                                <div class="col-lg-12 col-12">
+                                    <img src="images/news/news-detail-header12.jpg" class="img-fluid news-detail-image" alt="Свекла">
+                                </div>
+ 
+                                <h4 class="mb-3">Маринованная свекла на зиму.</h4>
+                                <h4 class="mb-3">Предлагаем один из вариантов этой смеси.</h4>
+                                <ul class="list">
+                                    <li class="list-item">Вам потребуется.</li>
+                                    <li class="list-item">Свекла - 2,5 кг.</li>
+                                    <li class="list-item">Соль 1-ст. Ложка.</li>
+                                    <li class="list-item">Сахар - 150 г.</li>
+                                    <li class="list-item">Масло - 150 г.</li>
+                                    <li class="list-item">Уксусная эссенция – 1 ст. Ложка.</li>
+                                    <li class="list-item">Вода – 200 мл.</li>
+                                </ul>
+                                <p>Пошаговый рецепт.
+                                Маринованная свекла на зиму.
+                                Шаг №1.
+                                Как приготовить свеклу на зиму?
+                                Свеклу натереть тонкой соломкой.
+                                Шаг №2.
+                                Уложить натертую свеклу в кастрюлю с толстым дном.
+                                Шаг №3.
+                                Добавить сахар, соль, уксус, воду, растительное масло и довести до кипения.
+                                Шаг №4.
+                                Хорошо все перемешать и тушить свеклу, периодически перемешивая на слабом огне 1,5 часа.
+                                Шаг №5.
+                                Разложить маринованую свеклу в стерилизованные банки и закрыть стерилизованными крышками. Укутать банки в плед и оставить до полного остывания. Хранить банки с маринованой свеклой нужно в темном прохладном месте.
+                                Шаг №6.
+                                У вас получится не только готовый салат из маринованной свеклы: из этой заготовки вы можете сварить ароматный борщ или приготовить свеклу, можете потушить свеклу с жареным луком и угостить всех настоящим деликатесом – свекольной икрой, или приготовить хит праздничного стола – селедку. Приятного аппетита!</p>
+
+                                <h4 class="mb-3">Маринованная свекла на зиму – отличная пикантная закуска.</h4>
+                                <p>Мы приготовили для вас простой рецепт, который не отнимет много времени и не требует длительной стерилизации. Чтобы овощ сохранил как можно больше полезных веществ, мы не будем варить его, а запекать в духовке. Для закуски выбирайте плотные корнеплоды средней величины: они быстрее и равномернее приготовятся, отличаются особой сочностью и ярким красным цветом. Нарезать свеклу можно разными способами: кубиками, соломкой, ломтиками. Есть рецепты, где ее маринуют целиком. Мы все же предлагаем вам достаточно быстрый и простой вариант – натереть на терке для корейской моркови. В таком виде ее можно подавать как гарнир или добавлять в борщ.</p>
+                                 
+                                <ul class="list">
+                                    <li class="list-item">Ингредиенты.</li>
+                                    <li class="list-item">Свекла – 2 кг.</li>
+                                    <li class="list-item">Уксус 9% - 50 мл.</li>
+                                    <li class="list-item">Для маринада:</li>
+                                    <li class="list-item">Вода - 250 мл. Сахар – 20 г. Душистый перец – 4 горошины. Гвоздика – 2 шт. Лавровый лист – 2 шт. Соль – 5 г.</li>
+                                </ul>
+                                <p>ШАГОВЫЙ РЕЦЕПТ ПРИГОТОВЛЕНИЯ.
+                                Шаг 1.
+                                Начинайте готовить маринованую свеклу на зиму, предварительно разогрев духовку до 200°С. Картофель свеклы тщательно вымойте и обсушите. Заверните каждый в фольгу, поместите на лист и запекайте 45-50 минут.
+                                Шаг 2.
+                                Свеклу аккуратно извлеките из фольги, облейте холодной водой, а затем очистите кожуру. Мякоть нарежьте соломкой, или натрите на терке для корейской моркови.
+                                Шаг 3.
+                                Подготовьте небольшие баночки. Предварительно простерилизуйте их любым удобным способом: на плите или в микроволновке. Распределите свеклу и влейте по 1 ст. ложке уксуса.
+                                Шаг 4.
+                                Приготовьте маринад для свеклы. Соедините воду с сахаром, солью и специями в кастрюле. Доведите до кипения. Варите около 5 минут | при активном кипении.
+                                Шаг 5.
+                                Кипящим маринадом залейте банки, закатайте стерилизованными крышками. Переверните и укутайте одеялом или пледом до полного остывания.
+                                Шаг 6.
+                                Готовую свеклу лучше хранить в холодильнике. Подавайте как закуску с маринованными огурцами, помидорами, капустой или как гарнир к мясу.
+
+                                ХОЗЯЙКЕ НА ЗАМЕТКУ.
+                                При приготовлении маринованной свеклы на зиму доливайте банки маринадом полностью к краям. Тогда свекла не потеряет своего яркого цвета. Также важно хранить её в темном месте, например, в холодильнике или прохладном погребе.
+
+                                КСТАТИ ГОВОРЯ.
+                                Чтобы приготовить маринованую свеклу на зиму, клубни можно и отварить. Для этого тщательно промойте их от земли, выложите в кастрюлю, посолите и доведите до кипения. Варите около 50 минут. Охладите.</p>
+                                
+                                <h4 class="mb-3">Абхазская аджика на зиму.</h4>
+                                <ul class="list">
+                                    <li class="list-item">Ингредиенты</li>
+                                    <li class="list-item">450–500 грамм перца чили 300–400 грамм чеснока.</li>
+                                    <li class="list-item">По 60–75 грамм свежей зелени: Базилика (лучше фиолетового) Кинзы (можно заменить семенами кориандра) Укропа Петрушки.</li>
+                                    <li class="list-item">Соль 2–3 столовые ложки (без горки). Внимание, соль нужно брать крупную или среднюю и обязательно нейодированную.</li>
+                                </ul>
+                                <p>Чем хороша абхазская аджика помимо остроты? Конечно же ароматом, ну и невозможностью испортить рецепт
+                                Для любителей остренького нет ничего вкуснее, чем перец чили, а когда его еще и много в рецепте, то получается настоящий праздник!
+                                Итак, начинаем запасаться на зиму жгучим вариантом аджики для самых смелых. Кстати, не забывайте, аджика у всех получается немного разная. Ведь это зависит от того, кто как привык готовит.
+                                Вариантов аджики много, кто-то добавляет грецкие орехи, кому-то нравится более соленая. И все рецепты правильные, но мы приводим самый аутентичный, из солнечной Абхазии. 
+                                Посуда:
+                                емкости для овощей и зелени
+                                мясорубка или блендер
+                                перчатки одноразовые (если очень жгучий чили) емкость с крышкой (не алюминиевая ) порционные баночки крышки. 
+                                Приготовление
+                                Промойте всю зелень, обсушите на полотенце. Если у зелени есть очень жесткие черенки, срежьте их не жалея.
+                                Перец чили промойте от пыли, аккуратно выкрутите хвостики, не повредив сам перчик.
+                                Перец разрезать не нужно, семена должны остаться внутри. Очистите от пленок чеснок, взвесьте. Отмерьте необходимое количество соли и кориандра, если его используете. Итак, все ингредиенты подготовлены, осталось соединить в единую массу.
+                                Прокрутите через мясорубку поочередно перец, чеснок и зелень. Также в мясорубку добавляют соль и прокручивают. В итоге получается красновато-зеленая масса, в которой явно видны семена перца. Если есть блендер, то можно дополнительно разбить массу им, но косточки перца должны чувствоваться обязательно.
+                                Какая же аджика без семян чили? Если блендера нет, то можно 2-3 раза прокрутить массу через мясорубку. Если кожа рук особо чуствительная, то используйте одноразовые перчатки.
+                                Масса получается густой, и из-за сока зелени в ней будет видна жидкость. Оставьте массу для брожения на столе на 3 дня. Во время брожения массу хранят с приоткрытой крышкой и при комнатной температуре.
+                                Дважды в день массу помешивают. За это время часть жидкости испарится и масса станет более густой. После ферментации аджику раскладывают по баночкам небольшого размера и хранят в холодильнике.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        <section class="BgImage"></section>
+        
+        <!-- Секция для добавления рецептов -->
+        <section id="add-recipe" class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-12">
+                        <div class="recipe-form">
+                            <h2 class="form-title">Добавить свой рецепт</h2>
+                            <form id="recipeForm">
+                                <div class="mb-3">
+                                    <label for="recipeTitle" class="form-label">Название рецепта*</label>
+                                    <input type="text" class="form-control" id="recipeTitle" required 
+                                        placeholder="Введите название вашего рецепта">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeCategory" class="form-label">Категория*</label>
+                                    <select class="form-select" id="recipeCategory" required>
+                                        <option value="">Выберите категорию</option>
+                                        <option value="Завтрак">Завтрак</option>
+                                        <option value="Обед">Обед</option>
+                                        <option value="Ужин">Ужин</option>
+                                        <option value="Десерт">Десерт</option>
+                                        <option value="Постное">Постное</option>
+                                        <option value="Консервация">Консервация</option>
+                                        <option value="Выпечка">Выпечка</option>
+                                        <option value="Напитки">Напитки</option>
+                                        <option value="Салаты">Салаты</option>
+                                        <option value="Закуски">Закуски</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Изображение (опционально)</label>
+                                    <div class="file-input-wrapper">
+                                        <div class="file-input-label">
+                                            <i class="bi bi-upload me-2"></i>Выбрать файл
+                                            <input type="file" class="form-control" id="recipeImageFile" accept="image/*">
+                                        </div>
+                                        <span id="fileName" class="file-name">Файл не выбран</span>
+                                    </div>
+                                    <div class="form-text">Максимальный размер: 1MB (JPG, PNG)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeIngredients" class="form-label">Ингредиенты*</label>
+                                    <textarea class="form-control" id="recipeIngredients" rows="4" required 
+                                        placeholder="Перечислите ингредиенты, каждый с новой строки"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeInstructions" class="form-label">Инструкция приготовления*</label>
+                                    <textarea class="form-control" id="recipeInstructions" rows="6" required 
+                                        placeholder="Опишите шаги приготовления"></textarea>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <span id="submitSpinner" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                        Добавить рецепт
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div id="recipePreview" class="recipe-preview mt-4">
+                                <h4>Предварительный просмотр:</h4>
+                                <div class="card recipe-card">
+                                    <img id="previewImage" src="images/default-recipe.jpg" class="card-img-top" 
+                                        alt="Предварительный просмотр">
+                                    <div class="card-body">
+                                        <h5 id="previewTitle" class="card-title">Название рецепта</h5>
+                                        <p id="previewCategory" class="card-text text-muted">Категория: не выбрано</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел для отображения пользовательских рецептов -->
+        <section id="user-recipes" class="section-padding bg-white">
+            <div class="container">
+                <div class="row">
+                    <h2 class="text-center mb-lg-5 mb-4">Рецепты от пользователей</h2>
+                    
+                    <div id="loadingRecipes">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Загрузка...</span>
+                        </div>
+                        <p class="mt-3">Загружаем рецепты...</p>
+                    </div>
+                    
+                    <div id="recipesContainer" class="row">
+                        <!-- Сюда будут добавляться рецепты через JS -->
+                    </div>
+                    
+                    <div id="noRecipesMessage" class="col-12 text-center d-none">
+                        <p>Пока нет добавленных рецептов. Будьте первым!</p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button id="loadMoreBtn" class="btn btn-outline-success d-none">Показать еще</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="text-white mb-4 me-5">Хрустящая кухня</h4>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+    
+    <script>
+        // Конфигурация Firebase (ЗАМЕНИТЕ НА ВАШУ КОНФИГУРАЦИЮ)
+        const firebaseConfig = {
+            apiKey: "ВАШ_API_KEY",
+            authDomain: "ВАШ_PROJECT.firebaseapp.com",
+            projectId: "ВАШ_PROJECT",
+            storageBucket: "ВАШ_PROJECT.appspot.com",
+            messagingSenderId: "ВАШ_SENDER_ID",
+            appId: "ВАШ_APP_ID"
+        };
+
+        // Инициализация Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        
+        // Глобальные переменные
+        let lastVisible = null;
+        let selectedFile = null;
+        const PAGE_SIZE = 6; // Количество рецептов за одну загрузку
+
+        $(document).ready(function() {
+            // Загрузка первых рецептов
+            loadRecipes();
+            
+            // Обработчики событий
+            $('#recipeForm').submit(handleFormSubmit);
+            $('#recipeImageFile').on('change', handleImageUpload);
+            $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
+            $('#loadMoreBtn').on('click', loadMoreRecipes);
+        });
+
+        // Обработка загрузки изображения
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) {
+                $('#fileName').text('Файл не выбран');
+                selectedFile = null;
+                return;
+            }
+
+            // Проверка типа файла
+            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                alert('Пожалуйста, выберите файл в формате JPG или PNG.');
+                resetFileInput();
+                return;
+            }
+
+            // Проверка размера файла
+            if (file.size > 1048576) {
+                alert('Файл слишком большой. Максимальный размер 1MB.');
+                resetFileInput();
+                return;
+            }
+
+            $('#fileName').text(file.name);
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                selectedFile = event.target.result;
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetFileInput() {
+            $('#recipeImageFile').val('');
+            $('#fileName').text('Файл не выбран');
+        }
+
+        function updatePreview() {
+            const title = $('#recipeTitle').val() || 'Название рецепта';
+            const category = $('#recipeCategory').val() || 'не выбрано';
+            
+            if (selectedFile) {
+                $('#previewImage').attr('src', selectedFile);
+            }
+            
+            $('#previewTitle').text(title);
+            $('#previewCategory').text('Категория: ' + category);
+            $('#recipePreview').show();
+        }
+
+        // Сжатие изображения для уменьшения размера
+        function compressImage(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Максимальные размеры
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 600;
+                        
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        // Изменяем размеры пропорционально
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        // Рисуем сжатое изображение
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Конвертируем в Blob с качеством 75%
+                        canvas.toBlob(blob => {
+                            resolve(blob);
+                        }, 'image/jpeg', 0.75);
+                    };
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Загрузка изображения в Firebase Storage
+        async function uploadImage(file) {
+            try {
+                // Сжимаем изображение
+                const compressedBlob = await compressImage(file);
+                
+                // Создаем уникальное имя файла
+                const fileName = `recipe-${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`;
+                const storageRef = storage.ref();
+                const fileRef = storageRef.child(`recipe-images/${fileName}`);
+                
+                // Загружаем файл
+                await fileRef.put(compressedBlob);
+                
+                // Получаем URL для скачивания
+                return await fileRef.getDownloadURL();
+            } catch (error) {
+                console.error("Ошибка загрузки изображения:", error);
+                throw new Error("Не удалось загрузить изображение");
+            }
+        }
+
+        // Обработка отправки формы
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Показываем спиннер
+            $('#submitSpinner').show();
+            $('#recipeForm button').prop('disabled', true);
+            
+            try {
+                const fileInput = document.getElementById('recipeImageFile');
+                const file = fileInput.files[0];
+                
+                let imageUrl = 'images/default-recipe.jpg';
+                
+                // Загружаем изображение, если оно есть
+                if (file) {
+                    imageUrl = await uploadImage(file);
+                }
+                
+                // Создаем объект рецепта
+                const recipe = {
+                    title: $('#recipeTitle').val(),
+                    category: $('#recipeCategory').val(),
+                    image: imageUrl,
+                    ingredients: $('#recipeIngredients').val(),
+                    instructions: $('#recipeInstructions').val(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                // Сохраняем в Firestore
+                await db.collection("recipes").add(recipe);
+                
+                // Сброс формы
+                $('#recipeForm')[0].reset();
+                $('#recipePreview').hide();
+                resetFileInput();
+                selectedFile = null;
+                
+                // Перезагружаем рецепты
+                await loadRecipes();
+                
+                alert('Рецепт успешно добавлен!');
+                
+                // Прокрутка к новому рецепту
+                $('html, body').animate({
+                    scrollTop: $('#user-recipes').offset().top - 100
+                }, 800);
+            } catch (error) {
+                console.error("Ошибка сохранения рецепта:", error);
+                alert('Произошла ошибка: ' + error.message);
+            } finally {
+                // Скрываем спиннер и активируем кнопку
+                $('#submitSpinner').hide();
+                $('#recipeForm button').prop('disabled', false);
+            }
+        }
+
+        // Загрузка рецептов
+        async function loadRecipes() {
+            try {
+                // Показываем индикатор загрузки
+                $('#loadingRecipes').show();
+                $('#recipesContainer').empty();
+                $('#noRecipesMessage').addClass('d-none');
+                $('#loadMoreBtn').addClass('d-none');
+                
+                // Запрос к Firestore
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                // Скрываем индикатор загрузки
+                $('#loadingRecipes').hide();
+                
+                if (snapshot.empty) {
+                    $('#noRecipesMessage').removeClass('d-none');
+                    return;
+                }
+                
+                // Сохраняем последний документ для пагинации
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Отображаем рецепты
+                displayRecipes(snapshot);
+                
+                // Показываем кнопку "Загрузить еще", если есть еще рецепты
+                if (snapshot.size === PAGE_SIZE) {
+                    $('#loadMoreBtn').removeClass('d-none');
+                }
+            } catch (error) {
+                console.error("Ошибка загрузки рецептов:", error);
+                $('#loadingRecipes').html('<p class="text-danger">Ошибка загрузки рецептов. Попробуйте обновить страницу.</p>');
+            }
+        }
+
+        // Загрузка дополнительных рецептов
+        async function loadMoreRecipes() {
+            try {
+                $('#loadMoreBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Загрузка...');
+                
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .startAfter(lastVisible)
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                if (snapshot.empty) {
+                    $('#loadMoreBtn').hide();
+                    return;
+                }
+                
+                // Обновляем последний документ
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Добавляем новые рецепты
+                displayRecipes(snapshot);
+                
+                // Скрываем кнопку, если больше нет рецептов
+                if (snapshot.size < PAGE_SIZE) {
+                    $('#loadMoreBtn').hide();
+                } else {
+                    $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
+                }
+            } catch (error) {
+                console.error("Ошибка загрузки рецептов:", error);
+                $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
+                alert('Ошибка загрузки дополнительных рецептов');
+            }
+        }
+
+        // Отображение рецептов на странице
+        function displayRecipes(snapshot) {
+            const container = $('#recipesContainer');
+            
+            snapshot.forEach(doc => {
+                const recipe = doc.data();
+                const recipeId = doc.id;
+                
+                // Форматируем дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    }) : 'Дата не указана';
+                
+                const recipeHtml = `
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="menu-thumb recipe-card">
+                        <div class="menu-image-wrap position-relative">
+                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
+                                <img src="${recipe.image}" class="img-fluid menu-image" alt="${recipe.title}" loading="lazy">
+                                <span class="user-recipe-tag bg-success">Пользовательский</span>
+                            </a>
+                        </div>
+                        <div class="menu-info d-flex flex-wrap align-items-center">
+                            <h4 class="mb-0">${recipe.title}</h4>
+                            <span class="text-muted small ms-2">${date}</span>
+                        </div>
+                    </div>
+                </div>`;
+                
+                container.append(recipeHtml);
+            });
+        }
+
+        // Показ деталей рецепта
+        window.showRecipeDetails = async function(recipeId) {
+            try {
+                const doc = await db.collection("recipes").doc(recipeId).get();
+                
+                if (!doc.exists) {
+                    alert('Рецепт не найден');
+                    return;
+                }
+                
+                const recipe = doc.data();
+                
+                // Форматируем дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) : 'Дата не указана';
+                
+                // Создаем HTML для модального окна
+                const modalHtml = `
+                <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">${recipe.title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-5 mb-3 mb-md-0">
+                                        <img src="${recipe.image}" class="img-fluid rounded mb-3" alt="${recipe.title}">
+                                        <div class="recipe-meta">
+                                            <p><strong>Категория:</strong> ${recipe.category || 'Не указана'}</p>
+                                            <p><strong>Добавлено:</strong> ${date}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="mb-4">
+                                            <h5>Ингредиенты:</h5>
+                                            <div class="recipe-ingredients">${formatText(recipe.ingredients)}</div>
+                                        </div>
+                                        <div>
+                                            <h5>Инструкция:</h5>
+                                            <div class="recipe-instructions">${formatText(recipe.instructions)}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                
+                // Добавляем модальное окно в DOM
+                $('body').append(modalHtml);
+                
+                // Показываем модальное окно
+                const modal = new bootstrap.Modal(document.getElementById('recipeDetailModal'));
+                modal.show();
+                
+                // Удаляем модальное окно после закрытия
+                $('#recipeDetailModal').on('hidden.bs.modal', function() {
+                    $(this).remove();
+                });
+            } catch (error) {
+                console.error("Ошибка загрузки рецепта:", error);
+                alert('Не удалось загрузить рецепт');
+            }
+        }
+
+        // Форматирование текста (замена переносов строк)
+        function formatText(text) {
+            return text.replace(/\n/g, '<br>');
+        }
+    </script>
+</body>
+</html>

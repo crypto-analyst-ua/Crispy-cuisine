@@ -1,0 +1,959 @@
+<!doctype html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Хрустка кухня - Буряк на зиму</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
+    <style>
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-label {
+            display: block;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        .file-input-label:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .file-input-label input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .file-name {
+            display: block;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        
+        .recipe-preview {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .recipe-card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: transform 0.3s ease;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .user-recipe-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .menu-image-wrap {
+            position: relative;
+        }
+        
+        .recipe-form {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        
+        .form-title {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #198754;
+        }
+        
+        .carousel-link {
+            display: block;
+            position: relative;
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .carousel-link:hover {
+            text-decoration: none;
+        }
+        
+        .carousel-link .carousel-caption {
+            z-index: 10;
+        }
+        
+        .carousel-link::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            display: none;
+        }
+        
+        #loadingRecipes {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .recipe-modal .modal-content {
+            border-radius: 0.8rem;
+            overflow: hidden;
+        }
+        
+        .recipe-modal .modal-header {
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+            border-bottom: none;
+        }
+        
+        .recipe-modal .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .recipe-modal .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .recipe-ingredients {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        
+        .recipe-instructions {
+            white-space: pre-line;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg bg-white shadow-lg">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <a class="navbar-brand" href="index.html">
+            Хрустка кухня
+        </a>
+
+        <div class="d-lg-none"></div>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Головна</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="top-ua.html">Перше</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="top2-ua.html">Друге</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="desert-ua.html">Десерт</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="beet-ru.html"><span class="category-tag me-3 bg-info">RU</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <header class="site-header site-news-detail-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Буряк на зиму</h2>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="news-detail section-padding pt-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-12">
+                    <img src="images/news/news-detail-header11.jpg" class="img-fluid news-detail-image" alt="Буряк на зиму">
+
+                    <div class="col-lg-10 col-10 mx-auto mt-5">
+                        <h4 class="mb-3">Про корисність буряка можна говорити багато.</h4>
+                        <p>Правильно приготовані страви з цього найдорожчого коренеплоду завжди виходять смачними та апетитними. Наші рецепти допоможуть вам законсервувати маринований буряк на зиму. Така заготовка завжди стане в нагоді.</p>
+                        
+                        <h4 class="mb-3">Кваси та бурякові настої для борщів.</h4>
+                        <p>Найкращі українські борщі готують на бурякових настоях та квасах. Нижче наведено кілька рецептів таких квасів та настоїв.</p>
+
+                        <h4 class="mb-3">Буряковий настій простий.</h4>
+                        <p>Очищений буряк натерти на тертці, залити кип'яченою водою та поставити в тепле місце на 3-4 дні. Співвідношення буряка та води (за вагою) 1:2.</p>
+                        
+                        <h4 class="mb-3">Буряковий настій заварний.</h4>
+                        <p>Очищений буряк натерти на великій тертці, залити склянкою гарячого м'ясного бульйону, додати лимонної кислоти та довести до кипіння на сильному вогні. Дати настоятися 30 хв.</p>
+                        
+                        <h4 class="mb-3">Квас буряково-хлібний.</h4>
+                        <p>0,5 кг чорного хліба нарізати шматочками, залити 1,5 л теплої кип'яченої води, покласти 6 шт. очищеного та нарізаного скибочками буряка, дати настоятися 2 дні (вдень на сонці, вночі в теплому місці), часто перемішувати. На третій день процідити, після чого квас буде готовий до вживання в борщ.</p>
+                        
+                        <h4 class="mb-3">Квас-сировець.</h4>
+                        <p>Для приготування цього квасу на 2 л води беруть 0,5 кг житнього борошна та 10 г дріжджів. 1-2 ст. ложки борошна розвести з дріжджами у теплій воді (приблизно 1-1,5 склянки) та дати перебродити (закваска). Борошно, що залишилось, залити гарячою водою, замісити тісто до густоти сметани та поставити в тепле місце. 
+                        Додати закваску в тісто, розвести теплою водою (до консистенції густого квасу). По мірі використання доливати водою (0,5 л на 1 л використаної рідини).</p>
+                        
+                        <h4 class="mb-3">Борщева заправка на зиму.</h4>
+                        <p>Смачний борщ можна зварити взимку швидко та легко, якщо восени приготувати борщеву заправку. Борщева заправка – дуже потрібна консервація на зиму для всіх господарок. Наш рецепт класичної заправки для борщу включає знайомі всім інгредієнти: буряк, морква, помідори, цибуля. Заправка виходить смачною, яскравою та зберігає більшість корисних речовин, якими славиться червоний буряк. Завдяки цій заправці ароматний, наваристий борщ можна зварити за 25 хвилин. Тож взимку часу на приготування борщу господиням знадобиться менше. Борщева заправка на зиму – це ідеальний спосіб зберегти поживність, вітаміни, смак та аромат овочів.</p>
+
+                        <h4 class="mb-3">Борщева заправка.</h4>
+                        <ul class="list">
+                            <li class="list-item">5 кг буряка</li>
+                            <li class="list-item">10 цибулин</li>
+                            <li class="list-item">1 кг помідорів</li>
+                            <li class="list-item">1 кг моркви</li>
+                            <li class="list-item">1,50 склянки олії</li>
+                            <li class="list-item">1,50 склянки оцту</li>
+                            <li class="list-item">2 ст. л. солі</li>
+                            <li class="list-item">1 ст. л. цукру</li>
+                        </ul>
+                        <p>Буряк зварити та натерти на тертці. У каструлю налити олію, поставити на плиту, додати нарізану цибулю. Натерти моркву та додати до цибулі. Натерти помідори (1 кг) та додати у каструлю. Можна використовувати томатну пасту у пропорції 50:50 (500 г помідорів та 500 г томатної пасти). Додати буряк, сіль, цукор, оцет та добре перемішати. Тушкувати 40 хв. Розкласти по банках та стерилізувати 25 хв. Закрутити кришки, банки перевернути догори дном, закутати та залишити до повного охолодження. Ваша заправка готова! Смачного борщу!</p>
+                        
+                        <h4 class="mb-3">Заправка для борщу з помідорів на зиму.</h4>
+                        <ul class="list">
+                            <li class="list-item">Інгредієнти</li>
+                            <li class="list-item">Помідори - 1 кг</li>
+                            <li class="list-item">Перець солодкий - 200 г</li>
+                            <li class="list-item">Сіль - 2 ст. ложки</li>
+                        </ul>
+                        <p>Простий варіант смачної заготовки, яка взимку стане в нагоді - заправка для борщу з помідорів на зиму. Заправка добре зберігається всю зиму. Підготуйте інгредієнти. Помідори вимити та висушити, нарізати часточками. Помідори подрібнити у блендері. Перелити у каструлю, додати нарізаний перець та сіль. Варити томат 15 хв. Тим часом простерилізувати дві півлітрові банки. Розлити томат по стерильним банкам, закатати та поставити догори дном, закутати та залишити на добу. Після цього перенести у сховище. Смачного!</p>
+                      
+                        <h4 class="mb-3">Заправка для борщу з буряком та помідорами.</h4>
+                        <ul class="list">
+                            <li class="list-item">Буряк - 2 шт.</li>
+                            <li class="list-item">Помідори - 2 шт.</li>
+                            <li class="list-item">Морква - 2 шт.</li>
+                            <li class="list-item">Цибуля - 2 шт.</li>
+                            <li class="list-item">Олія - 650 г</li>
+                            <li class="list-item">Цукор - 200 г</li>
+                            <li class="list-item">Сіль - 130 г</li>
+                            <li class="list-item">Оцет 9% - 100 мл</li>
+                            <li class="list-item">Перець духмяний - 15 шт.</li>
+                            <li class="list-item">Лавровий лист - 5 шт.</li>
+                            <li class="list-item">Вода - 150 г</li>
+                        </ul>
+                        <p>Буряк, моркву та цибулю подрібнити у кухонному комбайні. Усі овочі викласти у велику каструлю, залити олією та половиною оцту. Перемішати, щоб олія рівномірно покрила овочі. Додати воду, накрити кришкою та тушкувати овочі 15 хв. Помідори подрібнити у блендері. У каструлю з овочами вилити томатне пюре та решту оцту. Додати цукор, сіль, перець та лавровий лист. Накрити кришкою та тушкувати все разом 40 хв., періодично перемішуючи овочі. Заправку перекласти у стерилізовані банки, перевернути догори дном та охолодити. Після цього вона готова.</p>
+
+                        <h4 class="mb-3">Заправка для борщу з капустою.</h4>
+                        <ul class="list">
+                            <li class="list-item">Буряк - 3 кг</li>
+                            <li class="list-item">Цибуля - 1 кг</li>
+                            <li class="list-item">Морква - 1 кг</li>
+                            <li class="list-item">Капуста - 1 кг</li>
+                            <li class="list-item">Помідори - 1 кг</li>
+                            <li class="list-item">Цукор - 200 г</li>
+                            <li class="list-item">Сіль - 3 ст. л.</li>
+                            <li class="list-item">Олія - 250 г</li>
+                            <li class="list-item">Оцет 9% - 125 г</li>
+                        </ul>
+                        <p>Буряк та моркву подрібнити у кухонному комбайні, цибулю дрібно нарізати. Помідори перемолоти блендером. Капусту нарізати. Усі овочі перекласти у велику каструлю. Додати цукор, олію, сіль, оцет. Довести до кипіння на сильному вогні, потім зменшити вогонь до середнього та тушкувати 30 хв. Готову заправку розкласти по стерилізованих банках, закутати ковдрою та дати охолонути.</p>
+                        
+                        <h4 class="mb-3">Заправка для борщу з перцем.</h4>
+                        <ul class="list">
+                            <li class="list-item">Буряк - 3 кг</li>
+                            <li class="list-item">Морква - 1 кг</li>
+                            <li class="list-item">Цибуля - 1 кг</li>
+                            <li class="list-item">Помідори - 1 кг</li>
+                            <li class="list-item">Перець болгарський - 5 шт.</li>
+                            <li class="list-item">Олія - 220 г</li>
+                            <li class="list-item">Сіль - 3 ст.л.</li>
+                            <li class="list-item">Цукор - 200 г</li>
+                            <li class="list-item">Оцет 9% - 125 г</li>
+                        </ul>
+                        <p>Моркву та буряк натерти на тертці або подрібнити у кухонному комбайні. Перекласти у каструлю, посипати цукром та сіллю. Додати олію та поставити каструлю на середній вогонь. Тушкувати 15 хв. Нарізати цибулю півкільцями та додати до овочів, тушкувати ще 5 хв. Помідори нарізати півкільцями, перець - соломкою. Усі овочі тушкувати разом 25 хв. на невеликому вогні. Готову гарячу заправку розкласти по стерилізованих банках. Закрити кришками, закутати пледом та залишити до повного охолодження.</p>
+                        
+                        <div class="col-12">
+                            <h2>Буряк на зиму</h2>
+                        </div>
+                        
+                        <div class="col-lg-12 col-12">
+                            <img src="images/news/news-detail-header12.jpg" class="img-fluid news-detail-image" alt="Буряк">
+                        </div>
+
+                        <h4 class="mb-3">Маринований буряк на зиму.</h4>
+                        <h4 class="mb-3">Пропонуємо один із варіантів.</h4>
+                        <ul class="list">
+                            <li class="list-item">Вам знадобиться:</li>
+                            <li class="list-item">Буряк - 2,5 кг</li>
+                            <li class="list-item">Сіль - 1 ст. ложка</li>
+                            <li class="list-item">Цукор - 150 г</li>
+                            <li class="list-item">Олія - 150 г</li>
+                            <li class="list-item">Оцтова есенція - 1 ст. ложка</li>
+                            <li class="list-item">Вода - 200 мл</li>
+                        </ul>
+                        <p>Покроковий рецепт:
+                        Крок 1: Буряк натерти тонкою соломкою.
+                        Крок 2: Покласти натертий буряк у каструлю з товстим дном.
+                        Крок 3: Додати цукор, сіль, оцет, воду, олію та довести до кипіння.
+                        Крок 4: Добре перемішати та тушкувати буряк, періодично перемішуючи, на повільному вогні 1,5 години.
+                        Крок 5: Розкласти маринований буряк у стерилізовані банки та закрити стерилізованими кришками. Закутати банки у плед та залишити до повного охолодження. Зберігати банки з маринованим буряком потрібно у темному прохолодному місці.
+                        Крок 6: У вас вийде не лише готовий салат: з цієї заготовки ви можете зварити ароматний борщ, приготувати буряк, потушкувати буряк зі смаженою цибулею, приготувати бурякову ікру або оселедець під шубою. Смачного!</p>
+
+                        <h4 class="mb-3">Маринований буряк на зиму - чудова пікантна закуска.</h4>
+                        <p>Ми приготували для вас простий рецепт, який не відніме багато часу та не потребує тривалої стерилізації. Щоб овоч зберіг якомога більше корисних речовин, ми не варитимемо його, а запікатимемо у духовці. Для закуски вибирайте щільні коренеплоди середнього розміру: вони швидше та рівномірніше приготуються, мають особливу соковитість та яскравий червоний колір. Нарізати буряк можна різними способами: кубиками, соломкою, скибочками. Ми пропонуємо швидкий та простий варіант - натерти на тертці для корейської моркви. У такому вигляді його можна подавати як гарнір чи додавати до борщу.</p>
+                         
+                        <ul class="list">
+                            <li class="list-item">Інгредієнти:</li>
+                            <li class="list-item">Буряк - 2 кг</li>
+                            <li class="list-item">Оцет 9% - 50 мл</li>
+                            <li class="list-item">Для маринаду:</li>
+                            <li class="list-item">Вода - 250 мл</li>
+                            <li class="list-item">Цукор - 20 г</li>
+                            <li class="list-item">Перець духмяний - 4 горошини</li>
+                            <li class="list-item">Гвоздика - 2 шт.</li>
+                            <li class="list-item">Лавровий лист - 2 шт.</li>
+                            <li class="list-item">Сіль - 5 г</li>
+                        </ul>
+                        <p>ПОКРОКОВИЙ РЕЦЕПТ:
+                        Крок 1: Розігріти духовку до 200°C. Буряк ретельно вимити та висушити. Загорнути кожен у фольгу, покласти на деко та запікати 45-50 хв.
+                        Крок 2: Буряк акуратно вийняти з фольги, облити холодною водою та очистити. М'якоть нарізати соломкою або натерти.
+                        Крок 3: Підготувати банки. Простерилізувати будь-яким зручним способом. Розподілити буряк та додати по 1 ст. ложці оцту.
+                        Крок 4: Приготувати маринад. З'єднати воду з цукром, сіллю та спеціями у каструлі. Довести до кипіння. Варити близько 5 хв.
+                        Крок 5: Гарячим маринадом залити банки, закатати стерилізованими кришками. Перевернути догори дном, закутати пледом та залишити до повного охолодження.
+                        Крок 6: Готовий буряк краще зберігати у холодильнику. Подавати як закуску з маринованими огірками, помідорами, капустою або як гарнір до м'яса.
+
+                        Господині на замітку:
+                        Доливайте банки маринадом повністю, щоб буряк не втратив кольору. Зберігайте у темному місці (холодильнику чи прохолодному льоху).
+
+                        До речі:
+                        Буряк можна відварити: ретельно промити, покласти у каструлю, посолити, довести до кипіння та варити близько 50 хв. Охолодити.</p>
+                        
+                        <h4 class="mb-3">Абхазька аджика на зиму.</h4>
+                        <ul class="list">
+                            <li class="list-item">Інгредієнти</li>
+                            <li class="list-item">Перець чилі - 450-500 г</li>
+                            <li class="list-item">Часник - 300-400 г</li>
+                            <li class="list-item">Зелень (по 60-75 г):</li>
+                            <li class="list-item">Базилік (фіолетовий)</li>
+                            <li class="list-item">Кінза</li>
+                            <li class="list-item">Кріп</li>
+                            <li class="list-item">Петрушка</li>
+                            <li class="list-item">Сіль - 2-3 ст. ложки (без гірки, не йодована)</li>
+                        </ul>
+                        <p>Абхазька аджика хороша не лише гостротою, але й ароматом. Для любителів гострого - це справжнє свято! Підготуйте посуд: ємності для овочів, м'ясорубку/блендер, одноразові рукавички, ємність з кришкою (не алюмінієву), банки. Приготування: Промити зелень, обсушувати. Видалити жорсткі стебла. Перець чилі промити, акуратно видалити хвостики. Часник очистити. Прокрутити через м'ясорубку перець, часник та зелень. Додати сіль та прокрутити ще раз. Залишити масу для бродіння на 3 дні при кімнатній температурі, двічі на день перемішувати. Після ферментації розкласти аджику по маленьких банках та зберігати у холодильнику.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <section class="BgImage"></section>
+
+        <!-- Секция для добавления рецептов -->
+        <section id="add-recipe" class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-12">
+                        <div class="recipe-form">
+                            <h2 class="form-title">Додати свій рецепт</h2>
+                            <form id="recipeForm">
+                                <div class="mb-3">
+                                    <label for="recipeTitle" class="form-label">Назва рецепту*</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="recipeTitle" 
+                                        required 
+                                        placeholder="Введіть назву вашого рецепту"
+                                    >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeCategory" class="form-label">Категорія*</label>
+                                    <select class="form-select" id="recipeCategory" required>
+                                        <option value="">Виберіть категорію</option>
+                                        <option value="Сніданок">Сніданок</option>
+                                        <option value="Обід">Обід</option>
+                                        <option value="Вечеря">Вечеря</option>
+                                        <option value="Десерт">Десерт</option>
+                                        <option value="Пістне">Пістне</option>
+                                        <option value="Консервація">Консервація</option>
+                                        <option value="Випічка">Випічка</option>
+                                        <option value="Напої">Напої</option>
+                                        <option value="Салати">Салати</option>
+                                        <option value="Закуски">Закуски</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Зображення (опціонально)</label>
+                                    <div class="file-input-wrapper">
+                                        <div class="file-input-label">
+                                            <i class="bi bi-upload me-2"></i>Обрати файл
+                                            <input 
+                                                type="file" 
+                                                class="form-control" 
+                                                id="recipeImageFile" 
+                                                accept="image/*"
+                                            >
+                                        </div>
+                                        <span id="fileName" class="file-name">Файл не обрано</span>
+                                    </div>
+                                    <div class="form-text">Максимальний розмір: 1MB (JPG, PNG)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeIngredients" class="form-label">Інгредієнти*</label>
+                                    <textarea 
+                                        class="form-control" 
+                                        id="recipeIngredients" 
+                                        rows="4" 
+                                        required 
+                                        placeholder="Перелічіть інгредієнти, кожен з нового рядка"
+                                    ></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeInstructions" class="form-label">Інструкція приготування*</label>
+                                    <textarea 
+                                        class="form-control" 
+                                        id="recipeInstructions" 
+                                        rows="6" 
+                                        required 
+                                        placeholder="Опишіть кроки приготування"
+                                    ></textarea>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <span 
+                                            id="submitSpinner" 
+                                            class="spinner-border spinner-border-sm me-2" 
+                                            role="status" 
+                                            aria-hidden="true"
+                                        ></span>
+                                        Додати рецепт
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div id="recipePreview" class="recipe-preview mt-4">
+                                <h4>Попередній перегляд:</h4>
+                                <div class="card recipe-card">
+                                    <img 
+                                        id="previewImage" 
+                                        src="images/default-recipe.jpg" 
+                                        class="card-img-top" 
+                                        alt="Попередній перегляд"
+                                    >
+                                    <div class="card-body">
+                                        <h5 id="previewTitle" class="card-title">Назва рецепту</h5>
+                                        <p id="previewCategory" class="card-text text-muted">Категорія: не вибрано</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел для отображения пользовательских рецептов -->
+        <section id="user-recipes" class="section-padding bg-white">
+            <div class="container">
+                <div class="row">
+                    <h2 class="text-center mb-lg-5 mb-4">Рецепти від користувачів</h2>
+                    
+                    <div id="loadingRecipes">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Завантаження...</span>
+                        </div>
+                        <p class="mt-3">Завантажуємо рецепти...</p>
+                    </div>
+                    
+                    <div id="recipesContainer" class="row">
+                        <!-- Сюда будут добавляться рецепты через JS -->
+                    </div>
+                    
+                    <div id="noRecipesMessage" class="col-12 text-center d-none">
+                        <p>Поки немає доданих рецептів. Будьте першим!</p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button id="loadMoreBtn" class="btn btn-outline-success d-none">Показати ще</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="text-white mb-4 me-5">Хрустка кухня</h4>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+    
+    <script>
+        // Конфигурация Firebase (ЗАМЕНИТЕ НА ВАШУ КОНФИГУРАЦИЮ)
+        const firebaseConfig = {
+            apiKey: "ВАШ_API_KEY",
+            authDomain: "ВАШ_PROJECT.firebaseapp.com",
+            projectId: "ВАШ_PROJECT",
+            storageBucket: "ВАШ_PROJECT.appspot.com",
+            messagingSenderId: "ВАШ_SENDER_ID",
+            appId: "ВАШ_APP_ID"
+        };
+
+        // Инициализация Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        
+        // Глобальные переменные
+        let lastVisible = null;
+        let selectedFile = null;
+        const PAGE_SIZE = 6; // Количество рецептов за одну загрузку
+
+        $(document).ready(function() {
+            // Загрузка первых рецептов
+            loadRecipes();
+            
+            // Обработчики событий
+            $('#recipeForm').submit(handleFormSubmit);
+            $('#recipeImageFile').on('change', handleImageUpload);
+            $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
+            $('#loadMoreBtn').on('click', loadMoreRecipes);
+        });
+
+        // Обработка загрузки изображения
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) {
+                $('#fileName').text('Файл не обрано');
+                selectedFile = null;
+                return;
+            }
+
+            // Проверка типа файла
+            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                alert('Будь ласка, виберіть файл у форматі JPG або PNG.');
+                resetFileInput();
+                return;
+            }
+
+            // Проверка размера файла
+            if (file.size > 1048576) {
+                alert('Файл занадто великий. Максимальний розмір 1MB.');
+                resetFileInput();
+                return;
+            }
+
+            $('#fileName').text(file.name);
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                selectedFile = event.target.result;
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetFileInput() {
+            $('#recipeImageFile').val('');
+            $('#fileName').text('Файл не обрано');
+        }
+
+        function updatePreview() {
+            const title = $('#recipeTitle').val() || 'Назва рецепту';
+            const category = $('#recipeCategory').val() || 'не вибрано';
+            
+            if (selectedFile) {
+                $('#previewImage').attr('src', selectedFile);
+            }
+            
+            $('#previewTitle').text(title);
+            $('#previewCategory').text('Категорія: ' + category);
+            $('#recipePreview').show();
+        }
+
+        // Сжатие изображения для уменьшения размера
+        function compressImage(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Максимальные размеры
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 600;
+                        
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        // Изменяем размеры пропорционально
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        // Рисуем сжатое изображение
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Конвертируем в Blob с качеством 75%
+                        canvas.toBlob(blob => {
+                            resolve(blob);
+                        }, 'image/jpeg', 0.75);
+                    };
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Загрузка изображения в Firebase Storage
+        async function uploadImage(file) {
+            try {
+                // Сжимаем изображение
+                const compressedBlob = await compressImage(file);
+                
+                // Создаем уникальное имя файла
+                const fileName = `recipe-${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`;
+                const storageRef = storage.ref();
+                const fileRef = storageRef.child(`recipe-images/${fileName}`);
+                
+                // Загружаем файл
+                await fileRef.put(compressedBlob);
+                
+                // Получаем URL для скачивания
+                return await fileRef.getDownloadURL();
+            } catch (error) {
+                console.error("Помилка завантаження зображення:", error);
+                throw new Error("Не вдалося завантажити зображення");
+            }
+        }
+
+        // Обработка отправки формы
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Показываем спиннер
+            $('#submitSpinner').show();
+            $('#recipeForm button').prop('disabled', true);
+            
+            try {
+                const fileInput = document.getElementById('recipeImageFile');
+                const file = fileInput.files[0];
+                
+                let imageUrl = 'images/default-recipe.jpg';
+                
+                // Загружаем изображение, если оно есть
+                if (file) {
+                    imageUrl = await uploadImage(file);
+                }
+                
+                // Создаем объект рецепта
+                const recipe = {
+                    title: $('#recipeTitle').val(),
+                    category: $('#recipeCategory').val(),
+                    image: imageUrl,
+                    ingredients: $('#recipeIngredients').val(),
+                    instructions: $('#recipeInstructions').val(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                // Сохраняем в Firestore
+                await db.collection("recipes").add(recipe);
+                
+                // Сброс формы
+                $('#recipeForm')[0].reset();
+                $('#recipePreview').hide();
+                resetFileInput();
+                selectedFile = null;
+                
+                // Перезагружаем рецепты
+                await loadRecipes();
+                
+                alert('Рецепт успішно додано!');
+                
+                // Прокрутка к новому рецепту
+                $('html, body').animate({
+                    scrollTop: $('#user-recipes').offset().top - 100
+                }, 800);
+            } catch (error) {
+                console.error("Помилка збереження рецепту:", error);
+                alert('Сталася помилка: ' + error.message);
+            } finally {
+                // Скрываем спиннер и активируем кнопку
+                $('#submitSpinner').hide();
+                $('#recipeForm button').prop('disabled', false);
+            }
+        }
+
+        // Загрузка рецептов
+        async function loadRecipes() {
+            try {
+                // Показываем индикатор загрузки
+                $('#loadingRecipes').show();
+                $('#recipesContainer').empty();
+                $('#noRecipesMessage').addClass('d-none');
+                $('#loadMoreBtn').addClass('d-none');
+                
+                // Запрос к Firestore
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                // Скрываем индикатор загрузки
+                $('#loadingRecipes').hide();
+                
+                if (snapshot.empty) {
+                    $('#noRecipesMessage').removeClass('d-none');
+                    return;
+                }
+                
+                // Сохраняем последний документ для пагинации
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Отображаем рецепты
+                displayRecipes(snapshot);
+                
+                // Показываем кнопку "Загрузить еще", если есть еще рецепты
+                if (snapshot.size === PAGE_SIZE) {
+                    $('#loadMoreBtn').removeClass('d-none');
+                }
+            } catch (error) {
+                console.error("Помилка завантаження рецептів:", error);
+                $('#loadingRecipes').html('<p class="text-danger">Помилка завантаження рецептів. Спробуйте оновити сторінку.</p>');
+            }
+        }
+
+        // Загрузка дополнительных рецептов
+        async function loadMoreRecipes() {
+            try {
+                $('#loadMoreBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Завантаження...');
+                
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .startAfter(lastVisible)
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                if (snapshot.empty) {
+                    $('#loadMoreBtn').hide();
+                    return;
+                }
+                
+                // Обновляем последний документ
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Добавляем новые рецепты
+                displayRecipes(snapshot);
+                
+                // Скрываем кнопку, если больше нет рецептов
+                if (snapshot.size < PAGE_SIZE) {
+                    $('#loadMoreBtn').hide();
+                } else {
+                    $('#loadMoreBtn').prop('disabled', false).text('Показати ще');
+                }
+            } catch (error) {
+                console.error("Помилка завантаження рецептів:", error);
+                $('#loadMoreBtn').prop('disabled', false).text('Показати ще');
+                alert('Помилка завантаження додаткових рецептів');
+            }
+        }
+
+        // Отображение рецептов на странице
+        function displayRecipes(snapshot) {
+            const container = $('#recipesContainer');
+            
+            snapshot.forEach(doc => {
+                const recipe = doc.data();
+                const recipeId = doc.id;
+                
+                // Форматируем дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('uk-UA', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    }) : 'Дата не вказана';
+                
+                const recipeHtml = `
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="menu-thumb recipe-card">
+                        <div class="menu-image-wrap position-relative">
+                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
+                                <img 
+                                    src="${recipe.image}" 
+                                    class="img-fluid menu-image" 
+                                    alt="${recipe.title}" 
+                                    loading="lazy"
+                                >
+                                <span class="user-recipe-tag bg-success">Користувацький</span>
+                            </a>
+                        </div>
+                        <div class="menu-info d-flex flex-wrap align-items-center">
+                            <h4 class="mb-0">${recipe.title}</h4>
+                            <span class="text-muted small ms-2">${date}</span>
+                        </div>
+                    </div>
+                </div>`;
+                
+                container.append(recipeHtml);
+            });
+        }
+
+        // Показ деталей рецепта
+        window.showRecipeDetails = async function(recipeId) {
+            try {
+                const doc = await db.collection("recipes").doc(recipeId).get();
+                
+                if (!doc.exists) {
+                    alert('Рецепт не знайдено');
+                    return;
+                }
+                
+                const recipe = doc.data();
+                
+                // Форматируем дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('uk-UA', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) : 'Дата не вказана';
+                
+                // Создаем HTML для модального окна
+                const modalHtml = `
+                <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">${recipe.title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-5 mb-3 mb-md-0">
+                                        <img 
+                                            src="${recipe.image}" 
+                                            class="img-fluid rounded mb-3" 
+                                            alt="${recipe.title}"
+                                        >
+                                        <div class="recipe-meta">
+                                            <p><strong>Категорія:</strong> ${recipe.category || 'Не вказана'}</p>
+                                            <p><strong>Додано:</strong> ${date}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="mb-4">
+                                            <h5>Інгредієнти:</h5>
+                                            <div class="recipe-ingredients">${formatText(recipe.ingredients)}</div>
+                                        </div>
+                                        <div>
+                                            <h5>Інструкція:</h5>
+                                            <div class="recipe-instructions">${formatText(recipe.instructions)}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                
+                // Добавляем модальное окно в DOM
+                $('body').append(modalHtml);
+                
+                // Показываем модальное окно
+                const modal = new bootstrap.Modal(document.getElementById('recipeDetailModal'));
+                modal.show();
+                
+                // Удаляем модальное окно после закрытия
+                $('#recipeDetailModal').on('hidden.bs.modal', function() {
+                    $(this).remove();
+                });
+            } catch (error) {
+                console.error("Помилка завантаження рецепту:", error);
+                alert('Не вдалося завантажити рецепт');
+            }
+        }
+
+        // Форматирование текста (замена переносов строк)
+        function formatText(text) {
+            return text.replace(/\n/g, '<br>');
+        }
+    </script>
+</body>
+</html>

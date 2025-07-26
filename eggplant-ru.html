@@ -1,0 +1,963 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <title>Хрустящая кухня - Баклажаны на зиму</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
+    <style>
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-label {
+            display: block;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        .file-input-label:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .file-input-label input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .file-name {
+            display: block;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        
+        .recipe-preview {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .recipe-card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: transform 0.3s ease;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .user-recipe-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .menu-image-wrap {
+            position: relative;
+        }
+        
+        .recipe-form {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        
+        .form-title {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #198754;
+        }
+        
+        /* Добавленные стили для кликабельных слайдов */
+        .carousel-link {
+            display: block;
+            position: relative;
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .carousel-link:hover {
+            text-decoration: none;
+        }
+        
+        .carousel-link .carousel-caption {
+            z-index: 10;
+        }
+        
+        .carousel-link::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        
+        /* Добавим спиннер загрузки */
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            display: none;
+        }
+        
+        #loadingRecipes {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Улучшенный вид модального окна */
+        .recipe-modal .modal-content {
+            border-radius: 0.8rem;
+            overflow: hidden;
+        }
+        
+        .recipe-modal .modal-header {
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+            border-bottom: none;
+        }
+        
+        .recipe-modal .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .recipe-modal .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .recipe-ingredients {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        
+        .recipe-instructions {
+            white-space: pre-line;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-white shadow-lg">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <a class="navbar-brand" href="index-ru.html">
+                Хрустящая кухня
+            </a>
+
+            <div class="d-lg-none"></div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index-ru.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="top-ru.html">Первое</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="top2-ru.html">Второе</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="desert-ru.html">Десерт</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="eggplant-ua.html"><span class="category-tag me-3 bg-info">UA</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <header class="site-header site-news-detail-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Баклажаны на зиму</h2>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="news-detail section-padding pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12">
+                        <img src="images/news/news-detail-header.jpg" 
+                             class="img-fluid news-detail-image" 
+                             alt="Баклажаны">
+
+                        <div class="col-lg-10 col-10 mx-auto mt-5">
+                            <h4 class="mb-3">Баклажаны</h4>
+                            <p>
+                                В Украине баклажаны заготавливать любят и делают это с размахом. Их квасят, 
+                                фаршируют, маринуют, готовят из них икру и разнообразные пикантные и острые закуски.
+                                К сожалению, консервирование большинства из этих замечательно вкусных заготовок 
+                                занимает слишком много времени. Но это не должно останавливать тебя, ведь всегда 
+                                можно заготовить баклажанные полуфабрикаты (сушеные или замороженные печеные баклажаны), 
+                                а зимой приготовить из них все, что пожелаешь: хоть икру, хоть соте. Впрочем, есть 
+                                несколько рецептов очень вкусных баклажанных заготовок, которые ты сможешь законсервировать 
+                                достаточно быстро.
+                            </p>
+
+                            <h4 class="mb-3">Баклажаны острые, маринованные целиком</h4>
+                            <ul class="list">
+                                <li class="list-item">На литровую банку: 500 - 600 г молодых баклажанов</li>
+                                <li class="list-item">Одна столовая ложка соли</li>
+                                <li class="list-item">Одна столовая ложка сахара</li>
+                                <li class="list-item">Одна столовая ложка 9%-ного уксуса</li>
+                                <li class="list-item">Один лавровый лист</li>
+                                <li class="list-item">1/2 - 1 стручок острого перца</li>
+                            </ul>
+                            <p>
+                                Молодые баклажаны вымой и отрежь у них «носики» и хвостики. Для того чтобы определить количество 
+                                необходимой заливки, уложи баклажаны в банку и залей горячей кипяченой водой до самого верха. 
+                                Слей воду из банки в кастрюлю, добавь соль и сахар и приготовь заливку. Если собираешься законсервировать 
+                                несколько банок, увеличь количество воды в несколько раз плюс 2-1 стакан на выкипание. В другой кастрюле 
+                                вскипяти воду, добавь в нее соль (20-25 г соли на 1 л воды) и опусти туда баклажаны. Когда вода снова 
+                                начнет кипеть (на это уйдет примерно 5-7 мин), вынь баклажаны с помощью шумовки и сразу разложи в 
+                                стерилизованные банки, на дно которых уложены лавровый лист и острый перец. Затем залей баклажаны 
+                                кипящей заливкой, накрой банку крышкой и стерилизуй при 100°С в течение 5-7 мин. После этого влей в 
+                                банку уксус и закатай. Если у тебя есть возможность хранить заготовки в погребе или холодном подвале, 
+                                можешь не стерилизовать банку, а сразу влить уксус и закатать. После этого переверни банку кверху дном 
+                                и укутай одеялом для самостерилизации. Зимой подавай маринованные баклажаны, предварительно нарезав их 
+                                кубиками и заправив измельченным чесноком с майонезом или подсолнечным маслом.
+                            </p>
+
+                            <h4 class="mb-3">Баклажанная закуска "Пальчики"</h4>
+                            <ul class="list">
+                                <li class="list-item">На 10 полулитровых банок: 3 кг молодых баклажанов</li>
+                                <li class="list-item">1 кг сладкого перца</li>
+                                <li class="list-item">2 л томатного сока или помидорной массы</li>
+                                <li class="list-item">1 стакан сахара</li>
+                                <li class="list-item">1 стакан растительного масла</li>
+                                <li class="list-item">1 стакан 9%-ного уксуса, соль по вкусу</li>
+                            </ul>
+                            <p>
+                                Подготовленные баклажаны разрежь вдоль на 8 долек. Перец очисти и разрежь каждый на 4 части. 
+                                Спелые помидоры вымой, крупно нарежь и пропусти через мясорубку (на 2 л массы тебе потребуется 
+                                2,6-2,7 кг помидоров). Уложи овощи в кастрюлю, добавь томатный сок (помидорную массу), сахар, масло 
+                                и уксус, посоли по вкусу, перемешай и доведи до кипения. С момента закипания вари смесь 10-20 мин, 
+                                а затем быстро расфасуй закуску в банки, закатай их, переверни и укутай. И мой тебе совет! Когда я 
+                                консервирую эту закуску, то обычно подготавливаю 1,5 кг баклажанов и столько же цветной капусты. 
+                                Затем я делю все остальные ингредиенты пополам и раскладываю их в две кастрюли. В одну из них я 
+                                кладу подготовленные дольки баклажанов, а в другую бланшированные в подсоленной воде маленькие 
+                                соцветия цветной капусты. Дальше делаю все так, как описано в рецепте. В итоге я получаю вместо 
+                                одной закуски сразу две. Попробуй - надеюсь, моя цветная капуста в томатной заливке придется тебе 
+                                по вкусу.
+                            </p>
+
+                            <h4 class="mb-3">Баклажаны в кислом пряном маринаде</h4>
+                            <ul class="list">
+                                <li class="list-item">На 4 литровые банки: 2 кг молодых баклажанов</li>
+                                <li class="list-item">8 ст. ложек 9%-ного уксуса</li>
+                                <li class="list-item">4 лавровых листа, по 12 горошин черного и душистого перца, 4 гвоздички, палочка корицы</li>
+                                <li class="list-item">Для заливки: 2 л воды, 2 ст. ложки соли, 2 ст. ложки сахара</li>
+                            </ul>
+                            <p>
+                                Подготовленные баклажаны, не очищая, нарежь крупными кусками. Опусти баклажаны в кипящую подсоленную 
+                                воду 3-5 мин (не больше!), а затем отбрось их на дуршлаг. Приготовь заливку, растворив в кипящей воде 
+                                соль и сахар. На дно стерилизованных банок уложи пряности, влей по 2 ст. ложки уксуса. Затем уложи в 
+                                банки еще горячие баклажаны, залей их кипящей заливкой, наполняя банки до самого верха. После этого 
+                                закатай банки, переверни кверху дном и укутай для самостерилизации. Зимой подавай баклажаны так же, 
+                                как описано в предыдущем рецепте.
+                            </p>
+
+                            <h4 class="mb-3">Баклажаны острые, маринованные под грибы</h4>
+                            <ul class="list">
+                                <li class="list-item">На трехлитровую банку: 1,5 кг баклажанов</li>
+                                <li class="list-item">1 крупная головка чеснока, 300 г зелени укропа</li>
+                                <li class="list-item">1 стакан растительного масла</li>
+                                <li class="list-item">Для заливки: 2 л воды, 2 ст. ложки соли, 2 ст. ложки 70%-ной уксусной кислоты</li>
+                            </ul>
+                            <p>
+                                Баклажаны, маринованные по этому рецепту, по вкусу напоминают маринованные грибы. Тебе подойдут как 
+                                мелкие, так и крупные плоды. Баклажаны вымой и удали плодоножки. Крупные плоды очисти, а мелкие оставь 
+                                как есть. Подготовленные баклажаны нарежь кубиками или брусочками. Приготовь заливку: раствори в кипящей 
+                                воде соль, а затем добавь уксус. В кипящую заливку опусти баклажаны и вари их 5 мин (кубики) или 8 мин 
+                                (брусочки), считая с момента закипания. После этого отбрось баклажаны на дуршлаг и оставь там, чтобы с 
+                                них стекла жидкость. Через 2-3 часа измельчи чеснок, мелко нарежь зелень укропа и перемешай их в большой 
+                                миске с баклажанами и маслом. Уложи баклажаны в банку, закрой полиэтиленовой крышкой и поставь в холодильник.
+                                Кстати, по этому рецепту ты можешь заготовить маринованные кабачки, цукини или патиссоны. И мой тебе совет! 
+                                Для более изысканного и мягкого по вкусу маринада как вариант можешь использовать смесь из воды и белого 
+                                винного уксуса, лучше в соотношении 1:2. Но обязательно попробуй маринад и, если в нем много кислоты, 
+                                добавь воды. В такой же пропорции можно соединить воду с вином, лучше с белым сухим. И еще попробуй 
+                                законсервировать эти баклажаны для более длительного хранения. Сделай это так: слей маринад из банки в 
+                                кастрюлю, вскипяти его и залей баклажаны, наполнив банку до самого верха. Закатай банку, переверни кверху 
+                                дном и укутай для самостерилизации. Теперь можешь хранить ее в кладовке 2-3 месяца.
+                            </p>
+
+                            <h4 class="mb-3">Баклажанная икра с овощами</h4>
+                            <ul class="list">
+                                <li class="list-item">На 1 кг баклажанов</li>
+                                <li class="list-item">300-400 г помидоров</li>
+                                <li class="list-item">200 г моркови</li>
+                                <li class="list-item">100 мл рафинированного растительного масла</li>
+                                <li class="list-item">пучок петрушки, соль, сахар и молотый черный перец по вкусу лука</li>
+                            </ul>
+                            <p>
+                                Баклажанная икра отличается тем, что на ее заготовку, в особенности на стерилизацию, уходит слишком много 
+                                времени. Этот рецепт икры из баклажанов позволит тебе сэкономить немного времени при условии, что ты будешь 
+                                выполнять одновременно несколько операций. Итак, приготовь большой глубокий сотейник или другую глубокую 
+                                посуду и 2 глубокие сковороды (сотейника) поменьше. Баклажаны вымой, очисти, нарежь соломкой, уложи в миску, 
+                                посоли и дай полежать 30 мин. Тем временем очисти лук и нарежь его полукольцами, затем очисти морковь и натри 
+                                ее на крупной терке, а зелень петрушки мелко наруби. Спассеруй лук и морковь на масле в одной из сковород, 
+                                затем добавь зелень и приправь все солью, сахаром и перцем по вкусу. Помидоры вымой и очисти от кожицы любым 
+                                удобным для тебя способом, затем нарежь их мелко и поставь припускаться в масле во второй сковороде (под крышкой). 
+                                Пока помидоры готовятся, налей масло в глубокую посуду, поставь ее на огонь и займись баклажанами. Отожми их 
+                                руками и опусти в нагретое масло. Припускай баклажаны в масле до мягкости. Когда это произойдет, добавь к 
+                                баклажанам все содержимое сковороды, посоли, поперчи, если надо, добавь сахар, перемешай и вари 5 мин. 
+                                Горячую массу разложи в банки. Стерилизуй при 100°С банки емкостью 0,5 л 10 мин, 1 л 20 мин. После этого 
+                                закатай банки, переверни кверху дном, укутай и оставь до полного остывания.
+                            </p>
+
+                            <h4 class="mb-3">Закуска из баклажанов на зиму</h4>
+                            <ul class="list">
+                                <li class="list-item">1 кг баклажанов</li>
+                                <li class="list-item">Лук репчатый - 500 г</li>
+                                <li class="list-item">Помидоры красные сочные - 600 г</li>
+                                <li class="list-item">100 мл рафинированного растительного масла</li>
+                                <li class="list-item">Соль - 1 ст. л. Перец черный молотый - 1 ч. л.</li>
+                            </ul>
+                            <p>
+                                Вкусная и полезная холодная закуска из баклажанов и помидоров, которую можно заготовить на зиму, потратив 
+                                минимум времени и сил. Баклажаны хорошо вымыть, отрезать кончики и нарезать мелкими кубиками. На сковороду 
+                                вылить примерно половину растительного масла, хорошо разогреть его. Выложить на сковороду баклажаны. Обжарить 
+                                до получения золотистого цвета. Лук почистить, мелко нарезать ножом. Обжарить на растительном масле до 
+                                нежно-золотистого цвета. Помидоры также мелко порезать и обжарить на растительном масле. Все обжаренные 
+                                овощи сложить в одну емкость. Посолить, поперчить и перемешать. Довести до кипения. Удобно варку обжаренных 
+                                овощей производить в мультиварке: установить режим «варка» и время 15 минут. Разложить горячую овощную смесь 
+                                по стерилизованным банкам. Накрыть крышками и поставить в духовку на 40 минут. После этого банки закатать. 
+                                Закуска из баклажанов на зиму готова. Хранить холодную закуску из баклажанов в прохладном месте всю зиму. 
+                                Удачных заготовок!
+                            </p>
+
+                            <h4 class="mb-3">Баклажаны квашеные</h4>
+                            <ul class="list">
+                                <li class="list-item">Для рассола:</li>
+                                <li class="list-item">на 1 л воды</li>
+                                <li class="list-item">2 ст. ложки соли</li>
+                            </ul>
+                            <p>
+                                Свежие небольшие баклажаны с упругой мякотью вымой, удали плодоножки, ополосни холодной водой и дай ей стечь. 
+                                В подготовленную посуду послойно уложи баклажаны и мытую зелень, рассчитав так, чтобы последний слой был из 
+                                зелени. Наполненную тару залей рассолом на 3-4 см выше уровня зелени, накрой сложенной в 3-4 слоя марлей, 
+                                сверху положи кружок с гнетом. Первые 2-3 дня держи посуду с баклажанами в теплом помещении, затем вынеси в 
+                                подвал или другое холодное место. Используй квашеные баклажаны для приготовления рагу, салатов и вторых блюд. 
+                                Между прочим, регулярно употребляя в пищу не подвергнутые термической обработке квашеные баклажаны, можно 
+                                улучшить состояние десен при пародонтозе.
+                            </p>
+
+                            <h4 class="mb-3">Десятка</h4>
+                            <ul class="list">
+                                <li class="list-item">На 6—7 полулитровых банок</li>
+                                <li class="list-item">10 баклажанов среднего размера</li>
+                                <li class="list-item">10 стручков сладкого перца, 10 луковиц</li>
+                                <li class="list-item">2 л помидорной массы</li>
+                                <li class="list-item">1 стакан сахара, 2 ст. ложки 9%-ного уксуса, 1 стакан рафинированного растительного масла, соль по вкусу</li>
+                            </ul>
+                            <p>
+                                Подготовленные баклажаны нарежь кубиками, перец - квадратиками или соломкой, лук - полукольцами. Помидоры 
+                                нарежь и пропусти через мясорубку (для получения 2 л массы тебе потребуется примерно 2,7 кг помидоров), 
+                                перелей в кастрюлю, добавь сахар и масло и доведи до кипения. Затем опусти в кастрюлю лук и вари 10 мин, 
+                                после этого добавь баклажаны, а через 10 мин перец. Поварив еще 10 мин, посоли смесь по вкусу, влей уксус и 
+                                сними с огня. Разложи смесь в банки, закатай, переверни и укутай.
+                            </p>
+
+                            <h4 class="mb-3">Острая десятка</h4>
+                            <ul class="list">
+                                <li class="list-item">На 6 полулитровых банок</li>
+                                <li class="list-item">10 баклажанов среднего размера, 10 стручков сладкого перца, 10 спелых помидоров, 10 зубчиков чеснока</li>
+                                <li class="list-item">2 стручка острого перца</li>
+                                <li class="list-item">3 ст. ложки соли, 4 ст. ложки сахара</li>
+                                <li class="list-item">80 мл 9%-ного уксуса, 200 мл растительного масла</li>
+                            </ul>
+                            <p>
+                                Этот рецепт только с первого взгляда кажется похожим на десятку, на самом же деле это совершенно другая, 
+                                не менее вкусная закуска. Помидоры, сладкий и острый перцы и чеснок пропусти через мясорубку. Полученную 
+                                массу слей в кастрюлю, поставь на огонь, доведи до кипения и кипяти 5 мин, а в конце добавь соль, сахар, 
+                                масло и уксус. Когда смесь снова закипит, опусти в нее нарезанные кружочками баклажаны, доведи до кипения 
+                                и кипяти 15 мин. После этого разложи баклажаны в стерилизованные банки. Оставшуюся заливку снова вскипяти 
+                                и кипящей разлей в банки. Банки сразу же закатай, переверни и укутай.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="BgImage"></section>
+        
+        <!-- Секция для добавления рецептов -->
+        <section id="add-recipe" class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-12">
+                        <div class="recipe-form">
+                            <h2 class="form-title">Добавить свой рецепт</h2>
+                            <form id="recipeForm">
+                                <div class="mb-3">
+                                    <label for="recipeTitle" class="form-label">Название рецепта*</label>
+                                    <input type="text" class="form-control" id="recipeTitle" required 
+                                        placeholder="Введите название вашего рецепта">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeCategory" class="form-label">Категория*</label>
+                                    <select class="form-select" id="recipeCategory" required>
+                                        <option value="">Выберите категорию</option>
+                                        <option value="Завтрак">Завтрак</option>
+                                        <option value="Обед">Обед</option>
+                                        <option value="Ужин">Ужин</option>
+                                        <option value="Десерт">Десерт</option>
+                                        <option value="Постное">Постное</option>
+                                        <option value="Консервация">Консервация</option>
+                                        <option value="Выпечка">Выпечка</option>
+                                        <option value="Напитки">Напитки</option>
+                                        <option value="Салаты">Салаты</option>
+                                        <option value="Закуски">Закуски</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Изображение (опционально)</label>
+                                    <div class="file-input-wrapper">
+                                        <div class="file-input-label">
+                                            <i class="bi bi-upload me-2"></i>Выбрать файл
+                                            <input type="file" class="form-control" id="recipeImageFile" accept="image/*">
+                                        </div>
+                                        <span id="fileName" class="file-name">Файл не выбран</span>
+                                    </div>
+                                    <div class="form-text">Максимальный размер: 1MB (JPG, PNG)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeIngredients" class="form-label">Ингредиенты*</label>
+                                    <textarea class="form-control" id="recipeIngredients" rows="4" required 
+                                        placeholder="Перечислите ингредиенты, каждый с новой строки"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeInstructions" class="form-label">Инструкция приготовления*</label>
+                                    <textarea class="form-control" id="recipeInstructions" rows="6" required 
+                                        placeholder="Опишите шаги приготовления"></textarea>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <span id="submitSpinner" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                        Добавить рецепт
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div id="recipePreview" class="recipe-preview mt-4">
+                                <h4>Предварительный просмотр:</h4>
+                                <div class="card recipe-card">
+                                    <img id="previewImage" src="images/default-recipe.jpg" class="card-img-top" 
+                                        alt="Предварительный просмотр">
+                                    <div class="card-body">
+                                        <h5 id="previewTitle" class="card-title">Название рецепта</h5>
+                                        <p id="previewCategory" class="card-text text-muted">Категория: не выбрано</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел для отображения пользовательских рецептов -->
+        <section id="user-recipes" class="section-padding bg-white">
+            <div class="container">
+                <div class="row">
+                    <h2 class="text-center mb-lg-5 mb-4">Рецепты от пользователей</h2>
+                    
+                    <div id="loadingRecipes">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Загрузка...</span>
+                        </div>
+                        <p class="mt-3">Загружаем рецепты...</p>
+                    </div>
+                    
+                    <div id="recipesContainer" class="row">
+                        <!-- Сюда будут добавляться рецепты через JS -->
+                    </div>
+                    
+                    <div id="noRecipesMessage" class="col-12 text-center d-none">
+                        <p>Пока нет добавленных рецептов. Будьте первым!</p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button id="loadMoreBtn" class="btn btn-outline-success d-none">Показать еще</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="text-white mb-4 me-5">Хрустящая кухня</h4>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+    
+    <script>
+        // Конфигурация Firebase (ЗАМЕНИТЕ НА ВАШУ КОНФИГУРАЦИЮ)
+        const firebaseConfig = {
+            apiKey: "ВАШ_API_KEY",
+            authDomain: "ВАШ_PROJECT.firebaseapp.com",
+            projectId: "ВАШ_PROJECT",
+            storageBucket: "ВАШ_PROJECT.appspot.com",
+            messagingSenderId: "ВАШ_SENDER_ID",
+            appId: "ВАШ_APP_ID"
+        };
+
+        // Инициализация Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        
+        // Глобальные переменные
+        let lastVisible = null;
+        let selectedFile = null;
+        const PAGE_SIZE = 6; // Количество рецептов за одну загрузку
+
+        $(document).ready(function() {
+            // Загрузка первых рецептов
+            loadRecipes();
+            
+            // Обработчики событий
+            $('#recipeForm').submit(handleFormSubmit);
+            $('#recipeImageFile').on('change', handleImageUpload);
+            $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
+            $('#loadMoreBtn').on('click', loadMoreRecipes);
+        });
+
+        // Обработка загрузки изображения
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) {
+                $('#fileName').text('Файл не выбран');
+                selectedFile = null;
+                return;
+            }
+
+            // Проверка типа файла
+            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                alert('Пожалуйста, выберите файл в формате JPG или PNG.');
+                resetFileInput();
+                return;
+            }
+
+            // Проверка размера файла
+            if (file.size > 1048576) {
+                alert('Файл слишком большой. Максимальный размер 1MB.');
+                resetFileInput();
+                return;
+            }
+
+            $('#fileName').text(file.name);
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                selectedFile = event.target.result;
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetFileInput() {
+            $('#recipeImageFile').val('');
+            $('#fileName').text('Файл не выбран');
+        }
+
+        function updatePreview() {
+            const title = $('#recipeTitle').val() || 'Название рецепта';
+            const category = $('#recipeCategory').val() || 'не выбрано';
+            
+            if (selectedFile) {
+                $('#previewImage').attr('src', selectedFile);
+            }
+            
+            $('#previewTitle').text(title);
+            $('#previewCategory').text('Категория: ' + category);
+            $('#recipePreview').show();
+        }
+
+        // Сжатие изображения для уменьшения размера
+        function compressImage(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Максимальные размеры
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 600;
+                        
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        // Изменяем размеры пропорционально
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        // Рисуем сжатое изображение
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Конвертируем в Blob с качеством 75%
+                        canvas.toBlob(blob => {
+                            resolve(blob);
+                        }, 'image/jpeg', 0.75);
+                    };
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Загрузка изображения в Firebase Storage
+        async function uploadImage(file) {
+            try {
+                // Сжимаем изображение
+                const compressedBlob = await compressImage(file);
+                
+                // Создаем уникальное имя файла
+                const fileName = `recipe-${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`;
+                const storageRef = storage.ref();
+                const fileRef = storageRef.child(`recipe-images/${fileName}`);
+                
+                // Загружаем файл
+                await fileRef.put(compressedBlob);
+                
+                // Получаем URL для скачивания
+                return await fileRef.getDownloadURL();
+            } catch (error) {
+                console.error("Ошибка загрузки изображения:", error);
+                throw new Error("Не удалось загрузить изображение");
+            }
+        }
+
+        // Обработка отправки формы
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Показываем спиннер
+            $('#submitSpinner').show();
+            $('#recipeForm button').prop('disabled', true);
+            
+            try {
+                const fileInput = document.getElementById('recipeImageFile');
+                const file = fileInput.files[0];
+                
+                let imageUrl = 'images/default-recipe.jpg';
+                
+                // Загружаем изображение, если оно есть
+                if (file) {
+                    imageUrl = await uploadImage(file);
+                }
+                
+                // Создаем объект рецепта
+                const recipe = {
+                    title: $('#recipeTitle').val(),
+                    category: $('#recipeCategory').val(),
+                    image: imageUrl,
+                    ingredients: $('#recipeIngredients').val(),
+                    instructions: $('#recipeInstructions').val(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                // Сохраняем в Firestore
+                await db.collection("recipes").add(recipe);
+                
+                // Сброс формы
+                $('#recipeForm')[0].reset();
+                $('#recipePreview').hide();
+                resetFileInput();
+                selectedFile = null;
+                
+                // Перезагружаем рецепты
+                await loadRecipes();
+                
+                alert('Рецепт успешно добавлен!');
+                
+                // Прокрутка к новому рецепту
+                $('html, body').animate({
+                    scrollTop: $('#user-recipes').offset().top - 100
+                }, 800);
+            } catch (error) {
+                console.error("Ошибка сохранения рецепта:", error);
+                alert('Произошла ошибка: ' + error.message);
+            } finally {
+                // Скрываем спиннер и активируем кнопку
+                $('#submitSpinner').hide();
+                $('#recipeForm button').prop('disabled', false);
+            }
+        }
+
+        // Загрузка рецептов
+        async function loadRecipes() {
+            try {
+                // Показываем индикатор загрузки
+                $('#loadingRecipes').show();
+                $('#recipesContainer').empty();
+                $('#noRecipesMessage').addClass('d-none');
+                $('#loadMoreBtn').addClass('d-none');
+                
+                // Запрос к Firestore
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                // Скрываем индикатор загрузки
+                $('#loadingRecipes').hide();
+                
+                if (snapshot.empty) {
+                    $('#noRecipesMessage').removeClass('d-none');
+                    return;
+                }
+                
+                // Сохраняем последний документ для пагинации
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Отображаем рецепты
+                displayRecipes(snapshot);
+                
+                // Показываем кнопку "Загрузить еще", если есть еще рецепты
+                if (snapshot.size === PAGE_SIZE) {
+                    $('#loadMoreBtn').removeClass('d-none');
+                }
+            } catch (error) {
+                console.error("Ошибка загрузки рецептов:", error);
+                $('#loadingRecipes').html('<p class="text-danger">Ошибка загрузки рецептов. Попробуйте обновить страницу.</p>');
+            }
+        }
+
+        // Загрузка дополнительных рецептов
+        async function loadMoreRecipes() {
+            try {
+                $('#loadMoreBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Загрузка...');
+                
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .startAfter(lastVisible)
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                if (snapshot.empty) {
+                    $('#loadMoreBtn').hide();
+                    return;
+                }
+                
+                // Обновляем последний документ
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Добавляем новые рецепты
+                displayRecipes(snapshot);
+                
+                // Скрываем кнопку, если больше нет рецептов
+                if (snapshot.size < PAGE_SIZE) {
+                    $('#loadMoreBtn').hide();
+                } else {
+                    $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
+                }
+            } catch (error) {
+                console.error("Ошибка загрузки рецептов:", error);
+                $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
+                alert('Ошибка загрузки дополнительных рецептов');
+            }
+        }
+
+        // Отображение рецептов на странице
+        function displayRecipes(snapshot) {
+            const container = $('#recipesContainer');
+            
+            snapshot.forEach(doc => {
+                const recipe = doc.data();
+                const recipeId = doc.id;
+                
+                // Форматируем дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    }) : 'Дата не указана';
+                
+                const recipeHtml = `
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="menu-thumb recipe-card">
+                        <div class="menu-image-wrap position-relative">
+                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
+                                <img src="${recipe.image}" class="img-fluid menu-image" alt="${recipe.title}" loading="lazy">
+                                <span class="user-recipe-tag bg-success">Пользовательский</span>
+                            </a>
+                        </div>
+                        <div class="menu-info d-flex flex-wrap align-items-center">
+                            <h4 class="mb-0">${recipe.title}</h4>
+                            <span class="text-muted small ms-2">${date}</span>
+                        </div>
+                    </div>
+                </div>`;
+                
+                container.append(recipeHtml);
+            });
+        }
+
+        // Показ деталей рецепта
+        window.showRecipeDetails = async function(recipeId) {
+            try {
+                const doc = await db.collection("recipes").doc(recipeId).get();
+                
+                if (!doc.exists) {
+                    alert('Рецепт не найден');
+                    return;
+                }
+                
+                const recipe = doc.data();
+                
+                // Форматируем дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) : 'Дата не указана';
+                
+                // Создаем HTML для модального окна
+                const modalHtml = `
+                <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">${recipe.title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-5 mb-3 mb-md-0">
+                                        <img src="${recipe.image}" class="img-fluid rounded mb-3" alt="${recipe.title}">
+                                        <div class="recipe-meta">
+                                            <p><strong>Категория:</strong> ${recipe.category || 'Не указана'}</p>
+                                            <p><strong>Добавлено:</strong> ${date}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="mb-4">
+                                            <h5>Ингредиенты:</h5>
+                                            <div class="recipe-ingredients">${formatText(recipe.ingredients)}</div>
+                                        </div>
+                                        <div>
+                                            <h5>Инструкция:</h5>
+                                            <div class="recipe-instructions">${formatText(recipe.instructions)}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                
+                // Добавляем модальное окно в DOM
+                $('body').append(modalHtml);
+                
+                // Показываем модальное окно
+                const modal = new bootstrap.Modal(document.getElementById('recipeDetailModal'));
+                modal.show();
+                
+                // Удаляем модальное окно после закрытия
+                $('#recipeDetailModal').on('hidden.bs.modal', function() {
+                    $(this).remove();
+                });
+            } catch (error) {
+                console.error("Ошибка загрузки рецепта:", error);
+                alert('Не удалось загрузить рецепт');
+            }
+        }
+
+        // Форматирование текста (замена переносов строк)
+        function formatText(text) {
+            return text.replace(/\n/g, '<br>');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Хрустка кухня - Кабачки і патиссони на зиму</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
+    
+    <style>
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-label {
+            display: block;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        .file-input-label:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .file-input-label input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .file-name {
+            display: block;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        
+        .recipe-preview {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .recipe-card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: transform 0.3s ease;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .user-recipe-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .menu-image-wrap {
+            position: relative;
+        }
+        
+        .recipe-form {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        
+        .form-title {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #198754;
+        }
+        
+        .carousel-link {
+            display: block;
+            position: relative;
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .carousel-link:hover {
+            text-decoration: none;
+        }
+        
+        .carousel-link .carousel-caption {
+            z-index: 10;
+        }
+        
+        .carousel-link::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            display: none;
+        }
+        
+        #loadingRecipes {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .recipe-modal .modal-content {
+            border-radius: 0.8rem;
+            overflow: hidden;
+        }
+        
+        .recipe-modal .modal-header {
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+            border-bottom: none;
+        }
+        
+        .recipe-modal .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .recipe-modal .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .recipe-ingredients {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        
+        .recipe-instructions {
+            white-space: pre-line;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-white shadow-lg">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <a class="navbar-brand" href="index-ua.html">
+                Хрустка кухня
+            </a>
+
+            <div class="d-lg-none"></div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Головна</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="top-ua.html">Перше</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="top2-ua.html">Друге</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="desert-ua.html">Десерт</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="zucchini-ru.html"><span class="category-tag me-3 bg-info">RU</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <header class="site-header site-news-detail-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Кабачки, цукіні, патиссони на зиму</h2>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="news-detail section-padding pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12">
+                        <img src="images/news/news-detail-header5.jpg" class="img-fluid news-detail-image" alt="Кабачки, цукіні, патиссони">
+
+                        <div class="col-lg-10 col-10 mx-auto mt-5">
+                            <h4 class="mb-3">КАБАЧКИ, ЦУКІНІ, ПАТИССОНИ</h4>
+                            <p>
+                                Літній стіл немислимий без кабачків та патисонів.
+                                Щоправда, останнім часом їх дуже потіснили. Корисні та ніжні цукіні. Втім, всі вони хороші, причому як у смаженому, тушкованому та інших, так і у консервованому вигляді. їх солять, квасять, маринують, включають до складу овочевих закусочних консервів, консервують у вигляді компоту. Для консервування вибирай молоді недозрілі кабачки, цукіні і патисони, у яких ще не загрубіла шкірка і не визріло насіння.
+                            </p>
+
+                            <h4 class="mb-3">Кабачки мариновані.</h4>
+                            <ul class="list">
+                                <li class="list-item">На трилітрову банку.</li>
+                                <li class="list-item">2 кг молодих кабачків.</li>
+                                <li class="list-item">90-100 г солі.</li>
+                                <li class="list-item">3-5 зубчиків часнику.</li>
+                                <li class="list-item">1 ч. ложка 70% оцтової кислоти.</li>
+                                <li class="list-item">1-2 стебла кропу з парасольками, лист і корінь хрону, по 5 листків чорної смородини та вишні, гілочка естрадону, гілочка м'яти.</li>
+                            </ul>
+                            <p>
+                                Кабачки вимий, відріж «хвостики», великі плоди розріж упоперек на частини. На дно стерилізованої банки поклади приправи. Наповни банку кабачками, залий доверху окропом, накрий кришкою і дай постояти 10 хвилин. Потім злий воду в каструлю, додай ще трохи води, всип сіль і приготуй заливку. Поки що вариться заливка, ще раз залий кабачки окропом. через 10 хв злий воду з банки, наповни її киплячою заливкою до самого верху, влий оцтову кислоту і закатай банку.
+                                Після цього переверни банку догори дном, укутай і залиш до повного остигання.
+                                До речі, за цим же рецептом ти можеш законсервувати мариновані патисони. Для цієї заготівлі вибирай найдрібніші патисончики приблизно одного розміру. Вони будуть дуже ефектно виглядати у вигляді гарніру в м'ясі або рибі.
+                            </p>
+
+                            <h4 class="mb-3">Кабачки, мариновані з яблуками та морквою.</h4>
+                            <ul class="list">
+                                <li class="list-item">500 г яблук.</li>
+                                <li class="list-item">300 г моркви.</li>
+                                <li class="list-item">1 кг кабачків.</li>
+                                <li class="list-item">50 г зелені кропу.</li>
+                                <li class="list-item">Для заливання: на 1 л води.</li>
+                                <li class="list-item">Для заливання: на 1 л води – 1 ст. ложка солі, 2 ст. ложки цукру, 150 мл 9% оцту.</li>
+                            </ul>
+                            <p>
+                                Кабачки, яблука та морква вимий, очисти та наріж: кабачки та яблука – кубиками, морква – брусочками. Кріп промий і поклади на дно банок, потім щільно поклади суміш із кабачків, яблук і моркви. Приготуй заливку та розлий її в банки. Пастеризуй при 90 ° С: банки ємністю 0,5 л – 15 хв, 1 л – 20 хв, а після цього закатай.
+                            </p>
+
+                            <h4 class="mb-3">Гострий салат з кабачків.</h4>
+                            <ul class="list">
+                                <li class="list-item">На 6-7 півлітрових банок.</li>
+                                <li class="list-item">3 кг молодих кабачків (цукіні).</li>
+                                <li class="list-item">1-1/2 ст. ложки солі, 1-1/2 ст. ложки цукру.</li>
+                                <li class="list-item">150 г подрібненого часнику, 1 склянка яблучного оцту, 1 склянка рафінованої олії.</li>
+                            </ul>
+                            <p>
+                                Кабачки вимий і наріж півколами. Уклади кабачки в каструлю, додай подрібнений часник, сіль, цукор, оцет і масло, перемішай, накрий кришкою і постав у прохолодне місце на ніч. Вранці постав каструлю на вогонь, доведи суміш до кипіння і вари, помішуючи, 25 хв. Потім розклади кабачки в стерилізовані банки, закатай, переверни і закутай для самостерилізації.
+                            </p>
+
+                            <h4 class="mb-3">Закуска з кабачків з часником та помідорами.</h4>
+                            <ul class="list">
+                                <li class="list-item">На 12-13 півлітрових банок.</li>
+                                <li class="list-item">6 кг кабачків.</li>
+                                <li class="list-item">1,5 кг помідорів.</li>
+                                <li class="list-item">2 головки часнику.</li>
+                                <li class="list-item">2 ст. ложки з гіркою солі, 1 неповна склянка цукру.</li>
+                                <li class="list-item">2 склянки 9%-ного оцту, 500 мл рафінованої олії, 10 лаврових листків.</li>
+                            </ul>
+                            <p>
+                                Очищені від шкірки кабачки та помідори наріж кубиками. Часник дрібно порубай. У каструлю налий олію і доведи його до кипіння. Після цього опусти в киплячу олію кабачки, помідори та часник, додай сіль та цукор, перемішай і вари 10 хв. Потім поклади лавровий лист і влий оцет, перемішай суміш і знову доведи її до кипіння. Після цього відразу ж разложи суміш у банки, закатай, переверни і укутай.
+                            </p>
+
+                            <h4 class="mb-3">Лечо з кабачками.</h4>
+                            <ul class="list">
+                                <li class="list-item">На 3 літрові банки.</li>
+                                <li class="list-item">1,5 кг очищених від внутренностей кабачків.</li>
+                                <li class="list-item">6 стручків солодкого перця.</li>
+                                <li class="list-item">1 кг червоних помідорів.</li>
+                                <li class="list-item">6 цибулин.</li>
+                                <li class="list-item">2 ст. ложки солі, 2/3 склянки цукру, 1/2 склянки 9%-ного оцту, 2/3 склянки рафінованої рослинної олії.</li>
+                            </ul>
+                            <p>
+                                Очищені від нутрощів кабачки і перець наріж соломкою, цибулю очисти і наріж півкільцями, а помідори пропусти через м'ясорубку. змішай у каструлі рослинна олія, сіль, цукор та оцет. Скип'яті суміш, опусти в неї кабачки, через 5 хв додай цибулю, ще через 5 хв. перець. Через 5 хв вилий в каструлю помідорну масу і вари суміш 10 хв. Розклади лечо у стерилізовані банки та закатай.
+                            </p>
+
+                            <h4 class="mb-3">Кабачково-аличевий компом.</h4>
+                            <ul class="list">
+                                <li class="list-item">На трилітрову банку.</li>
+                                <li class="list-item">1 кг молодих кабачків.</li>
+                                <li class="list-item">800 г жовтої аличі.</li>
+                                <li class="list-item">2 л воды.</li>
+                                <li class="list-item">400 г цукру.</li>
+                            </ul>
+                            <p>
+                                Кабачки очисти від шкірки, розріж на 4 частини, ложкой видали серцевину, а м'якоть, що залишилася, наріж кубиками зі стороною 1 см. У приготовані банки розложи аличу, зверху поклади кабачки і залий киплячий цукровий сироп. Накрий банки кришками, укутай рушником і дай їм повністю охолонути. Потім злий сироп, прокип'яти його, знову залий у банки і відразу ж закатай їх. Після цього переверни банки догори дном та укутай для самостерилізації. Цей компот приємно здивує тебе ананасовим смаком.
+                            </p>
+
+                            <h4 class="mb-3">Кабачки з помідорами та морквою на зиму.</h4>
+                            <ul class="list">
+                                <li class="list-item">Кабачки 500 Грам. Помідори 500 Грам. Морква 100 Грам.</li>
+                                <li class="list-item">Цибуля ріпчаста 50 Грам.</li>
+                                <li class="list-item">Цукор 50 Грам. Сіль 0,5 ст. ложки.</li>
+                                <li class="list-item">Оцет 9% 1 Ст. ложка.</li>
+                                <li class="list-item">Олія рослинна 40 Грам.</li>
+                            </ul>
+                            <p>
+                                Закатайте на зиму смачні та ароматні кабачки з помідорами та морквою. Поєднання овочів дуже вдале і сподобається всім шанувальникам таких закусок. Підготуйте усі інгредієнти.
+                                Наріжте кубиками кабачки.
+                                Кубиками наріжте цибулю та морквину.
+                                Трохи розігрійте олію в каструлі, всипте цибулю та морквину. Пасеруйте 5 хвилин.
+                                Потім всипте кабачки.
+                                зверху всипте нарізані кубиками помідори.
+                                Всипте цукор, сіль|соль|.
+                                Гасіть овочі помішуючи близько 20-25 хвилин. Влийте оцет, перемішайте. Дайте закипіти та зніміть з вогню.
+                                Розкладіть овочі у чисті банки.
+                                Закатайте кришками та утепліть.
+                                Зберігайте заготівлю у темній коморі або льоху. вихід - 3 банки по 400 мл. Смачного!
+                            </p>
+
+                            <h4 class="mb-3">Кабачки як огірки на зиму.</h4>
+                            <ul class="list">
+                                <li class="list-item">Кабачок 300-350 Грам.</li>
+                                <li class="list-item">Кріп 1 Штука гілочка.</li>
+                                <li class="list-item">Часник 2 Зубчика перець чорний горошком 4-5 Штук. Лавровий лист 1 Штука.</li>
+                                <li class="list-item">Оцет 9% 1 Ст. ложка. Вода 500 Мілілітрів.</li>
+                                <li class="list-item">Сіль 12 Грам. Цукор 18 Грам.</li>
+                            </ul>
+                            <p>
+                                Пропоную рецепт маринованих кабачків на зиму, які до смаку виходять, як огірки. Хрусткі, пікантні та ароматні. Це чудова закуска, яка чудово урізноманітнить повсякденне меню. Підготуйте усі інгредієнти.
+                                Кабачки помийте, відріжте кінчики. Наріжте кабачки скибочками товщиною 2-3 см. Крім звичайних кабачків можна використовувати цукіні.
+                                на дно чистої стерилізованої банки викладіть очищені зубчики часнику, лавровий листок та перець горошком.
+                                Додайте гілочку кропу.
+                                Заповніть банку кабачками.
+                                Влийте гарячу воду, прикрийте кришкою та залиште на 15 хвилин.
+                                Злийте воду в каструлю, додайте сіль та цукор. Доведіть до кипіння.
+                                у банку додайте оцет і влийте гарячий маринад.
+                                Герметично закрутіть банку, переверніть вгору дном, укутайте в рушник і залиште так до повного остигання.
+                                Після заготівлі можна прибрати в холодне місце на зберігання. Кабачки, як огірки, готові.
+                            </p>
+                            
+                            <!-- Додано після останнього рецепту "Кабачки як огірки на зиму" -->
+                            <h4 class="mb-3">Кабачки як гриби (в маринаді)</h4>
+                            <ul class="list">
+                                <li class="list-item">Кабачки — 2 кг</li>
+                                <li class="list-item">Часник — 1 головка</li>
+                                <li class="list-item">Кріп — 1 пучок</li>
+                                <li class="list-item">Оцет 9% — 100 мл</li>
+                                <li class="list-item">Рослинна олія — 100 мл</li>
+                                <li class="list-item">Сіль — 2 ст. ложки</li>
+                                <li class="list-item">Цукор — 3 ст. ложки</li>
+                                <li class="list-item">Чорний перець — за смаком</li>
+                            </ul>
+                            <p>
+                                1. Наріжте кабачки кубиками.<br>
+                                2. Додайте подрібнений часник, кріп, сіль, цукор, оцет та олію.<br>
+                                3. Залиште маринуватися на 2–3 години.<br>
+                                4. Потім розкладіть у стерилізовані банки, накрийте кришками.<br>
+                                5. Стерилізуйте 15–20 хв (півлітрові банки) і закатайте.
+                            </p>
+
+                            <h4 class="mb-3">Ікра з кабачків (класична)</h4>
+                            <ul class="list">
+                                <li class="list-item">Кабачки — 3 кг</li>
+                                <li class="list-item">Морква — 500 г</li>
+                                <li class="list-item">Цибуля — 500 г</li>
+                                <li class="list-item">Томатна паста — 3 ст. ложки</li>
+                                <li class="list-item">Рослинна олія — 150 мл</li>
+                                <li class="list-item">Сіль — 1 ст. ложка</li>
+                                <li class="list-item">Цукор — 1 ст. ложка</li>
+                                <li class="list-item">Оцет 9% — 2 ст. ложки</li>
+                            </ul>
+                            <p>
+                                1. Наріжте овочі, обсмажте кабачки, моркву й цибулю окремо.<br>
+                                2. Змішайте все, додайте томатну пасту, спеції.<br>
+                                3. Перебийте блендером до однорідності.<br>
+                                4. Тушкуйте ще 30–40 хвилин.<br>
+                                5. В кінці додайте оцет, розкладіть у банки та закатайте.
+                            </p>
+
+                            <h4 class="mb-3">Кабачки в томатному соусі</h4>
+                            <ul class="list">
+                                <li class="list-item">Кабачки — 2 кг</li>
+                                <li class="list-item">Помідори — 1 кг</li>
+                                <li class="list-item">Морква — 500 г</li>
+                                <li class="list-item">Цибуля — 500 г</li>
+                                <li class="list-item">Часник — 1 головка</li>
+                                <li class="list-item">Цукор — 100 г</li>
+                                <li class="list-item">Сіль — 2 ст. ложки</li>
+                                <li class="list-item">Оцет 9% — 100 мл</li>
+                                <li class="list-item">Олія — 100 мл</li>
+                            </ul>
+                            <p>
+                                1. Натріть моркву, наріжте інші овочі.<br>
+                                2. Пропустіть помідори через м’ясорубку.<br>
+                                3. У великій каструлі готуйте все 40–60 хв.<br>
+                                4. Розкладіть по банках і закатайте.
+                            </p>
+
+                            <h4 class="mb-3">Кабачки по-корейськи</h4>
+                            <ul class="list">
+                                <li class="list-item">Кабачки — 2 кг (натерти на тертці)</li>
+                                <li class="list-item">Морква — 500 г</li>
+                                <li class="list-item">Часник — 1 головка</li>
+                                <li class="list-item">Оцет 9% — 100 мл</li>
+                                <li class="list-item">Олія — 100 мл</li>
+                                <li class="list-item">Сіль — 1 ст. ложка</li>
+                                <li class="list-item">Цукор — 2 ст. ложки</li>
+                                <li class="list-item">Приправа для моркви по-корейськи — 1 пакетик</li>
+                            </ul>
+                            <p>
+                                1. Змішати все, залишити на 2–3 години.<br>
+                                2. Розкласти по банках, стерилізувати 15 хв.<br>
+                                3. Закатати.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="BgImage"></section>
+
+        <!-- Секция для добавления рецептов -->
+        <section id="add-recipe" class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-12">
+                        <div class="recipe-form">
+                            <h2 class="form-title">Додати свій рецепт</h2>
+                            <form id="recipeForm">
+                                <div class="mb-3">
+                                    <label for="recipeTitle" class="form-label">Назва рецепту*</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="recipeTitle" 
+                                        required 
+                                        placeholder="Введіть назву вашого рецепту"
+                                    >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeCategory" class="form-label">Категорія*</label>
+                                    <select class="form-select" id="recipeCategory" required>
+                                        <option value="">Виберіть категорію</option>
+                                        <option value="Сніданок">Сніданок</option>
+                                        <option value="Обід">Обід</option>
+                                        <option value="Вечеря">Вечеря</option>
+                                        <option value="Десерт">Десерт</option>
+                                        <option value="Пістне">Пістне</option>
+                                        <option value="Консервація">Консервація</option>
+                                        <option value="Випічка">Випічка</option>
+                                        <option value="Напої">Напої</option>
+                                        <option value="Салати">Салати</option>
+                                        <option value="Закуски">Закуски</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Зображення (опціонально)</label>
+                                    <div class="file-input-wrapper">
+                                        <div class="file-input-label">
+                                            <i class="bi bi-upload me-2"></i>Обрати файл
+                                            <input 
+                                                type="file" 
+                                                class="form-control" 
+                                                id="recipeImageFile" 
+                                                accept="image/*"
+                                            >
+                                        </div>
+                                        <span id="fileName" class="file-name">Файл не обрано</span>
+                                    </div>
+                                    <div class="form-text">Максимальний розмір: 1MB (JPG, PNG)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeIngredients" class="form-label">Інгредієнти*</label>
+                                    <textarea 
+                                        class="form-control" 
+                                        id="recipeIngredients" 
+                                        rows="4" 
+                                        required 
+                                        placeholder="Перелічіть інгредієнти, кожен з нового рядка"
+                                    ></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipeInstructions" class="form-label">Інструкція приготування*</label>
+                                    <textarea 
+                                        class="form-control" 
+                                        id="recipeInstructions" 
+                                        rows="6" 
+                                        required 
+                                        placeholder="Опишіть кроки приготування"
+                                    ></textarea>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <span 
+                                            id="submitSpinner" 
+                                            class="spinner-border spinner-border-sm me-2" 
+                                            role="status" 
+                                            aria-hidden="true"
+                                        ></span>
+                                        Додати рецепт
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div id="recipePreview" class="recipe-preview mt-4">
+                                <h4>Попередній перегляд:</h4>
+                                <div class="card recipe-card">
+                                    <img 
+                                        id="previewImage" 
+                                        src="images/default-recipe.jpg" 
+                                        class="card-img-top" 
+                                        alt="Попередній перегляд"
+                                    >
+                                    <div class="card-body">
+                                        <h5 id="previewTitle" class="card-title">Назва рецепту</h5>
+                                        <p id="previewCategory" class="card-text text-muted">Категорія: не вибрано</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел для отображения пользовательских рецептов -->
+        <section id="user-recipes" class="section-padding bg-white">
+            <div class="container">
+                <div class="row">
+                    <h2 class="text-center mb-lg-5 mb-4">Рецепти від користувачів</h2>
+                    
+                    <div id="loadingRecipes">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Завантаження...</span>
+                        </div>
+                        <p class="mt-3">Завантажуємо рецепти...</p>
+                    </div>
+                    
+                    <div id="recipesContainer" class="row">
+                        <!-- Сюда будут добавляться рецепты через JS -->
+                    </div>
+                    
+                    <div id="noRecipesMessage" class="col-12 text-center d-none">
+                        <p>Поки немає доданих рецептів. Будьте першим!</p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button id="loadMoreBtn" class="btn btn-outline-success d-none">Показати ще</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="text-white mb-4 me-5">Хрустка кухня</h4>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+    
+    <script>
+        // Конфигурация Firebase (ЗАМЕНИТЕ НА ВАШУ КОНФИГУРАЦИЮ)
+        const firebaseConfig = {
+            apiKey: "ВАШ_API_KEY",
+            authDomain: "ВАШ_PROJECT.firebaseapp.com",
+            projectId: "ВАШ_PROJECT",
+            storageBucket: "ВАШ_PROJECT.appspot.com",
+            messagingSenderId: "ВАШ_SENDER_ID",
+            appId: "ВАШ_APP_ID"
+        };
+
+        // Инициализация Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        
+        // Глобальные переменные
+        let lastVisible = null;
+        let selectedFile = null;
+        const PAGE_SIZE = 6; // Количество рецептов за одну загрузку
+
+        $(document).ready(function() {
+            // Загрузка первых рецептов
+            loadRecipes();
+            
+            // Обработчики событий
+            $('#recipeForm').submit(handleFormSubmit);
+            $('#recipeImageFile').on('change', handleImageUpload);
+            $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
+            $('#loadMoreBtn').on('click', loadMoreRecipes);
+        });
+
+        // Обработка загрузки изображения
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) {
+                $('#fileName').text('Файл не обрано');
+                selectedFile = null;
+                return;
+            }
+
+            // Проверка типа файла
+            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                alert('Будь ласка, виберіть файл у форматі JPG або PNG.');
+                resetFileInput();
+                return;
+            }
+
+            // Проверка размера файла
+            if (file.size > 1048576) {
+                alert('Файл занадто великий. Максимальний розмір 1MB.');
+                resetFileInput();
+                return;
+            }
+
+            $('#fileName').text(file.name);
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                selectedFile = event.target.result;
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetFileInput() {
+            $('#recipeImageFile').val('');
+            $('#fileName').text('Файл не обрано');
+        }
+
+        function updatePreview() {
+            const title = $('#recipeTitle').val() || 'Назва рецепту';
+            const category = $('#recipeCategory').val() || 'не вибрано';
+            
+            if (selectedFile) {
+                $('#previewImage').attr('src', selectedFile);
+            }
+            
+            $('#previewTitle').text(title);
+            $('#previewCategory').text('Категорія: ' + category);
+            $('#recipePreview').show();
+        }
+
+        // Сжатие изображения для уменьшения размера
+        function compressImage(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Максимальные размеры
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 600;
+                        
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        // Изменяем размеры пропорционально
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        // Рисуем сжатое изображение
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Конвертируем в Blob с качеством 75%
+                        canvas.toBlob(blob => {
+                            resolve(blob);
+                        }, 'image/jpeg', 0.75);
+                    };
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Загрузка изображения в Firebase Storage
+        async function uploadImage(file) {
+            try {
+                // Сжимаем изображение
+                const compressedBlob = await compressImage(file);
+                
+                // Создаем уникальное имя файла
+                const fileName = `recipe-${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`;
+                const storageRef = storage.ref();
+                const fileRef = storageRef.child(`recipe-images/${fileName}`);
+                
+                // Загружаем файл
+                await fileRef.put(compressedBlob);
+                
+                // Получаем URL для скачивания
+                return await fileRef.getDownloadURL();
+            } catch (error) {
+                console.error("Помилка завантаження зображення:", error);
+                throw new Error("Не вдалося завантажити зображення");
+            }
+        }
+
+        // Обработка отправки формы
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Показываем спиннер
+            $('#submitSpinner').show();
+            $('#recipeForm button').prop('disabled', true);
+            
+            try {
+                const fileInput = document.getElementById('recipeImageFile');
+                const file = fileInput.files[0];
+                
+                let imageUrl = 'images/default-recipe.jpg';
+                
+                // Загружаем изображение, если оно есть
+                if (file) {
+                    imageUrl = await uploadImage(file);
+                }
+                
+                // Создаем объект рецепта
+                const recipe = {
+                    title: $('#recipeTitle').val(),
+                    category: $('#recipeCategory').val(),
+                    image: imageUrl,
+                    ingredients: $('#recipeIngredients').val(),
+                    instructions: $('#recipeInstructions').val(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                // Сохраняем в Firestore
+                await db.collection("recipes").add(recipe);
+                
+                // Сброс формы
+                $('#recipeForm')[0].reset();
+                $('#recipePreview').hide();
+                resetFileInput();
+                selectedFile = null;
+                
+                // Перезагружаем рецепты
+                await loadRecipes();
+                
+                alert('Рецепт успішно додано!');
+                
+                // Прокрутка к новому рецепту
+                $('html, body').animate({
+                    scrollTop: $('#user-recipes').offset().top - 100
+                }, 800);
+            } catch (error) {
+                console.error("Помилка збереження рецепту:", error);
+                alert('Сталася помилка: ' + error.message);
+            } finally {
+                // Скрываем спиннер и активируем кнопку
+                $('#submitSpinner').hide();
+                $('#recipeForm button').prop('disabled', false);
+            }
+        }
+
+        // Загрузка рецептов
+        async function loadRecipes() {
+            try {
+                // Показываем индикатор загрузки
+                $('#loadingRecipes').show();
+                $('#recipesContainer').empty();
+                $('#noRecipesMessage').addClass('d-none');
+                $('#loadMoreBtn').addClass('d-none');
+                
+                // Запрос к Firestore
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                // Скрываем индикатор загрузки
+                $('#loadingRecipes').hide();
+                
+                if (snapshot.empty) {
+                    $('#noRecipesMessage').removeClass('d-none');
+                    return;
+                }
+                
+                // Сохраняем последний документ для пагинации
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Отображаем рецепты
+                displayRecipes(snapshot);
+                
+                // Показываем кнопку "Загрузить еще", если есть еще рецепты
+                if (snapshot.size === PAGE_SIZE) {
+                    $('#loadMoreBtn').removeClass('d-none');
+                }
+            } catch (error) {
+                console.error("Помилка завантаження рецептів:", error);
+                $('#loadingRecipes').html('<p class="text-danger">Помилка завантаження рецептів. Спробуйте оновити сторінку.</p>');
+            }
+        }
+
+        // Загрузка дополнительных рецептов
+        async function loadMoreRecipes() {
+            try {
+                $('#loadMoreBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Завантаження...');
+                
+                const query = db.collection("recipes")
+                    .orderBy("createdAt", "desc")
+                    .startAfter(lastVisible)
+                    .limit(PAGE_SIZE);
+                
+                const snapshot = await query.get();
+                
+                if (snapshot.empty) {
+                    $('#loadMoreBtn').hide();
+                    return;
+                }
+                
+                // Обновляем последний документ
+                lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                
+                // Добавляем новые рецепты
+                displayRecipes(snapshot);
+                
+                // Скрываем кнопку, если больше нет рецептов
+                if (snapshot.size < PAGE_SIZE) {
+                    $('#loadMoreBtn').hide();
+                } else {
+                    $('#loadMoreBtn').prop('disabled', false).text('Показати ще');
+                }
+            } catch (error) {
+                console.error("Помилка завантаження рецептів:", error);
+                $('#loadMoreBtn').prop('disabled', false).text('Показати ще');
+                alert('Помилка завантаження додаткових рецептів');
+            }
+        }
+
+        // Отображение рецептов на странице
+        function displayRecipes(snapshot) {
+            const container = $('#recipesContainer');
+            
+            snapshot.forEach(doc => {
+                const recipe = doc.data();
+                const recipeId = doc.id;
+                
+                // Форматируем дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('uk-UA', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    }) : 'Дата не вказана';
+                
+                const recipeHtml = `
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="menu-thumb recipe-card">
+                        <div class="menu-image-wrap position-relative">
+                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
+                                <img 
+                                    src="${recipe.image}" 
+                                    class="img-fluid menu-image" 
+                                    alt="${recipe.title}" 
+                                    loading="lazy"
+                                >
+                                <span class="user-recipe-tag bg-success">Користувацький</span>
+                            </a>
+                        </div>
+                        <div class="menu-info d-flex flex-wrap align-items-center">
+                            <h4 class="mb-0">${recipe.title}</h4>
+                            <span class="text-muted small ms-2">${date}</span>
+                        </div>
+                    </div>
+                </div>`;
+                
+                container.append(recipeHtml);
+            });
+        }
+
+        // Показ деталей рецепта
+        window.showRecipeDetails = async function(recipeId) {
+            try {
+                const doc = await db.collection("recipes").doc(recipeId).get();
+                
+                if (!doc.exists) {
+                    alert('Рецепт не знайдено');
+                    return;
+                }
+                
+                const recipe = doc.data();
+                
+                // Форматируем дату
+                const date = recipe.createdAt ? 
+                    new Date(recipe.createdAt.toDate()).toLocaleDateString('uk-UA', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) : 'Дата не вказана';
+                
+                // Создаем HTML для модального окна
+                const modalHtml = `
+                <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">${recipe.title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-5 mb-3 mb-md-0">
+                                        <img 
+                                            src="${recipe.image}" 
+                                            class="img-fluid rounded mb-3" 
+                                            alt="${recipe.title}"
+                                        >
+                                        <div class="recipe-meta">
+                                            <p><strong>Категорія:</strong> ${recipe.category || 'Не вказана'}</p>
+                                            <p><strong>Додано:</strong> ${date}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="mb-4">
+                                            <h5>Інгредієнти:</h5>
+                                            <div class="recipe-ingredients">${formatText(recipe.ingredients)}</div>
+                                        </div>
+                                        <div>
+                                            <h5>Інструкція:</h5>
+                                            <div class="recipe-instructions">${formatText(recipe.instructions)}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                
+                // Добавляем модальное окно в DOM
+                $('body').append(modalHtml);
+                
+                // Показываем модальное окно
+                const modal = new bootstrap.Modal(document.getElementById('recipeDetailModal'));
+                modal.show();
+                
+                // Удаляем модальное окно после закрытия
+                $('#recipeDetailModal').on('hidden.bs.modal', function() {
+                    $(this).remove();
+                });
+            } catch (error) {
+                console.error("Помилка завантаження рецепту:", error);
+                alert('Не вдалося завантажити рецепт');
+            }
+        }
+
+        // Форматирование текста (замена переносов строк)
+        function formatText(text) {
+            return text.replace(/\n/g, '<br>');
+        }
+    </script>
+</body>
+</html>
