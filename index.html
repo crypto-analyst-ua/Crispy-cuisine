@@ -892,16 +892,16 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
     
     <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBy7FqoQqXkLOavEeuAPHW2lwOTtG-VcOU",
-            authDomain: "crispy-cuisine.firebaseapp.com",
-            projectId: "crispy-cuisine",
-            storageBucket: "crispy-cuisine.firebasestorage.app",
-            messagingSenderId: "976128845051",
-            appId: "1:976128845051:web:dd777ce4d8b05eca6afc5e",
-            measurementId: "G-JXXQRXMYT1"
-        };
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCmO3UwOLexKfUsNBiDhfVsJ7WWS9K_ft4",
+  authDomain: "crispy-cuisine-7334c.firebaseapp.com",
+  projectId: "crispy-cuisine-7334c",
+  storageBucket: "crispy-cuisine-7334c.firebasestorage.app",
+  messagingSenderId: "18003644183",
+  appId: "1:18003644183:web:4abb0800c18b00d7b83152",
+  measurementId: "G-250S27R82Y"
+};
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -1026,7 +1026,9 @@
                 
                 // Upload image if available
                 if (file) {
+                    console.log("Starting image upload...");
                     imageUrl = await uploadImage(file);
+                    console.log("Image uploaded:", imageUrl);
                 }
                 
                 // Create recipe object
@@ -1038,6 +1040,8 @@
                     instructions: $('#recipeInstructions').val(),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
+                
+                console.log("Saving recipe:", recipe);
                 
                 // Save to Firestore
                 await db.collection("recipes").add(recipe);
