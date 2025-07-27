@@ -1,7 +1,10 @@
 {
   "hosting": {
-    "public": "./",  // Вказуємо корінь
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "rewrites": []
+    "public": "./",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
   }
 }
