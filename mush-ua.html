@@ -314,8 +314,8 @@
         </section>
 
         <section class="BgImage"></section>
-        
-        <!-- Секція для додавання рецептів -->
+
+        <!-- Секция для добавления рецептов -->
         <section id="add-recipe" class="section-padding">
             <div class="container">
                 <div class="row justify-content-center">
@@ -325,8 +325,13 @@
                             <form id="recipeForm">
                                 <div class="mb-3">
                                     <label for="recipeTitle" class="form-label">Назва рецепту*</label>
-                                    <input type="text" class="form-control" id="recipeTitle" required 
-                                        placeholder="Введіть назву вашого рецепту">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="recipeTitle" 
+                                        required 
+                                        placeholder="Введіть назву вашого рецепту"
+                                    >
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipeCategory" class="form-label">Категорія*</label>
@@ -349,7 +354,12 @@
                                     <div class="file-input-wrapper">
                                         <div class="file-input-label">
                                             <i class="bi bi-upload me-2"></i>Обрати файл
-                                            <input type="file" class="form-control" id="recipeImageFile" accept="image/*">
+                                            <input 
+                                                type="file" 
+                                                class="form-control" 
+                                                id="recipeImageFile" 
+                                                accept="image/*"
+                                            >
                                         </div>
                                         <span id="fileName" class="file-name">Файл не обрано</span>
                                     </div>
@@ -357,17 +367,32 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipeIngredients" class="form-label">Інгредієнти*</label>
-                                    <textarea class="form-control" id="recipeIngredients" rows="4" required 
-                                        placeholder="Перелічіть інгредієнти, кожен з нового рядка"></textarea>
+                                    <textarea 
+                                        class="form-control" 
+                                        id="recipeIngredients" 
+                                        rows="4" 
+                                        required 
+                                        placeholder="Перелічіть інгредієнти, кожен з нового рядка"
+                                    ></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipeInstructions" class="form-label">Інструкція приготування*</label>
-                                    <textarea class="form-control" id="recipeInstructions" rows="6" required 
-                                        placeholder="Опишіть кроки приготування"></textarea>
+                                    <textarea 
+                                        class="form-control" 
+                                        id="recipeInstructions" 
+                                        rows="6" 
+                                        required 
+                                        placeholder="Опишіть кроки приготування"
+                                    ></textarea>
                                 </div>
                                 <div class="d-grid">
                                     <button type="submit" class="btn btn-success btn-lg">
-                                        <span id="submitSpinner" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                        <span 
+                                            id="submitSpinner" 
+                                            class="spinner-border spinner-border-sm me-2" 
+                                            role="status" 
+                                            aria-hidden="true"
+                                        ></span>
                                         Додати рецепт
                                     </button>
                                 </div>
@@ -376,8 +401,12 @@
                             <div id="recipePreview" class="recipe-preview mt-4">
                                 <h4>Попередній перегляд:</h4>
                                 <div class="card recipe-card">
-                                    <img id="previewImage" src="images/default-recipe.jpg" class="card-img-top" 
-                                        alt="Попередній перегляд">
+                                    <img 
+                                        id="previewImage" 
+                                        src="images/default-recipe.jpg" 
+                                        class="card-img-top" 
+                                        alt="Попередній перегляд"
+                                    >
                                     <div class="card-body">
                                         <h5 id="previewTitle" class="card-title">Назва рецепту</h5>
                                         <p id="previewCategory" class="card-text text-muted">Категорія: не вибрано</p>
@@ -390,7 +419,7 @@
             </div>
         </section>
 
-        <!-- Розділ для відображення рецептів користувачів -->
+        <!-- Раздел для отображения пользовательских рецептов -->
         <section id="user-recipes" class="section-padding bg-white">
             <div class="container">
                 <div class="row">
@@ -404,7 +433,7 @@
                     </div>
                     
                     <div id="recipesContainer" class="row">
-                        <!-- Сюди додаватимуться рецепти через JS -->
+                        <!-- Сюда будут добавляться рецепты через JS -->
                     </div>
                     
                     <div id="noRecipesMessage" class="col-12 text-center d-none">
@@ -437,41 +466,40 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
     
     <script>
-        // Конфігурація Firebase (ЗАМІНІТЬ НА ВАШУ КОНФІГУРАЦІЮ)
-        const firebaseConfig = {
-            apiKey: "ВАШ_API_KEY",
-            authDomain: "ВАШ_PROJECT.firebaseapp.com",
-            projectId: "ВАШ_PROJECT",
-            storageBucket: "ВАШ_PROJECT.appspot.com",
-            messagingSenderId: "ВАШ_SENDER_ID",
-            appId: "ВАШ_APP_ID"
-        };
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCmO3UwOLexKfUsNBiDhfVsJ7WWS9K_ft4",
+  authDomain: "crispy-cuisine-7334c.firebaseapp.com",
+  projectId: "crispy-cuisine-7334c",
+  storageBucket: "crispy-cuisine-7334c.firebasestorage.app",
+  messagingSenderId: "18003644183",
+  appId: "1:18003644183:web:4abb0800c18b00d7b83152",
+  measurementId: "G-250S27R82Y"
+};
 
-        // Ініціалізація Firebase
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        const storage = firebase.storage();
         
-        // Глобальні змінні
+        // Global variables
         let lastVisible = null;
         let selectedFile = null;
-        const PAGE_SIZE = 6; // Кількість рецептів за одне завантаження
+        const PAGE_SIZE = 6; // Number of recipes per load
 
         $(document).ready(function() {
-            // Завантаження перших рецептів
+            // Load first recipes
             loadRecipes();
             
-            // Обробники подій
+            // Event handlers
             $('#recipeForm').submit(handleFormSubmit);
             $('#recipeImageFile').on('change', handleImageUpload);
             $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
             $('#loadMoreBtn').on('click', loadMoreRecipes);
         });
 
-        // Обробка завантаження зображення
+        // Handle image upload
         function handleImageUpload(e) {
             const file = e.target.files[0];
             if (!file) {
@@ -480,14 +508,14 @@
                 return;
             }
 
-            // Перевірка типу файлу
+            // File type validation
             if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
                 alert('Будь ласка, виберіть файл у форматі JPG або PNG.');
                 resetFileInput();
                 return;
             }
 
-            // Перевірка розміру файлу
+            // File size validation
             if (file.size > 1048576) {
                 alert('Файл занадто великий. Максимальний розмір 1MB.');
                 resetFileInput();
@@ -522,81 +550,47 @@
             $('#recipePreview').show();
         }
 
-        // Стиснення зображення для зменшення розміру
-        function compressImage(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = new Image();
-                    img.src = e.target.result;
-                    
-                    img.onload = function() {
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        
-                        // Максимальні розміри
-                        const MAX_WIDTH = 800;
-                        const MAX_HEIGHT = 600;
-                        
-                        let width = img.width;
-                        let height = img.height;
-                        
-                        // Змінюємо розміри пропорційно
-                        if (width > height) {
-                            if (width > MAX_WIDTH) {
-                                height *= MAX_WIDTH / width;
-                                width = MAX_WIDTH;
-                            }
-                        } else {
-                            if (height > MAX_HEIGHT) {
-                                width *= MAX_HEIGHT / height;
-                                height = MAX_HEIGHT;
-                            }
-                        }
-                        
-                        canvas.width = width;
-                        canvas.height = height;
-                        
-                        // Малюємо стиснуте зображення
-                        ctx.drawImage(img, 0, 0, width, height);
-                        
-                        // Конвертуємо у Blob з якістю 75%
-                        canvas.toBlob(blob => {
-                            resolve(blob);
-                        }, 'image/jpeg', 0.75);
-                    };
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        // Завантаження зображення в Firebase Storage
+        // Upload image to Cloudinary
         async function uploadImage(file) {
             try {
-                // Стискаємо зображення
-                const compressedBlob = await compressImage(file);
+                const cloudName = "dhfkb6xv2"; // Your Cloudinary cloud name
+                const uploadPreset = "unsigned_preset"; // Your upload preset
+
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("upload_preset", uploadPreset);
+                formData.append("folder", "recipe_images"); // Optional folder
+
+                const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+                    method: "POST",
+                    body: formData
+                });
+
+                // Check for HTTP errors
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error.message || "Помилка Cloudinary");
+                }
+
+                const data = await response.json();
                 
-                // Створюємо унікальне ім'я файлу
-                const fileName = `recipe-${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`;
-                const storageRef = storage.ref();
-                const fileRef = storageRef.child(`recipe-images/${fileName}`);
-                
-                // Завантажуємо файл
-                await fileRef.put(compressedBlob);
-                
-                // Отримуємо URL для завантаження
-                return await fileRef.getDownloadURL();
+                if (data.secure_url) {
+                    // Add optimization parameters to URL
+                    return data.secure_url.replace('/upload/', '/upload/q_auto,f_auto/');
+                } else {
+                    throw new Error("Не вдалося отримати URL зображення");
+                }
             } catch (error) {
                 console.error("Помилка завантаження зображення:", error);
-                throw new Error("Не вдалося завантажити зображення");
+                throw new Error("Не вдалося завантажити зображення на Cloudinary");
             }
         }
 
-        // Обробка відправлення форми
+        // Handle form submission
         async function handleFormSubmit(e) {
             e.preventDefault();
             
-            // Показуємо спінер
+            // Show spinner
             $('#submitSpinner').show();
             $('#recipeForm button').prop('disabled', true);
             
@@ -606,12 +600,14 @@
                 
                 let imageUrl = 'images/default-recipe.jpg';
                 
-                // Завантажуємо зображення, якщо воно є
+                // Upload image if available
                 if (file) {
+                    console.log("Starting image upload...");
                     imageUrl = await uploadImage(file);
+                    console.log("Image uploaded:", imageUrl);
                 }
                 
-                // Створюємо об'єкт рецепту
+                // Create recipe object
                 const recipe = {
                     title: $('#recipeTitle').val(),
                     category: $('#recipeCategory').val(),
@@ -621,21 +617,23 @@
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
                 
-                // Зберігаємо в Firestore
+                console.log("Saving recipe:", recipe);
+                
+                // Save to Firestore
                 await db.collection("recipes").add(recipe);
                 
-                // Скидання форми
+                // Reset form
                 $('#recipeForm')[0].reset();
                 $('#recipePreview').hide();
                 resetFileInput();
                 selectedFile = null;
                 
-                // Перезавантажуємо рецепти
+                // Reload recipes
                 await loadRecipes();
                 
                 alert('Рецепт успішно додано!');
                 
-                // Прокрутка до нового рецепту
+                // Scroll to new recipes section
                 $('html, body').animate({
                     scrollTop: $('#user-recipes').offset().top - 100
                 }, 800);
@@ -643,29 +641,29 @@
                 console.error("Помилка збереження рецепту:", error);
                 alert('Сталася помилка: ' + error.message);
             } finally {
-                // Ховаємо спінер і активуємо кнопку
+                // Hide spinner and activate button
                 $('#submitSpinner').hide();
                 $('#recipeForm button').prop('disabled', false);
             }
         }
 
-        // Завантаження рецептів
+        // Load recipes
         async function loadRecipes() {
             try {
-                // Показуємо індикатор завантаження
+                // Show loading indicator
                 $('#loadingRecipes').show();
                 $('#recipesContainer').empty();
                 $('#noRecipesMessage').addClass('d-none');
                 $('#loadMoreBtn').addClass('d-none');
                 
-                // Запит до Firestore
+                // Query Firestore
                 const query = db.collection("recipes")
                     .orderBy("createdAt", "desc")
                     .limit(PAGE_SIZE);
                 
                 const snapshot = await query.get();
                 
-                // Ховаємо індикатор завантаження
+                // Hide loading indicator
                 $('#loadingRecipes').hide();
                 
                 if (snapshot.empty) {
@@ -673,13 +671,13 @@
                     return;
                 }
                 
-                // Зберігаємо останній документ для пагінації
+                // Save last document for pagination
                 lastVisible = snapshot.docs[snapshot.docs.length - 1];
                 
-                // Відображаємо рецепти
+                // Display recipes
                 displayRecipes(snapshot);
                 
-                // Показуємо кнопку "Завантажити ще", якщо є ще рецепти
+                // Show "Load more" button if there are more recipes
                 if (snapshot.size === PAGE_SIZE) {
                     $('#loadMoreBtn').removeClass('d-none');
                 }
@@ -689,7 +687,7 @@
             }
         }
 
-        // Завантаження додаткових рецептів
+        // Load more recipes
         async function loadMoreRecipes() {
             try {
                 $('#loadMoreBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Завантаження...');
@@ -706,13 +704,13 @@
                     return;
                 }
                 
-                // Оновлюємо останній документ
+                // Update last document
                 lastVisible = snapshot.docs[snapshot.docs.length - 1];
                 
-                // Додаємо нові рецепти
+                // Add new recipes
                 displayRecipes(snapshot);
                 
-                // Ховаємо кнопку, якщо більше немає рецептів
+                // Hide button if no more recipes
                 if (snapshot.size < PAGE_SIZE) {
                     $('#loadMoreBtn').hide();
                 } else {
@@ -725,7 +723,7 @@
             }
         }
 
-        // Відображення рецептів на сторінці
+        // Display recipes on page
         function displayRecipes(snapshot) {
             const container = $('#recipesContainer');
             
@@ -733,7 +731,7 @@
                 const recipe = doc.data();
                 const recipeId = doc.id;
                 
-                // Форматуємо дату
+                // Format date
                 const date = recipe.createdAt ? 
                     new Date(recipe.createdAt.toDate()).toLocaleDateString('uk-UA', {
                         day: 'numeric',
@@ -746,7 +744,12 @@
                     <div class="menu-thumb recipe-card">
                         <div class="menu-image-wrap position-relative">
                             <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
-                                <img src="${recipe.image}" class="img-fluid menu-image" alt="${recipe.title}" loading="lazy">
+                                <img 
+                                    src="${recipe.image}" 
+                                    class="img-fluid menu-image" 
+                                    alt="${recipe.title}" 
+                                    loading="lazy"
+                                >
                                 <span class="user-recipe-tag bg-success">Користувацький</span>
                             </a>
                         </div>
@@ -761,7 +764,7 @@
             });
         }
 
-        // Показ деталей рецепту
+        // Show recipe details
         window.showRecipeDetails = async function(recipeId) {
             try {
                 const doc = await db.collection("recipes").doc(recipeId).get();
@@ -773,7 +776,7 @@
                 
                 const recipe = doc.data();
                 
-                // Форматуємо дату
+                // Format date
                 const date = recipe.createdAt ? 
                     new Date(recipe.createdAt.toDate()).toLocaleDateString('uk-UA', {
                         day: 'numeric',
@@ -783,7 +786,7 @@
                         minute: '2-digit'
                     }) : 'Дата не вказана';
                 
-                // Створюємо HTML для модального вікна
+                // Create HTML for modal
                 const modalHtml = `
                 <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
                     <div class="modal-dialog modal-lg">
@@ -795,7 +798,11 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-md-5 mb-3 mb-md-0">
-                                        <img src="${recipe.image}" class="img-fluid rounded mb-3" alt="${recipe.title}">
+                                        <img 
+                                            src="${recipe.image}" 
+                                            class="img-fluid rounded mb-3" 
+                                            alt="${recipe.title}"
+                                        >
                                         <div class="recipe-meta">
                                             <p><strong>Категорія:</strong> ${recipe.category || 'Не вказана'}</p>
                                             <p><strong>Додано:</strong> ${date}</p>
@@ -820,14 +827,14 @@
                     </div>
                 </div>`;
                 
-                // Додаємо модальне вікно в DOM
+                // Add modal to DOM
                 $('body').append(modalHtml);
                 
-                // Показуємо модальне вікно
+                // Show modal
                 const modal = new bootstrap.Modal(document.getElementById('recipeDetailModal'));
                 modal.show();
                 
-                // Видаляємо модальне вікно після закриття
+                // Remove modal after closing
                 $('#recipeDetailModal').on('hidden.bs.modal', function() {
                     $(this).remove();
                 });
@@ -837,7 +844,7 @@
             }
         }
 
-        // Форматування тексту (заміна переносів рядків)
+        // Format text (replace line breaks)
         function formatText(text) {
             return text.replace(/\n/g, '<br>');
         }
