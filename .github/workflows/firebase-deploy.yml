@@ -1,4 +1,31 @@
-with:
-  repoToken: "${{ secrets.GITHUB_TOKEN }}"
-  firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
-  projectId: crispy-cuisine-7334c
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - main  # або заміни на іншу гілку, якщо не main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # Якщо є package.json — цей крок спробує встановити залежності
+      - name: Install dependencies
+        run: |
+          if [ -f package.json ]; then npm install; fi
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"  # автоматично генерується GitHub
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"  # сюди ти маєш додати ключ
+          projectId: crispy-cuisine-7334c
