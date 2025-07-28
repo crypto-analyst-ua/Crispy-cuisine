@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "./",  // якщо index.html в корені
+    "public": "./",
     "ignore": [
       "firebase.json",
       "**/.*",
