@@ -21,4 +21,4 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
           projectId: crispy-cuisine-7334c
-          firebaseToolsVersion: "11.14.0"
+          firebaseToolsVersion: "9.14.0"
