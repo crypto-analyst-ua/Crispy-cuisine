@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://crispy-cuisine-7334c.web.app/sitemap.xml
