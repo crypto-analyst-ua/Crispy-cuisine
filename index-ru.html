@@ -5,23 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <!-- Уникальные SEO-теги -->
-<title>Хрустящая кухня — Домашние рецепты, проверенные годами</title>
-<meta name="description" content="Авторские рецепты для ежедневного приготовления и надежная консервация на зиму. Хрусткая кухня — вкус детства, традиций и вдохновения.">
-<meta name="keywords" content="Хрусткая кухня, домашние рецепты, украинские блюда, консервация, рецепты с фото, проверенные рецепты, кулинарный блог, сезонные рецепты">
-<meta name="author" content="Konstantin Korovin — Хрусткая кухня">
-<meta name="robots" content="index, follow">
-<meta name="googlebot" content="index, follow">
+    <title>Хрустящая кухня — Домашние рецепты, проверенные годами</title>
+    <meta name="description" content="Авторские рецепты для ежедневного приготовления и надежная консервация на зиму. Хрусткая кухня — вкус детства, традиций и вдохновения.">
+    <meta name="keywords" content="Хрусткая кухня, домашние рецепты, украинские блюда, консервация, рецепты с фото, проверенные рецепты, кулинарный блог, сезонные рецепты">
+    <meta name="author" content="Konstantin Korovin — Хрусткая кухня">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
 
-<!-- Open Graph / Социальные сети -->
-<meta property="og:title" content="Хрусткая кухня — Кулинария с душой">
-<meta property="og:description" content="Готовьте вкусно каждый день. Только проверенные домашние рецепты и консервация на зиму от Хрусткой кухни.">
-<meta property="og:image" content="https://crispy-cuisine-7334c.web.app/images/slide/your-photo.jpg">
-<meta property="og:url" content="https://crispy-cuisine-7334c.web.app/index-ru.html">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="ru_RU">
+    <!-- Open Graph / Социальные сети -->
+    <meta property="og:title" content="Хрусткая кухня — Кулинария с душой">
+    <meta property="og:description" content="Готовьте вкусно каждый день. Только проверенные домашние рецепты и консервация на зиму от Хрусткой кухни.">
+    <meta property="og:image" content="https://crispy-cuisine-7334c.web.app/images/slide/your-photo.jpg">
+    <meta property="og:url" content="https://crispy-cuisine-7334c.web.app/index-ru.html">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
 
-<!-- Каноническая URL -->
-<link rel="canonical" href="https://crispy-cuisine-7334c.web.app/index-ru.html">
+    <!-- Каноническая URL -->
+    <link rel="canonical" href="https://crispy-cuisine-7334c.web.app/index-ru.html">
     
     <!-- CSS FILES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -187,6 +187,122 @@
         .recipe-instructions {
             white-space: pre-line;
             line-height: 1.8;
+        }
+        
+        /* Стили для баннера Temu */
+        .banner-container {
+            width: 250px;
+            height: 50px;
+            position: relative;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+        
+        .banner-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.35);
+        }
+        
+        .banner {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            padding: 0 10px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+        
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.15), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+        
+        .banner:hover::before {
+            animation: shine 0.8s ease-in-out;
+        }
+        
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+                opacity: 0;
+            }
+        }
+        
+        .banner-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .gift-icon {
+            font-size: 1.4rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-5px);
+            }
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+        
+        .text-container {
+            text-align: left;
+        }
+        
+        .title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            background: linear-gradient(45deg, #fff, #f8f8f8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            letter-spacing: 0.3px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .banner-logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+            padding-right: 5px;
+            position: relative;
+            z-index: 2;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
     </style>
 </head>
@@ -378,6 +494,21 @@
                     
                     <div class="col-12">
                         <h2 class="text-center mb-lg-5 mb-4">Консервация на зиму</h2>
+                    </div>
+
+                    <!-- Баннер Temu -->
+                    <div class="col-12 text-center mb-4">
+                        <div class="banner-container">
+                            <a href="https://share.temu.com/SBVbTVw3gxB" target="_blank" class="banner">
+                                <div class="banner-content">
+                                    <div class="gift-icon">🎁</div>
+                                    <div class="text-container">
+                                        <div class="title">Подарок в Temu</div>
+                                    </div>
+                                </div>
+                                <div class="banner-logo">TEMU</div>
+                            </a>
+                        </div>
                     </div>
 
                     <!-- Категории консервации -->
