@@ -32,6 +32,39 @@
     <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
     
     <style>
+        /* Стили для аутентификации */
+        .auth-modal .modal-content {
+            border-radius: 0.8rem;
+        }
+        
+        .auth-modal .modal-header {
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+            border-bottom: none;
+        }
+        
+        .auth-modal .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .auth-modal .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #198754;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
         .file-input-wrapper {
             position: relative;
             overflow: hidden;
@@ -119,7 +152,6 @@
             border-bottom: 2px solid #198754;
         }
         
-        /* Добавленные стили для кликабельных слайдов */
         .carousel-link {
             display: block;
             position: relative;
@@ -145,7 +177,6 @@
             z-index: 1;
         }
         
-        /* Добавим спиннер загрузки */
         .spinner-border {
             width: 3rem;
             height: 3rem;
@@ -157,7 +188,6 @@
             padding: 2rem;
         }
         
-        /* Улучшенный вид модального окна */
         .recipe-modal .modal-content {
             border-radius: 0.8rem;
             overflow: hidden;
@@ -304,14 +334,54 @@
             z-index: 2;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        
+        /* Стили для ошибок формы */
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        /* Стили для аватарки в навигации */
+        .nav-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #198754;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        /* Стили для предупреждения о неподтвержденном email */
+        #emailWarning {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            padding: 10px 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
     </style>
 </head>
-
+    
 <body>
     <nav class="navbar navbar-expand-lg bg-white shadow-lg">
         <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button 
+                class="navbar-toggler" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" 
+                aria-expanded="false" 
+                aria-label="Toggle navigation"
+            >
                 <span class="navbar-toggler-icon"></span>
             </button>
             
@@ -335,17 +405,111 @@
                     <li class="nav-item">
                         <a class="nav-link" href="desert-ru.html">Десерт</a>
                     </li>
-                    
                     <li class="nav-item">
                         <a class="nav-link" href="#add-recipe">Добавить рецепт</a>
                     </li>
+                </ul>
+                
+                <!-- Блок аутентификации -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown" id="accountDropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <div class="d-flex align-items-center">
+                                <div id="userAvatar" class="nav-avatar d-none">
+                                    <span id="avatarInitials">U</span>
+                                </div>
+                                <span id="userStatus">Аккаунт</span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li id="loginItem"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Войти</a></li>
+                            <li id="registerItem"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Регистрация</a></li>
+                            <li id="logoutItem" class="d-none"><a class="dropdown-item" href="#" id="logoutLink">Выйти</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item">
-                        <a href="index.html" class="nav-link"><span class="category-tag me-3 bg-info">UA</span></a>
+                        <a href="index.html"><span class="category-tag me-3 bg-info">UA</span></a>
                     </li>
                 </ul>
             </div>
         </div>
+        
+        <!-- Предупреждение о неподтвержденном email -->
+        <div id="emailWarning" class="d-none alert alert-warning rounded-0 mb-0 text-center w-100"></div>
     </nav>
+
+    <!-- Модальные окна для аутентификации -->
+    <div class="modal fade auth-modal" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Войти</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email*</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                            <div class="error-message" id="loginEmailError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Пароль*</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                            <div class="error-message" id="loginPasswordError"></div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">
+                                <span id="loginSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                                Войти
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade auth-modal" id="registerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Регистрация</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label">Имя*</label>
+                            <input type="text" class="form-control" id="registerName" required>
+                            <div class="error-message" id="registerNameError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email*</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                            <div class="error-message" id="registerEmailError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Пароль*</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                            <div class="error-message" id="registerPasswordError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Подтвердите пароль*</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                            <div class="error-message" id="confirmPasswordError"></div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">
+                                <span id="registerSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                                Зарегистрироваться
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <main>
         <section class="hero">
@@ -358,14 +522,16 @@
                     </div>
 
                     <div class="col-lg-7 col-12">
-                        <div id="carouselExampleCaptions" class="carousel carousel-fade hero-carousel slide" 
-                            data-bs-ride="carousel">
+                        <div id="carouselExampleCaptions" class="carousel carousel-fade hero-carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <a href="top3-ru.html" class="carousel-link">
                                         <div class="carousel-image-wrap">
-                                            <img src="images/slide/jay-wennington-N_Y88TWmGwA-unsplash.jpg" 
-                                                class="img-fluid carousel-image" alt="Рецепты на каждый день">
+                                            <img 
+                                                src="images/slide/jay-wennington-N_Y88TWmGwA-unsplash.jpg" 
+                                                class="img-fluid carousel-image" 
+                                                alt="Рецепты на каждый день"
+                                            >
                                         </div>
                                         <div class="carousel-caption">
                                             <h4 class="hero-text">Приготовить завтрак</h4>
@@ -376,8 +542,11 @@
                                 <div class="carousel-item">
                                     <a href="top4-ru.html" class="carousel-link">
                                         <div class="carousel-image-wrap">
-                                            <img src="images/slide/jason-leung-O67LZfeyYBk-unsplash.jpg" 
-                                                class="img-fluid carousel-image" alt="Рецепты на каждый день">
+                                            <img 
+                                                src="images/slide/jason-leung-O67LZfeyYBk-unsplash.jpg" 
+                                                class="img-fluid carousel-image" 
+                                                alt="Рецепты на каждый день"
+                                            >
                                         </div>
                                         <div class="carousel-caption">
                                             <div class="d-flex align-items-center">
@@ -390,8 +559,11 @@
                                 <div class="carousel-item">
                                     <a href="top5-ru.html" class="carousel-link">
                                         <div class="carousel-image-wrap">
-                                            <img src="images/slide/jason-leung-O67LZfeyYBk-unsplash1.jpg" 
-                                                class="img-fluid carousel-image" alt="Рецепты на каждый день">
+                                            <img 
+                                                src="images/slide/jason-leung-O67LZfeyYBk-unsplash1.jpg" 
+                                                class="img-fluid carousel-image" 
+                                                alt="Рецепты на каждый день"
+                                            >
                                         </div>
                                         <div class="carousel-caption">
                                             <div class="d-flex align-items-center">
@@ -404,8 +576,11 @@
                                 <div class="carousel-item">
                                     <a href="Celebration-ru.html" class="carousel-link">
                                         <div class="carousel-image-wrap">
-                                            <img src="images/slide/ivan-torres-MQUqbmszGGM-unsplash.jpg" 
-                                                class="img-fluid carousel-image" alt="Рецепты на каждый день">
+                                            <img 
+                                                src="images/slide/ivan-torres-MQUqbmszGGM-unsplash.jpg" 
+                                                class="img-fluid carousel-image" 
+                                                alt="Рецепты на каждый день"
+                                            >
                                         </div>
                                         <div class="carousel-caption">
                                             <div class="d-flex align-items-center">
@@ -416,16 +591,24 @@
                                 </div>
                             </div>
 
-                            <button class="carousel-control-prev" type="button" 
-                                data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                            <button 
+                                class="carousel-control-prev" 
+                                type="button" 
+                                data-bs-target="#carouselExampleCaptions" 
+                                data-bs-slide="prev"
+                            >
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
+                                <span class="visually-hidden">Предыдущий</span>
                             </button>
 
-                            <button class="carousel-control-next" type="button" 
-                                data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                            <button 
+                                class="carousel-control-next" 
+                                type="button" 
+                                data-bs-target="#carouselExampleCaptions" 
+                                data-bs-slide="next"
+                            >
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
+                                <span class="visually-hidden">Следующий</span>
                             </button>
                         </div>
                     </div>
@@ -435,10 +618,9 @@
             <div class="video-wrap">
                 <video autoplay="" loop="" muted="" class="custom-video" poster="">
                     <source src="video/production_ID_3769033.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
+                    Ваш браузер не поддерживает видео тег.
                 </video>
             </div>
-
             <div class="overlay"></div>
         </section>
 
@@ -450,8 +632,11 @@
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="news-thumb mb-4">
                             <a href="menu-ru.html">
-                                <img src="images/news/pablo-merchan-montes-Orz90t6o0e4-unsplash.jpg" 
-                                    class="img-fluid news-image" alt="Топ">
+                                <img 
+                                    src="images/news/pablo-merchan-montes-Orz90t6o0e4-unsplash.jpg" 
+                                    class="img-fluid news-image" 
+                                    alt="Топ"
+                                >
                             </a>
                             <div class="news-text-info news-text-info-large">
                                 <span class="category-tag bg-danger">Просмотреть</span>
@@ -459,14 +644,17 @@
                                     <a href="menu-ru.html" class="news-title-link">Вкусные рецепты на каждый день</a>
                                 </h5>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="news-thumb mb-4">
                             <a href="Vegan food-ru.html">
-                                <img src="images/news/stefan-johnson-xIFbDeGcy44-unsplash2.jpg" 
-                                    class="img-fluid news-image" alt="">
+                                <img 
+                                    src="images/news/stefan-johnson-xIFbDeGcy44-unsplash2.jpg" 
+                                    class="img-fluid news-image" 
+                                    alt="Вегетарианская кухня"
+                                >
                             </a>
                             <div class="news-text-info news-text-info-large">
                                 <span class="category-tag bg-danger">Просмотреть</span>
@@ -474,14 +662,17 @@
                                     <a href="Vegan food-ru.html" class="news-title-link">Вегетарианская кухня</a>
                                 </h5>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="news-thumb mb-4">
                             <a href="Celebration-ru.html">
-                                <img src="images/news/stefan-johnson-xIFbDeGcy44-unsplash1.jpg" 
-                                    class="img-fluid news-image" alt="">
+                                <img 
+                                    src="images/news/stefan-johnson-xIFbDeGcy44-unsplash1.jpg" 
+                                    class="img-fluid news-image" 
+                                    alt="Праздничный стол"
+                                >
                             </a>
                             <div class="news-text-info news-text-info-large">
                                 <span class="category-tag bg-danger">Просмотреть</span>
@@ -489,14 +680,14 @@
                                     <a href="Celebration-ru.html" class="news-title-link">Что приготовить на праздничный стол</a>
                                 </h5>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     
                     <div class="col-12">
                         <h2 class="text-center mb-lg-5 mb-4">Консервация на зиму</h2>
                     </div>
 
-                    <!-- Баннер Temu -->
+                    <!-- Добавленный баннер Temu -->
                     <div class="col-12 text-center mb-4">
                         <div class="banner-container">
                             <a href="https://share.temu.com/SBVbTVw3gxB" target="_blank" class="banner">
@@ -511,13 +702,15 @@
                         </div>
                     </div>
 
-                    <!-- Категории консервации -->
                     <div class="col-lg-4 col-md-6 col-12">
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="eggplant-ru.html">
-                                    <img src="images/breakfast/brett-jordan-8xt8-HIFqc8-unsplash.jpg" 
-                                        class="img-fluid menu-image" alt="Баклажаны">
+                                    <img 
+                                        src="images/breakfast/brett-jordan-8xt8-HIFqc8-unsplash.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Баклажаны"
+                                    >
                                     <span class="menu-tag bg-warning">Баклажаны</span>
                                 </a>
                             </div>
@@ -529,13 +722,15 @@
                         </div>
                     </div>
                     
-                    <!-- Остальные категории консервации -->
                     <div class="col-lg-4 col-md-6 col-12">
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="cucumbers-ru.html">
-                                    <img src="images/lunch/farhad-ibrahimzade-MGKqxm6u2bc-unsplash.jpg" 
-                                        class="img-fluid menu-image" alt="Огурцы">
+                                    <img 
+                                        src="images/lunch/farhad-ibrahimzade-MGKqxm6u2bc-unsplash.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Огурцы"
+                                    >
                                     <span class="menu-tag bg-warning">Огурцы</span>
                                 </a>
                             </div>
@@ -550,9 +745,12 @@
                     <div class="col-lg-4 col-md-6 col-12">
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
-                                <a href="tomato-ru.html">
-                                    <img src="images/dinner/keriliwi-c3mFafsFz2w-unsplash.jpg" 
-                                        class="img-fluid menu-image" alt="Помидоры">
+                                <a href="tomato-ru.html"> 
+                                    <img 
+                                        src="images/dinner/keriliwi-c3mFafsFz2w-unsplash.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Помидоры"
+                                    >
                                     <span class="menu-tag bg-warning">Помидоры</span>
                                 </a>
                             </div>
@@ -568,8 +766,11 @@
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="cabbage-ru.html">
-                                    <img src="images/dinner/farhad-ibrahimzade-ZipYER3NLhY-unsplash.jpg" 
-                                        class="img-fluid menu-image" alt="Капуста">
+                                    <img 
+                                        src="images/dinner/farhad-ibrahimzade-ZipYER3NLhY-unsplash.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Капуста"
+                                    >
                                     <span class="menu-tag bg-warning">Капуста</span>
                                 </a>
                             </div>
@@ -585,8 +786,11 @@
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="zucchini-ru.html">
-                                    <img src="images/breakfast/louis-hansel-dphM2U1xq0U-unsplash.jpg" 
-                                        class="img-fluid menu-image" alt="Кабачки, цукини, патиссоны">
+                                    <img 
+                                        src="images/breakfast/louis-hansel-dphM2U1xq0U-unsplash.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Кабачки, цукини, патиссоны"
+                                    >
                                     <span class="menu-tag bg-warning">Кабачки</span>
                                 </a>
                             </div>
@@ -602,8 +806,11 @@
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="adjika-ru.html">
-                                    <img src="images/lunch/farhad-ibrahimzade-D5c9ZciQy_I-unsplash3.jpg" 
-                                        class="img-fluid menu-image" alt="Заправки для борща, аджики, соусы, томаты">
+                                    <img 
+                                        src="images/lunch/farhad-ibrahimzade-D5c9ZciQy_I-unsplash3.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Заправки для борща, аджики, соусы, томаты"
+                                    >
                                     <span class="menu-tag bg-warning">Заправки</span>
                                 </a>
                             </div>
@@ -619,8 +826,11 @@
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="beet-ru.html">
-                                    <img src="images/lunch/farhad-ibrahimzade-D5c9ZciQy_I-unsplash1.jpg" 
-                                        class="img-fluid menu-image" alt="Свекла">
+                                    <img 
+                                        src="images/lunch/farhad-ibrahimzade-D5c9ZciQy_I-unsplash1.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Свекла"
+                                    >
                                     <span class="menu-tag bg-warning">Свекла</span>
                                 </a>
                             </div>
@@ -636,8 +846,11 @@
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="sweet-ru.html">
-                                    <img src="images/dinner/farhad-ibrahimzade-ZipYER3NLhY-unsplash2.jpg" 
-                                        class="img-fluid menu-image" alt="Перец сладкий, лечо">
+                                    <img 
+                                        src="images/dinner/farhad-ibrahimzade-ZipYER3NLhY-unsplash2.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Перец сладкий, лечо"
+                                    >
                                     <span class="menu-tag bg-warning">Перец сладкий</span>
                                 </a>
                             </div>
@@ -653,8 +866,11 @@
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="mushrooms-ru.html">
-                                    <img src="images/dinner/farhad-ibrahimzade-ZipYER3NLhY-unsplash1.jpg" 
-                                        class="img-fluid menu-image" alt="Грибы маринованные">
+                                    <img 
+                                        src="images/dinner/farhad-ibrahimzade-ZipYER3NLhY-unsplash1.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Грибы"
+                                    >
                                     <span class="menu-tag bg-warning">Грибы</span>
                                 </a>
                             </div>
@@ -670,8 +886,11 @@
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="fish-ru.html">
-                                    <img src="images/breakfast/louis-hansel-dphM2U1xq0U-unsplash2.jpg" 
-                                        class="img-fluid menu-image" alt="Рыба">
+                                    <img 
+                                        src="images/breakfast/louis-hansel-dphM2U1xq0U-unsplash2.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Рыба"
+                                    >
                                     <span class="menu-tag bg-warning">Рыба</span>
                                 </a>
                             </div>
@@ -687,8 +906,11 @@
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="salad-ru.html">
-                                    <img src="images/breakfast/louis-hansel-dphM2U1xq0U-unsplash1.jpg" 
-                                        class="img-fluid menu-image" alt="Салаты">
+                                    <img 
+                                        src="images/breakfast/louis-hansel-dphM2U1xq0U-unsplash1.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Салаты"
+                                    >
                                     <span class="menu-tag bg-warning">Салаты</span>
                                 </a>
                             </div>
@@ -704,8 +926,11 @@
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="meat-ru.html">
-                                    <img src="images/lunch/farhad-ibrahimzade-D5c9ZciQy_I-unsplash2.jpg" 
-                                        class="img-fluid menu-image" alt="мясо, тушонка">
+                                    <img 
+                                        src="images/lunch/farhad-ibrahimzade-D5c9ZciQy_I-unsplash2.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="мясо, тушонка"
+                                    >
                                     <span class="menu-tag bg-warning">Мясо</span>
                                 </a>
                             </div>
@@ -721,8 +946,11 @@
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="fruit-ru.html">
-                                    <img src="images/lunch/farhad-ibrahimzade-D5c9ZciQy_I-unsplash.jpg" 
-                                        class="img-fluid menu-image" alt="фрукты">
+                                    <img 
+                                        src="images/lunch/farhad-ibrahimzade-D5c9ZciQy_I-unsplash.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="фрукти"
+                                    >
                                     <span class="menu-tag bg-warning">Фрукты</span>
                                 </a>
                             </div>
@@ -738,14 +966,17 @@
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="juice-ru.html">
-                                    <img src="images/breakfast/brett-jordan-8xt8-HIFqc8-unsplash1.jpg" 
-                                        class="img-fluid menu-image" alt="Сок, компот, вино">
-                                    <span class="menu-tag bg-warning">Соки,компоты</span>
+                                    <img 
+                                        src="images/breakfast/brett-jordan-8xt8-HIFqc8-unsplash1.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Сок, компот, вино"
+                                    >
+                                    <span class="menu-tag bg-warning">Сок,компот</span>
                                 </a>
                             </div>
                             <div class="menu-info d-flex flex-wrap align-items-center">
                                 <a href="juice-ru.html">
-                                    <h4 class="mb-0">Соки, компоты, вина на зиму</h4>
+                                    <h4 class="mb-0">Сок, компот, вино на зиму</h4>
                                 </a>
                             </div>
                         </div>
@@ -755,8 +986,11 @@
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="jam-ru.html">
-                                    <img src="images/lunch/farhad-ibrahimzade-MGKqxm6u2bc-unsplash1.jpg" 
-                                        class="img-fluid menu-image" alt="Варенье, повидло, джем">
+                                    <img 
+                                        src="images/lunch/farhad-ibrahimzade-MGKqxm6u2bc-unsplash1.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Варенье , повидло, джем"
+                                    >
                                     <span class="menu-tag bg-warning">Варенье, повидло</span>
                                 </a>
                             </div>
@@ -772,14 +1006,17 @@
                         <div class="menu-thumb">
                             <div class="menu-image-wrap">
                                 <a href="vegetables-ru.html">
-                                    <img src="images/lunch/farhad-ibrahimzade-MGKqxm6u2bc-unsplash2.jpg" 
-                                        class="img-fluid menu-image" alt="Овощи и фрукты замороженные, вяленные, сушенные, печонные на зиму">
+                                    <img 
+                                        src="images/lunch/farhad-ibrahimzade-MGKqxm6u2bc-unsplash2.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Овощи фрукты замороженные печеные вяленые сушеные"
+                                    >
                                     <span class="menu-tag bg-warning">Овощи и фрукты</span>
                                 </a>
                             </div>
                             <div class="menu-info d-flex flex-wrap align-items-center">
                                 <a href="vegetables-ru.html">
-                                    <h4 class="mb-0">Овощи и фрукты замороженные, вяленные, сушенные, печонные на зиму</h4>
+                                    <h4 class="mb-0">Овощи, фрукты, замороженные, печеные, вяленые, сушеные</h4>
                                 </a>
                             </div>
                         </div>
@@ -793,73 +1030,108 @@
         </section>
 
         <section class="BgImage"></section>
-        
+
         <!-- Секция для добавления рецептов -->
         <section id="add-recipe" class="section-padding">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-12">
-                        <div class="recipe-form">
-                            <h2 class="form-title">Добавить свой рецепт</h2>
-                            <form id="recipeForm">
-                                <div class="mb-3">
-                                    <label for="recipeTitle" class="form-label">Название рецепта*</label>
-                                    <input type="text" class="form-control" id="recipeTitle" required 
-                                        placeholder="Введите название вашего рецепта">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeCategory" class="form-label">Категория*</label>
-                                    <select class="form-select" id="recipeCategory" required>
-                                        <option value="">Выберите категорию</option>
-                                        <option value="Завтрак">Завтрак</option>
-                                        <option value="Обед">Обед</option>
-                                        <option value="Ужин">Ужин</option>
-                                        <option value="Десерт">Десерт</option>
-                                        <option value="Постное">Постное</option>
-                                        <option value="Консервация">Консервация</option>
-                                        <option value="Выпечка">Выпечка</option>
-                                        <option value="Напитки">Напитки</option>
-                                        <option value="Салаты">Салаты</option>
-                                        <option value="Закуски">Закуски</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Изображение (опционально)</label>
-                                    <div class="file-input-wrapper">
-                                        <div class="file-input-label">
-                                            <i class="bi bi-upload me-2"></i>Выбрать файл
-                                            <input type="file" class="form-control" id="recipeImageFile" accept="image/*">
-                                        </div>
-                                        <span id="fileName" class="file-name">Файл не выбран</span>
+                        <div id="authMessage" class="alert alert-info text-center">
+                            <p>Пожалуйста, <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">войдите</a> или <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal">зарегистрируйтесь</a>, чтобы добавить рецепт!</p>
+                        </div>
+                        
+                        <div id="recipeFormContainer" class="d-none">
+                            <div class="recipe-form">
+                                <h2 class="form-title">Добавить свой рецепт</h2>
+                                <form id="recipeForm">
+                                    <div class="mb-3">
+                                        <label for="recipeTitle" class="form-label">Название рецепта*</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="recipeTitle" 
+                                            required 
+                                            placeholder="Введите название вашего рецепта"
+                                        >
                                     </div>
-                                    <div class="form-text">Максимальный размер: 1MB (JPG, PNG)</div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeIngredients" class="form-label">Ингредиенты*</label>
-                                    <textarea class="form-control" id="recipeIngredients" rows="4" required 
-                                        placeholder="Перечислите ингредиенты, каждый с новой строки"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeInstructions" class="form-label">Инструкция приготовления*</label>
-                                    <textarea class="form-control" id="recipeInstructions" rows="6" required 
-                                        placeholder="Опишите шаги приготовления"></textarea>
-                                </div>
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg">
-                                        <span id="submitSpinner" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                        Добавить рецепт
-                                    </button>
-                                </div>
-                            </form>
-                            
-                            <div id="recipePreview" class="recipe-preview mt-4">
-                                <h4>Предварительный просмотр:</h4>
-                                <div class="card recipe-card">
-                                    <img id="previewImage" src="images/default-recipe.jpg" class="card-img-top" 
-                                        alt="Предварительный просмотр">
-                                    <div class="card-body">
-                                        <h5 id="previewTitle" class="card-title">Название рецепта</h5>
-                                        <p id="previewCategory" class="card-text text-muted">Категория: не выбрано</p>
+                                    <div class="mb-3">
+                                        <label for="recipeCategory" class="form-label">Категория*</label>
+                                        <select class="form-select" id="recipeCategory" required>
+                                            <option value="">Выберите категорию</option>
+                                            <option value="Завтрак">Завтрак</option>
+                                            <option value="Обед">Обед</option>
+                                            <option value="Ужин">Ужин</option>
+                                            <option value="Десерт">Десерт</option>
+                                            <option value="Постное">Постное</option>
+                                            <option value="Консервация">Консервация</option>
+                                            <option value="Выпечка">Выпечка</option>
+                                            <option value="Напитки">Напитки</option>
+                                            <option value="Салаты">Салаты</option>
+                                            <option value="Закуски">Закуски</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Изображение (опционально)</label>
+                                        <div class="file-input-wrapper">
+                                            <div class="file-input-label">
+                                                <i class="bi bi-upload me-2"></i>Выбрать файл
+                                                <input 
+                                                    type="file" 
+                                                    class="form-control" 
+                                                    id="recipeImageFile" 
+                                                    accept="image/*"
+                                                >
+                                            </div>
+                                            <span id="fileName" class="file-name">Файл не выбран</span>
+                                        </div>
+                                        <div class="form-text">Максимальный размер: 1MB (JPG, PNG)</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="recipeIngredients" class="form-label">Ингредиенты*</label>
+                                        <textarea 
+                                            class="form-control" 
+                                            id="recipeIngredients" 
+                                            rows="4" 
+                                            required 
+                                            placeholder="Перечислите ингредиенты, каждый с новой строки"
+                                        ></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="recipeInstructions" class="form-label">Инструкция приготовления*</label>
+                                        <textarea 
+                                            class="form-control" 
+                                            id="recipeInstructions" 
+                                            rows="6" 
+                                            required 
+                                            placeholder="Опишите шаги приготовления"
+                                        ></textarea>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-success btn-lg">
+                                            <span 
+                                                id="submitSpinner" 
+                                                class="spinner-border spinner-border-sm me-2 d-none" 
+                                                role="status" 
+                                                aria-hidden="true"
+                                            ></span>
+                                            Добавить рецепт
+                                        </button>
+                                    </div>
+                                </form>
+                                
+                                <div id="recipePreview" class="recipe-preview mt-4">
+                                    <h4>Предварительный просмотр:</h4>
+                                    <div class="card recipe-card">
+                                        <img 
+                                            id="previewImage" 
+                                            src="images/default-recipe.jpg" 
+                                            class="card-img-top" 
+                                            alt="Предварительный просмотр"
+                                        >
+                                        <div class="card-body">
+                                            <h5 id="previewTitle" class="card-title">Название рецепта</h5>
+                                            <p id="previewCategory" class="card-text text-muted">Категория: не выбрано</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -903,51 +1175,51 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="text-white mb-4 me-5">Хрустящая кухня</h4>
-<footer style="
-  background-color: #fafafa;
-  padding: 25px 20px;
-  text-align: center;
-  font-size: 14px;
-  color: #777;
-  border-top: 1px solid #f0f0f0;
-">
-  <p style="margin: 0 0 10px 0; font-weight: 500; color: #555;">
-    © 2025 Домашние кулинарные рецепты
-  </p>
-  
-  <nav style="margin-top: 15px;">
-    <a href="about-ru.html" style="
-      margin: 0 12px;
-      color: #666;
-      text-decoration: none;
-      transition: color 0.2s;
-    ">О нас</a>
-    
-    <a href="mailto:korovinkonstantin0@gmail.com" style="
-      margin: 0 12px;
-      color: #666;
-      text-decoration: none;
-      transition: color 0.2s;
-    ">Контакты</a>
-    
-    <a href="privacy-ru.html" style="
-      margin: 0 12px;
-      color: #666;
-      text-decoration: none;
-      transition: color 0.2s;
-    ">Политика конфиденциальности</a>
-  </nav>
-  
-  <div style="margin-top: 20px; color: #aaa; font-size: 12px;">
-    Все права защищены
-  </div>
-</footer>
-  <footer style="text-align:center; margin-top: 2rem;">
-  <img 
-    src="https://hits.sh/crispy-cuisine-7334c.web.app.svg?style=flat-square&label=Просмотры&color=blue&logo=github" 
-    alt="Просмотры"
-  />
-</footer>
+                    <div style="
+                      background-color: #fafafa;
+                      padding: 25px 20px;
+                      text-align: center;
+                      font-size: 14px;
+                      color: #777;
+                      border-top: 1px solid #f0f0f0;
+                    ">
+                      <p style="margin: 0 0 10px 0; font-weight: 500; color: #555;">
+                        © 2025 Домашние кулинарные рецепты
+                      </p>
+                      
+                      <nav style="margin-top: 15px;">
+                        <a href="about-ru.html" style="
+                          margin: 0 12px;
+                          color: #666;
+                          text-decoration: none;
+                          transition: color 0.2s;
+                        ">О нас</a>
+                        
+                        <a href="mailto:korovinkonstantin0@gmail.com" style="
+                          margin: 0 12px;
+                          color: #666;
+                          text-decoration: none;
+                          transition: color 0.2s;
+                        ">Контакты</a>
+                        
+                        <a href="privacy-ru.html" style="
+                          margin: 0 12px;
+                          color: #666;
+                          text-decoration: none;
+                          transition: color 0.2s;
+                        ">Политика конфиденциальности</a>
+                      </nav>
+                      
+                      <div style="margin-top: 20px; color: #aaa; font-size: 12px;">
+                        Все права защищены
+                      </div>
+                    </div>
+                    <div style="text-align:center; margin-top: 2rem;">
+                      <img 
+                        src="https://hits.sh/crispy-cuisine-7334c.web.app.svg?style=flat-square&label=Просмотры&color=blue&logo=github" 
+                        alt="Просмотры"
+                      />
+                    </div>
                 </div>
             </div>
         </div>
@@ -961,56 +1233,322 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     
     <script>
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCmO3UwOLexKfUsNBiDhfVsJ7WWS9K_ft4",
-  authDomain: "crispy-cuisine-7334c.firebaseapp.com",
-  projectId: "crispy-cuisine-7334c",
-  storageBucket: "crispy-cuisine-7334c.firebasestorage.app",
-  messagingSenderId: "18003644183",
-  appId: "1:18003644183:web:4abb0800c18b00d7b83152",
-  measurementId: "G-250S27R82Y"
-};
+        const firebaseConfig = {
+          apiKey: "AIzaSyCmO3UwOLexKfUsNBiDhfVsJ7WWS9K_ft4",
+          authDomain: "crispy-cuisine-7334c.firebaseapp.com",
+          projectId: "crispy-cuisine-7334c",
+          storageBucket: "crispy-cuisine-7334c.appspot.com", // Исправленное имя бакета
+          messagingSenderId: "18003644183",
+          appId: "1:18003644183:web:4abb0800c18b00d7b83152",
+          measurementId: "G-250S27R82Y"
+        };
 
-        // Инициализация Firebase
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        const auth = firebase.auth();
         
-        // Глобальные переменные
+        // Global variables
         let lastVisible = null;
         let selectedFile = null;
-        const PAGE_SIZE = 6; // Количество рецептов за одну загрузку
+        let selectedFileObject = null; // Добавлено для обработки файлов
+        const PAGE_SIZE = 6;
+
+        // Функция для экранирования HTML
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
 
         $(document).ready(function() {
-            // Загрузка первых рецептов
+            // Load first recipes
             loadRecipes();
             
-            // Обработчики событий
+            // Event handlers
             $('#recipeForm').submit(handleFormSubmit);
             $('#recipeImageFile').on('change', handleImageUpload);
             $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
             $('#loadMoreBtn').on('click', loadMoreRecipes);
+            
+            // Authentication handlers
+            $('#loginForm').submit(handleLogin);
+            $('#registerForm').submit(handleRegister);
+            $('#logoutLink').click(handleLogout);
+            
+            // Track auth state
+            auth.onAuthStateChanged(handleAuthStateChange);
         });
 
-        // Обработка загрузки изображения
+        // Handle auth state change
+        function handleAuthStateChange(user) {
+            const loginItem = $('#loginItem');
+            const registerItem = $('#registerItem');
+            const logoutItem = $('#logoutItem');
+            const userStatus = $('#userStatus');
+            const userAvatar = $('#userAvatar');
+            const authMessage = $('#authMessage');
+            const recipeFormContainer = $('#recipeFormContainer');
+            const emailWarning = $('#emailWarning');
+            
+            if (user) {
+                db.collection("users").doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        const userName = doc.data().name;
+                        userStatus.text(userName);
+                        const initials = userName.split(' ').map(n => n[0]).join('').toUpperCase();
+                        $('#avatarInitials').text(initials.substring(0, 2));
+                        userAvatar.removeClass('d-none');
+                    }
+                }).catch(error => {
+                    console.error("Error getting user data:", error);
+                    userStatus.text(user.email);
+                    const initials = user.email.substring(0, 2).toUpperCase();
+                    $('#avatarInitials').text(initials);
+                    userAvatar.removeClass('d-none');
+                });
+                
+                loginItem.addClass('d-none');
+                registerItem.addClass('d-none');
+                logoutItem.removeClass('d-none');
+                
+                authMessage.addClass('d-none');
+                recipeFormContainer.removeClass('d-none');
+                
+                if (!user.emailVerified) {
+                    emailWarning.removeClass('d-none').html(
+                        `Ваш email <strong>${escapeHtml(user.email)}</strong> не подтвержден. 
+                        <a href="#" id="resendVerificationNavLink">Отправить письмо снова</a>`
+                    );
+                    
+                    $('#resendVerificationNavLink').on('click', function(e) {
+                        e.preventDefault();
+                        resendVerificationEmail(user);
+                    });
+                } else {
+                    emailWarning.addClass('d-none');
+                }
+            } else {
+                userStatus.text('Аккаунт');
+                userAvatar.addClass('d-none');
+                
+                loginItem.removeClass('d-none');
+                registerItem.removeClass('d-none');
+                logoutItem.addClass('d-none');
+                
+                authMessage.removeClass('d-none');
+                recipeFormContainer.addClass('d-none');
+                $('#emailWarning').addClass('d-none');
+            }
+        }
+
+        // Resend verification email
+        function resendVerificationEmail(user) {
+            user.sendEmailVerification()
+                .then(() => {
+                    alert('Письмо для подтверждения было отправлено снова на ваш email.');
+                })
+                .catch(error => {
+                    console.error("Resend error:", error);
+                    alert('Ошибка: ' + error.message);
+                });
+        }
+
+        // Handle login with email verification
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = $('#loginEmail').val().trim();
+            const password = $('#loginPassword').val();
+            
+            $('#loginEmailError').text('');
+            $('#loginPasswordError').text('');
+            
+            let isValid = true;
+            if (!email) {
+                $('#loginEmailError').text('Пожалуйста, введите email');
+                isValid = false;
+            }
+            if (!password) {
+                $('#loginPasswordError').text('Пожалуйста, введите пароль');
+                isValid = false;
+            }
+            if (!isValid) return;
+            
+            $('#loginSpinner').removeClass('d-none');
+            $('#loginForm button').prop('disabled', true);
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    
+                    if (!user.emailVerified) {
+                        $('#loginEmailError').html(
+                            'Ваш email еще не подтвержден. <a href="#" id="resendVerificationLink">Отправить письмо снова</a>'
+                        ).show();
+                        
+                        $('#resendVerificationLink').on('click', function(e) {
+                            e.preventDefault();
+                            resendVerificationEmail(user);
+                        });
+                        
+                        return auth.signOut();
+                    } else {
+                        $('#loginModal').modal('hide');
+                        $('#loginForm')[0].reset();
+                    }
+                })
+                .catch(error => {
+                    console.error("Login error:", error);
+                    let errorMessage = "Ошибка входа";
+                    
+                    switch(error.code) {
+                        case "auth/user-not-found":
+                        case "auth/invalid-email":
+                            errorMessage = "Пользователя с таким email не найдено";
+                            $('#loginEmailError').text(errorMessage);
+                            break;
+                        case "auth/wrong-password":
+                            errorMessage = "Неверный пароль";
+                            $('#loginPasswordError').text(errorMessage);
+                            break;
+                        case "auth/too-many-requests":
+                            errorMessage = "Слишком много попыток. Попробуйте позже";
+                            $('#loginPasswordError').text(errorMessage);
+                            break;
+                        case "auth/user-disabled":
+                            errorMessage = "Аккаунт отключен";
+                            $('#loginEmailError').text(errorMessage);
+                            break;
+                        default:
+                            $('#loginPasswordError').text(errorMessage);
+                    }
+                })
+                .finally(() => {
+                    $('#loginSpinner').addClass('d-none');
+                    $('#loginForm button').prop('disabled', false);
+                });
+        }
+
+        // Handle registration with email verification
+        function handleRegister(e) {
+            e.preventDefault();
+            
+            const name = $('#registerName').val().trim();
+            const email = $('#registerEmail').val().trim();
+            const password = $('#registerPassword').val();
+            const confirmPassword = $('#confirmPassword').val();
+            
+            $('#registerNameError').text('');
+            $('#registerEmailError').text('');
+            $('#registerPasswordError').text('');
+            $('#confirmPasswordError').text('');
+            
+            let isValid = true;
+            if (!name) {
+                $('#registerNameError').text('Пожалуйста, введите ваше имя');
+                isValid = false;
+            }
+            if (!email) {
+                $('#registerEmailError').text('Пожалуйста, введите email');
+                isValid = false;
+            }
+            if (!password) {
+                $('#registerPasswordError').text('Пожалуйста, введите пароль');
+                isValid = false;
+            }
+            if (password.length < 6) {
+                $('#registerPasswordError').text('Пароль должен содержать не менее 6 символов');
+                isValid = false;
+            }
+            if (password !== confirmPassword) {
+                $('#confirmPasswordError').text('Пароли не совпадают');
+                isValid = false;
+            }
+            if (!isValid) return;
+            
+            $('#registerSpinner').removeClass('d-none');
+            $('#registerForm button').prop('disabled', true);
+            
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    return db.collection("users").doc(userCredential.user.uid).set({
+                        name: name,
+                        email: email,
+                        emailVerified: false,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }).then(() => {
+                        return userCredential.user.sendEmailVerification();
+                    });
+                })
+                .then(() => {
+                    alert('Регистрация успешна! На вашу электронную адресу отправлено письмо со ссылкой для подтверждения. Пожалуйста, проверьте свою почту.');
+                    $('#registerModal').modal('hide');
+                    $('#registerForm')[0].reset();
+                })
+                .catch(error => {
+                    console.error("Registration error:", error);
+                    let errorMessage = "Ошибка регистрации";
+                    
+                    switch(error.code) {
+                        case "auth/email-already-in-use":
+                            errorMessage = "Этот email уже используется";
+                            break;
+                        case "auth/invalid-email":
+                            errorMessage = "Неверный формат email";
+                            break;
+                        case "auth/weak-password":
+                            errorMessage = "Пароль слишком слабый";
+                            break;
+                        case "auth/too-many-requests":
+                            errorMessage = "Слишком много попыток. Попробуйте позже";
+                            break;
+                    }
+                    
+                    $('#registerEmailError').text(errorMessage);
+                })
+                .finally(() => {
+                    $('#registerSpinner').addClass('d-none');
+                    $('#registerForm button').prop('disabled', false);
+                });
+        }
+
+        // Handle logout
+        function handleLogout(e) {
+            e.preventDefault();
+            auth.signOut()
+                .then(() => {
+                    console.log('User signed out successfully');
+                })
+                .catch(error => {
+                    console.error("Logout error:", error);
+                    alert('Ошибка при выходе: ' + error.message);
+                });
+        }
+
+        // Handle image upload
         function handleImageUpload(e) {
             const file = e.target.files[0];
             if (!file) {
                 $('#fileName').text('Файл не выбран');
                 selectedFile = null;
+                selectedFileObject = null;
                 return;
             }
 
-            // Проверка типа файла
             if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
                 alert('Пожалуйста, выберите файл в формате JPG или PNG.');
                 resetFileInput();
                 return;
             }
 
-            // Проверка размера файла
             if (file.size > 1048576) {
                 alert('Файл слишком большой. Максимальный размер 1MB.');
                 resetFileInput();
@@ -1018,6 +1556,7 @@ const firebaseConfig = {
             }
 
             $('#fileName').text(file.name);
+            selectedFileObject = file;
             
             const reader = new FileReader();
             reader.onload = function(event) {
@@ -1030,6 +1569,8 @@ const firebaseConfig = {
         function resetFileInput() {
             $('#recipeImageFile').val('');
             $('#fileName').text('Файл не выбран');
+            selectedFile = null;
+            selectedFileObject = null;
         }
 
         function updatePreview() {
@@ -1045,85 +1586,77 @@ const firebaseConfig = {
             $('#recipePreview').show();
         }
 
-        // Загрузка изображения в Cloudinary
+        // Upload image to Cloudinary
         async function uploadImage(file) {
             try {
                 const cloudName = "dhfkb6xv2";
                 const uploadPreset = "unsigned_preset";
-                
+
                 const formData = new FormData();
                 formData.append("file", file);
                 formData.append("upload_preset", uploadPreset);
                 formData.append("folder", "recipe_images");
-                
+
                 const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
                     method: "POST",
                     body: formData
                 });
-                
+
                 if (!response.ok) {
                     const errorData = await response.json();
                     throw new Error(errorData.error.message || "Ошибка Cloudinary");
                 }
-                
+
                 const data = await response.json();
-                
-                if (data.secure_url) {
-                    // Добавляем параметры для оптимизации
-                    return data.secure_url.replace('/upload/', '/upload/q_auto,f_auto/');
-                } else {
-                    throw new Error("Не удалось получить URL изображения");
-                }
+                return data.secure_url.replace('/upload/', '/upload/q_auto,f_auto/');
             } catch (error) {
                 console.error("Ошибка загрузки изображения:", error);
-                throw new Error("Не удалось загрузить изображение");
+                throw new Error("Не удалось загрузить изображение на Cloudinary");
             }
         }
 
-        // Обработка отправки формы
+        // Handle form submission
         async function handleFormSubmit(e) {
             e.preventDefault();
             
-            // Показываем спиннер
-            $('#submitSpinner').show();
+            if (!auth.currentUser) {
+                alert('Пожалуйста, войдите, чтобы добавить рецепт!');
+                return;
+            }
+            
+            $('#submitSpinner').removeClass('d-none');
             $('#recipeForm button').prop('disabled', true);
             
             try {
-                const fileInput = document.getElementById('recipeImageFile');
-                const file = fileInput.files[0];
-                
                 let imageUrl = 'images/default-recipe.jpg';
                 
-                // Загружаем изображение, если оно есть
-                if (file) {
-                    imageUrl = await uploadImage(file);
+                if (selectedFileObject) {
+                    console.log("Starting image upload...");
+                    imageUrl = await uploadImage(selectedFileObject);
+                    console.log("Image uploaded:", imageUrl);
                 }
                 
-                // Создаем объект рецепта
                 const recipe = {
                     title: $('#recipeTitle').val(),
                     category: $('#recipeCategory').val(),
                     image: imageUrl,
                     ingredients: $('#recipeIngredients').val(),
                     instructions: $('#recipeInstructions').val(),
+                    userId: auth.currentUser.uid,
+                    userEmail: auth.currentUser.email,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
                 
-                // Сохраняем в Firestore
+                console.log("Saving recipe:", recipe);
                 await db.collection("recipes").add(recipe);
                 
-                // Сброс формы
                 $('#recipeForm')[0].reset();
                 $('#recipePreview').hide();
                 resetFileInput();
-                selectedFile = null;
-                
-                // Перезагружаем рецепты
                 await loadRecipes();
                 
                 alert('Рецепт успешно добавлен!');
                 
-                // Прокрутка к новому рецепту
                 $('html, body').animate({
                     scrollTop: $('#user-recipes').offset().top - 100
                 }, 800);
@@ -1131,29 +1664,24 @@ const firebaseConfig = {
                 console.error("Ошибка сохранения рецепта:", error);
                 alert('Произошла ошибка: ' + error.message);
             } finally {
-                // Скрываем спиннер и активируем кнопку
-                $('#submitSpinner').hide();
+                $('#submitSpinner').addClass('d-none');
                 $('#recipeForm button').prop('disabled', false);
             }
         }
 
-        // Загрузка рецептов
+        // Load recipes
         async function loadRecipes() {
             try {
-                // Показываем индикатор загрузки
                 $('#loadingRecipes').show();
                 $('#recipesContainer').empty();
                 $('#noRecipesMessage').addClass('d-none');
                 $('#loadMoreBtn').addClass('d-none');
                 
-                // Запрос к Firestore
                 const query = db.collection("recipes")
                     .orderBy("createdAt", "desc")
                     .limit(PAGE_SIZE);
                 
                 const snapshot = await query.get();
-                
-                // Скрываем индикатор загрузки
                 $('#loadingRecipes').hide();
                 
                 if (snapshot.empty) {
@@ -1161,13 +1689,9 @@ const firebaseConfig = {
                     return;
                 }
                 
-                // Сохраняем последний документ для пагинации
                 lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                
-                // Отображаем рецепты
                 displayRecipes(snapshot);
                 
-                // Показываем кнопку "Загрузить еще", если есть еще рецепты
                 if (snapshot.size === PAGE_SIZE) {
                     $('#loadMoreBtn').removeClass('d-none');
                 }
@@ -1177,7 +1701,7 @@ const firebaseConfig = {
             }
         }
 
-        // Загрузка дополнительных рецептов
+        // Load more recipes
         async function loadMoreRecipes() {
             try {
                 $('#loadMoreBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Загрузка...');
@@ -1194,13 +1718,9 @@ const firebaseConfig = {
                     return;
                 }
                 
-                // Обновляем последний документ
                 lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                
-                // Добавляем новые рецепты
                 displayRecipes(snapshot);
                 
-                // Скрываем кнопку, если больше нет рецептов
                 if (snapshot.size < PAGE_SIZE) {
                     $('#loadMoreBtn').hide();
                 } else {
@@ -1213,7 +1733,7 @@ const firebaseConfig = {
             }
         }
 
-        // Отображение рецептов на странице
+        // Display recipes on page
         function displayRecipes(snapshot) {
             const container = $('#recipesContainer');
             
@@ -1221,7 +1741,6 @@ const firebaseConfig = {
                 const recipe = doc.data();
                 const recipeId = doc.id;
                 
-                // Форматируем дату
                 const date = recipe.createdAt ? 
                     new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
                         day: 'numeric',
@@ -1229,18 +1748,34 @@ const firebaseConfig = {
                         year: 'numeric'
                     }) : 'Дата не указана';
                 
+                let userName = recipe.userEmail;
+                let initials = userName.substring(0, 2).toUpperCase();
+                
                 const recipeHtml = `
                 <div class="col-lg-4 col-md-6 col-12 mb-4">
                     <div class="menu-thumb recipe-card">
                         <div class="menu-image-wrap position-relative">
                             <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
-                                <img src="${recipe.image}" class="img-fluid menu-image" alt="${recipe.title}" loading="lazy">
+                                <img 
+                                    src="${recipe.image}" 
+                                    class="img-fluid menu-image" 
+                                    alt="${escapeHtml(recipe.title)}" 
+                                    loading="lazy"
+                                >
                                 <span class="user-recipe-tag bg-success">Пользовательский</span>
                             </a>
                         </div>
-                        <div class="menu-info d-flex flex-wrap align-items-center">
-                            <h4 class="mb-0">${recipe.title}</h4>
-                            <span class="text-muted small ms-2">${date}</span>
+                        <div class="menu-info">
+                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
+                                <h4 class="mb-1">${escapeHtml(recipe.title)}</h4>
+                            </a>
+                            <div class="d-flex align-items-center mt-2">
+                                <div class="user-avatar small">
+                                    <span>${initials}</span>
+                                </div>
+                                <small class="text-muted">${escapeHtml(userName)}</small>
+                                <small class="text-muted ms-auto">${date}</small>
+                            </div>
                         </div>
                     </div>
                 </div>`;
@@ -1249,7 +1784,7 @@ const firebaseConfig = {
             });
         }
 
-        // Показ деталей рецепта
+        // Show recipe details
         window.showRecipeDetails = async function(recipeId) {
             try {
                 const doc = await db.collection("recipes").doc(recipeId).get();
@@ -1261,7 +1796,6 @@ const firebaseConfig = {
                 
                 const recipe = doc.data();
                 
-                // Форматируем дату
                 const date = recipe.createdAt ? 
                     new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
                         day: 'numeric',
@@ -1271,22 +1805,44 @@ const firebaseConfig = {
                         minute: '2-digit'
                     }) : 'Дата не указана';
                 
-                // Создаем HTML для модального окна
+                let userName = recipe.userEmail;
+                let userInitials = userName.substring(0, 2).toUpperCase();
+                
+                if (recipe.userId) {
+                    const userDoc = await db.collection("users").doc(recipe.userId).get();
+                    if (userDoc.exists && userDoc.data().name) {
+                        userName = userDoc.data().name;
+                        userInitials = userName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                    }
+                }
+                
                 const modalHtml = `
                 <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">${recipe.title}</h5>
+                                <h5 class="modal-title">${escapeHtml(recipe.title)}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-md-5 mb-3 mb-md-0">
-                                        <img src="${recipe.image}" class="img-fluid rounded mb-3" alt="${recipe.title}">
+                                        <img 
+                                            src="${recipe.image}" 
+                                            class="img-fluid rounded mb-3" 
+                                            alt="${escapeHtml(recipe.title)}"
+                                        >
                                         <div class="recipe-meta">
-                                            <p><strong>Категория:</strong> ${recipe.category || 'Не указана'}</p>
-                                            <p><strong>Добавлено:</strong> ${date}</p>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="user-avatar">
+                                                    <span>${userInitials}</span>
+                                                </div>
+                                                <div>
+                                                    <div><strong>Автор:</strong> ${escapeHtml(userName)}</div>
+                                                    <div><strong>Добавлено:</strong> ${date}</div>
+                                                </div>
+                                            </div>
+                                            <p><strong>Категория:</strong> ${escapeHtml(recipe.category || 'Не указана')}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-7">
@@ -1308,14 +1864,10 @@ const firebaseConfig = {
                     </div>
                 </div>`;
                 
-                // Добавляем модальное окно в DOM
                 $('body').append(modalHtml);
-                
-                // Показываем модальное окно
                 const modal = new bootstrap.Modal(document.getElementById('recipeDetailModal'));
                 modal.show();
                 
-                // Удаляем модальное окно после закрытия
                 $('#recipeDetailModal').on('hidden.bs.modal', function() {
                     $(this).remove();
                 });
@@ -1325,9 +1877,11 @@ const firebaseConfig = {
             }
         }
 
-        // Форматирование текста (замена переносов строк)
+        // Format text (replace line breaks)
         function formatText(text) {
-            return text.replace(/\n/g, '<br>');
+            if (!text) return '';
+            const escaped = escapeHtml(text);
+            return escaped.replace(/\n/g, '<br>');
         }
     </script>
 </body>
