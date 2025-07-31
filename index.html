@@ -36,11 +36,37 @@
     <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
     
     <style>
-        .file-input-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            width: 100%;
+        /* Стилі для аутентифікації */
+        .auth-modal .modal-content {
+            border-radius: 0.8rem;
+        }
+        
+        .auth-modal .modal-header {
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+            border-bottom: none;
+        }
+        
+        .auth-modal .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .auth-modal .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #198754;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 8px;
         }
         
         .file-input-wrapper {
@@ -312,6 +338,27 @@
             z-index: 2;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        
+        /* Стилі для помилок форми */
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        /* Стилі для аватарки в навігації */
+        .nav-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #198754;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 8px;
+        }
     </style>
 </head>
     
@@ -353,6 +400,25 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#add-recipe">Додати рецепт</a>
                     </li>
+                </ul>
+                
+                <!-- Блок аутентифікації -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown" id="accountDropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <div class="d-flex align-items-center">
+                                <div id="userAvatar" class="nav-avatar d-none">
+                                    <span id="avatarInitials">U</span>
+                                </div>
+                                <span id="userStatus">Акаунт</span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li id="loginItem"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Увійти</a></li>
+                            <li id="registerItem"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Реєстрація</a></li>
+                            <li id="logoutItem" class="d-none"><a class="dropdown-item" href="#" id="logoutLink">Вийти</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item">
                         <a href="index-ru.html"><span class="category-tag me-3 bg-info">RU</span></a>
                     </li>
@@ -360,6 +426,79 @@
             </div>
         </div>
     </nav>
+
+    <!-- Модальні вікна для аутентифікації -->
+    <div class="modal fade auth-modal" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Увійти</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email*</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                            <div class="error-message" id="loginEmailError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Пароль*</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                            <div class="error-message" id="loginPasswordError"></div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">
+                                <span id="loginSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                                Увійти
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade auth-modal" id="registerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Реєстрація</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label">Ім'я*</label>
+                            <input type="text" class="form-control" id="registerName" required>
+                            <div class="error-message" id="registerNameError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email*</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                            <div class="error-message" id="registerEmailError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Пароль*</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                            <div class="error-message" id="registerPasswordError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Підтвердіть пароль*</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                            <div class="error-message" id="confirmPasswordError"></div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">
+                                <span id="registerSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                                Зареєструватися
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <main>
         <section class="hero">
@@ -886,96 +1025,102 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-12">
-                        <div class="recipe-form">
-                            <h2 class="form-title">Додати свій рецепт</h2>
-                            <form id="recipeForm">
-                                <div class="mb-3">
-                                    <label for="recipeTitle" class="form-label">Назва рецепту*</label>
-                                    <input 
-                                        type="text" 
-                                        class="form-control" 
-                                        id="recipeTitle" 
-                                        required 
-                                        placeholder="Введіть назву вашого рецепту"
-                                    >
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeCategory" class="form-label">Категорія*</label>
-                                    <select class="form-select" id="recipeCategory" required>
-                                        <option value="">Виберіть категорію</option>
-                                        <option value="Сніданок">Сніданок</option>
-                                        <option value="Обід">Обід</option>
-                                        <option value="Вечеря">Вечеря</option>
-                                        <option value="Десерт">Десерт</option>
-                                        <option value="Пістне">Пістне</option>
-                                        <option value="Консервація">Консервація</option>
-                                        <option value="Випічка">Випічка</option>
-                                        <option value="Напої">Напої</option>
-                                        <option value="Салати">Салати</option>
-                                        <option value="Закуски">Закуски</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Зображення (опціонально)</label>
-                                    <div class="file-input-wrapper">
-                                        <div class="file-input-label">
-                                            <i class="bi bi-upload me-2"></i>Обрати файл
-                                            <input 
-                                                type="file" 
-                                                class="form-control" 
-                                                id="recipeImageFile" 
-                                                accept="image/*"
-                                            >
-                                        </div>
-                                        <span id="fileName" class="file-name">Файл не обрано</span>
+                        <div id="authMessage" class="alert alert-info text-center">
+                            <p>Будь ласка, <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">увійдіть</a> або <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal">зареєструйтесь</a>, щоб додати рецепт!</p>
+                        </div>
+                        
+                        <div id="recipeFormContainer" class="d-none">
+                            <div class="recipe-form">
+                                <h2 class="form-title">Додати свій рецепт</h2>
+                                <form id="recipeForm">
+                                    <div class="mb-3">
+                                        <label for="recipeTitle" class="form-label">Назва рецепту*</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="recipeTitle" 
+                                            required 
+                                            placeholder="Введіть назву вашого рецепту"
+                                        >
                                     </div>
-                                    <div class="form-text">Максимальний розмір: 1MB (JPG, PNG)</div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeIngredients" class="form-label">Інгредієнти*</label>
-                                    <textarea 
-                                        class="form-control" 
-                                        id="recipeIngredients" 
-                                        rows="4" 
-                                        required 
-                                        placeholder="Перелічіть інгредієнти, кожен з нового рядка"
-                                    ></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeInstructions" class="form-label">Інструкція приготування*</label>
-                                    <textarea 
-                                        class="form-control" 
-                                        id="recipeInstructions" 
-                                        rows="6" 
-                                        required 
-                                        placeholder="Опишіть кроки приготування"
-                                    ></textarea>
-                                </div>
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg">
-                                        <span 
-                                            id="submitSpinner" 
-                                            class="spinner-border spinner-border-sm me-2" 
-                                            role="status" 
-                                            aria-hidden="true"
-                                        ></span>
-                                        Додати рецепт
-                                    </button>
-                                </div>
-                            </form>
-                            
-                            <div id="recipePreview" class="recipe-preview mt-4">
-                                <h4>Попередній перегляд:</h4>
-                                <div class="card recipe-card">
-                                    <img 
-                                        id="previewImage" 
-                                        src="images/default-recipe.jpg" 
-                                        class="card-img-top" 
-                                        alt="Попередній перегляд"
-                                    >
-                                    <div class="card-body">
-                                        <h5 id="previewTitle" class="card-title">Назва рецепту</h5>
-                                        <p id="previewCategory" class="card-text text-muted">Категорія: не вибрано</p>
+                                    <div class="mb-3">
+                                        <label for="recipeCategory" class="form-label">Категорія*</label>
+                                        <select class="form-select" id="recipeCategory" required>
+                                            <option value="">Виберіть категорію</option>
+                                            <option value="Сніданок">Сніданок</option>
+                                            <option value="Обід">Обід</option>
+                                            <option value="Вечеря">Вечеря</option>
+                                            <option value="Десерт">Десерт</option>
+                                            <option value="Пістне">Пістне</option>
+                                            <option value="Консервація">Консервація</option>
+                                            <option value="Випічка">Випічка</option>
+                                            <option value="Напої">Напої</option>
+                                            <option value="Салати">Салати</option>
+                                            <option value="Закуски">Закуски</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Зображення (опціонально)</label>
+                                        <div class="file-input-wrapper">
+                                            <div class="file-input-label">
+                                                <i class="bi bi-upload me-2"></i>Обрати файл
+                                                <input 
+                                                    type="file" 
+                                                    class="form-control" 
+                                                    id="recipeImageFile" 
+                                                    accept="image/*"
+                                                >
+                                            </div>
+                                            <span id="fileName" class="file-name">Файл не обрано</span>
+                                        </div>
+                                        <div class="form-text">Максимальний розмір: 1MB (JPG, PNG)</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="recipeIngredients" class="form-label">Інгредієнти*</label>
+                                        <textarea 
+                                            class="form-control" 
+                                            id="recipeIngredients" 
+                                            rows="4" 
+                                            required 
+                                            placeholder="Перелічіть інгредієнти, кожен з нового рядка"
+                                        ></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="recipeInstructions" class="form-label">Інструкція приготування*</label>
+                                        <textarea 
+                                            class="form-control" 
+                                            id="recipeInstructions" 
+                                            rows="6" 
+                                            required 
+                                            placeholder="Опишіть кроки приготування"
+                                        ></textarea>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-success btn-lg">
+                                            <span 
+                                                id="submitSpinner" 
+                                                class="spinner-border spinner-border-sm me-2 d-none" 
+                                                role="status" 
+                                                aria-hidden="true"
+                                            ></span>
+                                            Додати рецепт
+                                        </button>
+                                    </div>
+                                </form>
+                                
+                                <div id="recipePreview" class="recipe-preview mt-4">
+                                    <h4>Попередній перегляд:</h4>
+                                    <div class="card recipe-card">
+                                        <img 
+                                            id="previewImage" 
+                                            src="images/default-recipe.jpg" 
+                                            class="card-img-top" 
+                                            alt="Попередній перегляд"
+                                        >
+                                        <div class="card-body">
+                                            <h5 id="previewTitle" class="card-title">Назва рецепту</h5>
+                                            <p id="previewCategory" class="card-text text-muted">Категорія: не вибрано</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1077,6 +1222,7 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     
     <script>
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -1093,6 +1239,7 @@ const firebaseConfig = {
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        const auth = firebase.auth();
         
         // Global variables
         let lastVisible = null;
@@ -1108,7 +1255,216 @@ const firebaseConfig = {
             $('#recipeImageFile').on('change', handleImageUpload);
             $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
             $('#loadMoreBtn').on('click', loadMoreRecipes);
+            
+            // Authentication handlers
+            $('#loginForm').submit(handleLogin);
+            $('#registerForm').submit(handleRegister);
+            $('#logoutLink').click(handleLogout);
+            
+            // Track auth state
+            auth.onAuthStateChanged(handleAuthStateChange);
         });
+
+        // Handle auth state change
+        function handleAuthStateChange(user) {
+            const loginItem = $('#loginItem');
+            const registerItem = $('#registerItem');
+            const logoutItem = $('#logoutItem');
+            const userStatus = $('#userStatus');
+            const userAvatar = $('#userAvatar');
+            const authMessage = $('#authMessage');
+            const recipeFormContainer = $('#recipeFormContainer');
+            
+            if (user) {
+                // User is signed in
+                db.collection("users").doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        const userName = doc.data().name;
+                        userStatus.text(userName);
+                        // Set avatar initials
+                        const initials = userName.split(' ').map(n => n[0]).join('').toUpperCase();
+                        $('#avatarInitials').text(initials.substring(0, 2));
+                        userAvatar.removeClass('d-none');
+                    }
+                }).catch(error => {
+                    console.error("Error getting user data:", error);
+                    userStatus.text(user.email);
+                    const initials = user.email.substring(0, 2).toUpperCase();
+                    $('#avatarInitials').text(initials);
+                    userAvatar.removeClass('d-none');
+                });
+                
+                loginItem.addClass('d-none');
+                registerItem.addClass('d-none');
+                logoutItem.removeClass('d-none');
+                
+                // Show recipe form
+                authMessage.addClass('d-none');
+                recipeFormContainer.removeClass('d-none');
+            } else {
+                // User is signed out
+                userStatus.text('Акаунт');
+                userAvatar.addClass('d-none');
+                
+                loginItem.removeClass('d-none');
+                registerItem.removeClass('d-none');
+                logoutItem.addClass('d-none');
+                
+                // Hide recipe form
+                authMessage.removeClass('d-none');
+                recipeFormContainer.addClass('d-none');
+            }
+        }
+
+        // Handle login
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = $('#loginEmail').val().trim();
+            const password = $('#loginPassword').val();
+            
+            // Clear errors
+            $('#loginEmailError').text('');
+            $('#loginPasswordError').text('');
+            
+            // Validation
+            let isValid = true;
+            if (!email) {
+                $('#loginEmailError').text('Будь ласка, введіть email');
+                isValid = false;
+            }
+            if (!password) {
+                $('#loginPasswordError').text('Будь ласка, введіть пароль');
+                isValid = false;
+            }
+            if (!isValid) return;
+            
+            // Show spinner
+            $('#loginSpinner').removeClass('d-none');
+            $('#loginForm button').prop('disabled', true);
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    $('#loginModal').modal('hide');
+                    $('#loginForm')[0].reset();
+                })
+                .catch(error => {
+                    console.error("Login error:", error);
+                    let errorMessage = "Помилка входу";
+                    
+                    switch(error.code) {
+                        case "auth/user-not-found":
+                            errorMessage = "Користувача з таким email не знайдено";
+                            break;
+                        case "auth/wrong-password":
+                            errorMessage = "Невірний пароль";
+                            break;
+                        case "auth/invalid-email":
+                            errorMessage = "Невірний формат email";
+                            break;
+                    }
+                    
+                    $('#loginPasswordError').text(errorMessage);
+                })
+                .finally(() => {
+                    $('#loginSpinner').addClass('d-none');
+                    $('#loginForm button').prop('disabled', false);
+                });
+        }
+
+        // Handle registration
+        function handleRegister(e) {
+            e.preventDefault();
+            
+            const name = $('#registerName').val().trim();
+            const email = $('#registerEmail').val().trim();
+            const password = $('#registerPassword').val();
+            const confirmPassword = $('#confirmPassword').val();
+            
+            // Clear errors
+            $('#registerNameError').text('');
+            $('#registerEmailError').text('');
+            $('#registerPasswordError').text('');
+            $('#confirmPasswordError').text('');
+            
+            // Validation
+            let isValid = true;
+            if (!name) {
+                $('#registerNameError').text('Будь ласка, введіть ваше ім\'я');
+                isValid = false;
+            }
+            if (!email) {
+                $('#registerEmailError').text('Будь ласка, введіть email');
+                isValid = false;
+            }
+            if (!password) {
+                $('#registerPasswordError').text('Будь ласка, введіть пароль');
+                isValid = false;
+            }
+            if (password.length < 6) {
+                $('#registerPasswordError').text('Пароль повинен містити щонайменше 6 символів');
+                isValid = false;
+            }
+            if (password !== confirmPassword) {
+                $('#confirmPasswordError').text('Паролі не співпадають');
+                isValid = false;
+            }
+            if (!isValid) return;
+            
+            // Show spinner
+            $('#registerSpinner').removeClass('d-none');
+            $('#registerForm button').prop('disabled', true);
+            
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    // Save user data to Firestore
+                    return db.collection("users").doc(userCredential.user.uid).set({
+                        name: name,
+                        email: email,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                })
+                .then(() => {
+                    $('#registerModal').modal('hide');
+                    $('#registerForm')[0].reset();
+                    alert('Реєстрація успішна! Ласкаво просимо, ' + name + '!');
+                })
+                .catch(error => {
+                    console.error("Registration error:", error);
+                    let errorMessage = "Помилка реєстрації";
+                    
+                    switch(error.code) {
+                        case "auth/email-already-in-use":
+                            errorMessage = "Цей email вже використовується";
+                            break;
+                        case "auth/invalid-email":
+                            errorMessage = "Невірний формат email";
+                            break;
+                        case "auth/weak-password":
+                            errorMessage = "Пароль занадто слабкий";
+                            break;
+                    }
+                    
+                    $('#registerEmailError').text(errorMessage);
+                })
+                .finally(() => {
+                    $('#registerSpinner').addClass('d-none');
+                    $('#registerForm button').prop('disabled', false);
+                });
+        }
+
+        // Handle logout
+        function handleLogout(e) {
+            e.preventDefault();
+            auth.signOut()
+                .then(() => {
+                    alert('Ви успішно вийшли з акаунту');
+                })
+                .catch(error => {
+                    console.error("Logout error:", error);
+                    alert('Помилка при виході: ' + error.message);
+                });
+        }
 
         // Handle image upload
         function handleImageUpload(e) {
@@ -1201,8 +1557,14 @@ const firebaseConfig = {
         async function handleFormSubmit(e) {
             e.preventDefault();
             
+            // Check if user is authenticated
+            if (!auth.currentUser) {
+                alert('Будь ласка, увійдіть, щоб додати рецепт!');
+                return;
+            }
+            
             // Show spinner
-            $('#submitSpinner').show();
+            $('#submitSpinner').removeClass('d-none');
             $('#recipeForm button').prop('disabled', true);
             
             try {
@@ -1225,6 +1587,8 @@ const firebaseConfig = {
                     image: imageUrl,
                     ingredients: $('#recipeIngredients').val(),
                     instructions: $('#recipeInstructions').val(),
+                    userId: auth.currentUser.uid,
+                    userEmail: auth.currentUser.email,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
                 
@@ -1253,7 +1617,7 @@ const firebaseConfig = {
                 alert('Сталася помилка: ' + error.message);
             } finally {
                 // Hide spinner and activate button
-                $('#submitSpinner').hide();
+                $('#submitSpinner').addClass('d-none');
                 $('#recipeForm button').prop('disabled', false);
             }
         }
@@ -1350,6 +1714,10 @@ const firebaseConfig = {
                         year: 'numeric'
                     }) : 'Дата не вказана';
                 
+                // Get user initials for avatar
+                let userName = recipe.userEmail;
+                let initials = userName.substring(0, 2).toUpperCase();
+                
                 const recipeHtml = `
                 <div class="col-lg-4 col-md-6 col-12 mb-4">
                     <div class="menu-thumb recipe-card">
@@ -1364,9 +1732,17 @@ const firebaseConfig = {
                                 <span class="user-recipe-tag bg-success">Користувацький</span>
                             </a>
                         </div>
-                        <div class="menu-info d-flex flex-wrap align-items-center">
-                            <h4 class="mb-0">${recipe.title}</h4>
-                            <span class="text-muted small ms-2">${date}</span>
+                        <div class="menu-info">
+                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
+                                <h4 class="mb-1">${recipe.title}</h4>
+                            </a>
+                            <div class="d-flex align-items-center mt-2">
+                                <div class="user-avatar small">
+                                    <span>${initials}</span>
+                                </div>
+                                <small class="text-muted">${userName}</small>
+                                <small class="text-muted ms-auto">${date}</small>
+                            </div>
                         </div>
                     </div>
                 </div>`;
@@ -1397,6 +1773,18 @@ const firebaseConfig = {
                         minute: '2-digit'
                     }) : 'Дата не вказана';
                 
+                // Get user name
+                let userName = recipe.userEmail;
+                let userInitials = userName.substring(0, 2).toUpperCase();
+                
+                if (recipe.userId) {
+                    const userDoc = await db.collection("users").doc(recipe.userId).get();
+                    if (userDoc.exists && userDoc.data().name) {
+                        userName = userDoc.data().name;
+                        userInitials = userName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                    }
+                }
+                
                 // Create HTML for modal
                 const modalHtml = `
                 <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
@@ -1415,8 +1803,16 @@ const firebaseConfig = {
                                             alt="${recipe.title}"
                                         >
                                         <div class="recipe-meta">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="user-avatar">
+                                                    <span>${userInitials}</span>
+                                                </div>
+                                                <div>
+                                                    <div><strong>Автор:</strong> ${userName}</div>
+                                                    <div><strong>Додано:</strong> ${date}</div>
+                                                </div>
+                                            </div>
                                             <p><strong>Категорія:</strong> ${recipe.category || 'Не вказана'}</p>
-                                            <p><strong>Додано:</strong> ${date}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-7">
