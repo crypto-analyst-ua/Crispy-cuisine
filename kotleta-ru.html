@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Котлеты по-киевски - украинская классика</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #fff8e1;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(to right, #ff5722, #ff9800);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+        }
+        
+        .hero-img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin: 2rem 0;
+            transition: transform 0.3s ease;
+        }
+        
+        .hero-img:hover {
+            transform: scale(1.02);
+        }
+        
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        h2 {
+            color: #e65100;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #ffe0b2;
+        }
+        
+        h3 {
+            color: #ef6c00;
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .ingredients-list, .instructions-list {
+            list-style-type: none;
+        }
+        
+        .ingredients-list li, .instructions-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .ingredients-list li:before {
+            content: "•";
+            color: #ff9800;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .instructions-list li {
+            counter-increment: step-counter;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions-list li:before {
+            content: counter(step-counter);
+            background-color: #ff9800;
+            color: white;
+            border-radius: 50%;
+            width: 1.8rem;
+            height: 1.8rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .tip-card {
+            background: #fff3e0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+        }
+        
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Котлеты по-киевски</h1>
+            <p class="subtitle">Украинская кулинарная классика, покорившая мир</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="hero">
+            <h2>Настоящий вкус Украины</h2>
+            <p>Нежное куриное филе, хрустящая панировка и тающее внутри сливочное масло с зеленью</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>История блюда</h2>
+            <p>Котлета по-киевски — знаковое блюдо украинской кухни, которое стало известным далеко за пределами нашей страны. Считается, что рецепт возник в Киеве в начале XX века. По легенде, блюдо было создано для участия в международном кулинарном конкурсе и сразу завоевало симпатии гурманов.</p>
+            <p>Отличительной особенностью котлет по-киевски является технология приготовления: куриное филе отбивается до тонкого слоя, заворачивается вокруг холодного сливочного масла с зеленью, панируется и жарится во фритюре до золотисто-коричневого цвета.</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>Ингредиенты</h2>
+            <ul class="ingredients-list">
+                <li>4 куриных филе (грудки)</li>
+                <li>200 г сливочного масла</li>
+                <li>1/2 пучка свежего укропа</li>
+                <li>1/2 пучка свежей петрушки</li>
+                <li>2 зубчика чеснока</li>
+                <li>Соль, черный молотый перец по вкусу</li>
+                <li>100 г муки</li>
+                <li>2 яйца</li>
+                <li>150 г панировочных сухарей</li>
+                <li>Масло для жарки (глубокий слой)</li>
+            </ul>
+        </section>
+        
+        <section class="content-section">
+            <h2>Способ приготовления</h2>
+            <ol class="instructions-list">
+                <li>Сливочное масло размягчите до комнатной температуры, добавьте измельченную зелень, выжатый чеснок, соль и перец. Перемешайте и сформируйте из массы небольшие колбаски. Положите в морозилку на 30 минут.</li>
+                <li>Куриные филе разрежьте вдоль, но не до конца, раскройте как книжку. Накройте пищевой пленкой и отбейте молотком до толщины около 0,5 см.</li>
+                <li>Посолите и поперчите отбитое мясо. На середину каждого куска положите замороженную колбаску из масла.</li>
+                <li>Аккуратно сверните филе, хорошо защепляя края, чтобы масло не вытекало во время жарки.</li>
+                <li>Обваляйте котлеты сначала в муке, затем во взбитых яйцах и наконец в панировочных сухарях. Повторите процедуру с яйцом и сухарями для более плотной панировки.</li>
+                <li>Положите котлеты в холодильник на 15-20 минут для фиксации формы.</li>
+                <li>Разогрейте масло в глубокой сковороде или фритюрнице до 160-170°C. Обжаривайте котлеты по 7-10 минут с каждой стороны до золотистого цвета.</li>
+                <li>Выньте котлеты на кухонную бумагу, чтобы удалить лишнее масло.</li>
+                <li>Подавайте горячими с картофелем, овощами или салатом.</li>
+            </ol>
+        </section>
+        
+        <section class="content-section">
+            <h2>Полезные советы</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h3>Как избежать вытекания масла</h3>
+                    <p>Хорошо защепите края котлеты и дважды панируйте. Охлаждение перед жаркой поможет маслу не вытекать.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>Температура масла</h3>
+                    <p>Если масло слишком разогрето, панировка подгорит, а мясо внутри останется сырым. Идеальная температура — 160-170°C.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>Вариации начинки</h3>
+                    <p>В масло можно добавить грибы, ветчину, сыр или другие ингредиенты по вашему вкусу.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>Подача</h3>
+                    <p>Подавайте котлету сразу после приготовления, чтобы масло внутри оставалось жидким и горячим.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2025 Украинская кухня | Все права защищены</p>
+            <p>Рецепт котлет по-киевски — наша национальная гордость</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Украинские вареники - рецепты</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: linear-gradient(to right, #0057b7, #ffd700);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            border-radius: 0 0 15px 15px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .recipe-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .recipe-title {
+            color: #0057b7;
+            border-bottom: 2px solid #ffd700;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .recipe-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .ingredients {
+            flex: 1;
+            min-width: 250px;
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .instructions {
+            flex: 2;
+            min-width: 300px;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .recipe-image {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .recipe-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #0057b7;
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        @media (max-width: 768px) {
+            .recipe-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Украинские вареники</h1>
+            <p>Вкусный символ Украины</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="intro">
+            <h2>Рецепты традиционных украинских вареников</h2>
+            <p>Вареники - это не просто блюдо, это часть украинской культуры и традиций. Готовим вместе!</p>
+        </div>
+
+        <!-- Рецепт вареников с картошкой -->
+        <div class="recipe-section">
+            <h2 class="recipe-title">Вареники с картошкой</h2>
+            
+            <div class="recipe-content">
+                <div class="ingredients">
+                    <h3>Ингредиенты:</h3>
+                    <h4>Для теста:</h4>
+                    <ul>
+                        <li>500 г муки</li>
+                        <li>250 мл воды</li>
+                        <li>1 яйцо</li>
+                        <li>1/2 ч. л. соли</li>
+                    </ul>
+                    <h4>Для начинки:</h4>
+                    <ul>
+                        <li>1 кг картофеля</li>
+                        <li>2 луковицы</li>
+                        <li>50 г сливочного масла</li>
+                        <li>соль по вкусу</li>
+                    </ul>
+                </div>
+                <div class="instructions">
+                    <h3>Способ приготовления:</h3>
+                    <ol>
+                        <li>Приготовить тесто: смешать муку, яйцо, соль и воду, замесить крутое тесто.</li>
+                        <li>Накрыть салфеткой и оставить на 30 минут.</li>
+                        <li>Картофель сварить в подсоленной воде, слить воду и сделать пюре.</li>
+                        <li>Лук нарезать и обжарить на масле до золотистого цвета, добавить к картофелю.</li>
+                        <li>Тесто раскатать, вырезать кружочки, начинить картофельной начинкой.</li>
+                        <li>Слепить вареники, варить в кипящей подсоленной воде 5-7 минут.</li>
+                        <li>Подавать со сметаной и зеленью.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Рецепт вареников с вишней -->
+        <div class="recipe-section">
+            <h2 class="recipe-title">Вареники с вишней</h2>
+            
+            <div class="recipe-content">
+                <div class="ingredients">
+                    <h3>Ингредиенты:</h3>
+                    <h4>Для теста:</h4>
+                    <ul>
+                        <li>500 г муки</li>
+                        <li>250 мл воды</li>
+                        <li>1 яйцо</li>
+                        <li>1 ст. л. сахара</li>
+                        <li>щепотка соли</li>
+                    </ul>
+                    <h4>Для начинки:</h4>
+                    <ul>
+                        <li>500 г вишни</li>
+                        <li>100 г сахара</li>
+                        <li>1 ст. л. крахмала</li>
+                    </ul>
+                </div>
+                <div class="instructions">
+                    <h3>Способ приготовления:</h3>
+                    <ol>
+                        <li>Замесить тесто как в предыдущем рецепте, добавив сахар.</li>
+                        <li>Вишню помыть, удалить косточки, смешать с сахаром и крахмалом.</li>
+                        <li>Тесто раскатать, вырезать кружочки.</li>
+                        <li>На каждый кружочек выложить начинку, слепить вареники.</li>
+                        <li>Варить в кипящей воде 4-5 минут.</li>
+                        <li>Подавать со сливочным маслом и сахаром.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Рецепт вареников с творогом -->
+        <div class="recipe-section">
+            <h2 class="recipe-title">Вареники с творогом</h2>
+            
+            <div class="recipe-content">
+                <div class="ingredients">
+                    <h3>Ингредиенты:</h3>
+                    <h4>Для теста:</h4>
+                    <ul>
+                        <li>500 г муки</li>
+                        <li>250 мл воды</li>
+                        <li>1 яйцо</li>
+                        <li>1/2 ч. л. соли</li>
+                    </ul>
+                    <h4>Для начинки:</h4>
+                    <ul>
+                        <li>500 г творога</li>
+                        <li>2-3 ст. л. сахара</li>
+                        <li>1 яйцо</li>
+                        <li>ванилин по вкусу</li>
+                    </ul>
+                </div>
+                <div class="instructions">
+                    <h3>Способ приготовления:</h3>
+                    <ol>
+                        <li>Приготовить тесто как в первом рецепте.</li>
+                        <li>Творог смешать с сахаром, яйцом и ванилином.</li>
+                        <li>Тесто раскатать, вырезать кружочки.</li>
+                        <li>Начинить творожной массой, слепить вареники.</li>
+                        <li>Варить в кипящей воде 5-7 минут.</li>
+                        <li>Подавать со сметаной и медом или вареньем.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Украинские вареники - вкус традиций</p>
+            <p>Рецепты украинской кухни</p>
+        </div>
+    </footer>
+</body>
+</html>

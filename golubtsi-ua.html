@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Голубці - традиційний український рецепт</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f5f0;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400"><rect width="800" height="400" fill="%23feb47b"/><text x="400" y="200" font-family="Arial" font-size="30" fill="white" text-anchor="middle">Зображення апетитних голубців</text></svg>');
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-wrapper {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .ingredients {
+            flex: 1;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .instructions {
+            flex: 2;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        h2 {
+            color: #ff7e5f;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ffd8c9;
+        }
+        
+        h3 {
+            color: #ff7e5f;
+            margin: 20px 0 10px;
+        }
+        
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .tips {
+            background-color: #fff9f0;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            
+            .hero-image {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Голубці</h1>
+            <p class="subtitle">Традиційна українська страва, яка полюбляється у кожній родині</p>
+        </header>
+        
+        <div class="content-wrapper">
+            <div class="ingredients">
+                <h2>Інгредієнти</h2>
+                
+                <h3>Для начинки:</h3>
+                <ul>
+                    <li>500 г м'якого фаршу (свинина + яловичина)</li>
+                    <li>1 склянка рису</li>
+                    <li>1 цибулина</li>
+                    <li>1 морква</li>
+                    <li>2 ст. ложки олії</li>
+                    <li>сіль, перець за смаком</li>
+                </ul>
+                
+                <h3>Для соусу:</h3>
+                <ul>
+                    <li>3 ст. ложки томатної пасти</li>
+                    <li>2 склянки овочевого бульйону</li>
+                    <li>1 ст. ложка борошна</li>
+                    <li>2 ст. ложки сметани</li>
+                    <li>лавровий лист, спеції</li>
+                </ul>
+                
+                <h3>Додатково:</h3>
+                <ul>
+                    <li>1 великий капустяний кочан</li>
+                    <li>вода для варіння капусти</li>
+                </ul>
+            </div>
+            
+            <div class="instructions">
+                <h2>Спосіб приготування</h2>
+                
+                <ol>
+                    <li>Капусту розібрати на листя, обрізати потовщення. Опускати листя в окріп на 3-4 хвилини, доки вони не стануть м'якими. Вийняти і дати охолонути.</li>
+                    <li>Рис відварити до напівготовності, відкинути на дуршлаг.</li>
+                    <li>Цибулю та моркву дрібно нарізати і обсмажити на олії до м'якості.</li>
+                    <li>У великій мисці змішати фарш, рис, засмажку з цибулею та морквою. Посолити, поперчити за смаком.</li>
+                    <li>На підготовлене капустяне листя викладати начинку (1-2 ст. ложки) і загортати, формуючи голубці.</li>
+                    <li>У глибокій каструлі асоціювати голубці щільними рядами.</li>
+                    <li>Приготувати соус: у окріпі розвести томатну пасту, додати бульйон, борошно, розведене у воді, сметану, спеції. Перемішати.</li>
+                    <li>Залити голубці соусом, додати лавровий лист.</li>
+                    <li>Тушкувати на повільному вогні під кришкою 40-50 хвилин.</li>
+                    <li>Подавати гарячими зі сметаною та свіжим хлібом.</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="tips">
+            <h2>Корисні поради</h2>
+            <p>Щоб капустяні листя легко знімалися, качан потрібно попередньо відварити в підсоленій воді 10-15 хвилин, потім облити холодною водою.</p>
+            <p>Для пікантності до начинки можна додати дрібно нарізаного зеленої цибулі або кропу.</p>
+            <p>Голубці можна готувати в духовці - для цього потрібно запекти їх при 180°C протягом 40 хвилин.</p>
+        </div>
+        
+        <footer>
+            <p>© 2025 Українські кулінарні традиції. Всі права захищені.</p>
+            <p>Рецепт передається з покоління в покоління</p>
+        </footer>
+    </div>
+</body>
+</html>

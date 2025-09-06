@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сырники - традиционный украинский рецепт</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #fff8e1;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(to right, #ffeb3b, #ff9800);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            color: #5d4037;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: #e65100;
+            margin: 25px 0 15px;
+            border-bottom: 2px solid #ffb74d;
+            padding-bottom: 8px;
+        }
+        
+        .intro {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .recipe-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .ingredients {
+            flex: 1;
+            min-width: 300px;
+            background-color: #fff3e0;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+        
+        .instructions {
+            flex: 2;
+            min-width: 300px;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .tips {
+            background-color: #ffecb3;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+        
+        .tips h2 {
+            color: #bf360c;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .recipe-image {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .recipe-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        @media (max-width: 768px) {
+            .recipe-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Сырники по-украински</h1>
+            <p class="intro">Вкусные, нежные и ароматные сырники - любимый десерт украинской кухни</p>
+        </header>
+        
+        <div class="recipe-image">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI2ZmZTBiNCIvPgogIDxjaXJjbGUgY3g9IjQwMCIgY3k9IjIwMCIgcj0iMTUwIiBmaWxsPSIjZmZjYTAwIi8+CiAgPGNpcmNsZSBjeD0iMzUwIiBjeT0iMTUwIiByPSIzMCIgZmlsbD0iI2ZmZjhmMSIvPgogIDxjaXJjbGUgY3g9IjQ1MCIgY3k9IjE1MCIgcj0iMzAiIGZpbGw9IiNmZmY4ZjEiLz4KICA8cGF0aCBkPSJNMzUwIDI1MCBRNDAwIDMwMCA0NTAgMjUwIiBzdHJva2U9IiM3OTU1NDgiIHN0cm9rZS13aWR0aD0iNSIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4=" alt="Сырники украинские">
+        </div>
+        
+        <div class="recipe-content">
+            <div class="ingredients">
+                <h2>Ингредиенты</h2>
+                <ul>
+                    <li>500 г свежего творога (не очень влажного)</li>
+                    <li>2 яйца</li>
+                    <li>3-4 ст. ложки муки</li>
+                    <li>2 ст. ложки сахара</li>
+                    <li>1 пакетик ванильного сахара</li>
+                    <li>щепотка соли</li>
+                    <li>растительное масло для жарки</li>
+                    <li>сметана, ягоды или мед для подачи</li>
+                </ul>
+            </div>
+            
+            <div class="instructions">
+                <h2>Способ приготовления</h2>
+                <ol>
+                    <li>Творог тщательно разомните вилкой или пропустите через сито.</li>
+                    <li>Добавьте яйца, сахар, ванильный сахар и соль. Хорошо перемешайте.</li>
+                    <li>Постепенно добавляйте муку, постоянно перемешивая. Тесто должно получиться мягким, но не липнуть к рукам.</li>
+                    <li>Сформируйте из теста колбаску и разрежьте ее на равные части. Из каждой части сформируйте круглую или овальную сырничку.</li>
+                    <li>Разогрейте сковороду с растительным маслом. Выложите сырники и обжарьте с обеих сторон до золотистой корочки на среднем огне.</li>
+                    <li>Готовые сырники выложите на бумажные полотенца, чтобы убрать лишнее масло.</li>
+                    <li>Подавайте со сметаной, ягодами, медом или фруктовым соусом.</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="tips">
+            <h2>Полезные советы</h2>
+            <ul>
+                <li>Для пышных сырников используйте творог с минимальным количеством жидкости.</li>
+                <li>Не переборщите с мукой, иначе сырники получатся жесткими.</li>
+                <li>Если тесто получилось слишком жидким, добавьте немного больше муки или манной крупы.</li>
+                <li>Чтобы сырники получились особенно нежными, добавьте в тесто немного разрыхлителя.</li>
+                <li>По желанию можете добавить в тесто изюм, предварительно запаренный в воде.</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 Украинские рецепты. Все права защищены.</p>
+            <p>Рецепт передается из поколения в поколение</p>
+        </div>
+    </div>
+</body>
+</html>

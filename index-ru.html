@@ -12,6 +12,17 @@
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
 
+    <!-- Гео-таргетинг для России -->
+    <meta name="geo.region" content="RU">
+    <meta name="geo.placename" content="Russia">
+    <meta name="geo.position" content="55.7558;37.6173">
+    <meta name="ICBM" content="55.7558, 37.6173">
+
+    <!-- Локализация -->
+    <link rel="alternate" hreflang="uk" href="https://crispy-cuisine-7334c.web.app/index.html" />
+    <link rel="alternate" hreflang="ru" href="https://crispy-cuisine-7334c.web.app/index-ru.html" />
+    <link rel="alternate" hreflang="x-default" href="https://crispy-cuisine-7334c.web.app/index-ru.html" />
+
     <!-- Open Graph / Социальные сети -->
     <meta property="og:title" content="Хрусткая кухня — Кулинария с душой">
     <meta property="og:description" content="Готовьте вкусно каждый день. Только проверенные домашние рецепты и консервация на зиму от Хрусткой кухни.">
@@ -34,6 +45,9 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-icons.css" rel="stylesheet">
     <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
+    
+    <!-- Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* Стили для аутентификации */
@@ -121,11 +135,13 @@
             border-radius: 0.5rem;
             overflow: hidden;
             box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
         }
         
         .recipe-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
         }
         
         .user-recipe-tag {
@@ -442,6 +458,104 @@
         
         .email-verification-info strong {
             color: #1a73e8;
+        }
+        
+        /* Новые стили для улучшенных карточек рецептов */
+        .recipe-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+        
+        .recipe-time, .recipe-difficulty {
+            display: flex;
+            align-items: center;
+            color: #6c757d;
+        }
+        
+        .recipe-rating {
+            color: #ffc107;
+            margin-top: 5px;
+        }
+        
+        .recipe-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .btn-favorite {
+            color: #6c757d;
+            border: none;
+            background: transparent;
+            transition: color 0.3s;
+        }
+        
+        .btn-favorite:hover, .btn-favorite.active {
+            color: #dc3545;
+        }
+        
+        .category-filter {
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .category-filter-btn {
+            border: 1px solid #dee2e6;
+            border-radius: 20px;
+            padding: 5px 15px;
+            background: white;
+            transition: all 0.3s;
+        }
+        
+        .category-filter-btn:hover, .category-filter-btn.active {
+            background: #198754;
+            color: white;
+            border-color: #198754;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            text-align: center;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #198754;
+        }
+        
+        .recipe-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 5;
+        }
+        
+        .menu-image-wrap img {
+            transition: transform 0.5s;
+        }
+        
+        .menu-thumb:hover .menu-image-wrap img {
+            transform: scale(1.05);
+        }
+        
+        /* Стили для новых категорий рецептов */
+        .new-recipes-section {
+            background-color: #f8f9fa;
+            padding: 60px 0;
         }
     </style>
 </head>
@@ -1141,6 +1255,282 @@
             </div>
         </section>
 
+        <!-- Новый раздел с дополнительными рецептами -->
+        <section class="new-recipes-section section-padding">
+            <div class="container">
+                <h2 class="section-title">Новые рецепты</h2>
+                
+                <div class="category-filter">
+                    <button class="category-filter-btn active" data-filter="all">Все</button>
+                    <button class="category-filter-btn" data-filter="breakfast">Завтраки</button>
+                    <button class="category-filter-btn" data-filter="lunch">Обеды</button>
+                    <button class="category-filter-btn" data-filter="dinner">Ужины</button>
+                    <button class="category-filter-btn" data-filter="dessert">Десерты</button>
+                    <button class="category-filter-btn" data-filter="baking">Выпечка</button>
+                </div>
+                
+                <div class="row">
+                    <!-- Рецепт 1 -->
+                    <div class="col-lg-4 col-md-6 col-12 mb-4" data-category="breakfast">
+                        <div class="menu-thumb recipe-card">
+                            <div class="menu-image-wrap">
+                                <a href="borshch-ru.html">
+                                    <img 
+                                        src="images/news/pablo-merchan-montes-Orz90t6o0e4-unsplash1.jpg" 
+                                        class="img-fluid menu-image" 
+                                        alt="Борщ украинский"
+                                    >
+                                    <span class="recipe-badge category-tag bg-danger">Завтрак</span>
+                                </a>
+                            </div>
+                            <div class="menu-info">
+                                <a href="borshch-ru.html">
+                                    <h4 class="mb-1">Борщ украинский</h4>
+                                </a>
+                                <div class="recipe-meta">
+                                    <div class="recipe-time">
+                                        <i class="far fa-clock me-1"></i> 60 мин
+                                    </div>
+                                    <div class="recipe-difficulty">
+                                        <i class="fas fa-chef-hat me-1"></i> Средняя
+                                    </div>
+                                </div>
+                                <div class="recipe-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="ms-1">(24)</span>
+                                </div>
+                                <div class="recipe-actions">
+                                    <button class="btn-favorite">
+                                        <i class="far fa-heart"></i> Добавить в избранное
+                                    </button>
+                                    <a href="borshch-ru.html" class="btn btn-sm btn-outline-success">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Рецепт 2 -->
+                    <div class="col-lg-4 col-md-6 col-12 mb-4" data-category="lunch">
+                        <div class="menu-thumb recipe-card">
+                            <div class="menu-image-wrap">
+                                <a href="varenyky-ru.html">
+                                    <img 
+                                        src="images/news/Screenshot_20250906-155023 (1).png" 
+                                        class="img-fluid menu-image" 
+                                        alt="Вареники с картошкой"
+                                    >
+                                    <span class="recipe-badge category-tag bg-success">Обед</span>
+                                </a>
+                            </div>
+                            <div class="menu-info">
+                                <a href="varenyky-ru.html">
+                                    <h4 class="mb-1">Вареники</h4>
+                                </a>
+                                <div class="recipe-meta">
+                                    <div class="recipe-time">
+                                        <i class="far fa-clock me-1"></i> 45 мин
+                                    </div>
+                                    <div class="recipe-difficulty">
+                                        <i class="fas fa-chef-hat me-1"></i> Легко
+                                    </div>
+                                </div>
+                                <div class="recipe-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="ms-1">(36)</span>
+                                </div>
+                                <div class="recipe-actions">
+                                    <button class="btn-favorite">
+                                        <i class="far fa-heart"></i> Добавить в избранное
+                                    </button>
+                                    <a href="varenyky-ru.html" class="btn btn-sm btn-outline-success">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Рецепт 3 -->
+                    <div class="col-lg-4 col-md-6 col-12 mb-4" data-category="dinner">
+                        <div class="menu-thumb recipe-card">
+                            <div class="menu-image-wrap">
+                                <a href="kotleta-ru.html">
+                                    <img 
+                                        src="images/news/Screenshot_20250906-165240 (1).png" 
+                                        class="img-fluid menu-image" 
+                                        alt="Котлеты по-киевски"
+                                    >
+                                    <span class="recipe-badge category-tag bg-primary">Ужин</span>
+                                </a>
+                            </div>
+                            <div class="menu-info">
+                                <a href="kotleta-ru.html">
+                                    <h4 class="mb-1">Котлеты по-киевски</h4>
+                                </a>
+                                <div class="recipe-meta">
+                                    <div class="recipe-time">
+                                        <i class="far fa-clock me-1"></i> 75 мин
+                                    </div>
+                                    <div class="recipe-difficulty">
+                                        <i class="fas fa-chef-hat me-1"></i> Сложно
+                                    </div>
+                                </div>
+                                <div class="recipe-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="ms-1">(18)</span>
+                                </div>
+                                <div class="recipe-actions">
+                                    <button class="btn-favorite">
+                                        <i class="far fa-heart"></i> Добавить в избранное
+                                    </button>
+                                    <a href="kotleta-ru.html" class="btn btn-sm btn-outline-success">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Рецепт 4 -->
+                    <div class="col-lg-4 col-md-6 col-12 mb-4" data-category="dessert">
+                        <div class="menu-thumb recipe-card">
+                            <div class="menu-image-wrap">
+                                <a href="syrnyk-ru.html">
+                                    <img 
+                                        src="images/news/Screenshot_20250906-171219 (1).png" 
+                                        class="img-fluid menu-image" 
+                                        alt="Сырник с ягодами"
+                                    >
+                                    <span class="recipe-badge category-tag bg-warning">Десерт</span>
+                                </a>
+                            </div>
+                            <div class="menu-info">
+                                <a href="syrnyk-ru.html">
+                                    <h4 class="mb-1">Сырник с ягодами</h4>
+                                </a>
+                                <div class="recipe-meta">
+                                    <div class="recipe-time">
+                                        <i class="far fa-clock me-1"></i> 50 мин
+                                    </div>
+                                    <div class="recipe-difficulty">
+                                        <i class="fas fa-chef-hat me-1"></i> Средняя
+                                    </div>
+                                </div>
+                                <div class="recipe-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="ms-1">(29)</span>
+                                </div>
+                                <div class="recipe-actions">
+                                    <button class="btn-favorite">
+                                        <i class="far fa-heart"></i> Добавить в избранное
+                                    </button>
+                                    <a href="syrnyk-ru.html" class="btn btn-sm btn-outline-success">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Рецепт 5 -->
+                    <div class="col-lg-4 col-md-6 col-12 mb-4" data-category="baking">
+                        <div class="menu-thumb recipe-card">
+                            <div class="menu-image-wrap">
+                                <a href="pampushky-ru.html">
+                                    <img 
+                                        src="images/news/Screenshot_20250906-173909 (1).png" 
+                                        class="img-fluid menu-image" 
+                                        alt="Пампушки с чесноком"
+                                    >
+                                    <span class="recipe-badge category-tag bg-info">Выпечка</span>
+                                </a>
+                            </div>
+                            <div class="menu-info">
+                                <a href="pampushky-ru.html">
+                                    <h4 class="mb-1">Пампушки с чесноком</h4>
+                                </a>
+                                <div class="recipe-meta">
+                                    <div class="recipe-time">
+                                        <i class="far fa-clock me-1"></i> 90 мин
+                                    </div>
+                                    <div class="recipe-difficulty">
+                                        <i class="fas fa-chef-hat me-1"></i> Легко
+                                    </div>
+                                </div>
+                                <div class="recipe-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="ms-1">(42)</span>
+                                </div>
+                                <div class="recipe-actions">
+                                    <button class="btn-favorite">
+                                        <i class="far fa-heart"></i> Добавить в избранное
+                                    </button>
+                                    <a href="pampushky-ru.html" class="btn btn-sm btn-outline-success">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Рецепт 6 -->
+                    <div class="col-lg-4 col-md-6 col-12 mb-4" data-category="dinner">
+                        <div class="menu-thumb recipe-card">
+                            <div class="menu-image-wrap">
+                                <a href="golubtsi-ru.html">
+                                    <img 
+                                        src="images/news/Screenshot_20250906-175544 (1).png" 
+                                        class="img-fluid menu-image" 
+                                        alt="Голубцы с мясом"
+                                    >
+                                    <span class="recipe-badge category-tag bg-primary">Ужин</span>
+                                </a>
+                            </div>
+                            <div class="menu-info">
+                                <a href="golubtsi-ru.html">
+                                    <h4 class="mb-1">Голубцы с мясом</h4>
+                                </a>
+                                <div class="recipe-meta">
+                                    <div class="recipe-time">
+                                        <i class="far fa-clock me-1"></i> 120 мин
+                                    </div>
+                                    <div class="recipe-difficulty">
+                                        <i class="fas fa-chef-hat me-1"></i> Сложно
+                                    </div>
+                                </div>
+                                <div class="recipe-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="ms-1">(31)</span>
+                                </div>
+                                <div class="recipe-actions">
+                                    <button class="btn-favorite">
+                                        <i class="far fa-heart"></i> Добавить в избранное
+                                    </button>
+                                    <a href="golubtsi-ru.html" class="btn btn-sm btn-outline-success">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="BgImage"></section>
 
         <!-- Секция для добавления рецептов -->
@@ -1410,6 +1800,43 @@
                             console.error("Resend error:", error);
                             alert('Ошибка: ' + error.message);
                         });
+                }
+            });
+
+            // Фильтрация рецептов по категориям
+            $('.category-filter-btn').on('click', function() {
+                const filter = $(this).data('filter');
+                
+                // Обновляем активную кнопку
+                $('.category-filter-btn').removeClass('active');
+                $(this).addClass('active');
+                
+                // Показываем/скрываем рецепты
+                if (filter === 'all') {
+                    $('[data-category]').show();
+                } else {
+                    $('[data-category]').each(function() {
+                        if ($(this).data('category') === filter) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                }
+            });
+
+            // Обработчик для добавления в избранное
+            $(document).on('click', '.btn-favorite', function() {
+                if (!auth.currentUser) {
+                    $('#loginModal').modal('show');
+                    return;
+                }
+                
+                $(this).toggleClass('active');
+                if ($(this).hasClass('active')) {
+                    $(this).html('<i class="fas fa-heart"></i> В избранном');
+                } else {
+                    $(this).html('<i class="far fa-heart"></i> Добавить в избранное');
                 }
             });
         });
