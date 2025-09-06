@@ -168,6 +168,133 @@
             white-space: pre-line;
             line-height: 1.8;
         }
+        
+        /* Стили для аутентификации */
+        .auth-modal .modal-content {
+            border-radius: 0.8rem;
+        }
+        
+        .auth-modal .modal-header {
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+            border-bottom: none;
+        }
+        
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #198754;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        /* Стили для предупреждения о неподтвержденном email */
+        #emailWarning {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            padding: 10px 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        /* Исправление z-index для модальных окон */
+        .modal {
+            z-index: 1060 !important;
+        }
+        .modal-backdrop {
+            z-index: 1050 !important;
+        }
+        
+        /* ДОБАВЛЕННЫЕ ИСПРАВЛЕНИЯ */
+        #recipePreview {
+            margin-top: 20px;
+            display: block;
+        }
+        
+        .spinner-border {
+            display: inline-block !important;
+            width: 1.5rem;
+            height: 1.5rem;
+            vertical-align: text-bottom;
+        }
+        
+        #loadingRecipes .spinner-border {
+            display: block !important;
+            margin: 0 auto;
+        }
+        
+        .recipe-date {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        /* Добавлено для превью изображений */
+        .preview-image-container {
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+            border: 1px dashed #dee2e6;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        /* Стили для уведомления о подтверждении email */
+        .email-verification-info {
+            background-color: #e8f4fd;
+            border-left: 4px solid #1a73e8;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .email-verification-info p {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .email-verification-info p:before {
+            content: "•";
+            margin-right: 8px;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+        
+        .email-verification-info strong {
+            color: #1a73e8;
+        }
+        
+        /* Стилі для аватарки в навігації */
+        .nav-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #198754;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
     </style>
 </head>
 
@@ -198,14 +325,147 @@
                     <li class="nav-item">
                         <a class="nav-link" href="desert-ua.html">Десерт</a>
                     </li>
-                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="#add-recipe">Додати рецепт</a>
+                    </li>
+                </ul>
+                
+                <!-- Блок аутентифікації -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown" id="accountDropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <div class="d-flex align-items-center">
+                                <div id="userAvatar" class="nav-avatar d-none">
+                                    <span id="avatarInitials">U</span>
+                                </div>
+                                <span id="userStatus">Акаунт</span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li id="loginItem"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Увійти</a></li>
+                            <li id="registerItem"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Реєстрація</a></li>
+                            <li id="logoutItem" class="d-none"><a class="dropdown-item" href="#" id="logoutLink">Вийти</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item">
                         <a href="Vegan food-ru.html"><span class="category-tag me-3 bg-info">RU</span></a>
                     </li>
                 </ul>
             </div>
         </div>
+        
+        <!-- Предупреждение о неподтвержденном email -->
+        <div id="emailWarning" class="d-none alert alert-warning rounded-0 mb-0 text-center w-100"></div>
     </nav>
+
+    <!-- Модальні вікна для аутентифікації -->
+    <div class="modal fade auth-modal" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Увійти</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email*</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                            <div class="error-message" id="loginEmailError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Пароль*</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                            <div class="error-message" id="loginPasswordError"></div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">
+                                <span id="loginSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                                Увійти
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade auth-modal" id="registerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Реєстрація</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label">Ім'я*</label>
+                            <input type="text" class="form-control" id="registerName" required>
+                            <div class="error-message" id="registerNameError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email*</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                            <div class="error-message" id="registerEmailError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Пароль*</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                            <div class="error-message" id="registerPasswordError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Підтвердіть пароль*</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                            <div class="error-message" id="confirmPasswordError"></div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">
+                                <span id="registerSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                                Зареєструватися
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- Додано інформацію про підтвердження email -->
+                    <div class="email-verification-info mt-4">
+                        <p>📧 Ми надішлемо листа для підтвердження email після реєстрації.</p>
+                        <p>🔍 Якщо ви не бачите листа, перевірте папку "Спам" або "Уся пошта".</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальне вікно для інформації про підтвердження email -->
+    <div class="modal fade" id="emailVerificationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Підтвердження Email</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-success">
+                        <h5>Реєстрація успішна!</h5>
+                        <p>На вашу електронну адресу відправлено лист з посиланням для підтвердження.</p>
+                    </div>
+                    
+                    <div class="email-verification-info">
+                        <p>📧 Ми надіслали лист для підтвердження email на вашу адресу.</p>
+                        <p>🔍 Якщо ви не бачите листа, перевірте папку "Спам" або "Уся пошта".</p>
+                    </div>
+                    
+                    <div class="alert alert-info mt-3">
+                        <p class="mb-0">Не отримали лист? <a href="#" id="resendVerificationInModal">Надіслати знову</a></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <main>
         <header class="site-header site-news-detail-header">
@@ -424,96 +684,102 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-12">
-                        <div class="recipe-form">
-                            <h2 class="form-title">Додати свій рецепт</h2>
-                            <form id="recipeForm">
-                                <div class="mb-3">
-                                    <label for="recipeTitle" class="form-label">Назва рецепту*</label>
-                                    <input 
-                                        type="text" 
-                                        class="form-control" 
-                                        id="recipeTitle" 
-                                        required 
-                                        placeholder="Введіть назву вашого рецепту"
-                                    >
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeCategory" class="form-label">Категорія*</label>
-                                    <select class="form-select" id="recipeCategory" required>
-                                        <option value="">Виберіть категорію</option>
-                                        <option value="Сніданок">Сніданок</option>
-                                        <option value="Обід">Обід</option>
-                                        <option value="Вечеря">Вечеря</option>
-                                        <option value="Десерт">Десерт</option>
-                                        <option value="Пістне">Пістне</option>
-                                        <option value="Консервація">Консервація</option>
-                                        <option value="Випічка">Випічка</option>
-                                        <option value="Напої">Напої</option>
-                                        <option value="Салати">Салати</option>
-                                        <option value="Закуски">Закуски</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Зображення (опціонально)</label>
-                                    <div class="file-input-wrapper">
-                                        <div class="file-input-label">
-                                            <i class="bi bi-upload me-2"></i>Обрати файл
-                                            <input 
-                                                type="file" 
-                                                class="form-control" 
-                                                id="recipeImageFile" 
-                                                accept="image/*"
-                                            >
-                                        </div>
-                                        <span id="fileName" class="file-name">Файл не обрано</span>
+                        <div id="authMessage" class="alert alert-info text-center">
+                            <p>Будь ласка, <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">увійдіть</a> або <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal">зареєструйтесь</a>, щоб додати рецепт!</p>
+                        </div>
+                        
+                        <div id="recipeFormContainer" class="d-none">
+                            <div class="recipe-form">
+                                <h2 class="form-title">Додати свій рецепт</h2>
+                                <form id="recipeForm">
+                                    <div class="mb-3">
+                                        <label for="recipeTitle" class="form-label">Назва рецепту*</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="recipeTitle" 
+                                            required 
+                                            placeholder="Введіть назву вашого рецепту"
+                                        >
                                     </div>
-                                    <div class="form-text">Максимальний розмір: 1MB (JPG, PNG)</div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeIngredients" class="form-label">Інгредієнти*</label>
-                                    <textarea 
-                                        class="form-control" 
-                                        id="recipeIngredients" 
-                                        rows="4" 
-                                        required 
-                                        placeholder="Перелічіть інгредієнти, кожен з нового рядка"
-                                    ></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeInstructions" class="form-label">Інструкція приготування*</label>
-                                    <textarea 
-                                        class="form-control" 
-                                        id="recipeInstructions" 
-                                        rows="6" 
-                                        required 
-                                        placeholder="Опишіть кроки приготування"
-                                    ></textarea>
-                                </div>
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg">
-                                        <span 
-                                            id="submitSpinner" 
-                                            class="spinner-border spinner-border-sm me-2" 
-                                            role="status" 
-                                            aria-hidden="true"
-                                        ></span>
-                                        Додати рецепт
-                                    </button>
-                                </div>
-                            </form>
-                            
-                            <div id="recipePreview" class="recipe-preview mt-4">
-                                <h4>Попередній перегляд:</h4>
-                                <div class="card recipe-card">
-                                    <img 
-                                        id="previewImage" 
-                                        src="images/default-recipe.jpg" 
-                                        class="card-img-top" 
-                                        alt="Попередній перегляд"
-                                    >
-                                    <div class="card-body">
-                                        <h5 id="previewTitle" class="card-title">Назва рецепту</h5>
-                                        <p id="previewCategory" class="card-text text-muted">Категорія: не вибрано</p>
+                                    <div class="mb-3">
+                                        <label for="recipeCategory" class="form-label">Категорія*</label>
+                                        <select class="form-select" id="recipeCategory" required>
+                                            <option value="">Виберіть категорію</option>
+                                            <option value="Сніданок">Сніданок</option>
+                                            <option value="Обід">Обід</option>
+                                            <option value="Вечеря">Вечеря</option>
+                                            <option value="Десерт">Десерт</option>
+                                            <option value="Пістне">Пістне</option>
+                                            <option value="Консервація">Консервація</option>
+                                            <option value="Випічка">Випічка</option>
+                                            <option value="Напої">Напої</option>
+                                            <option value="Салати">Салати</option>
+                                            <option value="Закуски">Закуски</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Зображення (опціонально)</label>
+                                        <div class="file-input-wrapper">
+                                            <div class="file-input-label">
+                                                <i class="bi bi-upload me-2"></i>Обрати файл
+                                                <input 
+                                                    type="file" 
+                                                    class="form-control" 
+                                                    id="recipeImageFile" 
+                                                    accept="image/*"
+                                                >
+                                            </div>
+                                            <span id="fileName" class="file-name">Файл не обрано</span>
+                                        </div>
+                                        <div class="form-text">Максимальний розмір: 1MB (JPG, PNG)</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="recipeIngredients" class="form-label">Інгредієнти*</label>
+                                        <textarea 
+                                            class="form-control" 
+                                            id="recipeIngredients" 
+                                            rows="4" 
+                                            required 
+                                            placeholder="Перелічіть інгредієнти, кожен з нового рядка"
+                                        ></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="recipeInstructions" class="form-label">Інструкція приготування*</label>
+                                        <textarea 
+                                            class="form-control" 
+                                            id="recipeInstructions" 
+                                            rows="6" 
+                                            required 
+                                            placeholder="Опишіть кроки приготування"
+                                        ></textarea>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-success btn-lg">
+                                            <span 
+                                                id="submitSpinner" 
+                                                class="spinner-border spinner-border-sm me-2 d-none" 
+                                                role="status" 
+                                                aria-hidden="true"
+                                            ></span>
+                                            Додати рецепт
+                                        </button>
+                                    </div>
+                                </form>
+                                
+                                <div id="recipePreview" class="recipe-preview mt-4">
+                                    <h4>Попередній перегляд:</h4>
+                                    <div class="card recipe-card">
+                                        <img 
+                                            id="previewImage" 
+                                            src="images/default-recipe.jpg" 
+                                            class="card-img-top" 
+                                            alt="Попередній перегляд"
+                                        >
+                                        <div class="card-body">
+                                            <h5 id="previewTitle" class="card-title">Назва рецепту</h5>
+                                            <p id="previewCategory" class="card-text text-muted">Категорія: не вибрано</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -557,6 +823,51 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="text-white mb-4 me-5">Хрустка кухня</h4>
+                    <div style="
+                      background-color: #fafafa;
+                      padding: 25px 20px;
+                      text-align: center;
+                      font-size: 14px;
+                      color: #777;
+                      border-top: 1px solid #f0f0f0;
+                    ">
+                      <p style="margin: 0 0 10px 0; font-weight: 500; color: #555;">
+                        © 2025 Домашні кулінарні рецепти
+                      </p>
+                      
+                      <nav style="margin-top: 15px;">
+                        <a href="about-ua.html" style="
+                          margin: 0 12px;
+                          color: #666;
+                          text-decoration: none;
+                          transition: color 0.2s;
+                        ">Про нас</a>
+                        
+                        <a href="mailto:korovinkonstantin0@gmail.com" style="
+                          margin: 0 12px;
+                          color: #666;
+                          text-decoration: none;
+                          transition: color 0.2s;
+                        ">Контакти</a>
+                        
+                        <a href="privacy-ua.html" style="
+                          margin: 0 12px;
+                          color: #666;
+                          text-decoration: none;
+                          transition: color 0.2s;
+                        ">Політика конфіденційності</a>
+                      </nav>
+                      
+                      <div style="margin-top: 20px; color: #aaa; font-size: 12px;">
+                        Усі права захищено
+                      </div>
+                    </div>
+                    <div style="text-align:center; margin-top: 2rem;">
+                      <img 
+                        src="https://hits.sh/crispy-cuisine-7334c.web.app.svg?style=flat-square&label=Перегляди&color=blue&logo=github" 
+                        alt="Перегляди"
+                      />
+                    </div>
                 </div>
             </div>
         </div>
@@ -570,27 +881,39 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     
     <script>
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCmO3UwOLexKfUsNBiDhfVsJ7WWS9K_ft4",
-  authDomain: "crispy-cuisine-7334c.firebaseapp.com",
-  projectId: "crispy-cuisine-7334c",
-  storageBucket: "crispy-cuisine-7334c.firebasestorage.app",
-  messagingSenderId: "18003644183",
-  appId: "1:18003644183:web:4abb0800c18b00d7b83152",
-  measurementId: "G-250S27R82Y"
-};
+        const firebaseConfig = {
+          apiKey: "AIzaSyCmO3UwOLexKfUsNBiDhfVsJ7WWS9K_ft4",
+          authDomain: "crispy-cuisine-7334c.firebaseapp.com",
+          projectId: "crispy-cuisine-7334c",
+          storageBucket: "crispy-cuisine-7334c.appspot.com",
+          messagingSenderId: "18003644183",
+          appId: "1:18003644183:web:4abb0800c18b00d7b83152",
+          measurementId: "G-250S27R82Y"
+        };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        const auth = firebase.auth();
         
         // Global variables
         let lastVisible = null;
         let selectedFile = null;
-        const PAGE_SIZE = 6; // Number of recipes per load
+        const PAGE_SIZE = 6;
+
+        // Функция для экранирования HTML
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
 
         $(document).ready(function() {
             // Load first recipes
@@ -601,7 +924,239 @@ const firebaseConfig = {
             $('#recipeImageFile').on('change', handleImageUpload);
             $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
             $('#loadMoreBtn').on('click', loadMoreRecipes);
+            
+            // Authentication handlers
+            $('#loginForm').submit(handleLogin);
+            $('#registerForm').submit(handleRegister);
+            $('#logoutLink').click(handleLogout);
+            
+            // Track auth state
+            auth.onAuthStateChanged(handleAuthStateChange);
+
+            // Обробник для повторного відправлення листа підтвердження
+            $(document).on('click', '#resendVerificationLink, #resendVerificationNavLink, #resendVerificationInModal', function(e) {
+                e.preventDefault();
+                const user = auth.currentUser;
+                if (user) {
+                    user.sendEmailVerification()
+                        .then(() => {
+                            alert('Лист для підтвердження був відправлений знову на вашу електронну адресу.');
+                        })
+                        .catch(error => {
+                            console.error("Resend error:", error);
+                            alert('Помилка: ' + error.message);
+                        });
+                }
+            });
         });
+
+        // Handle auth state change
+        function handleAuthStateChange(user) {
+            const loginItem = $('#loginItem');
+            const registerItem = $('#registerItem');
+            const logoutItem = $('#logoutItem');
+            const userStatus = $('#userStatus');
+            const userAvatar = $('#userAvatar');
+            const authMessage = $('#authMessage');
+            const recipeFormContainer = $('#recipeFormContainer');
+            const emailWarning = $('#emailWarning');
+            
+            if (user) {
+                // Всегда показываем информацию о пользователе
+                userStatus.text(user.displayName || user.email);
+                
+                // Генерируем инициалы для аватара
+                const name = user.displayName || user.email || '';
+                const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                $('#avatarInitials').text(initials);
+                userAvatar.removeClass('d-none');
+                
+                // Обновляем меню
+                loginItem.addClass('d-none');
+                registerItem.addClass('d-none');
+                logoutItem.removeClass('d-none');
+                
+                // Управление формой рецептов
+                authMessage.addClass('d-none');
+                recipeFormContainer.removeClass('d-none');
+                
+                // Управление предупреждением о email
+                if (!user.emailVerified) {
+                    emailWarning.removeClass('d-none').html(
+                        `Ваш email <strong>${escapeHtml(user.email)}</strong> не підтверджено. 
+                        <a href="#" id="resendVerificationNavLink">Надіслати лист знову</a>`
+                    );
+                } else {
+                    emailWarning.addClass('d-none');
+                }
+            } else {
+                // Сброс для неавторизованных пользователей
+                userStatus.text('Акаунт');
+                userAvatar.addClass('d-none');
+                
+                loginItem.removeClass('d-none');
+                registerItem.removeClass('d-none');
+                logoutItem.addClass('d-none');
+                
+                authMessage.removeClass('d-none');
+                recipeFormContainer.addClass('d-none');
+                emailWarning.addClass('d-none');
+            }
+        }
+
+        // Handle login
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = $('#loginEmail').val().trim();
+            const password = $('#loginPassword').val();
+            
+            // Валидация
+            $('#loginEmailError').text('');
+            $('#loginPasswordError').text('');
+            
+            let isValid = true;
+            if (!email) {
+                $('#loginEmailError').text('Будь ласка, введіть email');
+                isValid = false;
+            }
+            if (!password) {
+                $('#loginPasswordError').text('Будь ласка, введіть пароль');
+                isValid = false;
+            }
+            if (!isValid) return;
+            
+            // UI состояния
+            $('#loginSpinner').removeClass('d-none');
+            $('#loginForm button').prop('disabled', true);
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    
+                    if (!user.emailVerified) {
+                        $('#loginEmailError').html(
+                            'Ваш email ще не підтверджено. <a href="#" id="resendVerificationLink">Надіслати лист знову</a>'
+                        );
+                    } else {
+                        $('#loginModal').modal('hide');
+                        $('#loginForm')[0].reset();
+                    }
+                })
+                .catch(error => {
+                    console.error("Login error:", error);
+                    handleAuthError(error, '#loginEmailError', '#loginPasswordError');
+                })
+                .finally(() => {
+                    $('#loginSpinner').addClass('d-none');
+                    $('#loginForm button').prop('disabled', false);
+                });
+        }
+
+        // Обработка ошибок аутентификации
+        function handleAuthError(error, emailSelector, passwordSelector) {
+            let errorMessage = "Помилка аутентифікації";
+            
+            switch(error.code) {
+                case "auth/user-not-found":
+                case "auth/invalid-email":
+                    errorMessage = "Користувача з таким email не знайдено";
+                    $(emailSelector).text(errorMessage);
+                    break;
+                case "auth/wrong-password":
+                    errorMessage = "Невірний пароль";
+                    $(passwordSelector).text(errorMessage);
+                    break;
+                case "auth/too-many-requests":
+                    errorMessage = "Забагато спроб. Спробуйте пізніше";
+                    $(passwordSelector).text(errorMessage);
+                    break;
+                case "auth/user-disabled":
+                    errorMessage = "Акаунт вимкнено";
+                    $(emailSelector).text(errorMessage);
+                    break;
+                default:
+                    $(passwordSelector).text(errorMessage);
+            }
+        }
+
+        // Handle registration
+        function handleRegister(e) {
+            e.preventDefault();
+            
+            const name = $('#registerName').val().trim();
+            const email = $('#registerEmail').val().trim();
+            const password = $('#registerPassword').val();
+            const confirmPassword = $('#confirmPassword').val();
+            
+            // Валидация
+            $('#registerNameError').text('');
+            $('#registerEmailError').text('');
+            $('#registerPasswordError').text('');
+            $('#confirmPasswordError').text('');
+            
+            let isValid = true;
+            if (!name) {
+                $('#registerNameError').text('Будь ласка, введіть ваше ім\'я');
+                isValid = false;
+            }
+            if (!email) {
+                $('#registerEmailError').text('Будь ласка, введіть email');
+                isValid = false;
+            }
+            if (!password) {
+                $('#registerPasswordError').text('Будь ласка, введіть пароль');
+                isValid = false;
+            }
+            if (password.length < 6) {
+                $('#registerPasswordError').text('Пароль повинен містити щонайменше 6 символів');
+                isValid = false;
+            }
+            if (password !== confirmPassword) {
+                $('#confirmPasswordError').text('Паролі не співпадають');
+                isValid = false;
+            }
+            if (!isValid) return;
+            
+            // UI состояния
+            $('#registerSpinner').removeClass('d-none');
+            $('#registerForm button').prop('disabled', true);
+            
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    // Обновляем профиль пользователя
+                    return userCredential.user.updateProfile({
+                        displayName: name
+                    }).then(() => {
+                        return userCredential.user.sendEmailVerification();
+                    });
+                })
+                .then(() => {
+                    $('#registerModal').modal('hide');
+                    $('#registerForm')[0].reset();
+                    
+                    // Показываем модальное окно с информацией о подтверждении email
+                    $('#emailVerificationModal').modal('show');
+                })
+                .catch(error => {
+                    console.error("Registration error:", error);
+                    handleAuthError(error, '#registerEmailError', '#registerPasswordError');
+                })
+                .finally(() => {
+                    $('#registerSpinner').addClass('d-none');
+                    $('#registerForm button').prop('disabled', false);
+                });
+        }
+
+        // Handle logout
+        function handleLogout(e) {
+            e.preventDefault();
+            auth.signOut()
+                .catch(error => {
+                    console.error("Logout error:", error);
+                    alert('Помилка при виході: ' + error.message);
+                });
+        }
 
         // Handle image upload
         function handleImageUpload(e) {
@@ -694,50 +1249,50 @@ const firebaseConfig = {
         async function handleFormSubmit(e) {
             e.preventDefault();
             
-            // Show spinner
-            $('#submitSpinner').show();
+            // Проверка авторизации
+            if (!auth.currentUser) {
+                alert('Будь ласка, увійдіть, щоб додати рецепт!');
+                return;
+            }
+            
+            // UI состояния
+            $('#submitSpinner').removeClass('d-none');
             $('#recipeForm button').prop('disabled', true);
             
             try {
-                const fileInput = document.getElementById('recipeImageFile');
-                const file = fileInput.files[0];
-                
+                // Загрузка изображения
                 let imageUrl = 'images/default-recipe.jpg';
                 
-                // Upload image if available
-                if (file) {
-                    console.log("Starting image upload...");
-                    imageUrl = await uploadImage(file);
-                    console.log("Image uploaded:", imageUrl);
+                if (selectedFile) {
+                    const fileInput = document.getElementById('recipeImageFile');
+                    const file = fileInput.files[0];
+                    if (file) {
+                        imageUrl = await uploadImage(file);
+                    }
                 }
                 
-                // Create recipe object
+                // Создаем объект рецепта
                 const recipe = {
                     title: $('#recipeTitle').val(),
                     category: $('#recipeCategory').val(),
                     image: imageUrl,
                     ingredients: $('#recipeIngredients').val(),
                     instructions: $('#recipeInstructions').val(),
+                    userId: auth.currentUser.uid,
+                    userName: auth.currentUser.displayName || auth.currentUser.email,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
                 
-                console.log("Saving recipe:", recipe);
-                
-                // Save to Firestore
+                // Сохраняем в Firestore
                 await db.collection("recipes").add(recipe);
                 
-                // Reset form
+                // Сброс формы
                 $('#recipeForm')[0].reset();
-                $('#recipePreview').hide();
                 resetFileInput();
-                selectedFile = null;
-                
-                // Reload recipes
                 await loadRecipes();
                 
+                // Уведомление и скролл
                 alert('Рецепт успішно додано!');
-                
-                // Scroll to new recipes section
                 $('html, body').animate({
                     scrollTop: $('#user-recipes').offset().top - 100
                 }, 800);
@@ -745,8 +1300,7 @@ const firebaseConfig = {
                 console.error("Помилка збереження рецепту:", error);
                 alert('Сталася помилка: ' + error.message);
             } finally {
-                // Hide spinner and activate button
-                $('#submitSpinner').hide();
+                $('#submitSpinner').addClass('d-none');
                 $('#recipeForm button').prop('disabled', false);
             }
         }
@@ -754,48 +1308,52 @@ const firebaseConfig = {
         // Load recipes
         async function loadRecipes() {
             try {
-                // Show loading indicator
+                // UI состояния
                 $('#loadingRecipes').show();
                 $('#recipesContainer').empty();
                 $('#noRecipesMessage').addClass('d-none');
                 $('#loadMoreBtn').addClass('d-none');
                 
-                // Query Firestore
+                // Запрос к Firestore
                 const query = db.collection("recipes")
                     .orderBy("createdAt", "desc")
                     .limit(PAGE_SIZE);
                 
                 const snapshot = await query.get();
                 
-                // Hide loading indicator
-                $('#loadingRecipes').hide();
-                
+                // Обработка результатов
                 if (snapshot.empty) {
                     $('#noRecipesMessage').removeClass('d-none');
+                    $('#loadingRecipes').hide();
                     return;
                 }
                 
-                // Save last document for pagination
+                // Пагинация
                 lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                
-                // Display recipes
                 displayRecipes(snapshot);
                 
-                // Show "Load more" button if there are more recipes
+                // Кнопка "Показать еще"
                 if (snapshot.size === PAGE_SIZE) {
                     $('#loadMoreBtn').removeClass('d-none');
                 }
+                
+                $('#loadingRecipes').hide();
             } catch (error) {
                 console.error("Помилка завантаження рецептів:", error);
-                $('#loadingRecipes').html('<p class="text-danger">Помилка завантаження рецептів. Спробуйте оновити сторінку.</p>');
+                $('#loadingRecipes').html(
+                    '<p class="text-danger">Помилка завантаження рецептів. Спробуйте оновити сторінку.</p>'
+                );
             }
         }
 
         // Load more recipes
         async function loadMoreRecipes() {
             try {
-                $('#loadMoreBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Завантаження...');
+                // UI состояния
+                $('#loadMoreBtn').prop('disabled', true)
+                    .html('<span class="spinner-border spinner-border-sm me-2"></span>Завантаження...');
                 
+                // Запрос к Firestore
                 const query = db.collection("recipes")
                     .orderBy("createdAt", "desc")
                     .startAfter(lastVisible)
@@ -803,22 +1361,20 @@ const firebaseConfig = {
                 
                 const snapshot = await query.get();
                 
+                // Обработка результатов
                 if (snapshot.empty) {
                     $('#loadMoreBtn').hide();
                     return;
                 }
                 
-                // Update last document
+                // Пагинация
                 lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                
-                // Add new recipes
                 displayRecipes(snapshot);
                 
-                // Hide button if no more recipes
+                // Обновление кнопки
+                $('#loadMoreBtn').prop('disabled', false).text('Показати ще');
                 if (snapshot.size < PAGE_SIZE) {
                     $('#loadMoreBtn').hide();
-                } else {
-                    $('#loadMoreBtn').prop('disabled', false).text('Показати ще');
                 }
             } catch (error) {
                 console.error("Помилка завантаження рецептів:", error);
@@ -827,7 +1383,7 @@ const firebaseConfig = {
             }
         }
 
-        // Display recipes on page
+        // Display recipes
         function displayRecipes(snapshot) {
             const container = $('#recipesContainer');
             
@@ -835,14 +1391,16 @@ const firebaseConfig = {
                 const recipe = doc.data();
                 const recipeId = doc.id;
                 
-                // Format date
-                const date = recipe.createdAt ? 
-                    new Date(recipe.createdAt.toDate()).toLocaleDateString('uk-UA', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                    }) : 'Дата не вказана';
+                // Форматирование даты
+                const date = recipe.createdAt?.toDate 
+                    ? new Date(recipe.createdAt.toDate()).toLocaleDateString('uk-UA') 
+                    : 'Сьогодні';
                 
+                // Инициалы пользователя
+                const userName = recipe.userName || "Анонім";
+                const initials = userName.substring(0, 2).toUpperCase();
+                
+                // Генерация HTML
                 const recipeHtml = `
                 <div class="col-lg-4 col-md-6 col-12 mb-4">
                     <div class="menu-thumb recipe-card">
@@ -851,15 +1409,23 @@ const firebaseConfig = {
                                 <img 
                                     src="${recipe.image}" 
                                     class="img-fluid menu-image" 
-                                    alt="${recipe.title}" 
+                                    alt="${escapeHtml(recipe.title)}" 
                                     loading="lazy"
                                 >
                                 <span class="user-recipe-tag bg-success">Користувацький</span>
                             </a>
                         </div>
-                        <div class="menu-info d-flex flex-wrap align-items-center">
-                            <h4 class="mb-0">${recipe.title}</h4>
-                            <span class="text-muted small ms-2">${date}</span>
+                        <div class="menu-info">
+                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
+                                <h4 class="mb-1">${escapeHtml(recipe.title)}</h4>
+                            </a>
+                            <div class="d-flex align-items-center mt-2">
+                                <div class="user-avatar small">
+                                    <span>${initials}</span>
+                                </div>
+                                <small class="text-muted">${escapeHtml(userName)}</small>
+                                <small class="recipe-date ms-auto">${date}</small>
+                            </div>
                         </div>
                     </div>
                 </div>`;
@@ -871,8 +1437,11 @@ const firebaseConfig = {
         // Show recipe details
         window.showRecipeDetails = async function(recipeId) {
             try {
-                const doc = await db.collection("recipes").doc(recipeId).get();
+                // Удаляем предыдущее модальное окно
+                $('#recipeDetailModal').remove();
                 
+                // Получаем рецепт из Firestore
+                const doc = await db.collection("recipes").doc(recipeId).get();
                 if (!doc.exists) {
                     alert('Рецепт не знайдено');
                     return;
@@ -880,23 +1449,26 @@ const firebaseConfig = {
                 
                 const recipe = doc.data();
                 
-                // Format date
-                const date = recipe.createdAt ? 
-                    new Date(recipe.createdAt.toDate()).toLocaleDateString('uk-UA', {
+                // Форматирование даты
+                const date = recipe.createdAt?.toDate 
+                    ? new Date(recipe.createdAt.toDate()).toLocaleDateString('uk-UA', {
                         day: 'numeric',
                         month: 'long',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    }) : 'Дата не вказана';
+                        year: 'numeric'
+                    }) 
+                    : 'Сьогодні';
                 
-                // Create HTML for modal
+                // Инициалы пользователя
+                const userName = recipe.userName || "Анонім";
+                const initials = userName.substring(0, 2).toUpperCase();
+                
+                // Генерация HTML модального окна
                 const modalHtml = `
                 <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">${recipe.title}</h5>
+                                <h5 class="modal-title">${escapeHtml(recipe.title)}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
@@ -905,11 +1477,19 @@ const firebaseConfig = {
                                         <img 
                                             src="${recipe.image}" 
                                             class="img-fluid rounded mb-3" 
-                                            alt="${recipe.title}"
+                                            alt="${escapeHtml(recipe.title)}"
                                         >
                                         <div class="recipe-meta">
-                                            <p><strong>Категорія:</strong> ${recipe.category || 'Не вказана'}</p>
-                                            <p><strong>Додано:</strong> ${date}</p>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="user-avatar">
+                                                    <span>${initials}</span>
+                                                </div>
+                                                <div>
+                                                    <div><strong>Автор:</strong> ${escapeHtml(userName)}</div>
+                                                    <div><strong>Додано:</strong> ${date}</div>
+                                                </div>
+                                            </div>
+                                            <p><strong>Категорія:</strong> ${escapeHtml(recipe.category || 'Не вказана')}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-7">
@@ -931,14 +1511,12 @@ const firebaseConfig = {
                     </div>
                 </div>`;
                 
-                // Add modal to DOM
+                // Добавляем и показываем модальное окно
                 $('body').append(modalHtml);
-                
-                // Show modal
-                const modal = new bootstrap.Modal(document.getElementById('recipeDetailModal'));
+                const modal = new bootstrap.Modal('#recipeDetailModal');
                 modal.show();
                 
-                // Remove modal after closing
+                // Удаляем модальное окно после закрытия
                 $('#recipeDetailModal').on('hidden.bs.modal', function() {
                     $(this).remove();
                 });
@@ -948,9 +1526,11 @@ const firebaseConfig = {
             }
         }
 
-        // Format text (replace line breaks)
+        // Format text
         function formatText(text) {
-            return text.replace(/\n/g, '<br>');
+            if (!text) return '';
+            const escaped = escapeHtml(text);
+            return escaped.replace(/\n/g, '<br>');
         }
     </script>
 </body>
