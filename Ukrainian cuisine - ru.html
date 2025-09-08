@@ -1,0 +1,2234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Украинская кухня: вкусные рецепты</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Все стили остаются без изменений */
+        :root {
+            --primary-color: #4a7c59;
+            --secondary-color: #8d5b4c;
+            --accent-color: #e6a756;
+            --light-bg: #f8f9fa;
+            --dark-text: #333;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-text);
+            background-color: #fff;
+            padding-top: 20px;
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+        
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .category-filter-btn {
+            background: white;
+            border: 2px solid var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .category-filter-btn:hover, 
+        .category-filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .recipe-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            height: 100%;
+            background: white;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .menu-image-wrap {
+            position: relative;
+            overflow: hidden;
+            height: 220px;
+        }
+        
+        .menu-image {
+            transition: transform 0.5s ease;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .recipe-card:hover .menu-image {
+            transform: scale(1.05);
+        }
+        
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.7));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .recipe-card:hover .image-overlay {
+            opacity: 1;
+        }
+        
+        .recipe-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 2;
+            font-size: 0.8rem;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .menu-info {
+            padding: 20px;
+        }
+        
+        .recipe-meta {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .recipe-time, .recipe-difficulty {
+            display: flex;
+            align-items: center;
+        }
+        
+        .recipe-rating {
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .recipe-rating .stars {
+            color: #ffc107;
+            margin-right: 8px;
+        }
+        
+        .recipe-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .btn-favorite {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 6px 10px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+        
+        .btn-favorite:hover {
+            color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+        
+        .btn-favorite.active {
+            color: #dc3545;
+        }
+        
+        .btn-details {
+            background-color: var(--primary-color);
+            border: none;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .btn-details:hover {
+            background-color: #3a6455;
+            transform: translateY(-2px);
+        }
+        
+        .view-all-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            margin-top: 40px;
+            display: inline-block;
+        }
+        
+        .view-all-btn:hover {
+            background-color: #724538;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .section-padding {
+            padding: 60px 0;
+        }
+        
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .recipe-item {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .menu-image-wrap {
+                height: 200px;
+            }
+            
+            .category-filter-btn {
+                padding: 6px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .recipe-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .recipe-actions {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .btn-details {
+                align-self: flex-end;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .category-filter {
+                gap: 8px;
+            }
+            
+            .category-filter-btn {
+                padding: 5px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .menu-image-wrap {
+                height: 180px;
+            }
+            
+            .menu-info {
+                padding: 15px;
+            }
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px 0;
+            display: none;
+            color: #6c757d;
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #dee2e6;
+        }
+        
+        /* Модальное окно */
+        .modal-recipe {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 40px auto;
+            padding: 0;
+            border-radius: 12px;
+            max-width: 900px;
+            width: 90%;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            margin: 0;
+            color: var(--primary-color);
+        }
+        
+        .close-modal {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: var(--secondary-color);
+        }
+        
+        .modal-body {
+            padding: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .recipe-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .ingredients-list, .instructions-list {
+            margin-bottom: 25px;
+        }
+        
+        .ingredients-list h4, .instructions-list h4 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .ingredients-list ul, .instructions-list ol {
+            padding-left: 20px;
+        }
+        
+        .ingredients-list li, .instructions-list li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        .recipe-meta-modal {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--light-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .meta-item {
+            text-align: center;
+        }
+        
+        .meta-item i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .meta-item .value {
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+        
+        .meta-item .label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Улучшенный раздел с дополнительными рецептами -->
+    <section class="new-recipes-section section-padding">
+        <div class="container">
+            <h2 class="section-title">Украинские рецепты</h2>
+            
+            <div class="category-filter">
+                <button class="category-filter-btn active" data-filter="all">Все</button>
+                <button class="category-filter-btn" data-filter="breakfast">Завтраки</button>
+                <button class="category-filter-btn" data-filter="lunch">Обеды</button>
+                <button class="category-filter-btn" data-filter="dinner">Ужины</button>
+                <button class="category-filter-btn" data-filter="dessert">Десерты</button>
+                <button class="category-filter-btn" data-filter="baking">Выпечка</button>
+            </div>
+            
+            <div class="row recipes-container">
+                <!-- Рецепт 1 -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="breakfast" style="animation-delay: 0.1s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250907-194244 (1).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Пшенная каша с тыквой"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-danger">Завтрак</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Пшенная каша с тыквой</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 40 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Легко
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="ms-1">(32)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe1">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Рецепт 2 -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="lunch" style="animation-delay: 0.2s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250907-202023 (1).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Сало с чесноком"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-success">Обед</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Сало с чесноком</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 20 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Легко
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="ms-1">(45)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe2">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Рецепт 3 -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="dinner" style="animation-delay: 0.3s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250907-203038 (1).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Вареники с вишней"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-primary">Ужин</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Вареники с вишней</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 60 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Средняя
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="ms-1">(28)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe3">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Рецепт 4 -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="dessert" style="animation-delay: 0.4s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250907-203843 (1).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Медовик"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-warning text-dark">Десерт</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Медовик</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 120 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Сложно
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="ms-1">(37)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe4">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Рецепт 5 -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="baking" style="animation-delay: 0.5s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250907-205841 (1).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Коржики"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-info">Выпечка</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Коржики</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 90 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Средняя
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="ms-1">(41)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe5">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Рецепт 6 -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="lunch" style="animation-delay: 0.6s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250907-211540 (1).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Капусняк"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-success">Обед</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Капусняк</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 90 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Средняя
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="ms-1">(26)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe6">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Рецепт 7: Борщ -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="lunch" style="animation-delay: 0.7s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/pablo-merchan-montes-Orz90t6o0e4-unsplash1.jpg"
+                                    class="img-fluid menu-image" 
+                                    alt="Борщ"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-success">Обед</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Борщ</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 120 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Средняя
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="ms-1">(58)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe7">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Рецепт 8: Сырники -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="breakfast" style="animation-delay: 0.8s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250906-171219 (1).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Сырники"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-danger">Завтрак</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Сырники</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 30 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Легко
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="ms-1">(47)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe8">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Рецепт 9: Голубцы -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="dinner" style="animation-delay: 0.9s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250906-175544 (1).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Голубцы"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-primary">Ужин</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Голубцы</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 90 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Средняя
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="ms-1">(39)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe9">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Рецепт 10: Вареники с картошкой -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="dinner" style="animation-delay: 1.0s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250906-155023 (1).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Вареники с картошкой"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-primary">Ужин</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Вареники с картошкой</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 75 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Средняя
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="ms-1">(34)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe10">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Рецепт 11: Деруны -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="breakfast" style="animation-delay: 1.1s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250907-221453 (2).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Деруны"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-danger">Завтрак</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Деруны</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 40 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Легко
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="ms-1">(42)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe11">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Рецепт 12: Кулеш -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="lunch" style="animation-delay: 1.2s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250908-075758 (1).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Кулеш"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-success">Обед</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Кулеш</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 120 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Средняя
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="ms-1">(29)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe12">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Рецепт 13: Оладьи -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="breakfast" style="animation-delay: 1.3s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250908-081340 (1).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Оладьи"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-danger">Завтрак</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Оладьи</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 30 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Легко
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="ms-1">(38)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe13">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Рецепт 14: Зразы -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="dinner" style="animation-delay: 1.4s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250908-083025 (1).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Зразы"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-primary">Ужин</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Зразы</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 60 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Средняя
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="ms-1">(31)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe14">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Рецепт 15: Пасха -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="baking" style="animation-delay: 1.5s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250908-084049 (1).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Пасха"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-info">Выпечка</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Пасха</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 180 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Сложно
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="ms-1">(27)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe15">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Рецепт 16: Узвар -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4 recipe-item" data-category="dessert" style="animation-delay: 1.6s;">
+                    <div class="menu-thumb recipe-card h-100">
+                        <div class="menu-image-wrap">
+                            <div class="d-block position-relative">
+                                <img 
+                                    src="images/news/Screenshot_20250908-090209 (1).png" 
+                                    class="img-fluid menu-image" 
+                                    alt="Узвар"
+                                    loading="lazy"
+                                >
+                                <span class="recipe-badge category-tag bg-warning text-dark">Десерт</span>
+                                <div class="image-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="menu-info d-flex flex-column">
+                            <h4 class="mb-1">Узвар</h4>
+                            <div class="recipe-meta">
+                                <div class="recipe-time">
+                                    <i class="far fa-clock me-1"></i> 60 мин
+                                </div>
+                                <div class="recipe-difficulty">
+                                    <i class="fas fa-chef-hat me-1"></i> Легко
+                                </div>
+                            </div>
+                            <div class="recipe-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="ms-1">(33)</span>
+                            </div>
+                            <div class="recipe-actions mt-auto">
+                                <button class="btn-favorite">
+                                    <i class="far fa-heart"></i> Добавить в избранное
+                                </button>
+                                <button class="btn-details" data-recipe="recipe16">Подробнее</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="no-results">
+                <i class="fas fa-search"></i>
+                <h4>Рецепты не найдены</h4>
+                <p>Попробуйте выбрать другую категорию</p>
+            </div>
+            
+            <div class="text-center mt-5">
+                <button class="view-all-btn" id="showAllRecipes">Смотреть все рецепты</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальные окна с рецептами -->
+    <!-- Рецепт 1: Пшенная каша с тыквой -->
+    <div id="recipe1" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Пшенная каша с тыквой</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250907-194244 (1).png" alt="Пшенная каша с тыквой" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">40 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Легко</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">4 порции</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты</h4>
+                    <ul>
+                        <li>1 стакан пшена</li>
+                        <li>300 г тыквы</li>
+                        <li>2 стакана молока</li>
+                        <li>1 стакан воды</li>
+                        <li>2 ст. л. сахара</li>
+                        <li>Щепотка соли</li>
+                        <li>50 г сливочного масла</li>
+                        <li>Мед или варенье по желанию</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Пшено тщательно промыть несколько раз в теплой воде, пока вода не станет прозрачной.</li>
+                        <li>Тыкву очистить от кожуры и семян, нарезать мелкими кубиками.</li>
+                        <li>В кастрюлю налить молоко и воду, добавить пшено, соль и сахар. Довести до кипения.</li>
+                        <li>Добавить нарезанную тыкву, уменьшить огонь и варить под крышкой 20-25 минут, периодически помешивая.</li>
+                        <li>Когда каша загустеет, добавить сливочное масло, накрыть крышкой и дать постоять 10-15 минут.</li>
+                        <li>Подавать с медом, вареньем или взбитыми сливками.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 2: Сало с чесноком -->
+    <div id="recipe2" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Сало с чесноком</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250907-202023 (1).png" alt="Сало с чесноком" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">20 мин + маринование</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Легко</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">6 порций</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты</h4>
+                    <ul>
+                        <li>500 г свежего сала со шкуркой</li>
+                        <li>5-6 зубчиков чеснока</li>
+                        <li>1 ч. л. черного молотого перца</li>
+                        <li>1 ч. л. паприки</li>
+                        <li>1/2 ч. л. семян укропа</li>
+                        <li>1 ст. л. соли</li>
+                        <li>Свежие травы по желанию (укроп, петрушка)</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Сало тщательно вымыть, обсушить и нарезать кусочками шириной 3-4 см.</li>
+                        <li>Чеснок очистить и измельчить (можно пропустить через пресс или мелко нарезать).</li>
+                        <li>Смешать соль, перец, паприку и семена укропа.</li>
+                        <li>В каждом кусочке сала сделать несколько надрезов ножом и натереть полученной смесью специй.</li>
+                        <li>Обмазать сало смесью специй со всех сторон, особенно тщательно втирая в надрезы.</li>
+                        <li>Положить сало в контейнер, накрыть крышкой и отправить в холодильник на 2-3 дня для маринования.</li>
+                        <li>Перед подачей можно посыпать свежими травами.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 3: Вареники с вишней -->
+    <div id="recipe3" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Вареники с вишней</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250907-203038 (1).png" alt="Вареники с вишней" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">60 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Средняя</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">4-5 порций</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты для теста</h4>
+                    <ul>
+                        <li>2 стакана муки</li>
+                        <li>1/2 стакана теплой воды</li>
+                        <li>1 яйцо</li>
+                        <li>1/2 ч. л. соли</li>
+                        <li>1 ст. л. растительного масла</li>
+                    </ul>
+                    
+                    <h4>Ингредиенты для начинки</h4>
+                    <ul>
+                        <li>500 г вишни</li>
+                        <li>3-4 ст. л. сахара</li>
+                        <li>1 ст. л. крахмала</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Приготовить тесто: смешать муку, соль, добавить яйцо, воду и масло. Замесить крутое тесто, накрыть и оставить на 20-30 минут.</li>
+                        <li>Вишню помыть, удалить косточки, смешать с сахаром и крахмалом.</li>
+                        <li>Тесто раскатать тонким пластом, вырезать кружочки стаканом.</li>
+                        <li>На каждый кружочек выложить начинку, слепить вареники, хорошо защепив края.</li>
+                        <li>В кипящую подсоленную воду опустить вареники, варить 5-7 минут после всплытия.</li>
+                        <li>Готовые вареники вынуть шумовкой, положить в тарелку, заправить сливочным маслом или сметаной.</li>
+                        <li>Посыпать сахаром или полить медом по желанию.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 4: Медовик -->
+    <div id="recipe4" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Медовик</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250907-203843 (1).png" alt="Медовик" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">120 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Сложно</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">10 порций</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты для коржей</h4>
+                    <ul>
+                        <li>2 стакана муки</li>
+                        <li>2 яйца</li>
+                        <li>1 стакан сахара</li>
+                        <li>100 г сливочного масла</li>
+                        <li>3 ст. л. меда</li>
+                        <li>1 ч. л. соды</li>
+                        <li>Щепотка соли</li>
+                    </ul>
+                    
+                    <h4>Ингредиенты для крема</h4>
+                    <ul>
+                        <li>800 г сметаны</li>
+                        <li>1,5 стакана сахара</li>
+                        <li>1 пакетик ванильного сахара</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>В кастрюле смешать мед, масло, сахар и соду. Подогревать на среднем огне, помешивая, до получения однородной массы.</li>
+                        <li>Снять с огня, немного остудить и добавить яйца, хорошо перемешивая.</li>
+                        <li>Постепенно добавлять муку, замешивая тесто. Оно должно получиться мягким и не липким.</li>
+                        <li>Разделить тесто на 6-8 равных частей, каждую раскатать в круг.</li>
+                        <li>Коржи выпекать при 180°C 5-7 минут до золотистого цвета.</li>
+                        <li>Приготовить крем: взбить сметану с сахаром и ванилью до пышной массы.</li>
+                        <li>Охлажденные коржи смазать кремом, также смазать верх и бока торта.</li>
+                        <li>Украсить крошкой из обрезков коржей. Дать торту пропитаться в холодильнике 8-10 часов.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 5: Коржики -->
+    <div id="recipe5" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Коржики</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250907-205841 (1).png"alt="Коржики" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">90 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Средняя</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">30-40 шт</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты</h4>
+                    <ul>
+                        <li>3 стакана муки</li>
+                        <li>200 г сливочного масла</li>
+                        <li>2 яйца</li>
+                        <li>1 стакан сахара</li>
+                        <li>1/2 стакана сметаны</li>
+                        <li>1/2 ч. л. соды</li>
+                        <li>1 ст. л. уксуса</li>
+                        <li>Щепотка соли</li>
+                        <li>Ванильный сахар по вкусу</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Масло размягчить при комнатной температуре, взбить с сахаром.</li>
+                        <li>Добавить яйца, сметану, взбить до однородности.</li>
+                        <li>Соду погасить уксусом, добавить в тесто.</li>
+                        <li>Постепенно добавлять муку, замешивая тесто. Оно должно получиться мягким, но не липким.</li>
+                        <li>Тесто разделить на 4 части, каждую завернуть в пленку и положить в холодильник на 30 минут.</li>
+                        <li>Охлажденное тесто раскатать тонким слоем (2-3 мм), вырезать формочками фигурки.</li>
+                        <li>Выпекать при 180°C 10-12 минут до золотистого цвета.</li>
+                        <li>Готовые коржики остудить на решетке. Можно посыпать сахарной пудрой.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 6: Капусняк -->
+    <div id="recipe6" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Капусняк</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250907-211540 (1).png" alt="Капусняк" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">90 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Средняя</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">6-8 порций</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты</h4>
+                    <ul>
+                        <li>500 г свинины или говядины</li>
+                        <li>300 г свежей капусты</li>
+                        <li>3 картофелины</li>
+                        <li>1 морковь</li>
+                        <li>1 луковица</li>
+                        <li>2 ст. л. томатной пасты</li>
+                        <li>2 л воды</li>
+                        <li>Соль, перец, лавровый лист по вкусу</li>
+                        <li>Сметана и зелень для подачи</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Мясо помыть, положить в кастрюлю, залить холодной водой и довести до кипения.</li>
+                        <li>Снять пену, уменьшить огонь и варить мясо 1-1,5 часа до готовности.</li>
+                        <li>Лук и морковь мелко нарезать, обжарить на масле до мягкости.</li>
+                        <li>Добавить томатную пасту, тушить 3-4 минуты.</li>
+                        <li>Капусту тонко нарезать, картофель очистить и нарезать кубиками.</li>
+                        <li>Когда мясо готово, вынуть его, нарезать и вернуть в бульон.</li>
+                        <li>Добавить картофель, варить 10 минут.</li>
+                        <li>Добавить капусту, варить еще 10 минут.</li>
+                        <li>Добавить зажарку, соль, перец, лавровый лист. Варить еще 5-7 минут.</li>
+                        <li>Дать супу настояться 15-20 минут. Подавать со сметаной и зеленью.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 7: Борщ -->
+    <div id="recipe7" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Борщ</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/pablo-merchan-montes-Orz90t6o0e4-unsplash1.jpg"alt="Борщ" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">120 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Средняя</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">6-8 порций</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты</h4>
+                    <ul>
+                        <li>500 г говядины</li>
+                        <li>1 свекла</li>
+                        <li>2 картофелины</li>
+                        <li>1 морковь</li>
+                        <li>1 луковица</li>
+                        <li>300 г белокочанной капусты</li>
+                        <li>2 ст. л. томатной пасты</li>
+                        <li>3 л воды</li>
+                        <li>Соль, перец, лавровый лист по вкусу</li>
+                        <li>Сметана и зелень для подачи</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Мясо помыть, положить в кастрюлю, залить холодной водой. Довести до кипения, снять пену.</li>
+                        <li>Уменьшить огонь и варить мясо 1,5-2 часа до готовности.</li>
+                        <li>Свеклу, морковь и лук нарезать соломкой, обжарить на масле.</li>
+                        <li>Добавить томатную пасту, тушить 5-7 минут.</li>
+                        <li>Картофель очистить и нарезать кубиками, капусту тонко нарезать.</li>
+                        <li>Когда мясо готово, вынуть его, нарезать и вернуть в бульон.</li>
+                        <li>Добавить картофель, варить 10 минут.</li>
+                        <li>Добавить капусту, варить еще 10 минут.</li>
+                        <li>Добавить зажарку, соль, перец, лавровый лист. Варить еще 10 минут.</li>
+                        <li>Дать борщу настояться 20-30 минут. Подавать со сметаной, зеленью и чесноком.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 8: Сырники -->
+    <div id="recipe8" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Сырники</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250906-171219 (1).png"alt="Сырники" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">30 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Легко</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">4 порции</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты</h4>
+                    <ul>
+                        <li>500 г творога</li>
+                        <li>2 яйца</li>
+                        <li>3-4 ст. л. муки</li>
+                        <li>2 ст. л. сахара</li>
+                        <li>Щепотка соли</li>
+                        <li>Ванильный сахар по вкусу</li>
+                        <li>Масло для жарки</li>
+                        <li>Сметана или варенье для подачи</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Творог размять вилкой или пропустить через сито.</li>
+                        <li>Добавить яйца, сахар, соль, ванильный сахар. Тщательно перемешать.</li>
+                        <li>Постепенно добавлять муку, замешивая тесто. Оно должно получиться мягким, но не липким.</li>
+                        <li>Сформировать небольшие котлеты, обвалять их в муке.</li>
+                        <li>Разогреть масло на сковороде, выложить сырники и обжарить с обеих сторон до золотистой корочки.</li>
+                        <li>Подавать со сметаной, вареньем или медом.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 9: Голубцы -->
+    <div id="recipe9" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Голубцы</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250906-175544 (1).png"alt="Голубцы" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">90 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Средняя</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">6 порций</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты</h4>
+                    <ul>
+                        <li>1 кочан капусты</li>
+                        <li>500 г фарша (свино-говяжьего)</li>
+                        <li>1 луковица</li>
+                        <li>100 г риса</li>
+                        <li>2 ст. л. томатной пасты</li>
+                        <li>Соль, перец по вкусу</li>
+                        <li>Масло для жарки</li>
+                        <li>Сметана для подачи</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Капусту разобрать на листья, обварить в кипятке до мягкости.</li>
+                        <li>Рис отварить до полуготовности.</li>
+                        <li>Лук мелко нарезать, обжарить на масле.</li>
+                        <li>Смешать фарш, рис, лук, соль, перец.</li>
+                        <li>На капустные листья выкладывать начинку, заворачивать.</li>
+                        <li>Голубцы уложить в кастрюлю, залить водой с томатной пастой.</li>
+                        <li>Тушить на медленном огне 40-50 минут.</li>
+                        <li>Подавать со сметаной.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 10: Вареники с картошкой -->
+    <div id="recipe10" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Вареники с картошкой</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250906-155023 (1).png" alt="Вареники с картошкой" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">75 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Средняя</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">4-5 порций</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты для теста</h4>
+                    <ul>
+                        <li>2 стакана муки</li>
+                        <li>1/2 стакана теплой воды</li>
+                        <li>1 яйцо</li>
+                        <li>1/2 ч. л. соли</li>
+                        <li>1 ст. л. растительного масла</li>
+                    </ul>
+                    
+                    <h4>Ингредиенты для начинки</h4>
+                    <ul>
+                        <li>6-7 картофелин</li>
+                        <li>1 луковица</li>
+                        <li>50 г сливочного масла</li>
+                        <li>Соль, перец по вкусу</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Приготовить тесто: смешать муку, соль, добавить яйцо, воду и масло. Замесить крутое тесто, накрыть и оставить на 20-30 минут.</li>
+                        <li>Картофель очистить, отварить, слить воду и размять в пюре.</li>
+                        <li>Лук нарезать, обжарить на масле, добавить к картофельному пюре.</li>
+                        <li>Добавить сливочное масло, соль, перец. Тщательно перемешать.</li>
+                        <li>Тесто раскатать тонким пластом, вырезать кружочки стаканом.</li>
+                        <li>На каждый кружочек выложить начинку, слепить вареники.</li>
+                        <li>В кипящую подсоленную воду опустить вареники, варить 5-7 минут после всплытия.</li>
+                        <li>Подавать со сметаной и обжаренным луком.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 11: Деруны -->
+    <div id="recipe11" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Деруны</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250907-221453 (2).png" alt="Деруны" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">40 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Легко</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">4 порции</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты</h4>
+                    <ul>
+                        <li>6-7 картофелин</li>
+                        <li>1 яйцо</li>
+                        <li>2 ст. л. муки</li>
+                        <li>1 луковица</li>
+                        <li>Соль, перец по вкусу</li>
+                        <li>Масло для жарки</li>
+                        <li>Сметана для подачи</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Картофель очистить, натереть на мелкой терке.</li>
+                        <li>Отжать лишнюю жидкость.</li>
+                        <li>Лук мелко нарезать, добавить к картофелю.</li>
+                        <li>Добавить яйцо, муку, соль, перец. Тщательно перемешать.</li>
+                        <li>Разогреть масло на сковороде.</li>
+                        <li>Выкладывать тесто ложкой, формировать небольшие оладьи.</li>
+                        <li>Обжаривать с обеих сторон до золотистой корочки.</li>
+                        <li>Подавать со сметаной.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 12: Кулеш -->
+    <div id="recipe12" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Кулеш</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250908-075758 (1).png" alt="Кулеш" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">120 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Средняя</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">6 порций</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты</h4>
+                    <ul>
+                        <li>500 г свинины</li>
+                        <li>1 стакан пшена</li>
+                        <li>3 картофелины</li>
+                        <li>1 морковь</li>
+                        <li>1 луковица</li>
+                        <li>2 л воды</li>
+                        <li>Соль, перец, лавровый лист по вкусу</li>
+                        <li>Зелень для подачи</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Мясо помыть, положить в кастрюлю, залить холодной водой. Довести до кипения, снять пену.</li>
+                        <li>Уменьшить огонь и варить мясо 1 час.</li>
+                        <li>Пшено тщательно промыть.</li>
+                        <li>Картофель, морковь и лук очистить и нарезать кубиками.</li>
+                        <li>Добавить пшено к бульону, варить 20 минут.</li>
+                        <li>Добавить овощи, варить еще 20 минут.</li>
+                        <li>Добавить соль, перец, лавровый лист. Варить до готовности.</li>
+                        <li>Подавать с зеленью.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 13: Оладьи -->
+    <div id="recipe13" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Оладьи</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250908-081340 (1).png"alt="Оладьи" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">30 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Легко</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">4 порции</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты</h4>
+                    <ul>
+                        <li>2 стакана муки</li>
+                        <li>2 яйца</li>
+                        <li>2 стакана молока</li>
+                        <li>2 ст. л. сахара</li>
+                        <li>Щепотка соли</li>
+                        <li>1/2 ч. л. соды</li>
+                        <li>Масло для жарки</li>
+                        <li>Варенье или мед для подачи</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Взбить яйца с сахаром и солью.</li>
+                        <li>Добавить молоко, тщательно перемешать.</li>
+                        <li>Постепенно добавлять муку, перемешивая, чтобы не было комочков.</li>
+                        <li>Добавить соду.</li>
+                        <li>Тесто должно получиться консистенции жидкой сметаны.</li>
+                        <li>Разогреть масло на сковороде.</li>
+                        <li>Наливать тесто ложкой, формировать небольшие оладьи.</li>
+                        <li>Обжаривать с обеих сторон до золотистой корочки.</li>
+                        <li>Подавать с вареньем, медом или сметаной.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 14: Зразы -->
+    <div id="recipe14" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Зразы</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250908-083025 (1).png" alt="Зразы" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">60 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Средняя</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">4 порции</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты</h4>
+                    <ul>
+                        <li>6-7 картофелин</li>
+                        <li>300 г мяса</li>
+                        <li>1 луковица</li>
+                        <li>1 яйцо</li>
+                        <li>2 ст. л. муки</li>
+                        <li>Соль, перец по вкусу</li>
+                        <li>Масло для жарки</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Картофель очистить, отварить, слить воду и размять в пюре.</li>
+                        <li>Добавить яйцо, муку, соль. Замесить тесто.</li>
+                        <li>Мясо пропустить через мясорубку, добавить мелко нарезанный лук, соль, перец.</li>
+                        <li>Из картофельного теста сформировать небольшие лепешки.</li>
+                        <li>На каждую лепешку выложить мясную начинку, защипнуть.</li>
+                        <li>Обжарить с обеих сторон до золотистой корочки.</li>
+                        <li>Можно потушить в соусе 10-15 минут.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 15: Пасха -->
+    <div id="recipe15" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Пасха</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250908-084049 (1).png" alt="Пасха" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">180 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Сложно</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">8-10 порций</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты</h4>
+                    <ul>
+                        <li>1 кг муки</li>
+                        <li>500 мл молока</li>
+                        <li>200 г сливочного масла</li>
+                        <li>6 яиц</li>
+                        <li>200 г сахара</li>
+                        <li>50 г дрожжей</li>
+                        <li>100 г изюма</li>
+                        <li>Ванильный сахар по вкусу</li>
+                        <li>Цукаты для украшения</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Дрожжи развести в теплом молоке с ложкой сахара.</li>
+                        <li>Желтки взбить с сахаром до белой массы.</li>
+                        <li>Добавить растопленное масло, ванильный сахар.</li>
+                        <li>Добавить дрожжевую смесь, тщательно перемешать.</li>
+                        <li>Постепенно добавлять муку, замешивая тесто.</li>
+                        <li>Добавить изюм.</li>
+                        <li>Тесто накрыть и оставить в теплом месте на 1,5-2 часа.</li>
+                        <li>Разделить тесто на формы, оставить еще на 30 минут.</li>
+                        <li>Выпекать при 180°C 40-50 минут.</li>
+                        <li>Украсить цукатами или глазурью.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Рецепт 16: Узвар -->
+    <div id="recipe16" class="modal-recipe">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Узвар</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="images/news/Screenshot_20250908-090209 (1).png" alt="Узвар" class="recipe-image">
+                
+                <div class="recipe-meta-modal">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <div class="value">60 мин</div>
+                        <div class="label">Время приготовления</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chef-hat"></i>
+                        <div class="value">Легко</div>
+                        <div class="label">Сложность</div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <div class="value">6 порций</div>
+                        <div class="label">Количество</div>
+                    </div>
+                </div>
+                
+                <div class="ingredients-list">
+                    <h4>Ингредиенты</h4>
+                    <ul>
+                        <li>200 г сушеных яблок</li>
+                        <li>100 г сушеных груш</li>
+                        <li>50 г сушеных слив</li>
+                        <li>100 г меда</li>
+                        <li>3 л воды</li>
+                        <li>Корица по желанию</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-list">
+                    <h4>Способ приготовления</h4>
+                    <ol>
+                        <li>Сушеные фрукты тщательно промыть.</li>
+                        <li>Залить холодной водой, оставить на 30 минут.</li>
+                        <li>Довести до кипения, снять пену.</li>
+                        <li>Уменьшить огонь, варить 30-40 минут.</li>
+                        <li>Добавить мед, корицу.</li>
+                        <li>Снять с огня, накрыть крышкой.</li>
+                        <li>Оставить настаиваться 2-3 часа.</li>
+                        <li>Подавать охлажденным.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Фильтрация рецептов
+            const filterButtons = document.querySelectorAll('.category-filter-btn');
+            const recipeItems = document.querySelectorAll('.recipe-item');
+            const noResults = document.querySelector('.no-results');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Убираем активный класс у всех кнопок
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Добавляем активный класс текущей кнопке
+                    button.classList.add('active');
+                    
+                    const filterValue = button.getAttribute('data-filter');
+                    let visibleItems = 0;
+                    
+                    recipeItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                            visibleItems++;
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                    
+                    // Показываем сообщение, если нет результатов
+                    if (visibleItems === 0) {
+                        noResults.style.display = 'block';
+                    } else {
+                        noResults.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Добавление в избранное
+            const favoriteButtons = document.querySelectorAll('.btn-favorite');
+            
+            favoriteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const icon = this.querySelector('i');
+                    
+                    if (this.classList.contains('active')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        this.innerHTML = '<i class="fas fa-heart"></i> В избранном';
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        this.innerHTML = '<i class="far fa-heart"></i> Добавить в избранное';
+                    }
+                });
+            });
+            
+            // Плавное появление элементов при загрузке
+            setTimeout(function() {
+                document.querySelectorAll('.recipe-item').forEach(item => {
+                    item.style.opacity = '1';
+                });
+            }, 100);
+            
+            // Модальные окна рецептов
+            const modalRecipes = document.querySelectorAll('.modal-recipe');
+            const detailButtons = document.querySelectorAll('.btn-details');
+            const closeButtons = document.querySelectorAll('.close-modal');
+            
+            // Открытие модального окна
+            detailButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const recipeId = this.getAttribute('data-recipe');
+                    document.getElementById(recipeId).style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Закрытие модального окна
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.closest('.modal-recipe').style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+            });
+            
+            // Закрытие модального окна при клике вне его
+            window.addEventListener('click', function(event) {
+                modalRecipes.forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+            
+            // Кнопка "Смотреть все рецепты"
+            document.getElementById('showAllRecipes').addEventListener('click', function() {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                document.querySelector('[data-filter="all"]').classList.add('active');
+                
+                recipeItems.forEach(item => {
+                    item.style.display = 'block';
+                });
+                
+                noResults.style.display = 'none';
+                
+                // Прокрутка к началу списка рецептов
+                document.querySelector('.recipes-container').scrollIntoView({behavior: 'smooth'});
+            });
+        });
+    </script>
+</body>
+</html>
