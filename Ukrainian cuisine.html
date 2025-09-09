@@ -143,56 +143,24 @@
             align-items: center;
         }
         
-        .recipe-rating {
-            margin: 12px 0;
-            display: flex;
-            align-items: center;
-        }
-        
-        .recipe-rating .stars {
-            color: #ffc107;
-            margin-right: 8px;
-        }
-        
         .recipe-actions {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             margin-top: 15px;
-        }
-        
-        .btn-favorite {
-            background: none;
-            border: none;
-            color: #6c757d;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            padding: 6px 10px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-weight: 500;
-        }
-        
-        .btn-favorite:hover {
-            color: #dc3545;
-            background-color: rgba(220, 53, 69, 0.1);
-        }
-        
-        .btn-favorite.active {
-            color: #dc3545;
         }
         
         .btn-details {
             background-color: var(--primary-color);
             border: none;
             color: white;
-            padding: 6px 15px;
+            padding: 8px 20px;
             border-radius: 6px;
             transition: all 0.3s ease;
             font-weight: 500;
             cursor: pointer;
+            width: 100%;
+            text-align: center;
         }
         
         .btn-details:hover {
@@ -256,7 +224,7 @@
             }
             
             .btn-details {
-                align-self: flex-end;
+                align-self: stretch;
             }
         }
         
@@ -452,20 +420,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Легко
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="ms-1">(32)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe1">Детальніше</button>
                             </div>
                         </div>
@@ -497,20 +452,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Легко
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="ms-1">(45)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe2">Детальніше</button>
                             </div>
                         </div>
@@ -542,20 +484,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Середня
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="ms-1">(28)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe3">Детальніше</button>
                             </div>
                         </div>
@@ -587,20 +516,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Складно
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="ms-1">(37)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe4">Детальніше</button>
                             </div>
                         </div>
@@ -632,20 +548,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Середня
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="ms-1">(41)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe5">Детальніше</button>
                             </div>
                         </div>
@@ -677,20 +580,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Середня
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="ms-1">(26)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe6">Детальніше</button>
                             </div>
                         </div>
@@ -722,20 +612,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Середня
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="ms-1">(58)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe7">Детальніше</button>
                             </div>
                         </div>
@@ -767,20 +644,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Легко
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="ms-1">(47)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe8">Детальніше</button>
                             </div>
                         </div>
@@ -812,20 +676,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Середня
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="ms-1">(39)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe9">Детальніше</button>
                             </div>
                         </div>
@@ -857,20 +708,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Середня
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="ms-1">(34)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe10">Детальніше</button>
                             </div>
                         </div>
@@ -902,21 +740,8 @@
                                     <i class="fas fa-chef-hat me-1"></i> Легко
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="ms-1">(42)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
-                                <button class="btn-details" data-recipe="recipe11">Детальніше</button>
+                                <button class="btn-details" data-recipe="recipe11">Дetальніше</button>
                             </div>
                         </div>
                     </div>
@@ -947,20 +772,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Середня
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="ms-1">(29)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe12">Детальніше</button>
                             </div>
                         </div>
@@ -992,20 +804,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Легко
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="ms-1">(38)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe13">Детальніше</button>
                             </div>
                         </div>
@@ -1037,20 +836,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Середня
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="ms-1">(31)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe14">Детальніше</button>
                             </div>
                         </div>
@@ -1082,20 +868,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Складно
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="ms-1">(27)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe15">Детальніше</button>
                             </div>
                         </div>
@@ -1127,20 +900,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Легко
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="ms-1">(33)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Додати в обране
-                                </button>
                                 <button class="btn-details" data-recipe="recipe16">Детальніше</button>
                             </div>
                         </div>
@@ -1389,8 +1149,8 @@
                     <h4>Спосіб приготування</h4>
                     <ol>
                         <li>У каструлі змішати мед, масло, цукор и соду. Підігрівати на середньому вогні, помішуючи, до отримання однорідної маси.</li>
-                        <li>Зняти з вогню, трохи охолодити і додати яйця, добре перемішуючи.</li>
-                        <li>Поступово додавати борошно, замішуючи тісто. Воно повинно вийти м'яким і не липким.</li>
+                        <li>Зняти з вогню, трохи охолодити и додати яйця, добре перемішуючи.</li>
+                        <li>Поступово додавати борошно, замішуючи тісто. Воно повинно вийти м'яким і не липним.</li>
                         <li>Розділити тісто на 6-8 рівних частин, кожну розкатати в коло.</li>
                         <li>Коржі випікати при 180°C 5-7 хвилин до золотистого кольору.</li>
                         <li>Приготувати крем: збити сметану з цукром і ваніллю до пишної маси.</li>
@@ -1509,11 +1269,11 @@
                     <h4>Спосіб приготування</h4>
                     <ol>
                         <li>М'ясо помити, покласти в каструлю, залити холодною водою и довести до кипіння.</li>
-                        <li>Зняти піну, зменшити вогонь і варити м'ясо 1-1,5 години до готовності.</li>
+                        <li>Зняти піну, зменшити вогонь і варити м'ясо 1-1,5 години до готовностя.</li>
                         <li>Цибулю і моркву дрібно нарізати, обсмажити на олії до м'якості.</li>
                         <li>Додати томатну пасту, тушкувати 3-4 хвилини.</li>
-                        <li>Капусту тонко нарізати, картоплю очистити і нарізати кубиками.</li>
-                        <li>Коли м'ясо готове, вийняти його, нарізати і повернути в бульйон.</li>
+                        <li>Капусту тонко нарізати, картоплю очистити и нарізати кубиками.</li>
+                        <li>Коли м'ясо готове, вийняти його, нарізати и повернути в бульйон.</li>
                         <li>Додати картоплю, варити 10 хвилин.</li>
                         <li>Додати капусту, варити ще 10 хвилин.</li>
                         <li>Додати засмажку, сіль, перець, лавровий лист. Варити ще 5-7 хвилин.</li>
@@ -1575,8 +1335,8 @@
                         <li>Зменшити вогонь і варити м'ясо 1,5-2 години до готовності.</li>
                         <li>Буряк, моркву и цибулину нарізати соломкою, обсмажити на олії.</li>
                         <li>Додати томатну пасту, тушкувати 5-7 хвилин.</li>
-                        <li>Картоплю очистити і нарізати кубиками, капусту тонко нарізати.</li>
-                        <li>Коли м'ясо готове, вийняти його, нарізати і повернути в бульйон.</li>
+                        <li>Картоплю очистити и нарізати кубиками, капусту тонко нарізати.</li>
+                        <li>Коли м'ясо готове, вийняти його, нарізати и повернути в бульйон.</li>
                         <li>Додати картоплю, варити 10 хвилин.</li>
                         <li>Додати капусту, варити ще 10 хвилин.</li>
                         <li>Додати засмажку, сіль, перець, лавровий лист. Варити ще 10 хвилин.</li>
@@ -1634,9 +1394,9 @@
                     <ol>
                         <li>Сир розім'яти виделкою або пропустити через сито.</li>
                         <li>Додати яйця, цукор, сіль, ванільний цукор. Ретельно перемішати.</li>
-                        <li>Поступово додавати борошно, замішуючи тісто. Воно повинно вийти м'яким, але не липким.</li>
+                        <li>Поступово додавати борошно, замішуючи тісто. Воно повинно вийти м'яким, але не липним.</li>
                         <li>Сформувати невеликі котлети, обваляти їх у борошні.</li>
-                        <li>Розігріти олію на сковороді, викласти сирники і обсмажити з обох сторін до золотистої скоринки.</li>
+                        <li>Розігріти олію на сковороді, викласти сирники и обсмажити з обох сторін до золотистої скоринки.</li>
                         <li>Подавати зі сметаною, варенням або медом.</li>
                     </ol>
                 </div>
@@ -1757,7 +1517,7 @@
                         <li>Картоплю очистити, відварити, злити воду и розім'яти в пюре.</li>
                         <li>Цибулю нарізати, обсмажити на олії, додати до картопляного пюре.</li>
                         <li>Додати вершкове масло, сіль, перець. Ретельно перемішати.</li>
-                        <li>Тісто розкатати тонким пластом, вирізати кружечки склянкою.</li>
+                        <li>Тісто розкатати тонним пластом, вирізати кружечки склянкою.</li>
                         <li>На кожен кружечок викласти начинку, заліпити вареники.</li>
                         <li>В киплячу підсолену воду опустити вареники, варити 5-7 хвилин після спливання.</li>
                         <li>Подавати зі сметаною и обсмаженою цибулею.</li>
@@ -1995,6 +1755,7 @@
                         <li>На кожен корж викласти м'ясну начинку, заліпити.</li>
                         <li>Обсмажити з обох сторін до золотистої скоринки.</li>
                         <li>Можна потушкувати в соусі 10-15 хвилин.</li>
+                        <li>Подавати зі сметаною.</li>
                     </ol>
                 </div>
             </div>
@@ -2151,26 +1912,6 @@
                         noResults.style.display = 'block';
                     } else {
                         noResults.style.display = 'none';
-                    }
-                });
-            });
-            
-            // Добавление в избранное
-            const favoriteButtons = document.querySelectorAll('.btn-favorite');
-            
-            favoriteButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    const icon = this.querySelector('i');
-                    
-                    if (this.classList.contains('active')) {
-                        icon.classList.remove('far');
-                        icon.classList.add('fas');
-                        this.innerHTML = '<i class="fas fa-heart"></i> В обраному';
-                    } else {
-                        icon.classList.remove('fas');
-                        icon.classList.add('far');
-                        this.innerHTML = '<i class="far fa-heart"></i> Додати в обране';
                     }
                 });
             });

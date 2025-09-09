@@ -143,56 +143,24 @@
             align-items: center;
         }
         
-        .recipe-rating {
-            margin: 12px 0;
-            display: flex;
-            align-items: center;
-        }
-        
-        .recipe-rating .stars {
-            color: #ffc107;
-            margin-right: 8px;
-        }
-        
         .recipe-actions {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             margin-top: 15px;
-        }
-        
-        .btn-favorite {
-            background: none;
-            border: none;
-            color: #6c757d;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            padding: 6px 10px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-weight: 500;
-        }
-        
-        .btn-favorite:hover {
-            color: #dc3545;
-            background-color: rgba(220, 53, 69, 0.1);
-        }
-        
-        .btn-favorite.active {
-            color: #dc3545;
         }
         
         .btn-details {
             background-color: var(--primary-color);
             border: none;
             color: white;
-            padding: 6px 15px;
+            padding: 8px 20px;
             border-radius: 6px;
             transition: all 0.3s ease;
             font-weight: 500;
             cursor: pointer;
+            width: 100%;
+            text-align: center;
         }
         
         .btn-details:hover {
@@ -256,7 +224,7 @@
             }
             
             .btn-details {
-                align-self: flex-end;
+                align-self: stretch;
             }
         }
         
@@ -452,20 +420,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Легко
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="ms-1">(32)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe1">Подробнее</button>
                             </div>
                         </div>
@@ -497,20 +452,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Легко
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="ms-1">(45)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe2">Подробнее</button>
                             </div>
                         </div>
@@ -542,20 +484,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Средняя
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="ms-1">(28)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe3">Подробнее</button>
                             </div>
                         </div>
@@ -587,20 +516,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Сложно
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="ms-1">(37)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe4">Подробнее</button>
                             </div>
                         </div>
@@ -632,20 +548,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Средняя
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="ms-1">(41)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe5">Подробнее</button>
                             </div>
                         </div>
@@ -677,20 +580,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Средняя
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="ms-1">(26)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe6">Подробнее</button>
                             </div>
                         </div>
@@ -722,20 +612,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Средняя
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="ms-1">(58)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe7">Подробнее</button>
                             </div>
                         </div>
@@ -767,20 +644,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Легко
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="ms-1">(47)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe8">Подробнее</button>
                             </div>
                         </div>
@@ -812,20 +676,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Средняя
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="ms-1">(39)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe9">Подробнее</button>
                             </div>
                         </div>
@@ -857,20 +708,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Средняя
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="ms-1">(34)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe10">Подробнее</button>
                             </div>
                         </div>
@@ -902,20 +740,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Легко
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="ms-1">(42)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe11">Подробнее</button>
                             </div>
                         </div>
@@ -947,20 +772,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Средняя
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="ms-1">(29)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe12">Подробнее</button>
                             </div>
                         </div>
@@ -992,20 +804,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Легко
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="ms-1">(38)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe13">Подробнее</button>
                             </div>
                         </div>
@@ -1037,20 +836,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Средняя
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="ms-1">(31)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe14">Подробнее</button>
                             </div>
                         </div>
@@ -1082,20 +868,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Сложно
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="ms-1">(27)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe15">Подробнее</button>
                             </div>
                         </div>
@@ -1127,20 +900,7 @@
                                     <i class="fas fa-chef-hat me-1"></i> Легко
                                 </div>
                             </div>
-                            <div class="recipe-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="ms-1">(33)</span>
-                            </div>
                             <div class="recipe-actions mt-auto">
-                                <button class="btn-favorite">
-                                    <i class="far fa-heart"></i> Добавить в избранное
-                                </button>
                                 <button class="btn-details" data-recipe="recipe16">Подробнее</button>
                             </div>
                         </div>
@@ -1262,10 +1022,10 @@
                 <div class="instructions-list">
                     <h4>Способ приготовления</h4>
                     <ol>
-                        <li>Сало тщательно вымыть, обсушить и нарезать кусочками шириной 3-4 см.</li>
+                        <li>Сало тщательно вымыть, обсушить и нарезать кусками шириной 3-4 см.</li>
                         <li>Чеснок очистить и измельчить (можно пропустить через пресс или мелко нарезать).</li>
                         <li>Смешать соль, перец, паприку и семена укропа.</li>
-                        <li>В каждом кусочке сала сделать несколько надрезов ножом и натереть полученной смесью специй.</li>
+                        <li>В каждом куске сала сделать несколько надрезов ножом и натереть полученной смесью специй.</li>
                         <li>Обмазать сало смесью специй со всех сторон, особенно тщательно втирая в надрезы.</li>
                         <li>Положить сало в контейнер, накрыть крышкой и отправить в холодильник на 2-3 дня для маринования.</li>
                         <li>Перед подачей можно посыпать свежими травами.</li>
@@ -1327,7 +1087,7 @@
                         <li>Приготовить тесто: смешать муку, соль, добавить яйцо, воду и масло. Замесить крутое тесто, накрыть и оставить на 20-30 минут.</li>
                         <li>Вишню помыть, удалить косточки, смешать с сахаром и крахмалом.</li>
                         <li>Тесто раскатать тонким пластом, вырезать кружочки стаканом.</li>
-                        <li>На каждый кружочек выложить начинку, слепить вареники, хорошо защепив края.</li>
+                        <li>На каждый кружочек выложить начинку, залепить вареники, хорошо защипляя края.</li>
                         <li>В кипящую подсоленную воду опустить вареники, варить 5-7 минут после всплытия.</li>
                         <li>Готовые вареники вынуть шумовкой, положить в тарелку, заправить сливочным маслом или сметаной.</li>
                         <li>Посыпать сахаром или полить медом по желанию.</li>
@@ -1389,7 +1149,7 @@
                     <h4>Способ приготовления</h4>
                     <ol>
                         <li>В кастрюле смешать мед, масло, сахар и соду. Подогревать на среднем огне, помешивая, до получения однородной массы.</li>
-                        <li>Снять с огня, немного остудить и добавить яйца, хорошо перемешивая.</li>
+                        <li>Снять с огня, немного охладить и добавить яйца, хорошо перемешивая.</li>
                         <li>Постепенно добавлять муку, замешивая тесто. Оно должно получиться мягким и не липким.</li>
                         <li>Разделить тесто на 6-8 равных частей, каждую раскатать в круг.</li>
                         <li>Коржи выпекать при 180°C 5-7 минут до золотистого цвета.</li>
@@ -1455,7 +1215,7 @@
                         <li>Тесто разделить на 4 части, каждую завернуть в пленку и положить в холодильник на 30 минут.</li>
                         <li>Охлажденное тесто раскатать тонким слоем (2-3 мм), вырезать формочками фигурки.</li>
                         <li>Выпекать при 180°C 10-12 минут до золотистого цвета.</li>
-                        <li>Готовые коржики остудить на решетке. Можно посыпать сахарной пудрой.</li>
+                        <li>Готовые коржики охладить на решетке. Можно посыпать сахарной пудрой.</li>
                     </ol>
                 </div>
             </div>
@@ -1676,7 +1436,7 @@
                     <h4>Ингредиенты</h4>
                     <ul>
                         <li>1 кочан капусты</li>
-                        <li>500 г фарша (свино-говяжьего)</li>
+                        <li>500 г фарша (свино-говяжий)</li>
                         <li>1 луковица</li>
                         <li>100 г риса</li>
                         <li>2 ст. л. томатной пасты</li>
@@ -1758,7 +1518,7 @@
                         <li>Лук нарезать, обжарить на масле, добавить к картофельному пюре.</li>
                         <li>Добавить сливочное масло, соль, перец. Тщательно перемешать.</li>
                         <li>Тесто раскатать тонким пластом, вырезать кружочки стаканом.</li>
-                        <li>На каждый кружочек выложить начинку, слепить вареники.</li>
+                        <li>На каждый кружочек выложить начинку, залепить вареники.</li>
                         <li>В кипящую подсоленную воду опустить вареники, варить 5-7 минут после всплытия.</li>
                         <li>Подавать со сметаной и обжаренным луком.</li>
                     </ol>
@@ -1874,7 +1634,7 @@
                         <li>Уменьшить огонь и варить мясо 1 час.</li>
                         <li>Пшено тщательно промыть.</li>
                         <li>Картофель, морковь и лук очистить и нарезать кубиками.</li>
-                        <li>Добавить пшено к бульону, варить 20 минут.</li>
+                        <li>Добавить пшено в бульон, варить 20 минут.</li>
                         <li>Добавить овощи, варить еще 20 минут.</li>
                         <li>Добавить соль, перец, лавровый лист. Варить до готовности.</li>
                         <li>Подавать с зеленью.</li>
@@ -1992,9 +1752,10 @@
                         <li>Добавить яйцо, муку, соль. Замесить тесто.</li>
                         <li>Мясо пропустить через мясорубку, добавить мелко нарезанный лук, соль, перец.</li>
                         <li>Из картофельного теста сформировать небольшие лепешки.</li>
-                        <li>На каждую лепешку выложить мясную начинку, защипнуть.</li>
+                        <li>На каждую лепешку выложить мясную начинку, залепить.</li>
                         <li>Обжарить с обеих сторон до золотистой корочки.</li>
                         <li>Можно потушить в соусе 10-15 минут.</li>
+                        <li>Подавать со сметаной.</li>
                     </ol>
                 </div>
             </div>
@@ -2151,26 +1912,6 @@
                         noResults.style.display = 'block';
                     } else {
                         noResults.style.display = 'none';
-                    }
-                });
-            });
-            
-            // Добавление в избранное
-            const favoriteButtons = document.querySelectorAll('.btn-favorite');
-            
-            favoriteButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    const icon = this.querySelector('i');
-                    
-                    if (this.classList.contains('active')) {
-                        icon.classList.remove('far');
-                        icon.classList.add('fas');
-                        this.innerHTML = '<i class="fas fa-heart"></i> В избранном';
-                    } else {
-                        icon.classList.remove('fas');
-                        icon.classList.add('far');
-                        this.innerHTML = '<i class="far fa-heart"></i> Добавить в избранное';
                     }
                 });
             });
