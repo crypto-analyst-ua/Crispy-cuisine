@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Хрустящая кухня - Топ рецептов</title>
+    <meta name="description" content="Подробные рецепты десертов русской и мировой кухни с пошаговыми инструкциями">
+    <meta name="author" content="Хрусткая кухня">
+    <title>Хрусткая кухня - Подробные рецепты десертов</title>
     
     <!-- CSS FILES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,161 +15,164 @@
     <link href="css/bootstrap-icons.css" rel="stylesheet">
     <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
     <style>
-        .file-input-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            width: 100%;
-        }
-        
-        .file-input-label {
-            display: block;
-            padding: 0.375rem 0.75rem;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #212529;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid #ced4da;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
-        
-        .file-input-label:hover {
-            background-color: #f8f9fa;
-        }
-        
-        .file-input-label input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .file-name {
-            display: block;
-            margin-top: 0.25rem;
-            font-size: 0.875rem;
-            color: #6c757d;
-        }
-        
-        .recipe-preview {
-            margin-top: 2rem;
-            display: none;
-        }
-        
         .recipe-card {
             border-radius: 0.5rem;
             overflow: hidden;
             box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
             transition: transform 0.3s ease;
+            height: 100%;
         }
         
         .recipe-card:hover {
             transform: translateY(-5px);
         }
         
-        .user-recipe-tag {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: white;
-        }
-        
-        .menu-image-wrap {
-            position: relative;
-        }
-        
-        .recipe-form {
+        .recipe-content {
             background-color: #f8f9fa;
-            padding: 2rem;
             border-radius: 0.5rem;
+            padding: 2rem;
+        }
+        
+        .recipe-header {
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #dc3545;
+        }
+        
+        .recipe-image {
+            border-radius: 0.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        
+        .ingredients-list {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
             box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
         }
         
-        .form-title {
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #198754;
+        .recipe-tags {
+            margin-top: 1rem;
         }
         
-        /* Добавленные стили для кликабельных слайдов */
-        .carousel-link {
-            display: block;
-            position: relative;
-            color: inherit;
-            text-decoration: none;
+        .tag {
+            display: inline-block;
+            background-color: #f8d7da;
+            color: #dc3545;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
         }
         
-        .carousel-link:hover {
-            text-decoration: none;
+        .nutrition-info {
+            background-color: white;
+            border-left: 4px solid #dc3545;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
         }
         
-        .carousel-link .carousel-caption {
-            z-index: 10;
+        .recipe-filter {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            margin-bottom: 2rem;
         }
         
-        .carousel-link::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;
+        .filter-btn {
+            margin: 0.25rem;
         }
         
-        /* Добавим спиннер загрузки */
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-            display: none;
+        .rating {
+            color: #fd7e14;
+            margin-bottom: 0.5rem;
         }
         
-        #loadingRecipes {
-            text-align: center;
-            padding: 2rem;
-        }
-        
-        /* Улучшенный вид модального окна */
-        .recipe-modal .modal-content {
-            border-radius: 0.8rem;
-            overflow: hidden;
-        }
-        
-        .recipe-modal .modal-header {
-            background: linear-gradient(to right, #28a745, #20c997);
+        .recipe-accordion .accordion-button:not(.collapsed) {
+            background-color: #dc3545;
             color: white;
-            border-bottom: none;
         }
         
-        .recipe-modal .modal-body {
-            padding: 1.5rem;
+        .difficulty-easy { color: #198754; }
+        .difficulty-medium { color: #fd7e14; }
+        .difficulty-hard { color: #dc3545; }
+        
+        .print-btn, .share-btn {
+            margin-left: 0.5rem;
         }
         
-        .recipe-modal .modal-footer {
-            background-color: #f8f9fa;
-            border-top: 1px solid #dee2e6;
+        .cooking-time {
+            background-color: #f8d7da;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            display: inline-block;
+            margin-bottom: 1rem;
         }
         
-        .recipe-ingredients {
+        @media (max-width: 768px) {
+            .recipe-content {
+                padding: 1rem;
+            }
+            
+            .recipe-header {
+                margin-bottom: 1.5rem;
+            }
+            
+            .filter-btn {
+                margin-bottom: 0.5rem;
+            }
+        }
+        
+        .new-recipe-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 5;
+        }
+        
+        .serving-size {
+            display: inline-block;
+            background-color: #e9ecef;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+        }
+        
+        .filterable {
+            transition: all 0.3s ease;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+        }
+        
+        .detail-box {
             background-color: #f8f9fa;
             border-radius: 0.5rem;
-            padding: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #dc3545;
         }
         
-        .recipe-instructions {
-            white-space: pre-line;
-            line-height: 1.8;
+        .dessert-icon {
+            font-size: 1.5rem;
+            color: #dc3545;
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -182,7 +185,7 @@
             </button>
             
             <a class="navbar-brand" href="index-ru.html">
-                Хрустящая кухня
+                Хрусткая кухня
             </a>
 
             <div class="d-lg-none"></div>
@@ -193,13 +196,13 @@
                         <a class="nav-link" href="index-ru.html">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="top-ru.html">Первые</a>
+                        <a class="nav-link" href="top-ru.html">Первое</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="top2-ru.html">Вторые</a>
+                        <a class="nav-link" href="top2-ru.html">Второе</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="desert-ru.html">Десерты</a>
+                        <a class="nav-link active" href="desert-ru.html">Десерт</a>
                     </li>
                     
                     <li class="nav-item">
@@ -215,7 +218,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h2>ДЕСЕРТЫ</h2>
+                        <h2>СЛАДОСТИ И ДЕСЕРТЫ</h2>
+                        <p class="text-center">Подробные рецепты сладостей русской и мировой кухни с пошаговыми инструкциями</p>
                     </div>
                 </div>
             </div>
@@ -223,213 +227,616 @@
 
         <section class="news-detail section-padding pt-0">
             <div class="container">
+                <!-- Фильтр рецептов -->
+                <div class="recipe-filter">
+                    <h5 class="mb-3">Фильтр рецептов:</h5>
+                    <div class="d-flex flex-wrap">
+                        <button class="btn btn-outline-danger filter-btn active" data-filter="all">Все</button>
+                        <button class="btn btn-outline-danger filter-btn" data-filter="russian">Русские</button>
+                        <button class="btn btn-outline-danger filter-btn" data-filter="world">Мировые</button>
+                        <button class="btn btn-outline-danger filter-btn" data-filter="chocolate">Шоколадные</button>
+                        <button class="btn btn-outline-danger filter-btn" data-filter="new">Новые</button>
+                        <button class="btn btn-outline-danger filter-btn" data-filter="easy">Легкие</button>
+                    </div>
+                </div>
+                
                 <div class="row">
                     <div class="col-lg-12 col-12">
-                        <img src="images/news/pablo-merchan-montes-Orz90t6o0e4-unsplash2.jpg" class="img-fluid news-detail-image" alt="Тирамису">
+                        <div class="recipe-header text-center">
+                            <h1 class="mb-3">Тирамису - итальянская классика</h1>
+                            <div class="d-flex justify-content-center align-items-center flex-wrap">
+                                <div class="rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <span class="ms-2">4.9 (328)</span>
+                                </div>
+                                <div class="cooking-time">
+                                    <i class="bi bi-clock"></i> Время приготовления: 40 мин + охлаждение
+                                </div>
+                                <div class="serving-size">
+                                    <i class="bi bi-people"></i> 6-8 порций
+                                </div>
+                            </div>
+                            <div class="recipe-tags">
+                                <span class="tag">Итальянская кухня</span>
+                                <span class="tag">Классика</span>
+                                <span class="tag">С маскарпоне</span>
+                                <span class="tag difficulty-medium">Средняя сложность</span>
+                            </div>
+                            <div class="mt-3">
+                                <button class="btn btn-outline-secondary print-btn" onclick="window.print()">
+                                    <i class="bi bi-printer"></i> Печать
+                                </button>
+                                <button class="btn btn-outline-primary share-btn" id="shareRecipe">
+                                    <i class="bi bi-share"></i> Поделиться
+                                </button>
+                            </div>
+                        </div>
                         
-                        <div class="col-lg-10 col-10 mx-auto mt-5">
-                            <h4 class="mb-3">Тирамису</h4>
-                            <p>Классический итальянский десерт с нежным вкусом кофе и маскарпоне. Идеальное завершение ужина, которое легко приготовить дома. Секрет успеха - качественные ингредиенты: свежий маскарпоне, крепкий эспрессо и настоящие савоярди.</p>
-                            <p>Для достижения идеальной консистенции важно хорошо взбить яичные желтки с сахаром до светлой пены. Маскарпоне добавляйте постепенно, чтобы крем оставался воздушным. Не перемачивайте печенье в кофе - оно должно быть влажным, но не размокшим.</p>
-                            <p>Подавать тирамису лучше после нескольких часов охлаждения в холодильнике, чтобы вкусы соединились. Украсьте какао-порошком или тертым шоколадом перед подачей.</p>
-                            
-                            <h4 class="mb-3">Тирамису классический</h4>
-                            <ul class="list">
-                                <li class="list-item">500 г маскарпоне</li>
-                                <li class="list-item">4 яйца</li>
-                                <li class="list-item">100 г сахара</li>
-                                <li class="list-item">200 г печенья савоярди</li>
-                                <li class="list-item">250 мл крепкого кофе (охлажденного)</li>
-                                <li class="list-item">2 ст. л. какао-порошка</li>
-                                <li class="list-item">50 мл ликера Амаретто (по желанию)</li>
-                            </ul>
-                            <p>1. Отделите желтки от белков. Желтки взбейте с сахаром до пышной светлой массы.</p>
-                            <p>2. Добавьте маскарпоне и аккуратно перемешайте до однородности.</p>
-                            <p>3. Белки взбейте в крепкую пену и аккуратно вмешайте в крем.</p>
-                            <p>4. Смешайте охлажденный кофе с ликером (если используете).</p>
-                            <p>5. Быстро окунайте печенье в кофейную смесь и выкладывайте в форму.</p>
-                            <p>6. Распределите половину крема поверх печенья. Повторите слои.</p>
-                            <p>7. Накройте пищевой пленкой и уберите в холодильник на 6 часов.</p>
-                            <p>8. Перед подачей посыпьте какао через ситечко.</p>
-
-                            <h4 class="mb-3">Чизкейк Нью-Йорк</h4>
-                            <ul class="list">
-                                <li class="list-item">Для основы: 200 г песочного печенья, 100 г сливочного масла</li>
-                                <li class="list-item">Для начинки: 800 г творожного сыра, 200 г сахара, 3 яйца + 1 желток, 200 г сметаны, 2 ст. л. муки, 1 ч. л. ванильного экстракта</li>
-                                <li class="list-item">Для топпинга: 200 г ягодного джема</li>
-                            </ul>
-                            <p>1. Измельчите печенье в крошку, смешайте с растопленным маслом. Утрамбуйте в форму.</p>
-                            <p>2. Взбейте сыр с сахаром до гладкости. Добавляйте яйца по одному.</p>
-                            <p>3. Добавьте сметану, муку и ваниль, перемешайте.</p>
-                            <p>4. Вылейте начинку на основу. Выпекайте 1 час при 160°C.</p>
-                            <p>5. Выключите духовку, оставьте чизкейк внутри на 1 час.</p>
-                            <p>6. Охладите в холодильнике 6 часов. Подавайте с ягодным топпингом.</p>
-
-                            <h4 class="mb-3">Шоколадный фондан</h4>
-                            <ul class="list">
-                                <li class="list-item">100 г черного шоколада</li>
-                                <li class="list-item">100 г сливочного масла</li>
-                                <li class="list-item">2 яйца + 2 желтка</li>
-                                <li class="list-item">60 г сахара</li>
-                                <li class="list-item">50 г муки</li>
-                                <li class="list-item">Щепотка соли</li>
-                            </ul>
-                            <p>1. Растопите шоколад с маслом на водяной бане.</p>
-                            <p>2. Взбейте яйца с желтками и сахаром до пышности.</p>
-                            <p>3. Аккуратно смешайте шоколадную массу с яичной.</p>
-                            <p>4. Добавьте просеянную муку и соль, перемешайте.</p>
-                            <p>5. Разлейте по формочкам, смазанным маслом.</p>
-                            <p>6. Выпекайте 10-12 минут при 200°C до краев, но с жидкой серединкой.</p>
-                            <p>7. Подавайте сразу с шариком мороженого.</p>
-
-                            <h4 class="mb-3">Яблочный штрудель</h4>
-                            <ul class="list">
-                                <li class="list-item">6 тонких листов теста фило</li>
-                                <li class="list-item">1 кг яблок</li>
-                                <li class="list-item">100 г изюма</li>
-                                <li class="list-item">100 г сахара</li>
-                                <li class="list-item">1 ч. л. корицы</li>
-                                <li class="list-item">100 г сливочного масла</li>
-                                <li class="list-item">50 г панировочных сухарей</li>
-                            </ul>
-                            <p>1. Яблоки очистите, нарежьте дольками. Смешайте с изюмом, сахаром и корицей.</p>
-                            <p>2. Растопите 50 г масла, смешайте с сухарями.</p>
-                            <p>3. Смажьте лист теста маслом, посыпьте сухарной смесью. Накройте следующим листом. Повторите 4 раза.</p>
-                            <p>4. Выложите начинку, заверните рулетом.</p>
-                            <p>5. Смажьте оставшимся маслом, выпекайте 40 минут при 180°C.</p>
-                            <p>6. Подавайте теплым с ванильным мороженым.</p>
-                            
-                            <h4 class="mb-3">Панна-котта с ягодным соусом</h4>
-                            <ul class="list">
-                                <li class="list-item">500 мл сливок 33%</li>
-                                <li class="list-item">100 мл молока</li>
-                                <li class="list-item">80 г сахара</li>
-                                <li class="list-item">2 ч. л. желатина</li>
-                                <li class="list-item">1 стручок ванили</li>
-                                <li class="list-item">200 г смеси ягод (свежих или замороженных)</li>
-                                <li class="list-item">2 ст. л. сахарной пудры</li>
-                            </ul>
-                            <p>1. Замочите желатин в 50 мл холодного молока.</p>
-                            <p>2. Сливки, молоко, сахар и семена ванили доведите до кипения.</p>
-                            <p>3. Снимите с огня, добавьте желатин, перемешайте до растворения.</p>
-                            <p>4. Разлейте по формочкам, охладите 4 часа.</p>
-                            <p>5. Ягоды с сахарной пудрой проварите 5 минут, протрите через сито.</p>
-                            <p>6. Перед подачей опустите формочки в горячую воду на 10 секунд и переверните на тарелку. Полейте соусом.</p>
-                            
-                            <h4 class="mb-3">Медовик</h4>
-                            <ul class="list">
-                                <li class="list-item">Для коржей: 100 г меда, 150 г сахара, 100 г сливочного масла, 3 яйца, 2 ч. л. соды, 500 г муки</li>
-                                <li class="list-item">Для крема: 800 г сметаны 25%, 200 г сахарной пудры</li>
-                            </ul>
-                            <p>1. Мед, сахар и масло растопите на водяной бане. Добавьте соду, перемешайте.</p>
-                            <p>2. Снимите с огня, добавьте яйца по одному, перемешайте.</p>
-                            <p>3. Всыпьте муку, замесите тесто. Разделите на 8 частей.</p>
-                            <p>4. Раскатайте тонкие коржи, выпекайте по 5-7 минут при 180°C.</p>
-                            <p>5. Взбейте сметану с сахарной пудрой.</p>
-                            <p>6. Соберите торт, промазывая коржи кремом. Дайте пропитаться 8 часов.</p>
-                            
-                            <div class="row mb-5">
-                                <div class="col-12">
-                                    <h3 class="mb-4 text-success">Другие вкусные десерты</h3>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Классический бисквит</h5>
-                                        <p><strong>Ингредиенты:</strong><br>
-                                            4 яйца, 120 г сахара, 120 г муки, щепотка соли.
-                                        </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Взбить яйца с сахаром до пышности, аккуратно ввести муку. Выпекать 25 минут при 180°C.
-                                        </p>
+                        <img src="images/news/pablo-merchan-montes-Orz90t6o0e4-unsplash2.jpg" class="img-fluid recipe-image w-100 mb-4" alt="Тирамису">
+                        
+                        <div class="recipe-content">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <h3 class="mb-4">История и особенности приготовления тирамису</h3>
+                                    <p>Тирамису — один из самых известных итальянских десертов, который завоевал популярность во всем мире. Название переводится как "взбодри меня" - благодаря сочетанию кофе и какао, что дает энергию и улучшает настроение.</p>
+                                    <p>Основным ингредиентом тирамису является сыр маскарпоне, который придает десерту нежную кремовую текстуру. Савоярди (бисквитное печенье) пропитываются крепким кофе, что создает идеальный баланс сладкого и горьковатого вкуса.</p>
+                                    <p>Классический рецепт не предусматривает использование алкоголя, но многие вариации включают ром, мараскино или амаретто для дополнительного аромата.</p>
+                                    
+                                    <div class="nutrition-info">
+                                        <h5>Пищевая ценность (на порцию):</h5>
+                                        <p>Калорийность: 380-420 ккал | Белки: 8г | Жиры: 25г | Углеводы: 32г</p>
                                     </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Клубничный мусс</h5>
-                                        <p><strong>Ингредиенты:</strong><br>
-                                            500 г клубники, 200 г сахара, 15 г желатина, 500 мл сливок.
-                                        </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Пюрировать клубнику с сахаром, добавить желатин. Вмешать взбитые сливки. Охладить 4 часа.
-                                        </p>
+                                    
+                                    <h4 class="mb-3">Тирамису классический</h4>
+                                    <div class="ingredients-list">
+                                        <h5>Ингредиенты:</h5>
+                                        <ul class="list">
+                                            <li class="list-item">500 г маскарпоне</li>
+                                            <li class="list-item">4 крупных яйца</li>
+                                            <li class="list-item">100 г сахарной пудры</li>
+                                            <li class="list-item">200 мл крепкого кофе (эспрессо)</li>
+                                            <li class="list-item">24 шт. савоярди (бисквитное печенье)</li>
+                                            <li class="list-item">2 ст. л. какао-порошка</li>
+                                            <li class="list-item">1 ч. л. ванильного экстракта</li>
+                                            <li class="list-item">Щепотка соли</li>
+                                        </ul>
                                     </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Крем-брюле</h5>
-                                        <p><strong>Ингредиенты:</strong><br>
-                                            500 мл сливок, 5 желтков, 100 г сахара, 1 ванильный стручок.
-                                        </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Сливки с ванилью довести до кипения. Смешать с желтками и сахаром. Запекать на водяной бане 40 мин. Посыпать сахаром и карамелизировать.
-                                        </p>
+                                    
+                                    <h5>Подробный способ приготовления:</h5>
+                                    <div class="detail-box">
+                                        <p><strong>Подготовка крема (20 минут):</strong></p>
+                                        <p><span class="step-number">1</span> Отделить желтки от белков. Желтки взбить с сахарной пудрой до светлой и пышной массы.</p>
+                                        <p><span class="step-number">2</span> Добавить маскарпоне и ванильный экстракт, взбивать до однородности.</p>
+                                        <p><span class="step-number">3</span> В отдельной миске взбить белки с щепоткой соли до мягких пиков.</p>
+                                        <p><span class="step-number">4</span> Осторожно перемешать белки с кремовой массой, движениями сверху вниз.</p>
                                     </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Творожная запеканка</h5>
-                                        <p><strong>Ингредиенты:</strong><br>
-                                            500 г творога, 3 яйца, 100 г сахара, 100 г манки, изюм, ваниль.
-                                        </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Смешать все ингредиенты. Выпекать 40 минут при 180°C. Подавать со сметаной.
-                                        </p>
+                                    
+                                    <div class="detail-box">
+                                        <p><strong>Сборка десерта (15 минут):</strong></p>
+                                        <p><span class="step-number">5</span> Приготовить крепкий кофе, охладить до комнатной температуры.</p>
+                                        <p><span class="step-number">6</span> Быстро обмакнуть каждое печенье савоярди в кофе (не оставлять долго, чтобы не размокло слишком сильно).</p>
+                                        <p><span class="step-number">7</span> Выложить слой печенья на дно формы (20x20 см).</p>
+                                        <p><span class="step-number">8</span> Равномерно распределить половину крема с маскарпоне.</p>
+                                        <p><span class="step-number">9</span> Повторить слои: печенье, крем.</p>
+                                    </div>
+                                    
+                                    <div class="detail-box">
+                                        <p><strong>Завершение и подача:</strong></p>
+                                        <p>Сверху равномерно посыпать какао-порошком через мелкое сито. Накрыть пищевой пленкой и охладить в холодильнике не менее 6 часов (в идеале - ночь).</p>
+                                        <p><strong>Совет:</strong> Для лучшего вкуса дайте тирамису настояться в холодильнике не менее 6 часов. Подавайте охлажденным, украсив свежими ягодами или листьями мяты.</p>
                                     </div>
                                 </div>
                                 
-                                <div class="col-12">
-                                    <h3 class="mb-4 text-success">Легкие десерты</h3>
+                                <div class="col-lg-4">
+                                    <div class="p-3 bg-light rounded mb-4">
+                                        <h5>Советы шеф-кондитера:</h5>
+                                        <ul>
+                                            <li>Используйте свежие яйца наилучшего качества</li>
+                                            <li>Не оставляйте печенье в кофе слишком долго - оно должно быть пропитанным, но не размокшим</li>
+                                            <li>Дайте десерту хорошо охладиться перед подачей</li>
+                                            <li>Для алкогольной версии добавьте 2 ст. л. рома или амаретто в кофе</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="p-3 bg-light rounded">
+                                        <h5>Вариации:</h5>
+                                        <ul>
+                                            <li>Клубничный: добавьте слой свежей клубники между кремами</li>
+                                            <li>Шоколадный: замените какао тертым шоколадом</li>
+                                            <li>Летний: используйте холодный кофе со льдом для пропитки</li>
+                                        </ul>
+                                    </div>
                                 </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
+                            </div>
+                            
+                            <h4 class="mt-5 mb-4">Другие виды тирамису</h4>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="recipe-card p-4 bg-light h-100">
+                                        <h5>Тирамису с клубникой</h5>
+                                        <p><strong>Особенности:</strong> Легкий летний вариант со свежей клубникой, который придает десерту свежести и кисло-сладкого вкуса.</p>
+                                        <p><strong>Ингредиенты:</strong> Маскарпоне, яйца, сахар, савоярди, кофе, свежая клубника, ваниль, какао.</p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Приготовление:</strong> Приготовить крем как в классическом рецепте. Клубнику помыть, обсушить, нарезать тонкими ломтиками. Собирать десерт слоями: печенье, крем, клубника, повторять. Сверху посыпать какао и украсить целыми ягодами клубники.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="recipe-card p-4 bg-light h-100">
+                                        <h5>Шоколадное тирамису</h5>
+                                        <p><strong>Особенности:</strong> Насыщенный шоколадный вкус благодаря добавлению растопленного шоколада в крем и двойной порции какао.</p>
+                                        <p><strong>Ингредиенты:</strong> Маскарпоне, яйца, сахар, савоярди, кофе, черный шоколад, какао, ваниль.</p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Приготовление:</strong> Растопить 100 г черного шоколада на водяной бане, охладить. Взбить крем, добавить растопленный шоколад. Пропитывать печенье в кофе с добавлением 1 ст. л. какао. Собирать слои, сверху обильно посыпать тертым шоколадом и какао.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="recipe-card p-4 bg-light h-100">
+                                        <h5>Тирамису без яиц</h5>
+                                        <p><strong>Особенности:</strong> Версия для тех, кто избегает сырых яиц, с использованием сливок для легкой текстуры.</p>
+                                        <p><strong>Ингредиенты:</strong> Маскарпоне, сливки 35%, сахар, савоярди, кофе, какао, ваниль, желатин (по желанию).</p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Приготовление:</strong> Взбить сливки с сахаром до мягких пиков. Добавить маскарпоне и ваниль, аккуратно перемешать. Пропитывать печенье в кофе. Собирать слои. Для стабилизации можно добавить растворенный желатин (5 г). Охладить 4-6 часов.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="recipe-card p-4 bg-light h-100">
+                                        <h5>Тирамису в чашке</h5>
+                                        <p><strong>Особенности:</strong> Индивидуальные порции, идеально для званых обедов или когда нужно приготовить быстро.</p>
+                                        <p><strong>Ингредиенты:</strong> Маскарпоне, яйца, сахар, савоярди, кофе, какао, ваниль, свежие ягоды для подачи.</p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Приготовление:</strong> Приготовить крем как в классическом рецепте. Измельчить савоярди, смешать с кофе. В бокалы или чашки выкладывать слои: пропитанное печенье, крем, какао. Повторять. Охладить 2-3 часа. Перед подачей украсить ягодами.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h3 class="mb-4 mt-5 text-danger">Другие вкусные десерты</h3>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="world chocolate">
                                     <div class="recipe-card p-4 bg-light">
-                                        <h5>Фруктовый салат с йогуртом</h5>
+                                        <h5>Шоколадный фондан</h5>
                                         <p><strong>Ингредиенты:</strong><br>
-                                            Яблоко, банан, киви, апельсин, виноград, йогурт, мед.
+                                            Черный шоколад (100 г), сливочное масло (100 г), яйца (2 шт.), сахар (100 г), мука (50 г), какао для посыпки.
                                         </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Нарезать фрукты кубиками, заправить йогуртом с медом. Украсить мятой.
-                                        </p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Подробное приготовление:</strong></p>
+                                            <p><span class="step-number">1</span> Растопить шоколад с маслом на водяной бане, охладить.</p>
+                                            <p><span class="step-number">2</span> Взбить яйца с сахаром до светлой пены.</p>
+                                            <p><span class="step-number">3</span> Осторожно соединить шоколадную смесь с яичной.</p>
+                                            <p><span class="step-number">4</span> Добавить просеянную муку, перемешать до однородности.</p>
+                                            <p><span class="step-number">5</span> Разлить по смазанным формам, заполнив на 2/3.</p>
+                                            <p><span class="step-number">6</span> Выпекать при 200°C 10-12 минут (края должны быть твердыми, середина - жидкой).</p>
+                                            <p><span class="step-number">7</span> Подавать немедленно, посыпав какао или сахарной пудрой.</p>
+                                            <p><strong>Время приготовления:</strong> 25 минут. Подавать с шариком ванильного мороженого.</p>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="russian">
                                     <div class="recipe-card p-4 bg-light">
-                                        <h5>Шоколадный мусс из авокадо</h5>
+                                        <h5>Сырники с изюмом</h5>
                                         <p><strong>Ингредиенты:</strong><br>
-                                            2 спелых авокадо, 3 ст.л. какао, 4 ст.л. меда, щепотка соли.
+                                            Творог (500 г), яйца (2 шт.), мука (4-5 ст. л.), сахар (3-4 ст. л.), ваниль, изюм (50 г), соль, масло для жарки.
                                         </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Пюрировать ингредиенты блендером. Охладить 2 часа. Подавать с ягодами.
-                                        </p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Подробное приготовление:</strong></p>
+                                            <p><span class="step-number">1</span> Творог протереть через сито или измельчить блендером.</p>
+                                            <p><span class="step-number">2</span> Добавить яйца, сахар, соль, ваниль, тщательно перемешать.</p>
+                                            <p><span class="step-number">3</span> Добавить муку, изюм (предварительно замоченный), замесить тесто.</p>
+                                            <p><span class="step-number">4</span> Сформировать небольшие котлетки, обвалять в муке.</p>
+                                            <p><span class="step-number">5</span> Жарить на среднем огне до золотистой корочки с обеих сторон.</p>
+                                            <p><span class="step-number">6</span> Подавать со сметаной, медом или фруктовым соусом.</p>
+                                            <p><strong>Время приготовления:</strong> 30 минут. Классический русский десерт.</p>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="world">
                                     <div class="recipe-card p-4 bg-light">
-                                        <h5>Ягодное парфе</h5>
+                                        <h5>Чизкейк Нью-Йорк</h5>
                                         <p><strong>Ингредиенты:</strong><br>
-                                            Греческий йогурт, смесь ягод, мюсли, мед.
+                                            Печенье (200 г), сливочное масло (100 г), филадельфия (600 г), сахар (200 г), яйца (3 шт.), сливки (200 мл), ваниль, лимонный сок.
                                         </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Слоями выложить йогурт, ягоды и мюсли в стаканы. Полить медом.
-                                        </p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Подробное приготовление:</strong></p>
+                                            <p><span class="step-number">1</span> Измельчить печенье, смешать с растопленным маслом. Выложить в форму, утрамбовать.</p>
+                                            <p><span class="step-number">2</span> Взбить сыр с сахаром до гладкости.</p>
+                                            <p><span class="step-number">3</span> Добавить яйца по одному, продолжая взбивать.</p>
+                                            <p><span class="step-number">4</span> Добавить сливки, ваниль, лимонный сок.</p>
+                                            <p><span class="step-number">5</span> Вылить начинку на основу.</p>
+                                            <p><span class="step-number">6</span> Выпекать при 160°C 1 час (водяная баня). Выключить духовку, оставить еще на 1 час.</p>
+                                            <p><span class="step-number">7</span> Охладить, затем охладить в холодильнике 6-8 часов.</p>
+                                            <p><strong>Время приготовления:</strong> 1,5 ч + время охлаждения. Кремовый и нежный.</p>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="easy">
                                     <div class="recipe-card p-4 bg-light">
-                                        <h5>Банановое мороженое</h5>
+                                        <h5>Яблочная шарлотка</h5>
                                         <p><strong>Ингредиенты:</strong><br>
-                                            3 замороженных банана, 2 ст.л. какао или арахисовой пасты.
+                                            Яблоки (4-5 шт.), яйца (4 шт.), сахар (1 стакан), мука (1 стакан), ваниль, корица, лимонный сок.
                                         </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Взбить бананы в блендере до кремообразной массы. Добавить какао. Заморозить на 1 час.
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Подробное приготовление:</strong></p>
+                                            <p><span class="step-number">1</span> Яблоки очистить, нарезать, сбрызнуть лимонным соком, добавить корицу.</p>
+                                            <p><span class="step-number">2</span> Взбить яйца с сахаром до густой светлой пены.</p>
+                                            <p><span class="step-number">3</span> Добавить просеянную муку, аккуратно перемешать.</p>
+                                            <p><span class="step-number">4</span> Добавить яблоки в тесто, перемешать.</p>
+                                            <p><span class="step-number">5</span> Вылить в смазанную форму, разровнять.</p>
+                                            <p><span class="step-number">6</span> Выпекать при 180°C 35-40 минут до золотистого цвета.</p>
+                                            <p><span class="step-number">7</span> Подавать охлажденной с шариком мороженого.</p>
+                                            <p><strong>Время приготовления:</strong> 50 минут. Классический домашний десерт.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h3 class="mb-4 mt-5 text-danger">Легкие десерты без выпечки</h3>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="easy">
+                                    <div class="recipe-card p-4 bg-light">
+                                        <h5>Панна котта с клубничным соусом</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Сливки (500 мл), сахар (100 г), желатин (15 г), ваниль, клубника (200 г), лимонный сок.
                                         </p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Подробное приготовление:</strong></p>
+                                            <p><span class="step-number">1</span> Замочить желатин в холодной воде.</p>
+                                            <p><span class="step-number">2</span> Нагреть сливки с сахаром и ванилью, не доводя до кипения.</p>
+                                            <p><span class="step-number">3</span> Добавить разбухший желатин, размешать до растворения.</p>
+                                            <p><span class="step-number">4</span> Процедить смесь, разлить по формам, охладить 4 часа.</p>
+                                            <p><span class="step-number">5</span> Клубнику взбить блендером с сахаром и лимонным соком.</p>
+                                            <p><span class="step-number">6</span> Подавать панна котту, полив клубничным соусом.</p>
+                                            <p><span class="step-number">7</span> Украсить свежими ягодами и мятой.</p>
+                                            <p><strong>Время приготовления:</strong> 20 минут + время охлаждения. Нежный итальянский десерт.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="easy">
+                                    <div class="recipe-card p-4 bg-light">
+                                        <h5>Трюфели из черного шоколада</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Черный шоколад (200 г), сливки (100 мл), сливочное масло (50 г), какао, кокосовая стружка, измельченные орехи.
+                                        </p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Подробное приготовление:</strong></p>
+                                            <p><span class="step-number">1</span> Измельчить шоколад, добавить растопленное масло.</p>
+                                            <p><span class="step-number">2</span> Нагреть сливки, не доводя до кипения, залить шоколад.</p>
+                                            <p><span class="step-number">3</span> Размешать до гладкости, охладить 2 часа.</p>
+                                            <p><span class="step-number">4</span> Сформировать небольшие шарики, обвалять в какао, кокосе или орехах.</p>
+                                            <p><span class="step-number">5</span> Охладить еще 30 минут перед подачей.</p>
+                                            <p><strong>Время приготовления:</strong> 30 минут + время охлаждения. Насыщенный шоколадный вкус.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="russian easy">
+                                    <div class="recipe-card p-4 bg-light">
+                                        <h5>Русский медовик</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Мед (200 г), сахар (100 г), яйца (2 шт.), сода (1 ч. л.), мука (3 стакана), специи (корица, имбирь, гвоздика).
+                                        </p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Подробное приготовление:</strong></p>
+                                            <p><span class="step-number">1</span> Мед подогреть с сахаром, охладить.</p>
+                                            <p><span class="step-number">2</span> Добавить яйца, перемешать.</p>
+                                            <p><span class="step-number">3</span> Погасить соду уксусом, добавить к смеси.</p>
+                                            <p><span class="step-number">4</span> Добавить специи, постепенно всыпать муку.</p>
+                                            <p><span class="step-number">5</span> Замесить тесто, дать отдохнуть 30 минут.</p>
+                                            <p><span class="step-number">6</span> Разделить на коржи, выпекать при 180°C 15-20 минут.</p>
+                                            <p><span class="step-number">7</span> Смазать коржи вареньем или кремом, дать пропитаться.</p>
+                                            <p><strong>Время приготовления:</strong> 1 час + время для пропитки. Традиционный русский торт.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="easy">
+                                    <div class="recipe-card p-4 bg-light">
+                                        <h5>Фруктовый салат с йогуртовым соусом</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Яблоки (2 шт.), бананы (2 шт.), апельсины (2 шт.), киви (3 шт.), виноград (200 г), лимонный сок, йогурт (200 г), мед (2 ст. л.), ваниль.
+                                        </p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Подробное приготовление:</strong></p>
+                                            <p><span class="step-number">1</span> Все фрукты помыть, очистить, нарезать одинаковыми кусочками.</p>
+                                            <p><span class="step-number">2</span> Сбрызнуть яблоки и бананы лимонным соком.</p>
+                                            <p><span class="step-number">3</span> Смешать йогурт с медом и ванилью.</p>
+                                            <p><span class="step-number">4</span> Залить фрукты соусом, аккуратно перемешать.</p>
+                                            <p><span class="step-number">5</span> Охладить 30 минут перед подачей.</p>
+                                            <p><strong>Время приготовления:</strong> 20 минут. Легкий и полезный десерт.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- НОВЫЕ РЕЦЕПТЫ -->
+                            <h3 class="mb-4 mt-5 text-danger">Новые рецепты</h3>
+                            <div class="accordion recipe-accordion" id="newRecipesAccordion">
+                                <!-- Рецепт 1 -->
+                                <div class="accordion-item filterable" data-category="russian new">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            <div>
+                                                <h5 class="mb-0">Маховый рулет с орехами</h5>
+                                                <div class="rating small mt-1">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star"></i>
+                                                    <span class="ms-2">4.0 (56)</span>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#newRecipesAccordion">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h6>Ингредиенты:</h6>
+                                                    <ul>
+                                                        <li>Мак (200 г)</li>
+                                                        <li>Грецкие орехи (100 г)</li>
+                                                        <li>Яйца (5 шт.)</li>
+                                                        <li>Сахар (150 г)</li>
+                                                        <li>Мука (100 г)</li>
+                                                        <li>Мед (2 ст. л.)</li>
+                                                        <li>Ванильный сахар (10 г)</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h6>Подробное приготовление:</h6>
+                                                    <div class="detail-box">
+                                                        <p><span class="step-number">1</span> Мак залить кипятком на 30 минут, отцедить.</p>
+                                                        <p><span class="step-number">2</span> Измельчить мак с орехами в блендере.</p>
+                                                        <p><span class="step-number">3</span> Желтки взбить с сахаром до белой пены.</p>
+                                                        <p><span class="step-number">4</span> Добавить маково-ореховую смесь, мед, ваниль.</p>
+                                                        <p><span class="step-number">5</span> Белки взбить в густую пену, осторожно добавить в тесто.</p>
+                                                        <p><span class="step-number">6</span> Выпекать на пергаменте 25 минут при 180°C.</p>
+                                                        <p><span class="step-number">7</span> Свернуть рулет вместе с бумагой, охладить.</p>
+                                                        <p><span class="step-number">8</span> Убрать бумагу, посыпать сахарной пудрой.</p>
+                                                        <p><strong>Время приготовления:</strong> 1 час. Настоящая русская классика.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Рецепт 2 -->
+                                <div class="accordion-item filterable" data-category="world new">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            <div>
+                                                <h5 class="mb-0">Эклеры с заварным кремом</h5>
+                                                <div class="rating small mt-1">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-half"></i>
+                                                    <span class="ms-2">4.5 (42)</span>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#newRecipesAccordion">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h6>Ингредиенты:</h6>
+                                                    <ul>
+                                                        <li>Вода (125 мл)</li>
+                                                        <li>Сливочное масло (50 г)</li>
+                                                        <li>Мука (75 г)</li>
+                                                        <li>Яйца (2-3 шт.)</li>
+                                                        <li>Молоко (250 мл)</li>
+                                                        <li>Сахар (60 г)</li>
+                                                        <li>Ваниль</li>
+                                                        <li>Яичный желток (1 шт.)</li>
+                                                        <li>Кукурузный крахмал (20 г)</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h6>Подробное приготовление:</h6>
+                                                    <div class="detail-box">
+                                                        <p><span class="step-number">1</span> Довести до кипения воду с маслом.</p>
+                                                        <p><span class="step-number">2</span> Добавить муку, интенсивно перемешивая.</p>
+                                                        <p><span class="step-number">3</span> Охладить тесто, добавлять яйца по одному.</p>
+                                                        <p><span class="step-number">4</span> Отсадить полоски на противень, выпекать 25 мин при 190°C.</p>
+                                                        <p><span class="step-number">5</span> Для крема смешать желток, сахар, крахмал.</p>
+                                                        <p><span class="step-number">6</span> Добавить горячее молоко, варить до загустения.</p>
+                                                        <p><span class="step-number">7</span> Охладить крем, наполнить им эклеры.</p>
+                                                        <p><span class="step-number">8</span> Полить растопленным шоколадом.</p>
+                                                        <p><strong>Время приготовления:</strong> 1 час. Французская классика.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Рецепт 3 -->
+                                <div class="accordion-item filterable" data-category="world new">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            <div>
+                                                <h5 class="mb-0">Мусс из белого шоколада и малины</h5>
+                                                <div class="rating small mt-1">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <span class="ms-2">4.8 (37)</span>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#newRecipesAccordion">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h6>Ингредиенты:</h6>
+                                                    <ul>
+                                                        <li>Белый шоколад (200 г)</li>
+                                                        <li>Сливки 33% (400 мл)</li>
+                                                        <li>Желатин (10 г)</li>
+                                                        <li>Малина (150 г)</li>
+                                                        <li>Сахар (50 г)</li>
+                                                        <li>Ваниль</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h6>Подробное приготовление:</h6>
+                                                    <div class="detail-box">
+                                                        <p><span class="step-number">1</span> Замочить желатин в холодной воде.</p>
+                                                        <p><span class="step-number">2</span> Растопить шоколад на водяной бане.</p>
+                                                        <p><span class="step-number">3</span> Нагреть 100 мл сливок, растворить в них желатин.</p>
+                                                        <p><span class="step-number">4</span> Соединить шоколад со сливочной смесью.</p>
+                                                        <p><span class="step-number">5</span> Взбить остальные сливки, осторожно соединить с шоколадной массой.</p>
+                                                        <p><span class="step-number">6</span> Малину протереть через сито, добавить сахар.</p>
+                                                        <p><span class="step-number">7</span> Выкладывать в бокалы слои: мусс, малиновое пюре.</p>
+                                                        <p><span class="step-number">8</span> Охладить 4 часа. Украсить свежими ягодами.</p>
+                                                        <p><strong>Время приготовления:</strong> 30 минут + время охлаждения. Нежный и воздушный десерт.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Дополнительные рецепты -->
+                            <h3 class="mb-4 mt-5 text-danger">Традиционные русские сладости</h3>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="russian new">
+                                    <div class="recipe-card p-4 bg-light position-relative">
+                                        <span class="badge bg-danger new-recipe-badge">Новый</span>
+                                        <h5>Хворост</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Мука (500 г), яйца (3 шт.), сахар (100 г), сметана (100 г), масло (1 ст. л.), уксус (1 ст. л.), соль, масло для фритюра, сахарная пудра.
+                                        </p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Подробное приготовление:</strong></p>
+                                            <p><span class="step-number">1</span> Замесить тесто из муки, яиц, сахара, сметаны, масла, уксуса.</p>
+                                            <p><span class="step-number">2</span> Раскатать тонко, нарезать полосками.</p>
+                                            <p><span class="step-number">3</span> Сделать надрезы, продеть концы, формировать хворост.</p>
+                                            <p><span class="step-number">4</span> Жарить во фритюре до золотистого цвета.</p>
+                                            <p><span class="step-number">5</span> Выложить на бумажное полотенце, дать стечь маслу.</p>
+                                            <p><span class="step-number">6</span> Посыпать сахарной пудрой.</p>
+                                            <p><strong>Время приготовления:</strong> 1 час. Хрустящие и ароматные.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="russian new">
+                                    <div class="recipe-card p-4 bg-light position-relative">
+                                        <span class="badge bg-danger new-recipe-badge">Новый</span>
+                                        <h5>Орешки со сгущенкой</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Мука (300 г), мед (100 г), сахар (100 г), яйца (2 шт.), масло (100 г), сода (0,5 ч. л.), орехи (100 г), ваниль.
+                                        </p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Подробное приготовление:</strong></p>
+                                            <p><span class="step-number">1</span> Мед подогреть с маслом, сахаром, охладить.</p>
+                                            <p><span class="step-number">2</span> Добавить яйца, перемешать.</p>
+                                            <p><span class="step-number">3</span> Погасить соду, добавить к смеси.</p>
+                                            <p><span class="step-number">4</span> Добавить орехи, постепенно всыпать муку.</p>
+                                            <p><span class="step-number">5</span> Сформировать небольшие шарики, выпекать 20 мин при 180°C.</p>
+                                            <p><span class="step-number">6</span> Охладить, посыпать сахарной пудрой.</p>
+                                            <p><strong>Время приготовления:</strong> 45 минут. Сочные и ароматные.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Добавлены новые рецепты -->
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="russian">
+                                    <div class="recipe-card p-4 bg-light position-relative">
+                                        <h5>Пасха</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Мука (1 кг), молоко (250 мл), яйца (5 шт.), сахар (250 г), масло (200 г), дрожжи (50 г), изюм (100 г), цукаты (100 г), ваниль.
+                                        </p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Подробное приготовление:</strong></p>
+                                            <p><span class="step-number">1</span> Заквасить дрожжи с молоком, сахаром, мукой.</p>
+                                            <p><span class="step-number">2</span> Добавить желтки, растопленное масло, соль.</p>
+                                            <p><span class="step-number">3</span> Добавить изюм, цукаты, ваниль.</p>
+                                            <p><span class="step-number">4</span> Вымесить тесто, дать подойти 2-3 раза.</p>
+                                            <p><span class="step-number">5</span> Выложить в форму, дать подойти.</p>
+                                            <p><span class="step-number">6</span> Выпекать 1 час при 180°C.</p>
+                                            <p><span class="step-number">7</span> Охладить, украсить глазурью.</p>
+                                            <p><strong>Время приготовления:</strong> 4 часа. Традиционная пасхальная выпечка.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="russian">
+                                    <div class="recipe-card p-4 bg-light position-relative">
+                                        <h5>Медовик</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Мед (200 г), сахар (150 г), яйца (3 шт.), мука (500 г), сода (1 ч. л.), сметана (500 г), ваниль.
+                                        </p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Подробное приготовление:</strong></p>
+                                            <p><span class="step-number">1</span> Мед подогреть с сахаром, охладить.</p>
+                                            <p><span class="step-number">2</span> Добавить яйца, соду, перемешать.</p>
+                                            <p><span class="step-number">3</span> Добавить муку, замесить тесто.</p>
+                                            <p><span class="step-number">4</span> Разделить на 6-8 частей, раскатать, испечь коржи.</p>
+                                            <p><span class="step-number">5</span> Взбить сметану с сахаром и ванилью.</p>
+                                            <p><span class="step-number">6</span> Смазать коржи кремом, дать пропитаться.</p>
+                                            <p><strong>Время приготовления:</strong> 2 часа. Нежный и сочный торт.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="world">
+                                    <div class="recipe-card p-4 bg-light position-relative">
+                                        <h5>Крем-брюле</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Сливки (500 мл), ваниль, яичные желтки (6 шт.), сахар (100 г), сахар для карамели.
+                                        </p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Подробное приготовление:</strong></p>
+                                            <p><span class="step-number">1</span> Нагреть сливки с ванилью, не кипятить.</p>
+                                            <p><span class="step-number">2</span> Взбить желтки с сахаром.</p>
+                                            <p><span class="step-number">3</span> Осторожно соединить сливки с яичной смесью.</p>
+                                            <p><span class="step-number">4</span> Разлить по формам, запекать на водяной бане 40 мин.</p>
+                                            <p><span class="step-number">5</span> Охладить, посыпать сахаром, карамелизировать.</p>
+                                            <p><span class="step-number">6</span> Охладить перед подачей.</p>
+                                            <p><strong>Время приготовления:</strong> 1 час. Французский десерт с хрустящей корочкой.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="world">
+                                    <div class="recipe-card p-4 bg-light position-relative">
+                                        <h5>Печенье макарун</h5>
+                                        <p><strong>Ингредиенты:</strong><br>
+                                            Миндальная мука (150 г), сахарная пудра (150 г), яичные белки (110 г), сахар (50 г), краситель, начинка (ганаш, крем).
+                                        </p>
+                                        <div class="detail-box mt-3">
+                                            <p><strong>Подробное приготовление:</strong></p>
+                                            <p><span class="step-number">1</span> Просеять миндальную муку с сахарной пудрой.</p>
+                                            <p><span class="step-number">2</span> Взбить белки, постепенно добавляя сахар.</p>
+                                            <p><span class="step-number">3</span> Добавить краситель, сухие ингредиенты, аккуратно соединить.</p>
+                                            <p><span class="step-number">4</span> Отсадить на противень, дать высохнуть 30 минут.</p>
+                                            <p><span class="step-number">5</span> Выпекать 12-15 минут при 150°C.</p>
+                                            <p><span class="step-number">6</span> Охладить, соединить с начинкой.</p>
+                                            <p><strong>Время приготовления:</strong> 1,5 часа. Нежное французское печенье.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -440,116 +847,58 @@
         </section>
 
         <section class="BgImage"></section>
-        
-        <!-- Секция для добавления рецептов -->
-        <section id="add-recipe" class="section-padding">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-12">
-                        <div class="recipe-form">
-                            <h2 class="form-title">Добавить свой рецепт</h2>
-                            <form id="recipeForm">
-                                <div class="mb-3">
-                                    <label for="recipeTitle" class="form-label">Название рецепта*</label>
-                                    <input type="text" class="form-control" id="recipeTitle" required 
-                                        placeholder="Введите название вашего рецепта">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeCategory" class="form-label">Категория*</label>
-                                    <select class="form-select" id="recipeCategory" required>
-                                        <option value="">Выберите категорию</option>
-                                        <option value="Завтрак">Завтрак</option>
-                                        <option value="Обед">Обед</option>
-                                        <option value="Ужин">Ужин</option>
-                                        <option value="Десерт">Десерт</option>
-                                        <option value="Постное">Постное</option>
-                                        <option value="Консервация">Консервация</option>
-                                        <option value="Выпечка">Выпечка</option>
-                                        <option value="Напитки">Напитки</option>
-                                        <option value="Салаты">Салаты</option>
-                                        <option value="Закуски">Закуски</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Изображение (опционально)</label>
-                                    <div class="file-input-wrapper">
-                                        <div class="file-input-label">
-                                            <i class="bi bi-upload me-2"></i>Выбрать файл
-                                            <input type="file" class="form-control" id="recipeImageFile" accept="image/*">
-                                        </div>
-                                        <span id="fileName" class="file-name">Файл не выбран</span>
-                                    </div>
-                                    <div class="form-text">Максимальный размер: 1MB (JPG, PNG)</div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeIngredients" class="form-label">Ингредиенты*</label>
-                                    <textarea class="form-control" id="recipeIngredients" rows="4" required 
-                                        placeholder="Перечислите ингредиенты, каждый с новой строки"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeInstructions" class="form-label">Инструкция приготовления*</label>
-                                    <textarea class="form-control" id="recipeInstructions" rows="6" required 
-                                        placeholder="Опишите шаги приготовления"></textarea>
-                                </div>
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg">
-                                        <span id="submitSpinner" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                        Добавить рецепт
-                                    </button>
-                                </div>
-                            </form>
-                            
-                            <div id="recipePreview" class="recipe-preview mt-4">
-                                <h4>Предварительный просмотр:</h4>
-                                <div class="card recipe-card">
-                                    <img id="previewImage" src="images/default-recipe.jpg" class="card-img-top" 
-                                        alt="Предварительный просмотр">
-                                    <div class="card-body">
-                                        <h5 id="previewTitle" class="card-title">Название рецепта</h5>
-                                        <p id="previewCategory" class="card-text text-muted">Категория: не выбрано</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Раздел для отображения пользовательских рецептов -->
-        <section id="user-recipes" class="section-padding bg-white">
-            <div class="container">
-                <div class="row">
-                    <h2 class="text-center mb-lg-5 mb-4">Рецепты от пользователей</h2>
-                    
-                    <div id="loadingRecipes">
-                        <div class="spinner-border text-success" role="status">
-                            <span class="visually-hidden">Загрузка...</span>
-                        </div>
-                        <p class="mt-3">Загружаем рецепты...</p>
-                    </div>
-                    
-                    <div id="recipesContainer" class="row">
-                        <!-- Сюда будут добавляться рецепты через JS -->
-                    </div>
-                    
-                    <div id="noRecipesMessage" class="col-12 text-center d-none">
-                        <p>Пока нет добавленных рецептов. Будьте первым!</p>
-                    </div>
-                    
-                    <div class="text-center mt-4">
-                        <button id="loadMoreBtn" class="btn btn-outline-success d-none">Показать еще</button>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
     <footer class="site-footer section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h4 class="text-white mb-4 me-5">Хрустящая кухня</h4>
+                    <h4 class="text-white mb-4 me-5">Хрусткая кухня</h4>
+                    <div style="
+                      background-color: #fafafa;
+                      padding: 25px 20px;
+                      text-align: center;
+                      font-size: 14px;
+                      color: #777;
+                      border-top: 1px solid #f0f0f0;
+                    ">
+                      <p style="margin: 0 0 10px 0; font-weight: 500; color: #555;">
+                        © 2025 Домашние кулинарные рецепты
+                      </p>
+                      
+                      <nav style="margin-top: 15px;">
+                        <a href="about-ru.html" style="
+                          margin: 0 12px;
+                          color: #666;
+                          text-decoration: none;
+                          transition: color 0.2s;
+                        ">О нас</a>
+                        
+                        <a href="mailto:korovinkonstantin0@gmail.com" style="
+                          margin: 0 12px;
+                          color: #666;
+                          text-decoration: none;
+                          transition: color 0.2s;
+                        ">Контакты</a>
+                        
+                        <a href="privacy-ru.html" style="
+                          margin: 0 12px;
+                          color: #666;
+                          text-decoration: none;
+                          transition: color 0.2s;
+                        ">Политика конфиденциальности</a>
+                      </nav>
+                      
+                      <div style="margin-top: 20px; color: #aaa; font-size: 12px;">
+                        Все права защищены
+                      </div>
+                    </div>
+                    <div style="text-align:center; margin-top: 2rem;">
+                      <img 
+                        src="https://hits.sh/crispy-cuisine-7334c.web.app.svg?style=flat-square&label=Просмотры&color=blue&logo=github" 
+                        alt="Просмотры"
+                      />
+                    </div>
                 </div>
             </div>
         </div>
@@ -560,377 +909,52 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/custom.js"></script>
     
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    
     <script>
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCmO3UwOLexKfUsNBiDhfVsJ7WWS9K_ft4",
-  authDomain: "crispy-cuisine-7334c.firebaseapp.com",
-  projectId: "crispy-cuisine-7334c",
-  storageBucket: "crispy-cuisine-7334c.firebasestorage.app",
-  messagingSenderId: "18003644183",
-  appId: "1:18003644183:web:4abb0800c18b00d7b83152",
-  measurementId: "G-250S27R82Y"
-};
-
-        // Инициализация Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        
-        // Глобальные переменные
-        let lastVisible = null;
-        let selectedFile = null;
-        const PAGE_SIZE = 6; // Количество рецептов за одну загрузку
-
-        $(document).ready(function() {
-            // Загрузка первых рецептов
-            loadRecipes();
+        // Фильтрация рецептов
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const filterableElements = document.querySelectorAll('.filterable');
             
-            // Обработчики событий
-            $('#recipeForm').submit(handleFormSubmit);
-            $('#recipeImageFile').on('change', handleImageUpload);
-            $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
-            $('#loadMoreBtn').on('click', loadMoreRecipes);
-        });
-
-        // Обработка загрузки изображения
-        function handleImageUpload(e) {
-            const file = e.target.files[0];
-            if (!file) {
-                $('#fileName').text('Файл не выбран');
-                selectedFile = null;
-                return;
-            }
-
-            // Проверка типа файла
-            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
-                alert('Пожалуйста, выберите файл в формате JPG или PNG.');
-                resetFileInput();
-                return;
-            }
-
-            // Проверка размера файла
-            if (file.size > 1048576) {
-                alert('Файл слишком большой. Максимальный размер 1MB.');
-                resetFileInput();
-                return;
-            }
-
-            $('#fileName').text(file.name);
-            
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                selectedFile = event.target.result;
-                updatePreview();
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function resetFileInput() {
-            $('#recipeImageFile').val('');
-            $('#fileName').text('Файл не выбран');
-        }
-
-        function updatePreview() {
-            const title = $('#recipeTitle').val() || 'Название рецепта';
-            const category = $('#recipeCategory').val() || 'не выбрано';
-            
-            if (selectedFile) {
-                $('#previewImage').attr('src', selectedFile);
-            }
-            
-            $('#previewTitle').text(title);
-            $('#previewCategory').text('Категория: ' + category);
-            $('#recipePreview').show();
-        }
-
-        // Загрузка изображения в Cloudinary
-        async function uploadImage(file) {
-            try {
-                const cloudName = "dhfkb6xv2";
-                const uploadPreset = "unsigned_preset";
-                
-                const formData = new FormData();
-                formData.append("file", file);
-                formData.append("upload_preset", uploadPreset);
-                formData.append("folder", "recipe_images");
-                
-                const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-                    method: "POST",
-                    body: formData
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Удаляем активный класс со всех кнопок
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Добавляем активный класс к текущей кнопке
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Фильтруем элементы
+                    filterableElements.forEach(element => {
+                        if (filter === 'all') {
+                            element.classList.remove('hidden');
+                        } else {
+                            const categories = element.getAttribute('data-category').split(' ');
+                            if (categories.includes(filter)) {
+                                element.classList.remove('hidden');
+                            } else {
+                                element.classList.add('hidden');
+                            }
+                        }
+                    });
                 });
-                
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error.message || "Ошибка Cloudinary");
-                }
-                
-                const data = await response.json();
-                
-                if (data.secure_url) {
-                    // Добавляем параметры для оптимизации
-                    return data.secure_url.replace('/upload/', '/upload/q_auto,f_auto/');
-                } else {
-                    throw new Error("Не удалось получить URL изображения");
-                }
-            } catch (error) {
-                console.error("Ошибка загрузки изображения:", error);
-                throw new Error("Не удалось загрузить изображение");
-            }
-        }
-
-        // Обработка отправки формы
-        async function handleFormSubmit(e) {
-            e.preventDefault();
-            
-            // Показываем спиннер
-            $('#submitSpinner').show();
-            $('#recipeForm button').prop('disabled', true);
-            
-            try {
-                const fileInput = document.getElementById('recipeImageFile');
-                const file = fileInput.files[0];
-                
-                let imageUrl = 'images/default-recipe.jpg';
-                
-                // Загружаем изображение, если оно есть
-                if (file) {
-                    imageUrl = await uploadImage(file);
-                }
-                
-                // Создаем объект рецепта
-                const recipe = {
-                    title: $('#recipeTitle').val(),
-                    category: $('#recipeCategory').val(),
-                    image: imageUrl,
-                    ingredients: $('#recipeIngredients').val(),
-                    instructions: $('#recipeInstructions').val(),
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                };
-                
-                // Сохраняем в Firestore
-                await db.collection("recipes").add(recipe);
-                
-                // Сброс формы
-                $('#recipeForm')[0].reset();
-                $('#recipePreview').hide();
-                resetFileInput();
-                selectedFile = null;
-                
-                // Перезагружаем рецепты
-                await loadRecipes();
-                
-                alert('Рецепт успешно добавлен!');
-                
-                // Прокрутка к новому рецепту
-                $('html, body').animate({
-                    scrollTop: $('#user-recipes').offset().top - 100
-                }, 800);
-            } catch (error) {
-                console.error("Ошибка сохранения рецепта:", error);
-                alert('Произошла ошибка: ' + error.message);
-            } finally {
-                // Скрываем спиннер и активируем кнопку
-                $('#submitSpinner').hide();
-                $('#recipeForm button').prop('disabled', false);
-            }
-        }
-
-        // Загрузка рецептов
-        async function loadRecipes() {
-            try {
-                // Показываем индикатор загрузки
-                $('#loadingRecipes').show();
-                $('#recipesContainer').empty();
-                $('#noRecipesMessage').addClass('d-none');
-                $('#loadMoreBtn').addClass('d-none');
-                
-                // Запрос к Firestore
-                const query = db.collection("recipes")
-                    .orderBy("createdAt", "desc")
-                    .limit(PAGE_SIZE);
-                
-                const snapshot = await query.get();
-                
-                // Скрываем индикатор загрузки
-                $('#loadingRecipes').hide();
-                
-                if (snapshot.empty) {
-                    $('#noRecipesMessage').removeClass('d-none');
-                    return;
-                }
-                
-                // Сохраняем последний документ для пагинации
-                lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                
-                // Отображаем рецепты
-                displayRecipes(snapshot);
-                
-                // Показываем кнопку "Загрузить еще", если есть еще рецепты
-                if (snapshot.size === PAGE_SIZE) {
-                    $('#loadMoreBtn').removeClass('d-none');
-                }
-            } catch (error) {
-                console.error("Ошибка загрузки рецептов:", error);
-                $('#loadingRecipes').html('<p class="text-danger">Ошибка загрузки рецептов. Попробуйте обновить страницу.</p>');
-            }
-        }
-
-        // Загрузка дополнительных рецептов
-        async function loadMoreRecipes() {
-            try {
-                $('#loadMoreBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Загрузка...');
-                
-                const query = db.collection("recipes")
-                    .orderBy("createdAt", "desc")
-                    .startAfter(lastVisible)
-                    .limit(PAGE_SIZE);
-                
-                const snapshot = await query.get();
-                
-                if (snapshot.empty) {
-                    $('#loadMoreBtn').hide();
-                    return;
-                }
-                
-                // Обновляем последний документ
-                lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                
-                // Добавляем новые рецепты
-                displayRecipes(snapshot);
-                
-                // Скрываем кнопку, если больше нет рецептов
-                if (snapshot.size < PAGE_SIZE) {
-                    $('#loadMoreBtn').hide();
-                } else {
-                    $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
-                }
-            } catch (error) {
-                console.error("Ошибка загрузки рецептов:", error);
-                $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
-                alert('Ошибка загрузки дополнительных рецептов');
-            }
-        }
-
-        // Отображение рецептов на странице
-        function displayRecipes(snapshot) {
-            const container = $('#recipesContainer');
-            
-            snapshot.forEach(doc => {
-                const recipe = doc.data();
-                const recipeId = doc.id;
-                
-                // Форматируем дату
-                const date = recipe.createdAt ? 
-                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                    }) : 'Дата не указана';
-                
-                const recipeHtml = `
-                <div class="col-lg-4 col-md-6 col-12 mb-4">
-                    <div class="menu-thumb recipe-card">
-                        <div class="menu-image-wrap position-relative">
-                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
-                                <img src="${recipe.image}" class="img-fluid menu-image" alt="${recipe.title}" loading="lazy">
-                                <span class="user-recipe-tag bg-success">Пользовательский</span>
-                            </a>
-                        </div>
-                        <div class="menu-info d-flex flex-wrap align-items-center">
-                            <h4 class="mb-0">${recipe.title}</h4>
-                            <span class="text-muted small ms-2">${date}</span>
-                        </div>
-                    </div>
-                </div>`;
-                
-                container.append(recipeHtml);
             });
-        }
-
-        // Показ деталей рецепта
-        window.showRecipeDetails = async function(recipeId) {
-            try {
-                const doc = await db.collection("recipes").doc(recipeId).get();
-                
-                if (!doc.exists) {
-                    alert('Рецепт не найден');
-                    return;
+            
+            // Функционал для кнопки "Поделиться"
+            document.getElementById('shareRecipe').addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Рецепт тирамису - Хрусткая кухня',
+                        text: 'Настоящий итальянский тирамису - рецепт от Хрусткой кухни',
+                        url: window.location.href
+                    })
+                    .then(() => console.log('Успешно поделились'))
+                    .catch(error => console.log('Ошибка при обмене:', error));
+                } else {
+                    alert('Функция "Поделиться" не поддерживается вашим браузером');
                 }
-                
-                const recipe = doc.data();
-                
-                // Форматируем дату
-                const date = recipe.createdAt ? 
-                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    }) : 'Дата не указана';
-                
-                // Создаем HTML для модального окна
-                const modalHtml = `
-                <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">${recipe.title}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-5 mb-3 mb-md-0">
-                                        <img src="${recipe.image}" class="img-fluid rounded mb-3" alt="${recipe.title}">
-                                        <div class="recipe-meta">
-                                            <p><strong>Категория:</strong> ${recipe.category || 'Не указана'}</p>
-                                            <p><strong>Добавлено:</strong> ${date}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="mb-4">
-                                            <h5>Ингредиенты:</h5>
-                                            <div class="recipe-ingredients">${formatText(recipe.ingredients)}</div>
-                                        </div>
-                                        <div>
-                                            <h5>Инструкция:</h5>
-                                            <div class="recipe-instructions">${formatText(recipe.instructions)}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-                
-                // Добавляем модальное окно в DOM
-                $('body').append(modalHtml);
-                
-                // Показываем модальное окно
-                const modal = new bootstrap.Modal(document.getElementById('recipeDetailModal'));
-                modal.show();
-                
-                // Удаляем модальное окно после закрытия
-                $('#recipeDetailModal').on('hidden.bs.modal', function() {
-                    $(this).remove();
-                });
-            } catch (error) {
-                console.error("Ошибка загрузки рецепта:", error);
-                alert('Не удалось загрузить рецепт');
-            }
-        }
-
-        // Форматирование текста (замена переносов строк)
-        function formatText(text) {
-            return text.replace(/\n/g, '<br>');
-        }
+            });
+        });
     </script>
 </body>
 </html>
