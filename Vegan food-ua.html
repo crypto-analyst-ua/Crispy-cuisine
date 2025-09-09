@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
+    <meta name="description" content="Вегетарианські рецепти для здорового харчування. Смачні та корисні страви без м'яса">
     <meta name="author" content="">
-    <title>Хрустка кухня - Топ рецепти</title>
+    <title>Хрустка кухня - Вегетарианські рецепти</title>
     
     <!-- CSS FILES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,285 +15,131 @@
     <link href="css/bootstrap-icons.css" rel="stylesheet">
     <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
     <style>
-        .file-input-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            width: 100%;
-        }
-        
-        .file-input-label {
-            display: block;
-            padding: 0.375rem 0.75rem;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #212529;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid #ced4da;
-            border-radius: 0.25rem;
+        .category-badge {
             cursor: pointer;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            transition: all 0.3s;
         }
-        
-        .file-input-label:hover {
-            background-color: #f8f9fa;
+        .category-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        
-        .file-input-label input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .file-name {
-            display: block;
-            margin-top: 0.25rem;
-            font-size: 0.875rem;
-            color: #6c757d;
-        }
-        
-        .recipe-preview {
-            margin-top: 2rem;
-            display: none;
-        }
-        
         .recipe-card {
-            border-radius: 0.5rem;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 25px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            cursor: pointer;
         }
-        
         .recipe-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
-        
-        .user-recipe-tag {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: white;
+        .recipe-image {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
         }
-        
-        .menu-image-wrap {
-            position: relative;
+        .recipe-content {
+            padding: 20px;
         }
-        
-        .recipe-form {
-            background-color: #f8f9fa;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-        }
-        
-        .form-title {
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #198754;
-        }
-        
-        .carousel-link {
-            display: block;
-            position: relative;
-            color: inherit;
-            text-decoration: none;
-        }
-        
-        .carousel-link:hover {
-            text-decoration: none;
-        }
-        
-        .carousel-link .carousel-caption {
-            z-index: 10;
-        }
-        
-        .carousel-link::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;
-        }
-        
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-            display: none;
-        }
-        
-        #loadingRecipes {
-            text-align: center;
-            padding: 2rem;
-        }
-        
-        .recipe-modal .modal-content {
-            border-radius: 0.8rem;
-            overflow: hidden;
-        }
-        
-        .recipe-modal .modal-header {
-            background: linear-gradient(to right, #28a745, #20c997);
-            color: white;
-            border-bottom: none;
-        }
-        
-        .recipe-modal .modal-body {
-            padding: 1.5rem;
-        }
-        
-        .recipe-modal .modal-footer {
-            background-color: #f8f9fa;
-            border-top: 1px solid #dee2e6;
-        }
-        
-        .recipe-ingredients {
-            background-color: #f8f9fa;
-            border-radius: 0.5rem;
-            padding: 1rem;
-        }
-        
-        .recipe-instructions {
-            white-space: pre-line;
-            line-height: 1.8;
-        }
-        
-        /* Стили для аутентификации */
-        .auth-modal .modal-content {
-            border-radius: 0.8rem;
-        }
-        
-        .auth-modal .modal-header {
-            background: linear-gradient(to right, #28a745, #20c997);
-            color: white;
-            border-bottom: none;
-        }
-        
-        .user-avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: #198754;
-            color: white;
+        .recipe-meta {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 8px;
-        }
-        
-        /* Стили для предупреждения о неподтвержденном email */
-        #emailWarning {
-            position: fixed;
-            top: 70px;
-            left: 0;
-            right: 0;
-            z-index: 1030;
-            padding: 10px 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        /* Исправление z-index для модальных окон */
-        .modal {
-            z-index: 1060 !important;
-        }
-        .modal-backdrop {
-            z-index: 1050 !important;
-        }
-        
-        /* ДОБАВЛЕННЫЕ ИСПРАВЛЕНИЯ */
-        #recipePreview {
-            margin-top: 20px;
-            display: block;
-        }
-        
-        .spinner-border {
-            display: inline-block !important;
-            width: 1.5rem;
-            height: 1.5rem;
-            vertical-align: text-bottom;
-        }
-        
-        #loadingRecipes .spinner-border {
-            display: block !important;
-            margin: 0 auto;
-        }
-        
-        .recipe-date {
-            font-size: 0.85rem;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
             color: #6c757d;
         }
-
-        /* Добавлено для превью изображений */
-        .preview-image-container {
-            height: 200px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f8f9fa;
-            border: 1px dashed #dee2e6;
-            border-radius: 5px;
+        .recipe-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #2a6b3f;
+        }
+        .recipe-description {
+            color: #555;
             margin-bottom: 15px;
         }
-        
-        /* Стили для уведомления о подтверждении email */
-        .email-verification-info {
-            background-color: #e8f4fd;
-            border-left: 4px solid #1a73e8;
-            padding: 15px;
-            margin-top: 15px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
-        
-        .email-verification-info p {
-            margin-bottom: 8px;
+        .recipe-actions {
             display: flex;
-            align-items: flex-start;
+            justify-content: space-between;
         }
-        
-        .email-verification-info p:before {
-            content: "•";
-            margin-right: 8px;
-            font-weight: bold;
-            color: #1a73e8;
+        .filter-active {
+            background-color: #2a6b3f !important;
+            color: white !important;
         }
-        
-        .email-verification-info strong {
-            color: #1a73e8;
+        .nutrition-info {
+            background-color: #f8f9fa;
+            border-left: 4px solid #2a6b3f;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
         }
-        
-        /* Стилі для аватарки в навігації */
-        .nav-avatar {
+        .steps-list {
+            list-style-type: none;
+            padding-left: 0;
+            counter-reset: step-counter;
+        }
+        .steps-list li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+        .steps-list li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #2a6b3f;
+            color: white;
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            background-color: #198754;
-            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            margin-right: 8px;
         }
-        
-        .error-message {
-            color: #dc3545;
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
+        .recipe-tags {
+            margin: 10px 0;
+        }
+        .recipe-tag {
+            display: inline-block;
+            background: #e9f5ef;
+            color: #2a6b3f;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .category-section {
+            margin-bottom: 40px;
+        }
+        .category-title {
+            border-bottom: 2px solid #2a6b3f;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            color: #2a6b3f;
+        }
+        .rating {
+            display: none; /* Скрываем рейтинг */
+        }
+        .print-btn, .save-btn {
+            display: none; /* Скрываем кнопки печати и сохранения */
+        }
+        .search-container {
+            margin-bottom: 30px;
+        }
+        .intro-text {
+            background-color: #f0f8f2;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .recipe-detail {
+            display: none;
         }
     </style>
 </head>
@@ -326,146 +172,18 @@
                         <a class="nav-link" href="desert-ua.html">Десерт</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#add-recipe">Додати рецепт</a>
+                        <a class="nav-link active" href="Vegan food-ua.html">Вегетаріанське</a>
                     </li>
                 </ul>
                 
-                <!-- Блок аутентифікації -->
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown" id="accountDropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                            <div class="d-flex align-items-center">
-                                <div id="userAvatar" class="nav-avatar d-none">
-                                    <span id="avatarInitials">U</span>
-                                </div>
-                                <span id="userStatus">Акаунт</span>
-                            </div>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li id="loginItem"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Увійти</a></li>
-                            <li id="registerItem"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Реєстрація</a></li>
-                            <li id="logoutItem" class="d-none"><a class="dropdown-item" href="#" id="logoutLink">Вийти</a></li>
-                        </ul>
-                    </li>
                     <li class="nav-item">
                         <a href="Vegan food-ru.html"><span class="category-tag me-3 bg-info">RU</span></a>
                     </li>
                 </ul>
             </div>
         </div>
-        
-        <!-- Предупреждение о неподтвержденном email -->
-        <div id="emailWarning" class="d-none alert alert-warning rounded-0 mb-0 text-center w-100"></div>
     </nav>
-
-    <!-- Модальні вікна для аутентифікації -->
-    <div class="modal fade auth-modal" id="loginModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Увійти</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="loginForm">
-                        <div class="mb-3">
-                            <label for="loginEmail" class="form-label">Email*</label>
-                            <input type="email" class="form-control" id="loginEmail" required>
-                            <div class="error-message" id="loginEmailError"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Пароль*</label>
-                            <input type="password" class="form-control" id="loginPassword" required>
-                            <div class="error-message" id="loginPasswordError"></div>
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-success">
-                                <span id="loginSpinner" class="spinner-border spinner-border-sm d-none"></span>
-                                Увійти
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade auth-modal" id="registerModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Реєстрація</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="registerForm">
-                        <div class="mb-3">
-                            <label for="registerName" class="form-label">Ім'я*</label>
-                            <input type="text" class="form-control" id="registerName" required>
-                            <div class="error-message" id="registerNameError"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerEmail" class="form-label">Email*</label>
-                            <input type="email" class="form-control" id="registerEmail" required>
-                            <div class="error-message" id="registerEmailError"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerPassword" class="form-label">Пароль*</label>
-                            <input type="password" class="form-control" id="registerPassword" required>
-                            <div class="error-message" id="registerPasswordError"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Підтвердіть пароль*</label>
-                            <input type="password" class="form-control" id="confirmPassword" required>
-                            <div class="error-message" id="confirmPasswordError"></div>
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-success">
-                                <span id="registerSpinner" class="spinner-border spinner-border-sm d-none"></span>
-                                Зареєструватися
-                            </button>
-                        </div>
-                    </form>
-                    
-                    <!-- Додано інформацію про підтвердження email -->
-                    <div class="email-verification-info mt-4">
-                        <p>📧 Ми надішлемо листа для підтвердження email після реєстрації.</p>
-                        <p>🔍 Якщо ви не бачите листа, перевірте папку "Спам" або "Уся пошта".</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Модальне вікно для інформації про підтвердження email -->
-    <div class="modal fade" id="emailVerificationModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">Підтвердження Email</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-success">
-                        <h5>Реєстрація успішна!</h5>
-                        <p>На вашу електронну адресу відправлено лист з посиланням для підтвердження.</p>
-                    </div>
-                    
-                    <div class="email-verification-info">
-                        <p>📧 Ми надіслали лист для підтвердження email на вашу адресу.</p>
-                        <p>🔍 Якщо ви не бачите листа, перевірте папку "Спам" або "Уся пошта".</p>
-                    </div>
-                    
-                    <div class="alert alert-info mt-3">
-                        <p class="mb-0">Не отримали лист? <a href="#" id="resendVerificationInModal">Надіслати знову</a></p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <main>
         <header class="site-header site-news-detail-header">
@@ -473,6 +191,7 @@
                 <div class="row">
                     <div class="col-12">
                         <h2>ВЕГЕТАРІАНСЬКІ РЕЦЕПТИ</h2>
+                        <p class="text-center">Смачні та корисні страви без м'яса для щоденного раціону</p>
                     </div>
                 </div>
             </div>
@@ -480,306 +199,1324 @@
 
         <section class="news-detail section-padding pt-0">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 col-12">
-                        <img src="images/news/ella-olsson-mmnKI8kMxpc-unsplash.jpg" class="img-fluid news-detail-image" alt="Вегетаріанські страви">
-                        
-                        <div class="col-lg-10 col-10 mx-auto mt-5">
-                            <h4 class="mb-3">Картопля з грибами в духовці</h4>
-                            <ul class="list">
-                                <li class="list-item">Картопля — 5 шт.</li>
-                                <li class="list-item">Печериці — 300 г</li>
-                                <li class="list-item">Цибуля — 1 шт.</li>
-                                <li class="list-item">Рослинна олія — 2 ст. л.</li>
-                                <li class="list-item">Сіль, перець, зелень</li>
-                            </ul>
-                            <p>Нарізати все, змішати, запекти при 180°C ~40 хвилин. Посипати зеленню.</p>
+                <div class="intro-text">
+                    <h3>Чому вегетаріанське харчування?</h3>
+                    <p>Вегетаріанські страви не лише корисні для здоров'я, але й допомагають зменшити вплив на навколишнє середовище. На цій сторінці ми зібрали найсмачніші рецепти, багаті на білки, вітаміни та мінерали. Усі страви легко приготувати, вони підходять для щоденного раціону та особливих випадків.</p>
+                </div>
 
-                            <h4 class="mb-3">Салат з квасолі та овочів</h4>
-                            <ul class="list">
-                                <li class="list-item">Квасоля — 1 банка</li>
-                                <li class="list-item">Помідор — 2 шт.</li>
-                                <li class="list-item">Огірок — 1 шт.</li>
-                                <li class="list-item">Цибуля, олія, лимонний сік</li>
-                            </ul>
-                            <p>Нарізати овочі, змішати з квасолею, заправити, додати зелень.</p>
-
-                            <h4 class="mb-3">Пісний плов з овочами</h4>
-                            <ul class="list">
-                                <li class="list-item">Рис — 1 склянка</li>
-                                <li class="list-item">Морква, цибуля, перець, часник</li>
-                                <li class="list-item">Спеції, олія, вода</li>
-                            </ul>
-                            <p>Підсмажити овочі, додати рис і воду, тушкувати 25 хвилин під кришкою.</p>
-
-                            <h4 class="mb-3">Тушкована капуста з томатами</h4>
-                            <ul class="list">
-                                <li class="list-item">Капуста — 500 г</li>
-                                <li class="list-item">Цибуля, морква, томатна паста — 2 ст. л.</li>
-                                <li class="list-item">Сіль, перець, лавровий лист</li>
-                            </ul>
-                            <p>Підсмажити цибулю і моркву, додати капусту і пасту, тушкувати ~30 хв.</p>
-
-                            <h4 class="mb-3">Гречка з овочами</h4>
-                            <ul class="list">
-                                <li class="list-item">Гречка — 1 склянка</li>
-                                <li class="list-item">Морква, цибуля, кабачок</li>
-                                <li class="list-item">Олія, спеції</li>
-                            </ul>
-                            <p>Підсмажити овочі, додати гречку і воду, варити до готовності.</p>
-
-                            <h4 class="mb-3">Печені яблука з медом та горіхами</h4>
-                            <ul class="list">
-                                <li class="list-item">Яблука — 4 шт.</li>
-                                <li class="list-item">Мед — 2 ч. л. (або сироп)</li>
-                                <li class="list-item">Горіхи, родзинки</li>
-                            </ul>
-                            <p>Видалити серцевину, начинити, запекти при 180°C ~20 хвилин.</p>
-
-                            <h4 class="mb-3">Овочевий суп з сочевицею</h4>
-                            <ul class="list">
-                                <li class="list-item">Сочевиця — 1/2 склянки</li>
-                                <li class="list-item">Морква, картопля, цибуля, спеції</li>
-                            </ul>
-                            <p>Все нарізати, варити разом 30-40 хв до готовності сочевиці.</p>
-
-                            <h4 class="mb-3">Вінегрет</h4>
-                            <ul class="list">
-                                <li class="list-item">Буряк, картопля, морква (варена)</li>
-                                <li class="list-item">Квашена капуста або огірок</li>
-                                <li class="list-item">Цибуля, олія</li>
-                            </ul>
-                            <p>Овочі нарізати кубиками, додати олію і капусту, перемішати.</p>
-
-                            <h4 class="mb-3">Коржі на воді</h4>
-                            <ul class="list">
-                                <li class="list-item">Борошно — 2 склянки</li>
-                                <li class="list-item">Вода — 3/4 склянки</li>
-                                <li class="list-item">Сіль, трохи олії</li>
-                            </ul>
-                            <p>Замісити тісто, розкачати, обсмажити на сухій сковороді або запекти.</p>
-
-                            <h4 class="mb-3">Хумус (паштет з нуту)</h4>
-                            <ul class="list">
-                                <li class="list-item">Нут варений — 1 склянка</li>
-                                <li class="list-item">Часник — 1 зубчик</li>
-                                <li class="list-item">Оливкова олія, лимонний сік, сіль</li>
-                            </ul>
-                            <p>Подрібнити все у блендері до однорідної маси. Подавати з хлібом.</p>
-
-                            <h4 class="mb-3">Паста з томатним соусом</h4>
-                            <ul class="list">
-                                <li class="list-item">Паста без яєць</li>
-                                <li class="list-item">Помідори або томатна паста</li>
-                                <li class="list-item">Часник, цибуля, спеції</li>
-                            </ul>
-                            <p>Зварити пасту, приготувати соус, змішати і прогріти.</p>
-
-                            <h4 class="mb-3">Овочеве рагу</h4>
-                            <ul class="list">
-                                <li class="list-item">Кабачок — 1 шт.</li>
-                                <li class="list-item">Баклажан — 1 шт.</li>
-                                <li class="list-item">Болгарський перець — 2 шт.</li>
-                                <li class="list-item">Томатна паста — 2 ст. л.</li>
-                                <li class="list-item">Часник, прованські трави</li>
-                            </ul>
-                            <p>Овочі нарізати кубиками, тушкувати 25 хв з томатною пастою та спеціями.</p>
-
-                            <h4 class="mb-3">Котлети з сочевиці</h4>
-                            <ul class="list">
-                                <li class="list-item">Червона сочевиця — 1 склянка</li>
-                                <li class="list-item">Морква терта — 1 шт.</li>
-                                <li class="list-item">Цибуля — 1 шт.</li>
-                                <li class="list-item">Борошно нутове — 3 ст. л.</li>
-                                <li class="list-item">Коріандр, кумін</li>
-                            </ul>
-                            <p>Зварити сочевицю, змішати з овочами та спеціями, сформувати котлети, обсмажити.</p>
-
-                            <h4 class="mb-3">Гарбузовий суп-пюре</h4>
-                            <ul class="list">
-                                <li class="list-item">Гарбуз — 500 г</li>
-                                <li class="list-item">Кокосове молоко — 200 мл</li>
-                                <li class="list-item">Імбир тертий — 1 ч. л.</li>
-                                <li class="list-item">Куркума, мускатний горіх</li>
-                            </ul>
-                            <p>Запекти гарбуз, збити блендером з молоком та спеціями, прогріти 5 хв.</p>
-
-                            <h4 class="mb-3">Лаваш з овочевою начинкою</h4>
-                            <ul class="list">
-                                <li class="list-item">Лаваш вірменський — 2 листи</li>
-                                <li class="list-item">Авокадо — 1 шт.</li>
-                                <li class="list-item">Листя салату — пучок</li>
-                                <li class="list-item">Свіжий огірок — 1 шт.</li>
-                                <li class="list-item">Хумус — 3 ст. л.</li>
-                            </ul>
-                            <p>Намазати лаваш хумусом, викласти нарізані овочі, згорнути рулетом.</p>
-
-                            <h4 class="mb-3">Вівсяне печиво</h4>
-                            <ul class="list">
-                                <li class="list-item">Вівсяні пластівці — 2 склянки</li>
-                                <li class="list-item">Банани — 2 шт.</li>
-                                <li class="list-item">Родзинки/журавлина — ½ склянки</li>
-                                <li class="list-item">Кориця — 1 ч. л.</li>
-                            </ul>
-                            <p>Розім'яти банани, змішати з пластівцями та сухофруктами. Випікати 20 хв при 180°C.</p>
-
-                            <h4 class="mb-3">Грибний суп з локшиною</h4>
-                            <ul class="list">
-                                <li class="list-item">Рисова локшина — 100 г</li>
-                                <li class="list-item">Шиїтаке — 200 г</li>
-                                <li class="list-item">Морква — 1 шт.</li>
-                                <li class="list-item">Соєвий соус — 3 ст. л.</li>
-                                <li class="list-item">Корінь петрушки</li>
-                            </ul>
-                            <p>Варити гриби та овочі 15 хв, додати локшину та соус, готувати ще 5 хв.</p>
-
-                            <h4 class="mb-3">Фалафель</h4>
-                            <ul class="list">
-                                <li class="list-item">Нут варений — 2 склянки</li>
-                                <li class="list-item">Цибуля — 1 шт.</li>
-                                <li class="list-item">Кінза — пучок</li>
-                                <li class="list-item">Кумін, коріандр — по 1 ч. л.</li>
-                                <li class="list-item">Борошно нутове — 2 ст. л.</li>
-                            </ul>
-                            <p>Подрібнити інгредієнти у блендері, сформувати кульки, обсмажити до золотистої скоринки.</p>
-
-                            <h4 class="mb-3">Рататуй</h4>
-                            <ul class="list">
-                                <li class="list-item">Кабачок — 1 шт.</li>
-                                <li class="list-item">Баклажан — 1 шт.</li>
-                                <li class="list-item">Помідори — 3 шт.</li>
-                                <li class="list-item">Базилік — пучок</li>
-                                <li class="list-item">Часникова олія</li>
-                            </ul>
-                            <p>Овочі нарізати кружальцями, викласти спіраллю у форму, запекти 40 хв при 190°C.</p>
-
-                            <h4 class="mb-3">Шоколадний мусс</h4>
-                            <ul class="list">
-                                <li class="list-item">Авокадо — 2 шт.</li>
-                                <li class="list-item">Какао-порошок — 4 ст. л.</li>
-                                <li class="list-item">Кленовий сироп — 3 ст. л.</li>
-                                <li class="list-item">Ванілін — 1 щіпка</li>
-                            </ul>
-                            <p>Збити всі інгредієнти блендером до кремоподібної маси. Охолодити 2 години.</p>
-
-                            <h4 class="mb-3">Веганські роли</h4>
-                            <ul class="list">
-                                <li class="list-item">Рис для суші — 1 склянка</li>
-                                <li class="list-item">Норі — 5 листів</li>
-                                <li class="list-item">Огірок — 1 шт.</li>
-                                <li class="list-item">Авокадо — 1 шт.</li>
-                                <li class="list-item">Тофу копчений — 100 г</li>
-                            </ul>
-                            <p>Розподілити рис на норі, викласти начинку, згорнути роли. Нарізати на 8 частин.</p>
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="search-container">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Пошук рецептів..." id="recipeSearch">
+                                <button class="btn btn-outline-secondary" type="button" id="searchButton">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section class="BgImage"></section>
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <h4>Фільтр за категоріями:</h4>
+                        <div class="d-flex flex-wrap">
+                            <span class="category-badge badge bg-light text-dark me-2 mb-2 p-2 filter-active" data-category="all">Всі</span>
+                            <span class="category-badge badge bg-light text-dark me-2 mb-2 p-2" data-category="soup">Супи</span>
+                            <span class="category-badge badge bg-light text-dark me-2 mb-2 p-2" data-category="main">Основні страви</span>
+                            <span class="category-badge badge bg-light text-dark me-2 mb-2 p-2" data-category="salad">Салати</span>
+                            <span class="category-badge badge bg-light text-dark me-2 mb-2 p-2" data-category="dessert">Десерти</span>
+                            <span class="category-badge badge bg-light text-dark me-2 mb-2 p-2" data-category="snack">Закуски</span>
+                            <span class="category-badge badge bg-light text-dark me-2 mb-2 p-2" data-category="breakfast">Сніданки</span>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- Секция для добавления рецептов -->
-        <section id="add-recipe" class="section-padding">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-12">
-                        <div id="authMessage" class="alert alert-info text-center">
-                            <p>Будь ласка, <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">увійдіть</a> або <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal">зареєструйтесь</a>, щоб додати рецепт!</p>
+                <div class="row" id="recipesContainer">
+                    <!-- Рецепт 1 -->
+                    <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="main">
+                        <div class="recipe-card" data-recipe-id="1">
+                            <img src="images/news/Screenshot_20250908-164838 (1).png" class="recipe-image" alt="Картопля з грибами в духовці">
+                            <div class="recipe-content">
+                                <div class="recipe-meta">
+                                    <span><i class="bi bi-clock"></i> 50 хв</span>
+                                    <span><i class="bi bi-people"></i> 4 порції</span>
+                                </div>
+                                <h3 class="recipe-title">Картопля з грибами в духовці</h3>
+                                <p class="recipe-description">Запечена картопля з ароматними грибами та спеціями - ідеальна страва для сімейної вечері.</p>
+                                <div class="recipe-tags">
+                                    <span class="recipe-tag">основна страва</span>
+                                    <span class="recipe-tag">веганська</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Рецепт 2 -->
+                    <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="salad">
+                        <div class="recipe-card" data-recipe-id="2">
+                            <img src="images/news/Screenshot_20250908-171936 (1).png"class="recipe-image" alt="Салат з квасолі та овочів">
+                            <div class="recipe-content">
+                                <div class="recipe-meta">
+                                    <span><i class="bi bi-clock"></i> 20 хв</span>
+                                    <span><i class="bi bi-people"></i> 2 порції</span>
+                                </div>
+                                <h3 class="recipe-title">Салат з квасолі та овочів</h3>
+                                <p class="recipe-description">Поживний салат з квасолею, свіжими овочами та ароматною заправкою.</p>
+                                <div class="recipe-tags">
+                                    <span class="recipe-tag">салат</span>
+                                    <span class="recipe-tag">веганська</span>
+                                    <span class="recipe-tag">багато білку</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Рецепт 3 -->
+                    <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="main">
+                        <div class="recipe-card" data-recipe-id="3">
+                            <img src="images/news/stefan-johnson-xIFbDeGcy44-unsplash3.jpg" class="recipe-image" alt="Пісний плов з овочами">
+                            <div class="recipe-content">
+                                <div class="recipe-meta">
+                                    <span><i class="bi bi-clock"></i> 40 хв</span>
+                                    <span><i class="bi bi-people"></i> 4 порції</span>
+                                </div>
+                                <h3 class="recipe-title">Пісний плов з овочами</h3>
+                                <p class="recipe-description">Ароматний плов з рисом та сезонними овочами, приправлений куркумою та іншими спеціями.</p>
+                                <div class="recipe-tags">
+                                    <span class="recipe-tag">основна страва</span>
+                                    <span class="recipe-tag">веганська</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Рецепт 4 -->
+                    <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="soup">
+                        <div class="recipe-card" data-recipe-id="4">
+                            <img src="images/news/Screenshot_20250908-174528 (1).png" class="recipe-image" class="recipe-image" alt="Овочевий суп з квасолею">
+                            <div class="recipe-content">
+                                <div class="recipe-meta">
+                                    <span><i class="bi bi-clock"></i> 35 хв</span>
+                                    <span><i class="bi bi-people"></i> 4 порції</span>
+                                </div>
+                                <h3 class="recipe-title">Овочевий суп з квасолею</h3>
+                                <p class="recipe-description">Легкий та поживний суп з свіжими овочами та білою квасолею.</p>
+                                <div class="recipe-tags">
+                                    <span class="recipe-tag">суп</span>
+                                    <span class="recipe-tag">веганська</span>
+                                    <span class="recipe-tag">легкий</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Рецепт 5 -->
+                    <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="salad">
+                        <div class="recipe-card" data-recipe-id="5">
+                            <img src="images/news/Screenshot_20250908-181705 (1).png" class="recipe-image" alt="Грецький салат без сиру">
+                            <div class="recipe-content">
+                                <div class="recipe-meta">
+                                    <span><i class="bi bi-clock"></i> 15 хв</span>
+                                    <span><i class="bi bi-people"></i> 2 порції</span>
+                                </div>
+                                <h3 class="recipe-title">Грецький салат без сиру</h3>
+                                <p class="recipe-description">Класичний грецький салат з авокадо замість сиру фета.</p>
+                                <div class="recipe-tags">
+                                    <span class="recipe-tag">салат</span>
+                                    <span class="recipe-tag">веганська</span>
+                                    <span class="recipe-tag">освіжаючий</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Рецепт 6 -->
+                    <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="main">
+                        <div class="recipe-card" data-recipe-id="6">
+                            <img src="images/news/Screenshot_20250909-064657 (1).png" class="recipe-image" alt="Фарширований перець з рисом і овочами">
+                            <div class="recipe-content">
+                                <div class="recipe-meta">
+                                    <span><i class="bi bi-clock"></i> 60 хв</span>
+                                    <span><i class="bi bi-people"></i> 4 порції</span>
+                                </div>
+                                <h3 class="recipe-title">Фарширований перець з рисом і овочами</h3>
+                                <p class="recipe-description">Ароматний перець, фарширований рисом, овочами та зеленню.</p>
+                                <div class="recipe-tags">
+                                    <span class="recipe-tag">основна страва</span>
+                                    <span class="recipe-tag">веганська</span>
+                                    <span class="recipe-tag">запечена</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Рецепт 7 -->
+                    <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="snack">
+                        <div class="recipe-card" data-recipe-id="7">
+                            <img src="images/news/Screenshot_20250909-070624 (1).png" class="recipe-image" alt="Домашній хумус">
+                            <div class="recipe-content">
+                                <div class="recipe-meta">
+                                    <span><i class="bi bi-clock"></i> 20 хв</span>
+                                    <span><i class="bi bi-people"></i> 6 порцій</span>
+                                </div>
+                                <h3 class="recipe-title">Домашній хумус</h3>
+                                <p class="recipe-description">Ніжний хумус з нутом, тахіні, лимонним соком і спеціями.</p>
+                                <div class="recipe-tags">
+                                    <span class="recipe-tag">закуска</span>
+                                    <span class="recipe-tag">веганська</span>
+                                    <span class="recipe-tag">соус</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Рецепт 8 -->
+                    <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="breakfast">
+                        <div class="recipe-card" data-recipe-id="8">
+                            <img src="images/news/Screenshot_20250909-071800 (1).png" class="recipe-image" alt="Вівсянка з ягодами і горіхами">
+                            <div class="recipe-content">
+                                <div class="recipe-meta">
+                                    <span><i class="bi bi-clock"></i> 15 хв</span>
+                                    <span><i class="bi bi-people"></i> 2 порції</span>
+                                </div>
+                                <h3 class="recipe-title">Вівсянка з ягодами і горіхами</h3>
+                                <p class="recipe-description">Поживна вівсяна каша з свіжими ягодами, горіхами і медом.</p>
+                                <div class="recipe-tags">
+                                    <span class="recipe-tag">сніданок</span>
+                                    <span class="recipe-tag">веганська</span>
+                                    <span class="recipe-tag">поживна</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Рецепт 9 -->
+                    <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="main">
+                        <div class="recipe-card" data-recipe-id="9">
+                            <img src="images/news/Screenshot_20250909-074803 (1).png" class="recipe-image"class="recipe-image" alt="Рагу з овочів і тофу">
+                            <div class="recipe-content">
+                                <div class="recipe-meta">
+                                    <span><i class="bi bi-clock"></i> 40 хв</span>
+                                    <span><i class="bi bi-people"></i> 3 порції</span>
+                                </div>
+                                <h3 class="recipe-title">Рагу з овочів і тофу</h3>
+                                <p class="recipe-description">Ароматне рагу з сезонними овочами, тофу і соєвим соусом.</p>
+                                <div class="recipe-tags">
+                                    <span class="recipe-tag">основна страва</span>
+                                    <span class="recipe-tag">веганська</span>
+                                    <span class="recipe-tag">азійська кухня</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Рецепт 10 -->
+                    <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="dessert">
+                        <div class="recipe-card" data-recipe-id="10">
+                            <img src="images/news/Screenshot_20250909-080127 (1).png" class="recipe-image"class="recipe-image" alt="Фруктовий салат з м'ятою">
+                            <div class="recipe-content">
+                                <div class="recipe-meta">
+                                    <span><i class="bi bi-clock"></i> 10 хв</span>
+                                    <span><i class="bi bi-people"></i> 2 порції</span>
+                                </div>
+                                <h3 class="recipe-title">Фруктовий салат з м'ятою</h3>
+                                <p class="recipe-description">Освіжаючий салат з різноманітних фруктів з лимонним соком і м'ятою.</p>
+                                <div class="recipe-tags">
+                                    <span class="recipe-tag">десерт</span>
+                                    <span class="recipe-tag">веганська</span>
+                                    <span class="recipe-tag">легкий</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Рецепт 11 -->
+                    <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="salad">
+                        <div class="recipe-card" data-recipe-id="11">
+                            <img src="images/news/Screenshot_20250909-081431 (1).png" class="recipe-image" alt="Салат з кіноа та овочами">
+                            <div class="recipe-content">
+                                <div class="recipe-meta">
+                                    <span><i class="bi bi-clock"></i> 25 хв</span>
+                                    <span><i class="bi bi-people"></i> 3 порції</span>
+                                </div>
+                                <h3 class="recipe-title">Салат з кіноа та овочами</h3>
+                                <p class="recipe-description">Поживний салат з кіноа, свіжими овочами і цитрусовою заправкою.</p>
+                                <div class="recipe-tags">
+                                    <span class="recipe-tag">салат</span>
+                                    <span class="recipe-tag">веганська</span>
+                                    <span class="recipe-tag">багато білку</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Рецепт 12 -->
+                    <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="snack">
+                        <div class="recipe-card" data-recipe-id="12">
+                            <img src="images/news/Screenshot_20250908-152832 (1).png" class="recipe-image" alt="Овочеві котлети">
+                            <div class="recipe-content">
+                                <div class="recipe-meta">
+                                    <span><i class="bi bi-clock"></i> 30 хв</span>
+                                    <span><i class="bi bi-people"></i> 4 порції</span>
+                                </div>
+                                <h3 class="recipe-title">Овочеві котлети</h3>
+                                <p class="recipe-description">Соковиті котлети з моркви, картоплі та кабачка, запечені в духовці.</p>
+                                <div class="recipe-tags">
+                                    <span class="recipe-tag">закуска</span>
+                                    <span class="recipe-tag">веганська</span>
+                                    <span class="recipe-tag">запечена</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Рецепт 13 -->
+                    <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="dessert">
+                        <div class="recipe-card" data-recipe-id="13">
+                            <img src="images/news/Screenshot_20250909-085340.png"class="recipe-image" alt="Пудинг з чіа">
+                            <div class="recipe-content">
+                                <div class="recipe-meta">
+                                    <span><i class="bi bi-clock"></i> 10 хв + час охолодження</span>
+                                    <span><i class="bi bi-people"></i> 2 порції</span>
+                                </div>
+                                <h3 class="recipe-title">Пудинг з чіа</h3>
+                                <p class="recipe-description">Ніжний пудинг з насінням чіа, кокосовим молоком і свіжими ягодами.</p>
+                                <div class="recipe-tags">
+                                    <span class="recipe-tag">десерт</span>
+                                    <span class="recipe-tag">веганська</span>
+                                    <span class="recipe-tag">корисний</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Детали рецептов (скрыты по умолчанию) -->
+                <div class="recipe-details" id="recipeDetails" style="display: none;">
+                    <!-- Детали рецепта 1 -->
+                    <div class="recipe-detail" id="detail-1">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Картопля з грибами в духовці</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250908-164838 (1).png" class="img-fluid rounded mb-4" alt="Картопля з грибами">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 245 ккал</li>
+                                        <li>Білки: 6 г</li>
+                                        <li>Жири: 8 г</li>
+                                        <li>Вуглеводи: 38 г</li>
+                                        <li>Клітковина: 5 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Картопля — 5 шт. (середніх)</li>
+                                    <li class="list-group-item">Печериці — 300 г</li>
+                                    <li class="list-group-item">Цибуля ріпчаста — 1 шт.</li>
+                                    <li class="list-group-item">Часник — 3 зубчики</li>
+                                    <li class="list-group-item">Рослинна олія — 3 ст. л.</li>
+                                    <li class="list-group-item">Сіль, чорний перець, паприка — за смаком</li>
+                                    <li class="list-group-item">Свіжа зелень (петрушка, кріп) — для подачі</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 15 хвилин | Приготування: 40 хвилин</p>
+                            </div>
                         </div>
                         
-                        <div id="recipeFormContainer" class="d-none">
-                            <div class="recipe-form">
-                                <h2 class="form-title">Додати свій рецепт</h2>
-                                <form id="recipeForm">
-                                    <div class="mb-3">
-                                        <label for="recipeTitle" class="form-label">Назва рецепту*</label>
-                                        <input 
-                                            type="text" 
-                                            class="form-control" 
-                                            id="recipeTitle" 
-                                            required 
-                                            placeholder="Введіть назву вашого рецепту"
-                                        >
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="recipeCategory" class="form-label">Категорія*</label>
-                                        <select class="form-select" id="recipeCategory" required>
-                                            <option value="">Виберіть категорію</option>
-                                            <option value="Сніданок">Сніданок</option>
-                                            <option value="Обід">Обід</option>
-                                            <option value="Вечеря">Вечеря</option>
-                                            <option value="Десерт">Десерт</option>
-                                            <option value="Пістне">Пістне</option>
-                                            <option value="Консервація">Консервація</option>
-                                            <option value="Випічка">Випічка</option>
-                                            <option value="Напої">Напої</option>
-                                            <option value="Салати">Салати</option>
-                                            <option value="Закуски">Закуски</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Зображення (опціонально)</label>
-                                        <div class="file-input-wrapper">
-                                            <div class="file-input-label">
-                                                <i class="bi bi-upload me-2"></i>Обрати файл
-                                                <input 
-                                                    type="file" 
-                                                    class="form-control" 
-                                                    id="recipeImageFile" 
-                                                    accept="image/*"
-                                                >
-                                            </div>
-                                            <span id="fileName" class="file-name">Файл не обрано</span>
-                                        </div>
-                                        <div class="form-text">Максимальний розмір: 1MB (JPG, PNG)</div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="recipeIngredients" class="form-label">Інгредієнти*</label>
-                                        <textarea 
-                                            class="form-control" 
-                                            id="recipeIngredients" 
-                                            rows="4" 
-                                            required 
-                                            placeholder="Перелічіть інгредієнти, кожен з нового рядка"
-                                        ></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="recipeInstructions" class="form-label">Інструкція приготування*</label>
-                                        <textarea 
-                                            class="form-control" 
-                                            id="recipeInstructions" 
-                                            rows="6" 
-                                            required 
-                                            placeholder="Опишіть кроки приготування"
-                                        ></textarea>
-                                    </div>
-                                    <div class="d-grid">
-                                        <button type="submit" class="btn btn-success btn-lg">
-                                            <span 
-                                                id="submitSpinner" 
-                                                class="spinner-border spinner-border-sm me-2 d-none" 
-                                                role="status" 
-                                                aria-hidden="true"
-                                            ></span>
-                                            Додати рецепт
-                                        </button>
-                                    </div>
-                                </form>
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>Картоплю очистити, нарізати середніми шматочками. Залити холодною водою на 10 хвилин, щоб видалити зайвий крохмаль.</li>
+                            <li>Гриби помити, нарізати пластинками. Цибулю нарізати півкільцями, часник дрібно порубати.</li>
+                            <li>Злити воду з картоплі, обсушити її рушником. У великій мисці змішати картоплю, гриби, цибулю та часник.</li>
+                            <li>Додати олію, сіль, перець, паприку. Ретельно перемішати, щоб усі інгредієнти покрилися олією та спеціями.</li>
+                            <li>Викласти суміш на деко, застелене пергаментом. Розподілити рівномірним шаром.</li>
+                            <li>Запікати у розігрітій до 180°C духовці 35-40 хвилин, поки картопля не стане м'якою та рум'яною.</li>
+                            <li>Дістати з духовки, посипати свіжою зеленню. Подавати гарячою з овочевим салатом.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Для різноманітності можна додати болгарський перець, кабачок або баклажан. Подавайте з соусом на основі йогурту або веганським майонезом.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Детали рецепта 2 -->
+                    <div class="recipe-detail" id="detail-2">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Салат з квасолі та овочів</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250908-171936 (1).png" class="img-fluid rounded mb-4" alt="Салат з квасолі та овочів">
                                 
-                                <div id="recipePreview" class="recipe-preview mt-4">
-                                    <h4>Попередній перегляд:</h4>
-                                    <div class="card recipe-card">
-                                        <img 
-                                            id="previewImage" 
-                                            src="images/default-recipe.jpg" 
-                                            class="card-img-top" 
-                                            alt="Попередній перегляд"
-                                        >
-                                        <div class="card-body">
-                                            <h5 id="previewTitle" class="card-title">Назва рецепту</h5>
-                                            <p id="previewCategory" class="card-text text-muted">Категорія: не вибрано</p>
-                                        </div>
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 180 ккал</li>
+                                        <li>Білки: 9 г</li>
+                                        <li>Жири: 6 г</li>
+                                        <li>Вуглеводи: 22 г</li>
+                                        <li>Клітковина: 8 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Консервована квасоля — 400 г</li>
+                                    <li class="list-group-item">Помідори чері — 200 г</li>
+                                    <li class="list-group-item">Огірок — 1 шт.</li>
+                                    <li class="list-group-item">Червона цибуля — 1/2 шт.</li>
+                                    <li class="list-group-item">Петрушка — 1/2 пучка</li>
+                                    <li class="list-group-item">Оливкова олія — 3 ст. л.</li>
+                                    <li class="list-group-item">Лимонний сік — 1 ст. л.</li>
+                                    <li class="list-group-item">Сіль, перець — за смаком</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 15 хвилин | Приготування: 5 хвилин</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>Квасолю відкинути на друшляк, дати стікти рідини.</li>
+                            <li>Помідори чері нарізати на половинки, огірок — невеликими кубиками.</li>
+                            <li>Цибулю нарізати тонкими півкільцями, петрушку дрібно порубати.</li>
+                            <li>У великій мисці з'єднати квасолю, помідори, огірок, цибулю та петрушку.</li>
+                            <li>Приготувати заправку: змішати оливкову олію, лимонний сік, сіль і перець.</li>
+                            <li>Залити салат заправкою, акуратно перемішати.</li>
+                            <li>Дати настоятися 10-15 хвилин перед подачею.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Для більш насиченого смаку можна додати маслини або каперси. Можна використовувати суміш різних видів квасолі.</p>
+                        </div>
+                    </div>
+
+                    <!-- Детали рецепта 3 -->
+                    <div class="recipe-detail" id="detail-3">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Пісний плов з овочами</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/stefan-johnson-xIFbDeGcy44-unsplash3.jpg" class="img-fluid rounded mb-4" alt="Пісний плов з овочами">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 320 ккал</li>
+                                        <li>Білки: 8 г</li>
+                                        <li>Жири: 10 г</li>
+                                        <li>Вуглеводи: 50 г</li>
+                                        <li>Клітковина: 6 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Рис — 300 г</li>
+                                    <li class="list-group-item">Морква — 2 шт.</li>
+                                    <li class="list-group-item">Цибуля — 2 шт.</li>
+                                    <li class="list-group-item">Болгарський перець — 1 шт.</li>
+                                    <li class="list-group-item">Часник — 3 зубчики</li>
+                                    <li class="list-group-item">Рослинна олія — 4 ст. л.</li>
+                                    <li class="list-group-item">Куркума — 1 ч. л.</li>
+                                    <li class="list-group-item">Зира — 1 ч. л.</li>
+                                    <li class="list-group-item">Сіль — за смаком</li>
+                                    <li class="list-group-item">Вода — 600 мл</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 20 хвилин | Приготування: 40 хвилин</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>Рис ретельно промити до чистої води, залити водою и залишити на 20 хвилин.</li>
+                            <li>Моркву натерти на крупній тертці, цибулю нарізати кубиками, перець — соломкою.</li>
+                            <li>Розігріти олію в казані, додати цибулю и обсмажити до золотистого кольору.</li>
+                            <li>Додати моркву, готувати 5 хвилин, періодично помішуючи.</li>
+                            <li>Додати болгарський перець, готувати ще 3-4 хвилини.</li>
+                            <li>Додати куркуму, зіру і сіль, перемішати.</li>
+                            <li>Злити воду з рису, додати його до овочів, розрівняти.</li>
+                            <li>Залити гарячою водою, довести до кипіння.</li>
+                            <li>Зменшити вогонь, накрити кришкою і готувати 20 хвилин.</li>
+                            <li>Додати подрібнений часник, накрити кришкою і залишити на 10 хвилин.</li>
+                            <li>Перемішати перед подачею, прикрасити зеленню.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Для різноманітності можна додати родзинки або курагу. Подавайте з салатом зі свіжих овочів.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Детали рецепта 4 -->
+                    <div class="recipe-detail" id="detail-4">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Овочевий суп з квасолею</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250908-174528 (1).png" class="img-fluid rounded mb-4" alt="Овочевий суп з квасолею">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 180 ккал</li>
+                                        <li>Білки: 8 г</li>
+                                        <li>Жири: 3 г</li>
+                                        <li>Вуглеводи: 30 г</li>
+                                        <li>Клітковина: 9 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Біла квасоля консервована — 400 г</li>
+                                    <li class="list-group-item">Морква — 2 шт.</li>
+                                    <li class="list-group-item">Цибуля ріпчаста — 1 шт.</li>
+                                    <li class="list-group-item">Сельдерей — 2 стебла</li>
+                                    <li class="list-group-item">Помідори — 2 шт.</li>
+                                    <li class="list-group-item">Часник — 2 зубчики</li>
+                                    <li class="list-group-item">Оливкова олія — 2 ст. л.</li>
+                                    <li class="list-group-item">Овочевий бульйон — 1,5 л</li>
+                                    <li class="list-group-item">Сіль, перець, лавровий лист — за смаком</li>
+                                    <li class="list-group-item">Свіжа зелень (петрушка, кріп) — для подачі</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 15 хвилин | Приготування: 20 хвилин</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>Цибулю дрібно нарізати, моркву натерти на крупній тертці, сельдерей нарізати невеликими шматочками.</li>
+                            <li>Розігріти олію в каструлі, додати цибулю и обсмажити до прозорості.</li>
+                            <li>Додати моркву і сельдерей, тушкувати 5 хвилин.</li>
+                            <li>Помідори обшпаршити, зняти шкірку і нарізати кубиками. Додати до овочів.</li>
+                            <li>Влити овочевий бульйон, додати квасолю, довести до кипіння.</li>
+                            <li>Зменшити вогонь, додати спеції і лавровий лист, варити 15 хвилин.</li>
+                            <li>Прибрати лавровый лист, додати подрібнений часник і зелень.</li>
+                            <li>Подавати гарячим з свіжім хлібом.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Для більш насиченого смаку можна додати трошки томатної пасти. Можна також збити частину супу блендером для більш кремової текстури.</p>
+                        </div>
+                    </div>
+
+                    <!-- Детали рецепта 5 -->
+                    <div class="recipe-detail" id="detail-5">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Грецький салат без сиру</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250908-181705 (1).png" class="img-fluid rounded mb-4" alt="Грецький салат без сиру">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 220 ккал</li>
+                                        <li>Білки: 4 г</li>
+                                        <li>Жири: 18 г</li>
+                                        <li>Вуглеводи: 12 г</li>
+                                        <li>Клітковина: 5 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Помідори — 3 шт.</li>
+                                    <li class="list-group-item">Огірок — 1 шт.</li>
+                                    <li class="list-group-item">Червона цибуля — 1/2 шт.</li>
+                                    <li class="list-group-item">Солодкий перець — 1 шт.</li>
+                                    <li class="list-group-item">Авокадо — 1 шт.</li>
+                                    <li class="list-group-item">Маслини без кісточок — 50 г</li>
+                                    <li class="list-group-item">Оливкова олія — 3 ст. л.</li>
+                                    <li class="list-group-item">Лимонний сік — 1 ст. л.</li>
+                                    <li class="list-group-item">Сушений орегано — 1 ч. л.</li>
+                                    <li class="list-group-item">Сіль, перець — за смаком</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 15 хвилин | Приготування: 0 хвилин</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>Помідори нарізати середніми шматочками.</li>
+                            <li>Огірок очистити від шкірки, нарізати півкільцями.</li>
+                            <li>Цибулю нарізати тонкими кільцями, перець — соломкою.</li>
+                            <li>Авокадо очистити, видалити кісточку, нарізати кубиками.</li>
+                            <li>У великій мисці з'єднати всі овочі, додати маслини.</li>
+                            <li>Приготувати заправку: змішати оливкову олію, лимонний сік, орегано, сіль і перець.</li>
+                            <li>Залити салат заправкою, акуратно перемішати.</li>
+                            <li>Подавати негайно, щоб авокадо не потемніло.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Для автентичності можна додати каперси. Якщо хочете більш пікантний смак, додайте трошки червоного перцю.</p>
+                        </div>
+                    </div>
+
+                    <!-- Детали рецепта 6 -->
+                    <div class="recipe-detail" id="detail-6">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Фарширований перець з рисом і овочами</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250909-064657 (1).png" class="img-fluid rounded mb-4" alt="Фарширований перець з рисом і овочами">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 190 ккал</li>
+                                        <li>Білки: 5 г</li>
+                                        <li>Жири: 6 г</li>
+                                        <li>Вуглеводи: 30 г</li>
+                                        <li>Клітковина: 5 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Болгарський перець — 6 шт.</li>
+                                    <li class="list-group-item">Рис — 100 г</li>
+                                    <li class="list-group-item">Морква — 1 шт.</li>
+                                    <li class="list-group-item">Цибуля — 1 шт.</li>
+                                    <li class="list-group-item">Помідори — 2 шт.</li>
+                                    <li class="list-group-item">Часник — 2 зубчики</li>
+                                    <li class="list-group-item">Оливкова олія — 3 ст. л.</li>
+                                    <li class="list-group-item">Томатна паста — 2 ст. л.</li>
+                                    <li class="list-group-item">Сіль, перець, спеції — за смаком</li>
+                                    <li class="list-group-item">Вода — 200 мл</li>
+                                    <li class="list-group-item">Свіжа зелень — для подачі</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 30 хвилин | Приготування: 40 хвилин</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>Рис відварити до напівготовності, відкинути на друшляк.</li>
+                            <li>Перець помити, зрізати верхівки и видалити насіння.</li>
+                            <li>Цибулю дрібно нарізати, моркву натерти на тертці.</li>
+                            <li>Розігріти олію в сковороді, обсмажити цибулю до прозорості.</li>
+                            <li>Додати моркву, готувати 5 хвилин.</li>
+                            <li>Помідори обшпаршити, зняти шкірку, нарізати кубиками и додати до овочів.</li>
+                            <li>Додати томатну пасту, сіль, перець, спеції, готувати 3 хвилини.</li>
+                            <li>Зняти з вогню, додати рис і подрібнений часник, перемішати.</li>
+                            <li>Начинити перець рисово-овочевою сумішшю.</li>
+                            <li>У форму для запікання вилити воду, викласти фарширований перець.</li>
+                            <li>Запікати в розігрітій до 180°C духовці 30-35 хвилин.</li>
+                            <li>Подавати, посипавши свіжою зеленню.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Для соковитішої начинки можна додати трошки кукурудзи або зелених бобів. Подавайте зі сметаною або веганським соусом.</p>
+                        </div>
+                    </div>
+
+                    <!-- Детали рецепта 7 -->
+                    <div class="recipe-detail" id="detail-7">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Домашній хумус</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250909-070624 (1).png" class="img-fluid rounded mb-4" alt="Домашній хумус">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 160 ккал</li>
+                                        <li>Білки: 6 г</li>
+                                        <li>Жири: 10 г</li>
+                                        <li>Вуглеводи: 12 г</li>
+                                        <li>Клітковина: 5 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Нут консервований — 400 г</li>
+                                    <li class="list-group-item">Тахіні — 3 ст. л.</li>
+                                    <li class="list-group-item">Лимонний сік — 3 ст. л.</li>
+                                    <li class="list-group-item">Оливкова олія — 2 ст. л.</li>
+                                    <li class="list-group-item">Часник — 2 зубчики</li>
+                                    <li class="list-group-item">Кмин — 1/2 ч. л.</li>
+                                    <li class="list-group-item">Сіль — за смаком</li>
+                                    <li class="list-group-item">Вода — 2-3 ст. л.</li>
+                                    <li class="list-group-item">Паприка — для подачі</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 10 хвилин | Приготування: 0 хвилин</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>Злити рідину з нута, зберегти її.</li>
+                            <li>У блендер скласти нут, тахіні, лимонний сік, оливкову олію, часник, кмин і сіль.</li>
+                            <li>Збивати до отримання однорідної маси.</li>
+                            <li>Поступово додавати воду або рідину з нута, поки не досягнете бажаної консистенції.</li>
+                            <li>Перекласти в сервірувальну миску, зробити заглиблення ложкою.</li>
+                            <li>Полити оливковою олією, посипати паприкою.</li>
+                            <li>Подавати з пітою або свіжими овочами.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Для різноманітності можна додати обсмажені гриби, печену червону перцю або в'ялені томати. Зберігайте в холодильнику до 5 днів.</p>
+                        </div>
+                    </div>
+
+                    <!-- Детали рецепта 8 -->
+                    <div class="recipe-detail" id="detail-8">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Вівсянка з ягодами і горіхами</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250909-071800 (1).png" class="img-fluid rounded mb-4" alt="Вівсянка з ягодами і горіхами">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 350 ккал</li>
+                                        <li>Білки: 10 г</li>
+                                        <li>Жири: 12 г</li>
+                                        <li>Вуглеводи: 50 г</li>
+                                        <li>Клітковина: 8 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Вівсяні пластівці — 100 г</li>
+                                    <li class="list-group-item">Вода або рослинне молоко — 250 мл</li>
+                                    <li class="list-group-item">Мед або кленовий сироп — 2 ст. л.</li>
+                                    <li class="list-group-item">Смішані ягоди (свіжі або заморожені) — 100 г</li>
+                                    <li class="list-group-item">Горіхи волоські — 30 г</li>
+                                    <li class="list-group-item">Насіння чіа — 1 ст. л.</li>
+                                    <li class="list-group-item">Кориця — 1/2 ч. л.</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 5 хвилин | Приготування: 10 хвилин</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>У невеликій каструлі довести до кипіння воду або рослинне молоко.</li>
+                            <li>Додати вівсяні пластівці, зменшити вогонь и варити 5-7 хвилин, помішуючи.</li>
+                            <li>Додати корицю, половину меду, перемішати.</li>
+                            <li>Горіхи подрібнити, ягоди помити (якщо потрібно).</li>
+                            <li>Перекласти вівсянку в тарілку, зверху викласти ягоди и горіхи.</li>
+                            <li>Полити рештою меду, посипати насінням чіа.</li>
+                            <li>Подавати негайно.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Для різноманітності можна додати банан, яблуко або грушу. Можна використовувати будь-які горіхи або насіння.</p>
+                        </div>
+                    </div>
+
+                    <!-- Детали рецепта 9 -->
+                    <div class="recipe-detail" id="detail-9">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Рагу з овочів і тофу</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250909-074803 (1).png" class="img-fluid rounded mb-4" alt="Рагу з овочів і тофу">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 280 ккал</li>
+                                        <li>Білки: 15 г</li>
+                                        <li>Жири: 12 г</li>
+                                        <li>Вуглеводи: 25 г</li>
+                                        <li>Клітковина: 7 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Тофу — 300 г</li>
+                                    <li class="list-group-item">Баклажан — 1 шт.</li>
+                                    <li class="list-group-item">Кабачок — 1 шт.</li>
+                                    <li class="list-group-item">Болгарський перець — 1 шт.</li>
+                                    <li class="list-group-item">Цибуля — 1 шт.</li>
+                                    <li class="list-group-item">Часник — 3 зубчики</li>
+                                    <li class="list-group-item">Імбир — 1 см</li>
+                                    <li class="list-group-item">Соєвий соус — 3 ст. л.</li>
+                                    <li class="list-group-item">Оливкова олія — 2 ст. л.</li>
+                                    <li class="list-group-item">Кунжутне насіння — для подачі</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 20 хвилин | Приготування: 25 хвилин</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>Тофу обсмажити на олії до золотистої скоринки, відкласти.</li>
+                            <li>Баклажан і кабачок нарізати кубиками, посолити і залишити на 10 хвилин.</li>
+                            <li>Цибулю нарізати півкільцями, перець — соломкою.</li>
+                            <li>На розігрітій олії обсмажити цибулю до прозорості.</li>
+                            <li>Додати подрібнений часник і імбир, смажити 1 хвилину.</li>
+                            <li>Додати баклажан і кабачок, готувати 5 хвилин.</li>
+                            <li>Додати перець, готувати ще 3 хвилини.</li>
+                            <li>Додати соєвий соус, перемішати.</li>
+                            <li>Додати тофу, готувати 5 хвилин.</li>
+                            <li>Посипать кунжутним насінням, подавати з рисом.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Для більш пряного смаку можна додати перець чилі або гострий соус. Можна використовувати будь-які сезонні овочі.</p>
+                        </div>
+                    </div>
+
+                    <!-- Детали рецепта 10 -->
+                    <div class="recipe-detail" id="detail-10">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Фруктовий салат з м'ятою</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250909-080127 (1).png" class="img-fluid rounded mb-4" alt="Фруктовий салат з м'ятою">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 120 ккал</li>
+                                        <li>Білки: 2 г</li>
+                                        <li>Жири: 0.5 г</li>
+                                        <li>Вуглеводи: 28 г</li>
+                                        <li>Клітковина: 4 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Яблуко — 1 шт.</li>
+                                    <li class="list-group-item">Апельсин — 1 шт.</li>
+                                    <li class="list-group-item">Ківі — 2 шт.</li>
+                                    <li class="list-group-item">Банан — 1 шт.</li>
+                                    <li class="list-group-item">Полуниця — 100 г</li>
+                                    <li class="list-group-item">Лимонний сік — 1 ст. л.</li>
+                                    <li class="list-group-item">Мед — 1 ст. л.</li>
+                                    <li class="list-group-item">Свіжа м'ята — 5-6 листочків</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 15 хвилин | Приготування: 0 хвилин</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>Яблуко нарізати кубиками, збризнути лимонним сіком.</li>
+                            <li>Апельсин очистити, розділити на часточки, кожну нарізати на 2-3 частини.</li>
+                            <li>Ківі очистити, нарізати кубиками.</li>
+                            <li>Банан очистити, нарізати кружальцями.</li>
+                            <li>Полуницю помити, видалити хвостики, нарізати на чверті.</li>
+                            <li>М'яту дрібно порубати.</li>
+                            <li>У мисці з'єднати всі фрукти, додати мед і м'яту.</li>
+                            <li>Акуратно перемішати, подавати охолодженим.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Можна використовувати будь-які сезонні фрукти. Для додаткового аромату можна додати трошки цедри лимона або апельсина.</p>
+                        </div>
+                    </div>
+
+                    <!-- Детали рецепта 11 -->
+                    <div class="recipe-detail" id="detail-11">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Салат з кіноа та овочами</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250909-081431 (1).png" class="img-fluid rounded mb-4" alt="Салат з кіноа та овочами">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 250 ккал</li>
+                                        <li>Білки: 8 г</li>
+                                        <li>Жири: 12 г</li>
+                                        <li>Вуглеводи: 28 г</li>
+                                        <li>Клітковина: 6 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Кіноа — 100 г</li>
+                                    <li class="list-group-item">Огірок — 1 шт.</li>
+                                    <li class="list-group-item">Помідори чері — 100 г</li>
+                                    <li class="list-group-item">Червона цибуля — 1/4 шт.</li>
+                                    <li class="list-group-item">Авокадо — 1/2 шт.</li>
+                                    <li class="list-group-item">Петрушка — 1/4 пучка</li>
+                                    <li class="list-group-item">Оливкова олія — 2 ст. л.</li>
+                                    <li class="list-group-item">Лимонний сік — 1 ст. л.</li>
+                                    <li class="list-group-item">Сіль, перець — за смаком</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 15 хвилин | Приготування: 15 хвилин</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>Кіноа ретельно промити, відварити згідно з інструкцією на пакуванні.</li>
+                            <li>Огірок нарізати кубиками, помідори чері — половинками.</li>
+                            <li>Цибулю нарізати тонкими півкільцями, петрушку дрібно порубати.</li>
+                            <li>Авокадо очистити, нарізати кубиками.</li>
+                            <li>У мисці з'єднати охолоджену кіноа, овочі, авокадо і петрушку.</li>
+                            <li>Приготувати заправку: змішати оливкову олію, лимонний сік, сіль і перець.</li>
+                            <li>Залити салат заправкою, акуратно перемішати.</li>
+                            <li>Подавати охолодженим.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Для додавання смаку можна додати в'ялені томати або маслини. Можна також додати насіння соняшнику або гарбуза.</p>
+                        </div>
+                    </div>
+
+                    <!-- Детали рецепта 12 -->
+                    <div class="recipe-detail" id="detail-12">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Овочеві котлети</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250908-152832 (1).png" class="img-fluid rounded mb-4" alt="Овочеві котлети">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 180 ккал</li>
+                                        <li>Білки: 5 г</li>
+                                        <li>Жири: 8 г</li>
+                                        <li>Вуглеводи: 22 г</li>
+                                        <li>Клітковина: 4 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Картопля — 3 шт.</li>
+                                    <li class="list-group-item">Морква — 2 шт.</li>
+                                    <li class="list-group-item">Кабачок — 1 шт.</li>
+                                    <li class="list-group-item">Цибуля — 1 шт.</li>
+                                    <li class="list-group-item">Часник — 2 зубчики</li>
+                                    <li class="list-group-item">Борошно — 3 ст. л.</li>
+                                    <li class="list-group-item">Сіль, перець — за смаком</li>
+                                    <li class="list-group-item">Оливкова олія — для запікання</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 25 хвилин | Приготування: 25 хвилин</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>Картоплю відварити в мундирі, охолодити, очистити и натерти на крупній тертці.</li>
+                            <li>Моркву і кабачок натерти на дрібній тертці, віджати зайву рідину.</li>
+                            <li>Цибулю дрібно нарізати, часник подрібнити.</li>
+                            <li>З'єднати всі овочі, додати борошно, сіль, перець, ретельно перемішати.</li>
+                            <li>Сформувати котлети, викласти на деко, застелене пергаментом.</li>
+                            <li>Збризнути оливковою олією.</li>
+                            <li>Запікати в розігрітій до 180°C духовці 20-25 хвилин до золотистого кольору.</li>
+                            <li>Подавати з соусом на основі йогурту або овочевим салатом.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Для кращої форми можна покласти тісто в холодильник на 20-30 хвилин перед формуванням котлет. Можна додати спеції за смаком.</p>
+                        </div>
+                    </div>
+
+                    <!-- Детали рецепта 13 -->
+                    <div class="recipe-detail" id="detail-13">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Пудинг з чіа</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250909-085340.png" class="img-fluid rounded mb-4" alt="Пудинг з чіа">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 220 ккал</li>
+                                        <li>Білки: 6 г</li>
+                                        <li>Жири: 12 г</li>
+                                        <li>Вуглеводи: 20 г</li>
+                                        <li>Клітковина: 10 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Насіння чіа — 50 г</li>
+                                    <li class="list-group-item">Кокосове молоко — 250 мл</li>
+                                    <li class="list-group-item">Мед або кленовий сироп — 2 ст. л.</li>
+                                    <li class="list-group-item">Ванільний екстракт — 1/2 ч. л.</li>
+                                    <li class="list-group-item">Свіжі ягоди — для подачі</li>
+                                    <li class="list-group-item">Горіхи — для подачі</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 5 хвилин | Настоювання: 4 години або ніч</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>У банці або мисці з'єднати насіння чіа, кокосове молоко, мед і ванільний екстракт.</li>
+                            <li>Ретельно перемішати, щоб уникнути грудочок.</li>
+                            <li>Залишити на 10 хвилин, потім знову перемішати.</li>
+                            <li>Накрити кришкою и поставити в холодильник мінімум на 4 години (краще на ніч).</li>
+                            <li>Перед подачею прикрасити свіжими ягодами і горіхами.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Можна експериментувати з різними видами рослинного молока. Для різноманітності додайте какао-порошок або подрібнені фрукти.</p>
+                        </div>
+                    </div>
+
+                    <!-- Детали рецепта 21 -->
+                    <div class="recipe-detail" id="detail-21">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Каррі з сочевицею</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250909-100759 (1).png" class="img-fluid rounded mb-4" alt="Каррі з сочевицею">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 320 ккал</li>
+                                        <li>Білки: 15 г</li>
+                                        <li>Жири: 10 г</li>
+                                        <li>Вуглеводи: 45 г</li>
+                                        <li>Клітковина: 12 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Червона сочевиця — 200 г</li>
+                                    <li class="list-group-item">Кокосове молоко — 400 мл</li>
+                                    <li class="list-group-item">Цибуля — 1 шт.</li>
+                                    <li class="list-group-item">Часник — 3 зубчики</li>
+                                    <li class="list-group-item">Імбир — 2 см</li>
+                                    <li class="list-group-item">Помідори в власному соку — 400 г</li>
+                                    <li class="list-group-item">Каррі паста — 2 ст. л.</li>
+                                    <li class="list-group-item">Оливкова олія — 2 ст. л.</li>
+                                    <li class="list-group-item">Лимонний сік — 1 ст. л.</li>
+                                    <li class="list-group-item">Сіль — за смаком</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 15 хвилин | Приготування: 30 хвилин</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>Сочевицю ретельно промити.</li>
+                            <li>Цибулю дрібно нарізати, часник і імбир подрібнити.</li>
+                            <li>На розігрітій олії обсмажити цибулю до прозорості.</li>
+                            <li>Додати часник і імбир, смажити 1 хвилину.</li>
+                            <li>Додати каррі пасту, смажити ще 1 хвилину.</li>
+                            <li>Додати помідори, розім'яти їх ложкою.</li>
+                            <li>Додати сочевицю, кокосове молоко і 200 мл води.</li>
+                            <li>Довести до кипіння, зменшити вогонь и варити 20-25 хвилин.</li>
+                            <li>В кінці додати лимонний сік і сіль.</li>
+                            <li>Подавати з рисом або нааном.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Для більш пряного смаку можна додати трошки каєнського перцю. Можна прикрасити свіжою кінзою.</p>
+                        </div>
+                    </div>
+
+                    <!-- Детали рецепта 22 -->
+                    <div class="recipe-detail" id="detail-22">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Тост з авокадо</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250909-103634 (1).png" class="img-fluid rounded mb-4" alt="Тост з авокадо">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 250 ккал</li>
+                                        <li>Білки: 6 г</li>
+                                        <li>Жири: 15 г</li>
+                                        <li>Вуглеводи: 25 г</li>
+                                        <li>Клітковина: 8 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Хліб цільнозерновий — 2 скибочки</li>
+                                    <li class="list-group-item">Авокадо — 1 шт.</li>
+                                    <li class="list-group-item">Лимонний сік — 1 ст. л.</li>
+                                    <li class="list-group-item">Сіль, перець — за смаком</li>
+                                    <li class="list-group-item">Насіння чіа — 1 ч. л.</li>
+                                    <li class="list-group-item">Мікрогрін — для подачі</li>
+                                    <li class="list-group-item">Червона паприка — для подачі</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 10 хвилин | Приготування: 5 хвилин</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>Хліб підсмажити в тостері або на сухій сковороді.</li>
+                            <li>Авокадо розрізати, видалити кісточку, вибрати м'якоть.</li>
+                            <li>Розм'яти авокадо виделкою, додати лимонний сік, сіль і перець.</li>
+                            <li>Намазати пасту з авокадо на тости.</li>
+                            <li>Посипати насінням чіа і паприкою.</li>
+                            <li>Прикрасити мікрогріном.</li>
+                            <li>Подавати негайно.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Для додавання смаку можна додати трошки часникового порошку або суміші трав. Можна також додати кружальця редиски.</p>
+                        </div>
+                    </div>
+
+                    <!-- Детали рецепта 23 -->
+                    <div class="recipe-detail" id="detail-23">
+                        <button class="btn btn-secondary mb-4 back-to-recipes"><i class="bi bi-arrow-left"></i> До всіх рецептів</button>
+                        
+                        <h2 class="mb-4">Веганські брауні</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/news/Screenshot_20250909-104434 (1).png" class="img-fluid rounded mb-4" alt="Веганські брауні">
+                                
+                                <div class="nutrition-info">
+                                    <h5>Поживна цінність на порцію:</h5>
+                                    <ul>
+                                        <li>Калорії: 280 ккал</li>
+                                        <li>Білки: 5 г</li>
+                                        <li>Жири: 15 г</li>
+                                        <li>Вуглеводи: 35 г</li>
+                                        <li>Клітковина: 4 г</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Інгредієнти:</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item">Борошно — 200 г</li>
+                                    <li class="list-group-item">Какао-порошок — 60 г</li>
+                                    <li class="list-group-item">Цукор — 150 г</li>
+                                    <li class="list-group-item">Рослинна олія — 100 мл</li>
+                                    <li class="list-group-item">Вода — 200 мл</li>
+                                    <li class="list-group-item">Ванільний екстракт — 1 ч. л.</li>
+                                    <li class="list-group-item">Розпушувач — 1 ч. л.</li>
+                                    <li class="list-group-item">Сіль — 1/4 ч. л.</li>
+                                    <li class="list-group-item">Горіхи волоські — 50 г</li>
+                                </ul>
+                                
+                                <h4 class="mb-3">Час приготування:</h4>
+                                <p>Підготовка: 15 хвилин | Приготування: 25 хвилин</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4 mb-3">Приготування:</h4>
+                        <ol class="steps-list">
+                            <li>У мисці з'єднати борошно, какао, цукор, розпушувач і сіль.</li>
+                            <li>Додати рослинну олію, воду і ванільний екстракт.</li>
+                            <li>Перемішати до отримання однорідного тіста.</li>
+                            <li>Додати подрібнені горіхи.</li>
+                            <li>Вилити тісто в форму, застелену пергаментом.</li>
+                            <li>Запікати в розігрітій до 180°C духовці 20-25 хвилин.</li>
+                            <li>Перевірити готовність дерев'яною паличкою.</li>
+                            <li>Дати повністю охолонути перед порізанням.</li>
+                        </ol>
+                        
+                        <div class="mt-4">
+                            <h5>Поради:</h5>
+                            <p>Для більш багатого шоколадного смаку можна додати шматочки веганського шоколаду. Можна також додати сушену вишню або апельсинову цедру.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Новые рецепты -->
+                <div class="category-section">
+                    <h2 class="category-title">Нові рецепти</h2>
+                    <div class="row">
+                        <!-- Новый рецепт 1 -->
+                        <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="main">
+                            <div class="recipe-card" data-recipe-id="21">
+                                <img src="images/news/Screenshot_20250909-100759 (1).png" class="recipe-image" alt="Каррі з сочевицею">
+                                <div class="recipe-content">
+                                    <div class="recipe-meta">
+                                        <span><i class="bi bi-clock"></i> 35 хв</span>
+                                        <span><i class="bi bi-people"></i> 3 порції</span>
+                                    </div>
+                                    <h3 class="recipe-title">Каррі з сочевицею</h3>
+                                    <div class="rating">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-half"></i>
+                                    </div>
+                                    <p class="recipe-description">Ароматне каррі з червоною сочевицею, кокосовим молоком і індійськими спеціями.</p>
+                                    <div class="recipe-tags">
+                                        <span class="recipe-tag">основна страва</span>
+                                        <span class="recipe-tag">веганська</span>
+                                        <span class="recipe-tag">пряна</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Новый рецепт 2 -->
+                        <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="breakfast">
+                            <div class="recipe-card" data-recipe-id="22">
+                                <img src="images/news/Screenshot_20250909-103634 (1).png" class="recipe-image" alt="Тост з авокадо">
+                                <div class="recipe-content">
+                                    <div class="recipe-meta">
+                                        <span><i class="bi bi-clock"></i> 10 хв</span>
+                                        <span><i class="bi bi-people"></i> 1 порція</span>
+                                    </div>
+                                    <h3 class="recipe-title">Тост з авокадо</h3>
+                                    <div class="rating">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p class="recipe-description">Смачний і поживний сніданок з пюре авокадо, свіжими овочами та насінням.</p>
+                                    <div class="recipe-tags">
+                                        <span class="recipe-tag">сніданок</span>
+                                        <span class="recipe-tag">веганська</span>
+                                        <span class="recipe-tag">швидко</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Новый рецепт 3 -->
+                        <div class="col-lg-4 col-md-6 mb-4 recipe-card-container" data-category="dessert">
+                            <div class="recipe-card" data-recipe-id="23">
+                                <img src="images/news/Screenshot_20250909-104434 (1).png" class="recipe-image" alt="Веганські брауні">
+                                <div class="recipe-content">
+                                    <div class="recipe-meta">
+                                        <span><i class="bi bi-clock"></i> 45 хв</span>
+                                        <span><i class="bi bi-people"></i> 8 порцій</span>
+                                    </div>
+                                    <h3 class="recipe-title">Веганські брауні</h3>
+                                    <div class="rating">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star"></i>
+                                    </div>
+                                    <p class="recipe-description">Ніжні шоколадні брауні без яєць і молочних продуктів на основі авокадо и лляного насіння.</p>
+                                    <div class="recipe-tags">
+                                        <span class="recipe-tag">десерт</span>
+                                        <span class="recipe-tag">веганська</span>
+                                        <span class="recipe-tag">шоколад</span>
                                     </div>
                                 </div>
                             </div>
@@ -789,33 +1526,7 @@
             </div>
         </section>
 
-        <!-- Раздел для отображения пользовательских рецептов -->
-        <section id="user-recipes" class="section-padding bg-white">
-            <div class="container">
-                <div class="row">
-                    <h2 class="text-center mb-lg-5 mb-4">Рецепти від користувачів</h2>
-                    
-                    <div id="loadingRecipes">
-                        <div class="spinner-border text-success" role="status">
-                            <span class="visually-hidden">Завантаження...</span>
-                        </div>
-                        <p class="mt-3">Завантажуємо рецепти...</p>
-                    </div>
-                    
-                    <div id="recipesContainer" class="row">
-                        <!-- Сюда будут добавляться рецепты через JS -->
-                    </div>
-                    
-                    <div id="noRecipesMessage" class="col-12 text-center d-none">
-                        <p>Поки немає доданих рецептів. Будьте першим!</p>
-                    </div>
-                    
-                    <div class="text-center mt-4">
-                        <button id="loadMoreBtn" class="btn btn-outline-success d-none">Показати ще</button>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <section class="BgImage"></section>
     </main>
 
     <footer class="site-footer section-padding">
@@ -876,662 +1587,62 @@
     <!-- JAVASCRIPT FILES -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/custom.js"></script>
-    
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-    
     <script>
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-          apiKey: "AIzaSyCmO3UwOLexKfUsNBiDhfVsJ7WWS9K_ft4",
-          authDomain: "crispy-cuisine-7334c.firebaseapp.com",
-          projectId: "crispy-cuisine-7334c",
-          storageBucket: "crispy-cuisine-7334c.appspot.com",
-          messagingSenderId: "18003644183",
-          appId: "1:18003644183:web:4abb0800c18b00d7b83152",
-          measurementId: "G-250S27R82Y"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const auth = firebase.auth();
-        
-        // Global variables
-        let lastVisible = null;
-        let selectedFile = null;
-        const PAGE_SIZE = 6;
-
-        // Функция для экранирования HTML
-        function escapeHtml(unsafe) {
-            return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
         $(document).ready(function() {
-            // Load first recipes
-            loadRecipes();
-            
-            // Event handlers
-            $('#recipeForm').submit(handleFormSubmit);
-            $('#recipeImageFile').on('change', handleImageUpload);
-            $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
-            $('#loadMoreBtn').on('click', loadMoreRecipes);
-            
-            // Authentication handlers
-            $('#loginForm').submit(handleLogin);
-            $('#registerForm').submit(handleRegister);
-            $('#logoutLink').click(handleLogout);
-            
-            // Track auth state
-            auth.onAuthStateChanged(handleAuthStateChange);
-
-            // Обробник для повторного відправлення листа підтвердження
-            $(document).on('click', '#resendVerificationLink, #resendVerificationNavLink, #resendVerificationInModal', function(e) {
-                e.preventDefault();
-                const user = auth.currentUser;
-                if (user) {
-                    user.sendEmailVerification()
-                        .then(() => {
-                            alert('Лист для підтвердження був відправлений знову на вашу електронну адресу.');
-                        })
-                        .catch(error => {
-                            console.error("Resend error:", error);
-                            alert('Помилка: ' + error.message);
-                        });
+            // Функционал фильтрации по категориям
+            $('.category-badge').click(function() {
+                $('.category-badge').removeClass('filter-active');
+                $(this).addClass('filter-active');
+                
+                const category = $(this).data('category');
+                
+                if (category === 'all') {
+                    $('.recipe-card-container').show();
+                } else {
+                    $('.recipe-card-container').hide();
+                    $(`.recipe-card-container[data-category="${category}"]`).show();
                 }
+            });
+            
+            // Функционал поиска
+            $('#searchButton').click(function() {
+                const searchText = $('#recipeSearch').val().toLowerCase();
+                
+                $('.recipe-card-container').each(function() {
+                    const recipeTitle = $(this).find('.recipe-title').text().toLowerCase();
+                    const recipeDescription = $(this).find('.recipe-description').text().toLowerCase();
+                    const recipeTags = $(this).find('.recipe-tag').text().toLowerCase();
+                    
+                    if (recipeTitle.includes(searchText) || recipeDescription.includes(searchText) || recipeTags.includes(searchText)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+            
+            // Поиск при нажатии Enter
+            $('#recipeSearch').keypress(function(e) {
+                if (e.which === 13) {
+                    $('#searchButton').click();
+                }
+            });
+            
+            // Показать детали рецепта
+            $('.recipe-card').click(function() {
+                const recipeId = $(this).data('recipe-id');
+                $('#recipesContainer').hide();
+                $(`#detail-${recipeId}`).show();
+                $('#recipeDetails').show();
+            });
+            
+            // Вернуться к списку рецептов
+            $('.back-to-recipes').click(function() {
+                $('#recipeDetails').hide();
+                $('.recipe-detail').hide();
+                $('#recipesContainer').show();
             });
         });
-
-        // Handle auth state change
-        function handleAuthStateChange(user) {
-            const loginItem = $('#loginItem');
-            const registerItem = $('#registerItem');
-            const logoutItem = $('#logoutItem');
-            const userStatus = $('#userStatus');
-            const userAvatar = $('#userAvatar');
-            const authMessage = $('#authMessage');
-            const recipeFormContainer = $('#recipeFormContainer');
-            const emailWarning = $('#emailWarning');
-            
-            if (user) {
-                // Всегда показываем информацию о пользователе
-                userStatus.text(user.displayName || user.email);
-                
-                // Генерируем инициалы для аватара
-                const name = user.displayName || user.email || '';
-                const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-                $('#avatarInitials').text(initials);
-                userAvatar.removeClass('d-none');
-                
-                // Обновляем меню
-                loginItem.addClass('d-none');
-                registerItem.addClass('d-none');
-                logoutItem.removeClass('d-none');
-                
-                // Управление формой рецептов
-                authMessage.addClass('d-none');
-                recipeFormContainer.removeClass('d-none');
-                
-                // Управление предупреждением о email
-                if (!user.emailVerified) {
-                    emailWarning.removeClass('d-none').html(
-                        `Ваш email <strong>${escapeHtml(user.email)}</strong> не підтверджено. 
-                        <a href="#" id="resendVerificationNavLink">Надіслати лист знову</a>`
-                    );
-                } else {
-                    emailWarning.addClass('d-none');
-                }
-            } else {
-                // Сброс для неавторизованных пользователей
-                userStatus.text('Акаунт');
-                userAvatar.addClass('d-none');
-                
-                loginItem.removeClass('d-none');
-                registerItem.removeClass('d-none');
-                logoutItem.addClass('d-none');
-                
-                authMessage.removeClass('d-none');
-                recipeFormContainer.addClass('d-none');
-                emailWarning.addClass('d-none');
-            }
-        }
-
-        // Handle login
-        function handleLogin(e) {
-            e.preventDefault();
-            
-            const email = $('#loginEmail').val().trim();
-            const password = $('#loginPassword').val();
-            
-            // Валидация
-            $('#loginEmailError').text('');
-            $('#loginPasswordError').text('');
-            
-            let isValid = true;
-            if (!email) {
-                $('#loginEmailError').text('Будь ласка, введіть email');
-                isValid = false;
-            }
-            if (!password) {
-                $('#loginPasswordError').text('Будь ласка, введіть пароль');
-                isValid = false;
-            }
-            if (!isValid) return;
-            
-            // UI состояния
-            $('#loginSpinner').removeClass('d-none');
-            $('#loginForm button').prop('disabled', true);
-            
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    
-                    if (!user.emailVerified) {
-                        $('#loginEmailError').html(
-                            'Ваш email ще не підтверджено. <a href="#" id="resendVerificationLink">Надіслати лист знову</a>'
-                        );
-                    } else {
-                        $('#loginModal').modal('hide');
-                        $('#loginForm')[0].reset();
-                    }
-                })
-                .catch(error => {
-                    console.error("Login error:", error);
-                    handleAuthError(error, '#loginEmailError', '#loginPasswordError');
-                })
-                .finally(() => {
-                    $('#loginSpinner').addClass('d-none');
-                    $('#loginForm button').prop('disabled', false);
-                });
-        }
-
-        // Обработка ошибок аутентификации
-        function handleAuthError(error, emailSelector, passwordSelector) {
-            let errorMessage = "Помилка аутентифікації";
-            
-            switch(error.code) {
-                case "auth/user-not-found":
-                case "auth/invalid-email":
-                    errorMessage = "Користувача з таким email не знайдено";
-                    $(emailSelector).text(errorMessage);
-                    break;
-                case "auth/wrong-password":
-                    errorMessage = "Невірний пароль";
-                    $(passwordSelector).text(errorMessage);
-                    break;
-                case "auth/too-many-requests":
-                    errorMessage = "Забагато спроб. Спробуйте пізніше";
-                    $(passwordSelector).text(errorMessage);
-                    break;
-                case "auth/user-disabled":
-                    errorMessage = "Акаунт вимкнено";
-                    $(emailSelector).text(errorMessage);
-                    break;
-                default:
-                    $(passwordSelector).text(errorMessage);
-            }
-        }
-
-        // Handle registration
-        function handleRegister(e) {
-            e.preventDefault();
-            
-            const name = $('#registerName').val().trim();
-            const email = $('#registerEmail').val().trim();
-            const password = $('#registerPassword').val();
-            const confirmPassword = $('#confirmPassword').val();
-            
-            // Валидация
-            $('#registerNameError').text('');
-            $('#registerEmailError').text('');
-            $('#registerPasswordError').text('');
-            $('#confirmPasswordError').text('');
-            
-            let isValid = true;
-            if (!name) {
-                $('#registerNameError').text('Будь ласка, введіть ваше ім\'я');
-                isValid = false;
-            }
-            if (!email) {
-                $('#registerEmailError').text('Будь ласка, введіть email');
-                isValid = false;
-            }
-            if (!password) {
-                $('#registerPasswordError').text('Будь ласка, введіть пароль');
-                isValid = false;
-            }
-            if (password.length < 6) {
-                $('#registerPasswordError').text('Пароль повинен містити щонайменше 6 символів');
-                isValid = false;
-            }
-            if (password !== confirmPassword) {
-                $('#confirmPasswordError').text('Паролі не співпадають');
-                isValid = false;
-            }
-            if (!isValid) return;
-            
-            // UI состояния
-            $('#registerSpinner').removeClass('d-none');
-            $('#registerForm button').prop('disabled', true);
-            
-            auth.createUserWithEmailAndPassword(email, password)
-                .then(userCredential => {
-                    // Обновляем профиль пользователя
-                    return userCredential.user.updateProfile({
-                        displayName: name
-                    }).then(() => {
-                        return userCredential.user.sendEmailVerification();
-                    });
-                })
-                .then(() => {
-                    $('#registerModal').modal('hide');
-                    $('#registerForm')[0].reset();
-                    
-                    // Показываем модальное окно с информацией о подтверждении email
-                    $('#emailVerificationModal').modal('show');
-                })
-                .catch(error => {
-                    console.error("Registration error:", error);
-                    handleAuthError(error, '#registerEmailError', '#registerPasswordError');
-                })
-                .finally(() => {
-                    $('#registerSpinner').addClass('d-none');
-                    $('#registerForm button').prop('disabled', false);
-                });
-        }
-
-        // Handle logout
-        function handleLogout(e) {
-            e.preventDefault();
-            auth.signOut()
-                .catch(error => {
-                    console.error("Logout error:", error);
-                    alert('Помилка при виході: ' + error.message);
-                });
-        }
-
-        // Handle image upload
-        function handleImageUpload(e) {
-            const file = e.target.files[0];
-            if (!file) {
-                $('#fileName').text('Файл не обрано');
-                selectedFile = null;
-                return;
-            }
-
-            // File type validation
-            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
-                alert('Будь ласка, виберіть файл у форматі JPG або PNG.');
-                resetFileInput();
-                return;
-            }
-
-            // File size validation
-            if (file.size > 1048576) {
-                alert('Файл занадто великий. Максимальний розмір 1MB.');
-                resetFileInput();
-                return;
-            }
-
-            $('#fileName').text(file.name);
-            
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                selectedFile = event.target.result;
-                updatePreview();
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function resetFileInput() {
-            $('#recipeImageFile').val('');
-            $('#fileName').text('Файл не обрано');
-        }
-
-        function updatePreview() {
-            const title = $('#recipeTitle').val() || 'Назва рецепту';
-            const category = $('#recipeCategory').val() || 'не вибрано';
-            
-            if (selectedFile) {
-                $('#previewImage').attr('src', selectedFile);
-            }
-            
-            $('#previewTitle').text(title);
-            $('#previewCategory').text('Категорія: ' + category);
-            $('#recipePreview').show();
-        }
-
-        // Upload image to Cloudinary
-        async function uploadImage(file) {
-            try {
-                const cloudName = "dhfkb6xv2"; // Your Cloudinary cloud name
-                const uploadPreset = "unsigned_preset"; // Your upload preset
-
-                const formData = new FormData();
-                formData.append("file", file);
-                formData.append("upload_preset", uploadPreset);
-                formData.append("folder", "recipe_images"); // Optional folder
-
-                const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-                    method: "POST",
-                    body: formData
-                });
-
-                // Check for HTTP errors
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error.message || "Помилка Cloudinary");
-                }
-
-                const data = await response.json();
-                
-                if (data.secure_url) {
-                    // Add optimization parameters to URL
-                    return data.secure_url.replace('/upload/', '/upload/q_auto,f_auto/');
-                } else {
-                    throw new Error("Не вдалося отримати URL зображення");
-                }
-            } catch (error) {
-                console.error("Помилка завантаження зображення:", error);
-                throw new Error("Не вдалося завантажити зображення на Cloudinary");
-            }
-        }
-
-        // Handle form submission
-        async function handleFormSubmit(e) {
-            e.preventDefault();
-            
-            // Проверка авторизации
-            if (!auth.currentUser) {
-                alert('Будь ласка, увійдіть, щоб додати рецепт!');
-                return;
-            }
-            
-            // UI состояния
-            $('#submitSpinner').removeClass('d-none');
-            $('#recipeForm button').prop('disabled', true);
-            
-            try {
-                // Загрузка изображения
-                let imageUrl = 'images/default-recipe.jpg';
-                
-                if (selectedFile) {
-                    const fileInput = document.getElementById('recipeImageFile');
-                    const file = fileInput.files[0];
-                    if (file) {
-                        imageUrl = await uploadImage(file);
-                    }
-                }
-                
-                // Создаем объект рецепта
-                const recipe = {
-                    title: $('#recipeTitle').val(),
-                    category: $('#recipeCategory').val(),
-                    image: imageUrl,
-                    ingredients: $('#recipeIngredients').val(),
-                    instructions: $('#recipeInstructions').val(),
-                    userId: auth.currentUser.uid,
-                    userName: auth.currentUser.displayName || auth.currentUser.email,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                };
-                
-                // Сохраняем в Firestore
-                await db.collection("recipes").add(recipe);
-                
-                // Сброс формы
-                $('#recipeForm')[0].reset();
-                resetFileInput();
-                await loadRecipes();
-                
-                // Уведомление и скролл
-                alert('Рецепт успішно додано!');
-                $('html, body').animate({
-                    scrollTop: $('#user-recipes').offset().top - 100
-                }, 800);
-            } catch (error) {
-                console.error("Помилка збереження рецепту:", error);
-                alert('Сталася помилка: ' + error.message);
-            } finally {
-                $('#submitSpinner').addClass('d-none');
-                $('#recipeForm button').prop('disabled', false);
-            }
-        }
-
-        // Load recipes
-        async function loadRecipes() {
-            try {
-                // UI состояния
-                $('#loadingRecipes').show();
-                $('#recipesContainer').empty();
-                $('#noRecipesMessage').addClass('d-none');
-                $('#loadMoreBtn').addClass('d-none');
-                
-                // Запрос к Firestore
-                const query = db.collection("recipes")
-                    .orderBy("createdAt", "desc")
-                    .limit(PAGE_SIZE);
-                
-                const snapshot = await query.get();
-                
-                // Обработка результатов
-                if (snapshot.empty) {
-                    $('#noRecipesMessage').removeClass('d-none');
-                    $('#loadingRecipes').hide();
-                    return;
-                }
-                
-                // Пагинация
-                lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                displayRecipes(snapshot);
-                
-                // Кнопка "Показать еще"
-                if (snapshot.size === PAGE_SIZE) {
-                    $('#loadMoreBtn').removeClass('d-none');
-                }
-                
-                $('#loadingRecipes').hide();
-            } catch (error) {
-                console.error("Помилка завантаження рецептів:", error);
-                $('#loadingRecipes').html(
-                    '<p class="text-danger">Помилка завантаження рецептів. Спробуйте оновити сторінку.</p>'
-                );
-            }
-        }
-
-        // Load more recipes
-        async function loadMoreRecipes() {
-            try {
-                // UI состояния
-                $('#loadMoreBtn').prop('disabled', true)
-                    .html('<span class="spinner-border spinner-border-sm me-2"></span>Завантаження...');
-                
-                // Запрос к Firestore
-                const query = db.collection("recipes")
-                    .orderBy("createdAt", "desc")
-                    .startAfter(lastVisible)
-                    .limit(PAGE_SIZE);
-                
-                const snapshot = await query.get();
-                
-                // Обработка результатов
-                if (snapshot.empty) {
-                    $('#loadMoreBtn').hide();
-                    return;
-                }
-                
-                // Пагинация
-                lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                displayRecipes(snapshot);
-                
-                // Обновление кнопки
-                $('#loadMoreBtn').prop('disabled', false).text('Показати ще');
-                if (snapshot.size < PAGE_SIZE) {
-                    $('#loadMoreBtn').hide();
-                }
-            } catch (error) {
-                console.error("Помилка завантаження рецептів:", error);
-                $('#loadMoreBtn').prop('disabled', false).text('Показати ще');
-                alert('Помилка завантаження додаткових рецептів');
-            }
-        }
-
-        // Display recipes
-        function displayRecipes(snapshot) {
-            const container = $('#recipesContainer');
-            
-            snapshot.forEach(doc => {
-                const recipe = doc.data();
-                const recipeId = doc.id;
-                
-                // Форматирование даты
-                const date = recipe.createdAt?.toDate 
-                    ? new Date(recipe.createdAt.toDate()).toLocaleDateString('uk-UA') 
-                    : 'Сьогодні';
-                
-                // Инициалы пользователя
-                const userName = recipe.userName || "Анонім";
-                const initials = userName.substring(0, 2).toUpperCase();
-                
-                // Генерация HTML
-                const recipeHtml = `
-                <div class="col-lg-4 col-md-6 col-12 mb-4">
-                    <div class="menu-thumb recipe-card">
-                        <div class="menu-image-wrap position-relative">
-                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
-                                <img 
-                                    src="${recipe.image}" 
-                                    class="img-fluid menu-image" 
-                                    alt="${escapeHtml(recipe.title)}" 
-                                    loading="lazy"
-                                >
-                                <span class="user-recipe-tag bg-success">Користувацький</span>
-                            </a>
-                        </div>
-                        <div class="menu-info">
-                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
-                                <h4 class="mb-1">${escapeHtml(recipe.title)}</h4>
-                            </a>
-                            <div class="d-flex align-items-center mt-2">
-                                <div class="user-avatar small">
-                                    <span>${initials}</span>
-                                </div>
-                                <small class="text-muted">${escapeHtml(userName)}</small>
-                                <small class="recipe-date ms-auto">${date}</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-                
-                container.append(recipeHtml);
-            });
-        }
-
-        // Show recipe details
-        window.showRecipeDetails = async function(recipeId) {
-            try {
-                // Удаляем предыдущее модальное окно
-                $('#recipeDetailModal').remove();
-                
-                // Получаем рецепт из Firestore
-                const doc = await db.collection("recipes").doc(recipeId).get();
-                if (!doc.exists) {
-                    alert('Рецепт не знайдено');
-                    return;
-                }
-                
-                const recipe = doc.data();
-                
-                // Форматирование даты
-                const date = recipe.createdAt?.toDate 
-                    ? new Date(recipe.createdAt.toDate()).toLocaleDateString('uk-UA', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                    }) 
-                    : 'Сьогодні';
-                
-                // Инициалы пользователя
-                const userName = recipe.userName || "Анонім";
-                const initials = userName.substring(0, 2).toUpperCase();
-                
-                // Генерация HTML модального окна
-                const modalHtml = `
-                <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">${escapeHtml(recipe.title)}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-5 mb-3 mb-md-0">
-                                        <img 
-                                            src="${recipe.image}" 
-                                            class="img-fluid rounded mb-3" 
-                                            alt="${escapeHtml(recipe.title)}"
-                                        >
-                                        <div class="recipe-meta">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="user-avatar">
-                                                    <span>${initials}</span>
-                                                </div>
-                                                <div>
-                                                    <div><strong>Автор:</strong> ${escapeHtml(userName)}</div>
-                                                    <div><strong>Додано:</strong> ${date}</div>
-                                                </div>
-                                            </div>
-                                            <p><strong>Категорія:</strong> ${escapeHtml(recipe.category || 'Не вказана')}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="mb-4">
-                                            <h5>Інгредієнти:</h5>
-                                            <div class="recipe-ingredients">${formatText(recipe.ingredients)}</div>
-                                        </div>
-                                        <div>
-                                            <h5>Інструкція:</h5>
-                                            <div class="recipe-instructions">${formatText(recipe.instructions)}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-                
-                // Добавляем и показываем модальное окно
-                $('body').append(modalHtml);
-                const modal = new bootstrap.Modal('#recipeDetailModal');
-                modal.show();
-                
-                // Удаляем модальное окно после закрытия
-                $('#recipeDetailModal').on('hidden.bs.modal', function() {
-                    $(this).remove();
-                });
-            } catch (error) {
-                console.error("Помилка завантаження рецепту:", error);
-                alert('Не вдалося завантажити рецепт');
-            }
-        }
-
-        // Format text
-        function formatText(text) {
-            if (!text) return '';
-            const escaped = escapeHtml(text);
-            return escaped.replace(/\n/g, '<br>');
-        }
     </script>
 </body>
 </html>
