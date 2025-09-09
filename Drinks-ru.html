@@ -1,849 +1,1629 @@
 <!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Хрустящая кухня - Рецепты напитков</title>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Детальные рецепты напитков украинской и мировой кухни с пошаговыми инструкциями"
+    />
+    <meta name="author" content="Хрусткая кухня" />
+    <title>Хрусткая кухня - Детальные рецепты напитков</title>
 
     <!-- CSS FILES -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-icons.css" rel="stylesheet">
-    <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
-<style>
-        .file-input-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            width: 100%;
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+    <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet" />
+    <style>
+      .recipe-card {
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        transition: transform 0.3s ease;
+        height: 100%;
+      }
+
+      .recipe-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .recipe-content {
+        background-color: #f8f9fa;
+        border-radius: 0.5rem;
+        padding: 2rem;
+      }
+
+      .recipe-header {
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid #198754;
+      }
+
+      .recipe-image {
+        border-radius: 0.5rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      }
+
+      .ingredients-list {
+        background-color: white;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      }
+
+      .recipe-tags {
+        margin-top: 1rem;
+      }
+
+      .tag {
+        display: inline-block;
+        background-color: #e9f5ee;
+        color: #198754;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.875rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .nutrition-info {
+        background-color: white;
+        border-left: 4px solid #198754;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+      }
+
+      .recipe-filter {
+        background-color: white;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        margin-bottom: 2rem;
+      }
+
+      .filter-btn {
+        margin: 0.25rem;
+      }
+
+      .rating {
+        color: #fd7e14;
+        margin-bottom: 0.5rem;
+      }
+
+      .recipe-accordion .accordion-button:not(.collapsed) {
+        background-color: #198754;
+        color: white;
+      }
+
+      .difficulty-easy {
+        color: #198754;
+      }
+
+      .difficulty-medium {
+        color: #fd7e14;
+      }
+
+      .difficulty-hard {
+        color: #dc3545;
+      }
+
+      .print-btn,
+      .share-btn {
+        margin-left: 0.5rem;
+      }
+
+      .cooking-time {
+        background-color: #e9f5ee;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        display: inline-block;
+        margin-bottom: 1rem;
+      }
+
+      @media (max-width: 768px) {
+        .recipe-content {
+          padding: 1rem;
         }
-        
-        .file-input-label {
-            display: block;
-            padding: 0.375rem 0.75rem;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #212529;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid #ced4da;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+        .recipe-header {
+          margin-bottom: 1.5rem;
         }
-        
-        .file-input-label:hover {
-            background-color: #f8f9fa;
+
+        .filter-btn {
+          margin-bottom: 0.5rem;
         }
-        
-        .file-input-label input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .file-name {
-            display: block;
-            margin-top: 0.25rem;
-            font-size: 0.875rem;
-            color: #6c757d;
-        }
-        
-        .recipe-preview {
-            margin-top: 2rem;
-            display: none;
-        }
-        
-        .recipe-card {
-            border-radius: 0.5rem;
-            overflow: hidden;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            transition: transform 0.3s ease;
-        }
-        
-        .recipe-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .user-recipe-tag {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: white;
-        }
-        
-        .menu-image-wrap {
-            position: relative;
-        }
-        
-        .recipe-form {
-            background-color: #f8f9fa;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-        }
-        
-        .form-title {
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #198754;
-        }
-        
-        /* Добавленные стили для кликабельных слайдов */
-        .carousel-link {
-            display: block;
-            position: relative;
-            color: inherit;
-            text-decoration: none;
-        }
-        
-        .carousel-link:hover {
-            text-decoration: none;
-        }
-        
-        .carousel-link .carousel-caption {
-            z-index: 10;
-        }
-        
-        .carousel-link::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;
-        }
-        
-        /* Добавим спиннер загрузки */
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-            display: none;
-        }
-        
-        #loadingRecipes {
-            text-align: center;
-            padding: 2rem;
-        }
-        
-        /* Улучшенный вид модального окна */
-        .recipe-modal .modal-content {
-            border-radius: 0.8rem;
-            overflow: hidden;
-        }
-        
-        .recipe-modal .modal-header {
-            background: linear-gradient(to right, #28a745, #20c997);
-            color: white;
-            border-bottom: none;
-        }
-        
-        .recipe-modal .modal-body {
-            padding: 1.5rem;
-        }
-        
-        .recipe-modal .modal-footer {
-            background-color: #f8f9fa;
-            border-top: 1px solid #dee2e6;
-        }
-        
-        .recipe-ingredients {
-            background-color: #f8f9fa;
-            border-radius: 0.5rem;
-            padding: 1rem;
-        }
-        
-        .recipe-instructions {
-            white-space: pre-line;
-            line-height: 1.8;
-        }
+      }
+
+      .new-recipe-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 5;
+      }
+
+      .serving-size {
+        display: inline-block;
+        background-color: #e9ecef;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.875rem;
+        margin-right: 0.5rem;
+      }
+
+      .filterable {
+        transition: all 0.3s ease;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .step-number {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-color: #198754;
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 30px;
+        margin-right: 10px;
+      }
+
+      .detail-box {
+        background-color: #f8f9fa;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid #198754;
+      }
     </style>
-</head>
-    
-<body>
+  </head>
+
+  <body>
     <nav class="navbar navbar-expand-lg bg-white shadow-lg">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <a class="navbar-brand" href="index-ru.html">Хрустящая кухня</a>
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="d-lg-none"></div>
+        <a class="navbar-brand" href="index.html"> Хрусткая кухня </a>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index-ru.html">Главная</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="top-ru.html">Первое</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="top2-ru.html">Второе</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="desert-ru.html">Десерт</a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a href="Drinks-ua.html"><span class="category-tag me-3 bg-info">UA</span></a>                  
-                    </li>
-                </ul>
-            </div>
+        <div class="d-lg-none"></div>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Главная</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="top-ru.html">Первое</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="top2-ru.html">Второе</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="desert-ru.html">Десерт</a>
+            </li>
+
+            <li class="nav-item">
+              <a href="Drinks-ua.html"
+                ><span class="category-tag me-3 bg-info">UA</span></a
+              >
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
     <main>
-        <header class="site-header site-news-detail-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h2>Рецепты напитков</h2>
-                    </div>
-                </div>
+      <header class="site-header site-news-detail-header">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <h2>НАПИТКИ</h2>
+              <p class="text-center">
+                Детальные рецепты украинских и мировых напитков с пошаговыми инструкциями
+              </p>
             </div>
-        </header>
+          </div>
+        </div>
+      </header>
 
-        <section class="news-detail section-padding pt-0">
-            <div class="container">
+      <section class="news-detail section-padding pt-0">
+        <div class="container">
+          <!-- Фильтр рецептов -->
+          <div class="recipe-filter">
+            <h5 class="mb-3">Фильтр рецептов:</h5>
+            <div class="d-flex flex-wrap">
+              <button
+                class="btn btn-outline-success filter-btn active"
+                data-filter="all"
+              >
+                Все
+              </button>
+              <button
+                class="btn btn-outline-success filter-btn"
+                data-filter="ukrainian"
+              >
+                Украинские
+              </button>
+              <button
+                class="btn btn-outline-success filter-btn"
+                data-filter="world"
+              >
+                Мировые
+              </button>
+              <button
+                class="btn btn-outline-success filter-btn"
+                data-filter="hot"
+              >
+                Горячие
+              </button>
+              <button
+                class="btn btn-outline-success filter-btn"
+                data-filter="cold"
+              >
+                Холодные
+              </button>
+              <button
+                class="btn btn-outline-success filter-btn"
+                data-filter="new"
+              >
+                Новые
+              </button>
+              <button
+                class="btn btn-outline-success filter-btn"
+                data-filter="easy"
+              >
+                Легкие
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12 col-12">
+              <div class="recipe-header text-center">
+                <h1 class="mb-3">Узвар - традиционный украинский напиток</h1>
+                <div
+                  class="d-flex justify-content-center align-items-center flex-wrap"
+                >
+                  <div class="rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                    <span class="ms-2">4.5 (128)</span>
+                  </div>
+                  <div class="cooking-time">
+                    <i class="bi bi-clock"></i> Время приготовления: 1-2 часа
+                  </div>
+                  <div class="serving-size">
+                    <i class="bi bi-people"></i> 6-8 порций
+                  </div>
+                </div>
+                <div class="recipe-tags">
+                  <span class="tag">Украинская кухня</span>
+                  <span class="tag">Традиционный</span>
+                  <span class="tag">Полезный</span>
+                  <span class="tag difficulty-easy">Легкая сложность</span>
+                </div>
+                <div class="mt-3">
+                  <button
+                    class="btn btn-outline-secondary print-btn"
+                    onclick="window.print()"
+                  >
+                    <i class="bi bi-printer"></i> Печать
+                  </button>
+                  <button
+                    class="btn btn-outline-primary share-btn"
+                    id="shareRecipe"
+                  >
+                    <i class="bi bi-share"></i> Поделиться
+                  </button>
+                </div>
+              </div>
+
+              <img
+                src="images/news/Screenshot_20250719-174114~2.png"
+                class="img-fluid recipe-image w-100 mb-4"
+                alt="Украинский узвар"
+              />
+
+              <div class="recipe-content">
                 <div class="row">
-                    <div class="col-lg-12 col-12">
-                        <img src="images/news/Screenshot_20250719-174114~2.png" class="img-fluid news-detail-image" alt="Напитки">
+                  <div class="col-lg-8">
+                    <h3 class="mb-4">
+                      История и особенности приготовления узвара
+                    </h3>
+                    <p>
+                      Узвар — традиционный украинский напиток из сушеных фруктов и ягод, 
+                      который готовили еще наши прабабушки. Это не просто освежающий напиток, 
+                      а настоящая витаминная бомба, особенно полезная в зимний период.
+                    </p>
+                    <p>
+                      Традиционно узвар готовят из сушеных яблок, груш, слив, вишен, 
+                      изюма и других сушеных фруктов. Каждая хозяйка имеет свой уникальный 
+                      рецепт, передаваемый из поколения в поколение.
+                    </p>
+                    <p>
+                      Особенностью приготовления узвара является то, что его не варят, 
+                      а лишь доводят до кипения и настаивают. Это позволяет сохранить 
+                      максимум полезных веществ и витаминов.
+                    </p>
 
-                        <div class="col-lg-10 col-10 mx-auto mt-5">
-                            <h4 class="mb-3">Освежающие и согревающие напитки</h4>
-                            <p>
-                                Напитки - это искусство утоления жажды и создания настроения. От прохладительных летних коктейлей до согревающих зимних напитков - каждый рецепт несёт в себе особый вкус и атмосферу. В этой подборке вы найдёте как классические рецепты, так и новые интересные варианты напитков для любого времени года и повода.
-                            </p>
+                    <div class="nutrition-info">
+                      <h5>Пищевая ценность (на порцию):</h5>
+                      <p>
+                        Калорийность: 80-100 ккал | Витамин C: 15% | Калий: 8% | Железо: 6%
+                      </p>
+                    </div>
 
-                            <h4 class="mb-3">Домашний лимонад</h4>
-                            <ul class="list">
-                                <li class="list-item">4 лимона</li>
-                                <li class="list-item">100 г сахара</li>
-                                <li class="list-item">1 л воды</li>
-                                <li class="list-item">Листья мяты</li>
-                                <li class="list-item">Лёд</li>
+                    <h4 class="mb-3">Узвар традиционный</h4>
+                    <div class="ingredients-list">
+                      <h5>Ингредиенты:</h5>
+                      <ul class="list">
+                        <li class="list-item">200 г сушеных яблок</li>
+                        <li class="list-item">100 г сушеных груш</li>
+                        <li class="list-item">50 г сушеных слив</li>
+                        <li class="list-item">50 г сушеных вишен</li>
+                        <li class="list-item">30 г изюма</li>
+                        <li class="list-item">100 г меда (по желанию)</li>
+                        <li class="list-item">3-4 л воды</li>
+                        <li class="list-item">1 лимон (необязательно)</li>
+                        <li class="list-item">Корица, гвоздика по вкусу</li>
+                      </ul>
+                    </div>
+
+                    <h5>Подробный способ приготовления:</h5>
+                    <div class="detail-box">
+                      <p><strong>Подготовка фруктов (15 минут):</strong></p>
+                      <p>
+                        <span class="step-number">1</span> Сушеные фрукты тщательно перебрать, 
+                        промыть в прохладной воде.
+                      </p>
+                      <p>
+                        <span class="step-number">2</span> Крупные фрукты (яблоки, груши) 
+                        можно порезать на более мелкие кусочки.
+                      </p>
+                      <p>
+                        <span class="step-number">3</span> Залить фрукты теплой водой и 
+                        оставить на 15-20 минут для размягчения.
+                      </p>
+                    </div>
+
+                    <div class="detail-box">
+                      <p><strong>Приготовление узвара (30 минут):</strong></p>
+                      <p>
+                        <span class="step-number">4</span> В большую кастрюлю налить воду, 
+                        добавить подготовленные фрукты.
+                      </p>
+                      <p>
+                        <span class="step-number">5</span> Довести до кипения на среднем огне, 
+                        затем уменьшить огонь до минимума.
+                      </p>
+                      <p>
+                        <span class="step-number">6</span> Добавить корицу, гвоздику по желанию.
+                      </p>
+                      <p>
+                        <span class="step-number">7</span> Томить под крышкой 20-25 минут, 
+                        не допуская бурного кипения.
+                      </p>
+                      <p>
+                        <span class="step-number">8</span> Выключить огонь, добавить мед по желанию 
+                        (не в кипящий напиток, чтобы сохранить полезные свойства меда).
+                      </p>
+                      <p>
+                        <span class="step-number">9</span> Добавить сок лимона по желанию для кислинки.
+                      </p>
+                    </div>
+
+                    <div class="detail-box">
+                      <p><strong>Настаивание и подача:</strong></p>
+                      <p>
+                        Готовый узвар накрыть крышкой и оставить настаиваться не менее 2-3 часов, 
+                        а лучше - всю ночь. За это время фрукты отдадут весь свой вкус и аромат.
+                      </p>
+                      <p>
+                        Подавать узвар охлажденным или комнатной температуры. Можно добавить 
+                        кубики льда летом.
+                      </p>
+                      <p>
+                        <strong>Совет:</strong> Узвар становится еще вкуснее на второй день, 
+                        поэтому можете приготовить его заранее. Хранить в холодильнике до 5 суток.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4">
+                    <div class="p-3 bg-light rounded mb-4">
+                      <h5>Советы шеф-повара:</h5>
+                      <ul>
+                        <li>
+                          Для богатого вкуса используйте разнообразные сушеные фрукты
+                        </li>
+                        <li>
+                          Мед добавляйте уже в остывший напиток, чтобы сохранить его полезные свойства
+                        </li>
+                        <li>
+                          Дайте узвару хорошо настояться - это ключ к насыщенному вкусу
+                        </li>
+                        <li>
+                          Подавайте со свежими фруктами или мятой для аромата
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="p-3 bg-light rounded">
+                      <h5>Вариации:</h5>
+                      <ul>
+                        <li>
+                          С добавлением шиповника - для обогащения витамином С
+                        </li>
+                        <li>
+                          С имбирем - для пикантного вкуса и согревающего эффекта
+                        </li>
+                        <li>С ванилью - для нежного аромата</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <h4 class="mt-5 mb-4">Другие виды узваров</h4>
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="recipe-card p-4 bg-light h-100">
+                      <h5>Узвар с шиповником</h5>
+                      <p>
+                        <strong>Особенности:</strong> Обогащен витамином С, идеален для профилактики простуд.
+                      </p>
+                      <p>
+                        <strong>Ингредиенты:</strong> Сушеные яблоки, груши, шиповник, мед, лимон, вода.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Приготовление:</strong></p>
+                        <p>
+                          Шиповник предварительно замочить на 2 часа. Варить вместе с другими 
+                          фруктами 20 минут. Настаивать 4-6 часов. Процедить через сито для 
+                          удаления ворсинок шиповника.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-4">
+                    <div class="recipe-card p-4 bg-light h-100">
+                      <h5>Узвар с добавлением свежих ягод</h5>
+                      <p>
+                        <strong>Особенности:</strong> Летний вариант с добавлением свежих ягод для более яркого вкуса.
+                      </p>
+                      <p>
+                        <strong>Ингредиенты:</strong> Сушеные фрукты, свежие ягоды (клубника, малина, смородина), мед, вода.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Приготовление:</strong></p>
+                        <p>
+                          Приготовить базовый узвар, охладить. Свежие ягоды помять, добавить в 
+                          остывший напиток. Дать настояться 1-2 часа в холодильнике.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-4">
+                    <div class="recipe-card p-4 bg-light h-100">
+                      <h5>Рождественский узвар</h5>
+                      <p>
+                        <strong>Особенности:</strong> Готовится с добавлением специй, традиционный для рождественского стола.
+                      </p>
+                      <p>
+                        <strong>Ингредиенты:</strong> Сушеные фрукты, мед, апельсиновая цедра, корица, гвоздика, бадьян, вода.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Приготовление:</strong></p>
+                        <p>
+                          Добавить специи в процессе варки. Цедру апельсина добавить в конце. 
+                          Настаивать не менее 6 часов.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-4">
+                    <div class="recipe-card p-4 bg-light h-100">
+                      <h5>Узвар-сырец</h5>
+                      <p>
+                        <strong>Особенности:</strong> Кисловатый освежающий напиток с добавлением хлебного кваса.
+                      </p>
+                      <p>
+                        <strong>Ингредиенты:</strong> Сушеные фрукты, хлебный квас, мед, мята, вода.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Приготовление:</strong></p>
+                        <p>
+                          Приготовить базовый узвар, охладить. Смешать с хлебным квасом в пропорции 1:1. 
+                          Добавить мед и мяту по вкусу.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <h3 class="mb-4 mt-5 text-success">Другие вкусные напитки</h3>
+                <div class="row">
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="world cold"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Мохито (классический кубинский коктейль)</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        Белый ром (50 мл), свежая мята (6-8 листочков), лайм (1 шт.), 
+                        сахарный песок (2 ч.л.), содовая вода (100 мл), лед дробленый.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Лайм нарезать на 4 части, 
+                          помять вместе с мятой и сахаром в высоком стакане.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Добавить дробленый лед до 2/3 стакана.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Добавить ром, перемешать.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Долить содовой водой, аккуратно перемешать.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Украсить листком мяты и кружочком лайма.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 5 минут. Подавать с соломинкой.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="ukrainian hot"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Глинтвейн украинский</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        Красное вино (750 мл), мед (3-4 ст.л.), апельсин (1 шт.), 
+                        лимон (0.5 шт.), гвоздика (5-6 шт.), корица (1 палочка), 
+                        мускатный орех (щепотка), душистый перец (3-4 горошины), 
+                        имбирь (свежий, 1 см).
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Вино налить в кастрюлю, 
+                          добавить мед. Нагревать на медленном огне, не доводя до кипения.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Апельсин и лимон нарезать 
+                          кружочками, добавить к вину.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Добавить все специи. 
+                          Имбирь натереть на мелкой терке.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Нагревать на минимальном 
+                          огне 5-7 минут, не давая закипеть.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Выключить огонь, накрыть 
+                          крышкой, дать настояться 10-15 минут.
+                        </p>
+                        <p>
+                          <span class="step-number">6</span> Процедить через ситечко, 
+                          разлить по чашкам.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 20 минут. 
+                          Идеальный напиток для холодного времени года.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="world cold"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Лимонад имбирно-мятный</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        Лимоны (4 шт.), свежая мята (1 пучок), имбирь (свежий, 3-4 см корень), 
+                        мед или сахар (по вкусу), вода (1.5 л), лед.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Имбирь очистить, натереть на мелкой терке.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Из лимонов выжать сок.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Мяту помять в глубокой посуде, 
+                          добавить тертый имбирь.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Добавить лимонный сок, мед или сахар, перемешать.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Залить водой, тщательно перемешать.
+                        </p>
+                        <p>
+                          <span class="step-number">6</span> Процедить через сито, добавить лед.
+                        </p>
+                        <p>
+                          <span class="step-number">7</span> Подавать с кружочками лимона и листьями мяты.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 15 минут. Освежающий летний напиток.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="ukrainian cold"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Квас домашний</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        Ржаной хлеб (300 г), сахар (150 г), дрожжи (5 г), изюм (50 г), вода (3 л).
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Хлеб порезать на кубики, 
+                          подсушить в духовке до румяного цвета.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Залить хлеб кипятком, накрыть 
+                          крышкой, оставить на 4-6 часов.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Процедить через марлю, добавить 
+                          сахар и дрожжи, разведенные в небольшом количестве воды.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Оставить для брожения на 12-15 
+                          часов при комнатной температуре.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Процедить, добавить изюм, 
+                          разлить по бутылкам.
+                        </p>
+                        <p>
+                          <span class="step-number">6</span> Оставить в холодильнике на 2-3 
+                          дня для созревания.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 15 минут + время брожения. 
+                          Классический славянский напиток.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <h3 class="mb-4 mt-5 text-success">Горячие напитки</h3>
+                <div class="row">
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="hot easy"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Кофе по-украински с пряностями</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        Молотый кофе (3 ч.л.), вода (250 мл), кардамон (2-3 коробочки), 
+                        гвоздика (2-3 шт.), корица (0.5 ч.л.), сахар по вкусу.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Воду со специями довести до 
+                          кипения, снять с огня, накрыть крышкой, дать настояться 5 минут.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Процедить, снова нагреть почти до кипения.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Добавить кофе, снять с огня, 
+                          оставить на 3-4 минуты.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Процедить через ситечко, 
+                          добавить сахар по вкусу.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 10 минут. Ароматный кофе с восточными нотками.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="hot easy"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Горячий шоколад по-бельгийски</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        Черный шоколад (100 г), молоко (250 мл), сливки (50 мл), сахар (по вкусу), 
+                        ванилин (щепотка), зефир (для подачи).
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Шоколад поломать на мелкие кусочки.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Молоко со сливками нагреть, 
+                          не доводя до кипения.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Снять с огня, добавить шоколад, 
+                          перемешивать до полного растворения.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Добавить ванилин, сахар по вкусу.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Взбить венчиком для появления пены.
+                        </p>
+                        <p>
+                          <span class="step-number">6</span> Разлить по чашкам, украсить зефиром.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 10 минут. Нежный и ароматный напиток.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="ukrainian hot"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Чай с калиной</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        Калина (100 г), вода (500 мл), мед (2 ст.л.), лимон (1 долька), 
+                        имбирь (по желанию).
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Калину перебрать, помыть, 
+                          помять деревянной ложкой.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Залить кипятком, добавить 
+                          тонко нарезанный имбирь по желанию.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Накрыть крышкой, настаивать 15-20 минут.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Процедить, добавить мед 
+                          (не в горячий напиток).
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Подавать с долькой лимона.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 25 минут. Полезный напиток при простуде.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="world hot"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Масала-чай (индийский пряный чай)</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        Черный чай (2 ч.л.), молоко (250 мл), вода (250 мл), имбирь (1 см), 
+                        кардамон (5 коробочек), гвоздика (3 шт.), корица (0.5 ч.л.), 
+                        мускатный орех (щепотка), сахар (2 ч.л.).
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Воду со специями довести до 
+                          кипения, варить 2-3 минуты.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Добавить чай, варить еще 1 минуту.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Добавить молоко, сахар, довести до кипения.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Выключить огонь, накрыть крышкой, 
+                          настаивать 3-4 минуты.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Процедить, разлить по чашкам.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 10 минут. Ароматный согревающий напиток.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- НОВЫЕ РЕЦЕПТЫ -->
+                <h3 class="mb-4 mt-5 text-success">Новые рецепты</h3>
+                <div class="accordion recipe-accordion" id="newRecipesAccordion">
+                  <!-- Рецепт 1 -->
+                  <div
+                    class="accordion-item filterable"
+                    data-category="ukrainian new"
+                  >
+                    <h2 class="accordion-header" id="headingOne">
+                      <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne"
+                        aria-expanded="true"
+                        aria-controls="collapseOne"
+                      >
+                        <div>
+                          <h5 class="mb-0">
+                            Медовуха (украинский медовый напиток)
+                          </h5>
+                          <div class="rating small mt-1">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star"></i>
+                            <span class="ms-2">4.0 (56)</span>
+                          </div>
+                        </div>
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseOne"
+                      class="accordion-collapse collapse show"
+                      aria-labelledby="headingOne"
+                      data-bs-parent="#newRecipesAccordion"
+                    >
+                      <div class="accordion-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <h6>Ингредиенты:</h6>
+                            <ul>
+                              <li>1 кг меда</li>
+                              <li>4 л воды</li>
+                              <li>10 г хмеля</li>
+                              <li>Дрожжи (20 г)</li>
+                              <li>Корица, гвоздика по вкусу</li>
                             </ul>
-                            <p>
-                                Выжать сок из лимонов. В кастрюле смешать сахар с 200 мл воды, довести до кипения, помешивая до растворения сахара. Охладить сироп. В кувшин влить лимонный сок, сироп и оставшуюся воду. Добавить лёд и листья мяты. Подавать охлаждённым.
-                            </p>
+                          </div>
+                          <div class="col-md-6">
+                            <h6>Подробное приготовление:</h6>
+                            <div class="detail-box">
+                              <p>
+                                <span class="step-number">1</span> Мед развести в воде, 
+                                добавить специи, довести до кипения.
+                              </p>
+                              <p>
+                                <span class="step-number">2</span> Варить на медленном 
+                                огне 1 час, снимая пену.
+                              </p>
+                              <p>
+                                <span class="step-number">3</span> Добавить хмель, варить еще 10 минут.
+                              </p>
+                              <p>
+                                <span class="step-number">4</span> Охладить до 30°C, добавить дрожжи.
+                              </p>
+                              <p>
+                                <span class="step-number">5</span> Оставить для брожения на 5-7 
+                                дней под гидрозатвором.
+                              </p>
+                              <p>
+                                <span class="step-number">6</span> Процедить, разлить по бутылкам, 
+                                оставить созревать на 1-2 месяца.
+                              </p>
+                              <p>
+                                <strong>Время приготовления:</strong> 2 часа + время брожения. 
+                                Традиционный славянский напиток.
+                              </p>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-                            <h4 class="mb-3">Горячий шоколад</h4>
-                            <ul class="list">
-                                <li class="list-item">500 мл молока</li>
-                                <li class="list-item">100 г тёмного шоколада</li>
-                                <li class="list-item">2 ст. ложки какао-порошка</li>
-                                <li class="list-item">2 ст. ложки сахара</li>
-                                <li class="list-item">Щепотка соли</li>
-                                <li class="list-item">Ваниль по вкусу</li>
+                  <!-- Рецепт 2 -->
+                  <div
+                    class="accordion-item filterable"
+                    data-category="world new"
+                  >
+                    <h2 class="accordion-header" id="headingTwo">
+                      <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo"
+                        aria-expanded="false"
+                        aria-controls="collapseTwo"
+                      >
+                        <div>
+                          <h5 class="mb-0">
+                            Сангрия (испанский фруктовый напиток)
+                          </h5>
+                          <div class="rating small mt-1">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-half"></i>
+                            <span class="ms-2">4.5 (42)</span>
+                          </div>
+                        </div>
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseTwo"
+                      class="accordion-collapse collapse"
+                      aria-labelledby="headingTwo"
+                      data-bs-parent="#newRecipesAccordion"
+                    >
+                      <div class="accordion-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <h6>Ингредиенты:</h6>
+                            <ul>
+                              <li>1 бутылка красного вина (750 мл)</li>
+                              <li>100 мл бренди</li>
+                              <li>50 мл апельсинового ликера</li>
+                              <li>1 апельсин</li>
+                              <li>1 лимон</li>
+                              <li>1 яблоко</li>
+                              <li>2 ст.л. меда или сахара</li>
+                              <li>Газированная вода (по желанию)</li>
                             </ul>
-                            <p>
-                                Молоко подогреть на среднем огне. Добавить мелко наломанный шоколад, какао, сахар и соль. Помешивать до полного растворения шоколада. Не доводить до кипения. В конце добавить ваниль. Подавать горячим, можно с зефиром или взбитыми сливками.
-                            </p>
-
-                            <h4 class="mb-3">Мохито безалкогольный</h4>
-                            <ul class="list">
-                                <li class="list-item">8-10 листьев мяты</li>
-                                <li class="list-item">1 лайм</li>
-                                <li class="list-item">2 ч. ложки сахара</li>
-                                <li class="list-item">150 мл газированной воды</li>
-                                <li class="list-item">Лёд</li>
-                            </ul>
-                            <p>
-                                В стакан положить мяту и сахар. Размять пестиком или ложкой. Добавить сок половины лайма и нарезанную дольками вторую половину. Наполнить стакан льдом. Влить газированную воду. Аккуратно перемешать. Украсить веточкой мяты.
-                            </p>
-
-                            <h4 class="mb-3">Ягодный морс</h4>
-                            <ul class="list">
-                                <li class="list-item">500 г свежих или замороженных ягод</li>
-                                <li class="list-item">100 г сахара</li>
-                                <li class="list-item">1.5 л воды</li>
-                                <li class="list-item">Мята для украшения</li>
-                            </ul>
-                            <p>
-                                Ягоды размять толкушкой. Залить 500 мл кипятка, накрыть крышкой и дать настояться 30 минут. Процедить через сито, отжать ягоды. В отвар добавить сахар и перемешать до растворения. Добавить оставшуюся воду. Подавать охлаждённым с листиками мяты.
-                            </p>
-
-                            <h4 class="mb-3">Классический глинтвейн</h4>
-                            <ul class="list">
-                                <li class="list-item">750 мл красного вина</li>
-                                <li class="list-item">250 мл апельсинового сока</li>
-                                <li class="list-item">1 апельсин</li>
-                                <li class="list-item">1 яблоко</li>
-                                <li class="list-item">3 ст. ложки мёда</li>
-                                <li class="list-item">3 гвоздики</li>
-                                <li class="list-item">1 палочка корицы</li>
-                                <li class="list-item">Щепотка мускатного ореха</li>
-                            </ul>
-                            <p>
-                                Апельсин и яблоко нарезать дольками. В кастрюлю влить вино и апельсиновый сок, добавить специи и фрукты. Нагревать на медленном огне 20 минут, не доводя до кипения. Снять с огня, добавить мёд и перемешать. Настоять 10 минут под крышкой. Подавать горячим.
-                            </p>
-
-                            <h4 class="mb-3">Молочный коктейль с бананом</h4>
-                            <ul class="list">
-                                <li class="list-item">2 банана</li>
-                                <li class="list-item">500 мл молока</li>
-                                <li class="list-item">200 мл ванильного мороженого</li>
-                                <li class="list-item">2 ст. ложки сахара</li>
-                                <li class="list-item">Шоколадный сироп</li>
-                            </ul>
-                            <p>
-                                Бананы очистить и нарезать кружочками. В блендере смешать бананы, молоко, мороженое и сахар. Взбивать до однородной массы. Разлить по бокалам, сверху полить шоколадным сиропом. Подавать сразу же с трубочкой.
-                            </p>
-                            
-                            <div class="col-12">
-                                <h2>Холодные напитки</h2>
+                          </div>
+                          <div class="col-md-6">
+                            <h6>Подробное приготовление:</h6>
+                            <div class="detail-box">
+                              <p>
+                                <span class="step-number">1</span> Фрукты помыть, нарезать тонкими кружочками.
+                              </p>
+                              <p>
+                                <span class="step-number">2</span> В глубокой посуде соединить вино, бренди, ликер.
+                              </p>
+                              <p>
+                                <span class="step-number">3</span> Добавить фрукты, мед или сахар, перемешать.
+                              </p>
+                              <p>
+                                <span class="step-number">4</span> Накрыть крышкой, охладить в холодильнике 4-6 часов.
+                              </p>
+                              <p>
+                                <span class="step-number">5</span> Перед подачей добавить газированную воду по желанию.
+                              </p>
+                              <p>
+                                <span class="step-number">6</span> Подавать со льдом, украсив фруктами.
+                              </p>
+                              <p>
+                                <strong>Время приготовления:</strong> 15 минут + время охлаждения. 
+                                Идеальный напиток для летней вечеринки.
+                              </p>
                             </div>
-                            
-                            <h4 class="mb-3">Арбузный фреш с мятой</h4>
-                            <ul class="list">
-                                <li class="list-item">500 г арбуза</li>
-                                <li class="list-item">1 лайм</li>
-                                <li class="list-item">10 листьев мяты</li>
-                                <li class="list-item">Лёд</li>
-                                <li class="list-item">Минеральная вода</li>
-                            </ul>
-                            <p>
-                                Арбуз очистить от корки и семечек, нарезать кубиками. В блендере измельчить арбуз с соком лайма и мятой. Процедить через сито. Разлить по стаканам с льдом, добавить минеральную воду по вкусу. Украсить долькой лайма и листиком мяты.
-                            </p>
-                            
-                            <h4 class="mb-3">Латте с карамелью</h4>
-                            <ul class="list">
-                                <li class="list-item">50 мл эспрессо</li>
-                                <li class="list-item">150 мл молока</li>
-                                <li class="list-item">2 ст. ложки карамельного сиропа</li>
-                                <li class="list-item">Взбитые сливки</li>
-                                <li class="list-item">Карамельный соус для украшения</li>
-                            </ul>
-                            <p>
-                                Взбить молоко до появления пены. В бокал налить карамельный сироп. Добавить свежеприготовленный эспрессо. Аккуратно влить взбитое молоко. Сверху выложить взбитые сливки, полить карамельным соусом. Подавать сразу.
-                            </p>
-                            
-                            <h4 class="mb-3">Малиновый чай со льдом</h4>
-                            <ul class="list">
-                                <li class="list-item">3 ч. ложки чёрного чая</li>
-                                <li class="list-item">500 мл кипятка</li>
-                                <li class="list-item">150 г малины</li>
-                                <li class="list-item">2 ст. ложки мёда</li>
-                                <li class="list-item">Лёд</li>
-                                <li class="list-item">Листья мяты</li>
-                            </ul>
-                            <p>
-                                Заварить чай кипятком, настоять 5 минут. Процедить и охладить. Малину размять с мёдом. В кувшин выложить малиновое пюре, добавить охлаждённый чай и перемешать. Разлить по стаканам с большим количеством льда. Украсить листиками мяты и свежей малиной.
-                            </p>
+                          </div>
                         </div>
+                      </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                  </div>
 
-        <section class="BgImage"></section>
-        
-        <!-- Секция для добавления рецептов -->
-        <section id="add-recipe" class="section-padding">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-12">
-                        <div class="recipe-form">
-                            <h2 class="form-title">Добавить свой рецепт</h2>
-                            <form id="recipeForm">
-                                <div class="mb-3">
-                                    <label for="recipeTitle" class="form-label">Название рецепта*</label>
-                                    <input type="text" class="form-control" id="recipeTitle" required 
-                                        placeholder="Введите название вашего рецепта">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeCategory" class="form-label">Категория*</label>
-                                    <select class="form-select" id="recipeCategory" required>
-                                        <option value="">Выберите категорию</option>
-                                        <option value="Завтрак">Завтрак</option>
-                                        <option value="Обед">Обед</option>
-                                        <option value="Ужин">Ужин</option>
-                                        <option value="Десерт">Десерт</option>
-                                        <option value="Постное">Постное</option>
-                                        <option value="Консервация">Консервация</option>
-                                        <option value="Выпечка">Выпечка</option>
-                                        <option value="Напитки">Напитки</option>
-                                        <option value="Салаты">Салаты</option>
-                                        <option value="Закуски">Закуски</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Изображение (опционально)</label>
-                                    <div class="file-input-wrapper">
-                                        <div class="file-input-label">
-                                            <i class="bi bi-upload me-2"></i>Выбрать файл
-                                            <input type="file" class="form-control" id="recipeImageFile" accept="image/*">
-                                        </div>
-                                        <span id="fileName" class="file-name">Файл не выбран</span>
-                                    </div>
-                                    <div class="form-text">Максимальный размер: 1MB (JPG, PNG)</div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeIngredients" class="form-label">Ингредиенты*</label>
-                                    <textarea class="form-control" id="recipeIngredients" rows="4" required 
-                                        placeholder="Перечислите ингредиенты, каждый с новой строки"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeInstructions" class="form-label">Инструкция приготовления*</label>
-                                    <textarea class="form-control" id="recipeInstructions" rows="6" required 
-                                        placeholder="Опишите шаги приготовления"></textarea>
-                                </div>
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg">
-                                        <span id="submitSpinner" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                        Добавить рецепт
-                                    </button>
-                                </div>
-                            </form>
-                            
-                            <div id="recipePreview" class="recipe-preview mt-4">
-                                <h4>Предварительный просмотр:</h4>
-                                <div class="card recipe-card">
-                                    <img id="previewImage" src="images/default-recipe.jpg" class="card-img-top" 
-                                        alt="Предварительный просмотр">
-                                    <div class="card-body">
-                                        <h5 id="previewTitle" class="card-title">Название рецепта</h5>
-                                        <p id="previewCategory" class="card-text text-muted">Категория: не выбрано</p>
-                                    </div>
-                                </div>
+                  <!-- Рецепт 3 -->
+                  <div
+                    class="accordion-item filterable"
+                    data-category="ukrainian hot new"
+                  >
+                    <h2 class="accordion-header" id="headingThree">
+                      <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree"
+                        aria-expanded="false"
+                        aria-controls="collapseThree"
+                      >
+                        <div>
+                          <h5 class="mb-0">
+                            Варенуха (украинский пряный напиток)
+                          </h5>
+                          <div class="rating small mt-1">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-half"></i>
+                            <span class="ms-2">4.5 (42)</span>
+                          </div>
+                        </div>
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseThree"
+                      class="accordion-collapse collapse"
+                      aria-labelledby="headingThree"
+                      data-bs-parent="#newRecipesAccordion"
+                    >
+                      <div class="accordion-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <h6>Ингредиенты:</h6>
+                            <ul>
+                              <li>0.5 л водки</li>
+                              <li>100 г меда</li>
+                              <li>1 яблоко</li>
+                              <li>1 груша</li>
+                              <li>50 г сушеных ягод (ежевика, малина)</li>
+                              <li>5-6 горошин душистого перца</li>
+                              <li>3-4 бутончика гвоздики</li>
+                              <li>1 палочка корицы</li>
+                              <li>1 ч.л. тертого имбиря</li>
+                            </ul>
+                          </div>
+                          <div class="col-md-6">
+                            <h6>Подробное приготовление:</h6>
+                            <div class="detail-box">
+                              <p>
+                                <span class="step-number">1</span> Фрукты помыть, нарезать небольшими кусочками.
+                              </p>
+                              <p>
+                                <span class="step-number">2</span> В кастрюлю положить фрукты, ягоды, специи, залить водкой.
+                              </p>
+                              <p>
+                                <span class="step-number">3</span> Добавить мед.
+                              </p>
+                              <p>
+                                <span class="step-number">4</span> Нагревать на медленном огне, не доводя до кипения (до 70-75°C).
+                              </p>
+                              <p>
+                                <span class="step-number">5</span> Снять с огня, накрыть крышкой, дать настояться 2-3 часа.
+                              </p>
+                              <p>
+                                <span class="step-number">6</span> Процедить через марлю, подавать теплым.
+                              </p>
+                              <p>
+                                <strong>Время приготовления:</strong> 30 минут + время настаивания. 
+                                Настоящий украинский напиток.
+                              </p>
                             </div>
+                          </div>
                         </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Раздел для отображения пользовательских рецептов -->
-        <section id="user-recipes" class="section-padding bg-white">
-            <div class="container">
+                <!-- БЕЗАЛКОГОЛЬНЫЕ НАПИТКИ -->
+                <h3 class="mb-4 mt-5 text-success">Безалкогольные напитки</h3>
                 <div class="row">
-                    <h2 class="text-center mb-lg-5 mb-4">Рецепты от пользователей</h2>
-                    
-                    <div id="loadingRecipes">
-                        <div class="spinner-border text-success" role="status">
-                            <span class="visually-hidden">Загрузка...</span>
-                        </div>
-                        <p class="mt-3">Загружаем рецепты...</p>
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="cold easy"
+                  >
+                    <div class="recipe-card p-4 bg-light position-relative">
+                      <span class="badge bg-danger new-recipe-badge">Новый</span>
+                      <h5>Лимонад клубничный</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        300 г клубники, 4 лимона, 100 г сахара, 1.5 л воды, лед, мята.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Клубнику помыть, очистить от плодоножек, взбить блендером.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Из лимонов выжать сок.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Смешать клубничное пюре, лимонный сок, сахар.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Добавить воду, тщательно перемешать.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Процедить через сито, добавить лед и мяту.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 15 минут. Освежающий летний напиток.
+                        </p>
+                      </div>
                     </div>
-                    
-                    <div id="recipesContainer" class="row">
-                        <!-- Сюда будут добавляться рецепты через JS -->
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="cold easy"
+                  >
+                    <div class="recipe-card p-4 bg-light position-relative">
+                      <span class="badge bg-danger new-recipe-badge">Новый</span>
+                      <h5>Морс из клюквы</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        500 г клюквы, 200 г сахара, 2 л воды, лед.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Клюкву перебрать, помыть, взбить блендером.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Отжать сок через марлю.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Клюквенный жмых залить водой, довести до кипения, варить 5 минут.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Процедить, добавить сахар, охладить.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Соединить с отжатым соком, добавить лед.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 20 минут. Полезный напиток богатый витаминами.
+                        </p>
+                      </div>
                     </div>
-                    
-                    <div id="noRecipesMessage" class="col-12 text-center d-none">
-                        <p>Пока нет добавленных рецептов. Будьте первым!</p>
+                  </div>
+
+                  <!-- Добавлены новые рецепты -->
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="ukrainian cold"
+                  >
+                    <div class="recipe-card p-4 bg-light position-relative">
+                      <h5>Компот из вишни</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        500 г вишни, 200 г сахара, 3 л воды, лимонная кислота (по желанию).
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Вишню перебрать, помыть, удалить косточки.
+                          </p>
+                        <p>
+                          <span class="step-number">2</span> Воду довести до кипения, добавить сахар.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Добавить вишню, варить 5-7 минут.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Добавить лимонную кислоту по желанию.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Охладить, подавать со льдом.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 15 минут. Классический летний напиток.
+                        </p>
+                      </div>
                     </div>
-                    
-                    <div class="text-center mt-4">
-                        <button id="loadMoreBtn" class="btn btn-outline-success d-none">Показать еще</button>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="world cold"
+                  >
+                    <div class="recipe-card p-4 bg-light position-relative">
+                      <h5>Мохито безалкогольный</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        Свежая мята, лайм, сахар, содовая вода, лед.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> В стакане помять мяту с сахаром и дольками лайма.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Наполнить стакан льдом.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Долить содовой водой, аккуратно перемешать.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Украсить мятой и кружочком лайма.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 5 минут. Освежающий напиток для всей семьи.
+                        </p>
+                      </div>
                     </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="hot easy"
+                  >
+                    <div class="recipe-card p-4 bg-light position-relative">
+                      <h5>Какао с зефиром</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        Молоко, какао-порошок, сахар, ванилин, зефир.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Молоко нагреть, не доводя до кипения.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Смешать какао с сахаром, добавить немного горячего молока, размешать до пасты.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Соединить с остальным молоком, добавить ванилин.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Взбить венчиком до появления пены.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Подавать с зефиром.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 10 минут. Любимый напиток детей.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="ukrainian hot"
+                  >
+                    <div class="recipe-card p-4 bg-light position-relative">
+                      <h5>Чай из шиповника и облепихи</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        Шиповник, облепиха, мед, вода.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Шиповник и облепиху залить кипятком.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Настаивать 15-20 минут под крышкой.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Процедить, добавить мед по вкусу.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Подавать горячим.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 25 минут. Витаминный напиток для крепкого здоровья.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Добавлены новые рецепты по вашему запросу -->
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="ukrainian cold"
+                  >
+                    <div class="recipe-card p-4 bg-light position-relative">
+                      <h5>Сливовка (сливовый компот)</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        1 кг слив, 200 г сахара, 3 л воды, корица по желанию.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Сливы помыть, разрезать на половинки, вынуть косточки.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Воду довести до кипения, добавить сахар.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Добавить сливы, варить 10-15 минут на медленном огне.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Добавить корицу по желанию.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Охладить, подавать охлажденным.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 25 минут. Ароматный летний напиток.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="ukrainian cold"
+                  >
+                    <div class="recipe-card p-4 bg-light position-relative">
+                      <h5>Квас с хреном</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        100 г корня хрена, 150 г сахара, 1 лимон, 4 л воды, 10 г дрожжей.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Хрен натереть на мелкой терке.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Из лимона выжать сок.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Смешать хрен, сахар, лимонный сок.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Добавить дрожжи, разведенные в небольшом количестве воды.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Залить смесь водой, оставить для брожения на 12 часов.
+                        </p>
+                        <p>
+                          <span class="step-number">6</span> Процедить, разлить по бутылкам, охладить.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 20 минут + время брожения. Пикантный освежающий напиток.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="ukrainian hot"
+                  >
+                    <div class="recipe-card p-4 bg-light position-relative">
+                      <h5>Чай с чабрецом и мятой</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        2 ч.л. черного чая, 1 веточка чабреца, 5-6 листочков мяты, мед по вкусу, 500 мл воды.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Воду довести до кипения.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Добавить чай, чабрец и мяту.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Настаивать 5-7 минут под крышкой.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Процедить, добавить мед по вкусу.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Подавать горячим.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 10 минут. Успокаивающий и ароматный напиток.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="ukrainian cold"
+                  >
+                    <div class="recipe-card p-4 bg-light position-relative">
+                      <h5>Морс из бузины</h5>
+                      <p>
+                        <strong>Ингредиенты:</strong><br />
+                        500 г ягод бузины, 200 г сахара, 2 л воды, лимонный сок по вкусу.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Подробное приготовление:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Ягоды бузины перебрать, помыть.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Залить кипятком, варить 5-7 минут.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Процедить через сито, ягоды протереть.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Добавить сахар, лимонный сок по вкусу.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Охладить, подавать со льдом.
+                        </p>
+                        <p>
+                          <strong>Время приготовления:</strong> 20 минут. Полезный напиток богатый витаминами.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="BgImage"></section>
     </main>
 
     <footer class="site-footer section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h4 class="text-white mb-4 me-5">Хрустящая кухня</h4>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h4 class="text-white mb-4 me-5">Хрусткая кухня</h4>
+            <div
+              style="
+                background-color: #fafafa;
+                padding: 25px 20px;
+                text-align: center;
+                font-size: 14px;
+                color: #777;
+                border-top: 1px solid #f0f0f0;
+              "
+            >
+              <p
+                style="margin: 0 0 10px 0; font-weight: 500; color: #555;"
+              >
+                © 2025 Домашние кулинарные рецепты
+              </p>
+
+              <nav style="margin-top: 15px;">
+                <a
+                  href="about-ru.html"
+                  style="
+                    margin: 0 12px;
+                    color: #666;
+                    text-decoration: none;
+                    transition: color 0.2s;
+                  "
+                  >О нас</a
+                >
+
+                <a
+                  href="mailto:korovinkonstantin0@gmail.com"
+                  style="
+                    margin: 0 12px;
+                    color: #666;
+                    text-decoration: none;
+                    transition: color 0.2s;
+                  "
+                  >Контакты</a
+                >
+
+                <a
+                  href="privacy-ru.html"
+                  style="
+                    margin: 0 12px;
+                    color: #666;
+                    text-decoration: none;
+                    transition: color 0.2s;
+                  "
+                  >Политика конфиденциальности</a
+                >
+              </nav>
+
+              <div style="margin-top: 20px; color: #aaa; font-size: 12px;">
+                Все права защищены
+              </div>
             </div>
+            <div style="text-align: center; margin-top: 2rem;">
+              <img
+                src="https://hits.sh/crispy-cuisine-7334c.web.app.svg?style=flat-square&label=Просмотры&color=blue&logo=github"
+                alt="Просмотры"
+              />
+            </div>
+          </div>
         </div>
+      </div>
     </footer>
 
     <!-- JAVASCRIPT FILES -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/custom.js"></script>
-    
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    
+
     <script>
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCmO3UwOLexKfUsNBiDhfVsJ7WWS9K_ft4",
-  authDomain: "crispy-cuisine-7334c.firebaseapp.com",
-  projectId: "crispy-cuisine-7334c",
-  storageBucket: "crispy-cuisine-7334c.firebasestorage.app",
-  messagingSenderId: "18003644183",
-  appId: "1:18003644183:web:4abb0800c18b00d7b83152",
-  measurementId: "G-250S27R82Y"
-};
+      // Фильтрация рецептов
+      document.addEventListener("DOMContentLoaded", function () {
+        const filterButtons = document.querySelectorAll(".filter-btn");
+        const filterableElements = document.querySelectorAll(".filterable");
 
-        // Инициализация Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        
-        // Глобальные переменные
-        let lastVisible = null;
-        let selectedFile = null;
-        const PAGE_SIZE = 6; // Количество рецептов за одну загрузку
+        filterButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            // Удаляем активный класс со всех кнопок
+            filterButtons.forEach((btn) => btn.classList.remove("active"));
+            // Добавляем активный класс к текущей кнопке
+            this.classList.add("active");
 
-        $(document).ready(function() {
-            // Загрузка первых рецептов
-            loadRecipes();
-            
-            // Обработчики событий
-            $('#recipeForm').submit(handleFormSubmit);
-            $('#recipeImageFile').on('change', handleImageUpload);
-            $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
-            $('#loadMoreBtn').on('click', loadMoreRecipes);
+            const filter = this.getAttribute("data-filter");
+
+            // Фильтруем элементы
+            filterableElements.forEach((element) => {
+              if (filter === "all") {
+                element.classList.remove("hidden");
+              } else {
+                const categories = element
+                  .getAttribute("data-category")
+                  .split(" ");
+                if (categories.includes(filter)) {
+                  element.classList.remove("hidden");
+                } else {
+                  element.classList.add("hidden");
+                }
+              }
+            });
+          });
         });
 
-        // Обработка загрузки изображения
-        function handleImageUpload(e) {
-            const file = e.target.files[0];
-            if (!file) {
-                $('#fileName').text('Файл не выбран');
-                selectedFile = null;
-                return;
+        // Функционал для кнопки "Поделиться"
+        document
+          .getElementById("shareRecipe")
+          .addEventListener("click", function () {
+            if (navigator.share) {
+              navigator
+                .share({
+                  title: "Рецепт узвара - Хрусткая кухня",
+                  text: "Традиционный украинский узвар - рецепт от Хрусткой кухни",
+                  url: window.location.href,
+                })
+                .then(() => console.log("Успешно поделились"))
+                .catch((error) => console.log("Ошибка при обмене:", error));
+            } else {
+              alert(
+                'Функция "Поделиться" не поддерживается вашим браузером'
+              );
             }
-
-            // Проверка типа файла
-            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
-                alert('Пожалуйста, выберите файл в формате JPG или PNG.');
-                resetFileInput();
-                return;
-            }
-
-            // Проверка размера файла
-            if (file.size > 1048576) {
-                alert('Файл слишком большой. Максимальный размер 1MB.');
-                resetFileInput();
-                return;
-            }
-
-            $('#fileName').text(file.name);
-            
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                selectedFile = event.target.result;
-                updatePreview();
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function resetFileInput() {
-            $('#recipeImageFile').val('');
-            $('#fileName').text('Файл не выбран');
-        }
-
-        function updatePreview() {
-            const title = $('#recipeTitle').val() || 'Название рецепта';
-            const category = $('#recipeCategory').val() || 'не выбрано';
-            
-            if (selectedFile) {
-                $('#previewImage').attr('src', selectedFile);
-            }
-            
-            $('#previewTitle').text(title);
-            $('#previewCategory').text('Категория: ' + category);
-            $('#recipePreview').show();
-        }
-
-        // Загрузка изображения в Cloudinary
-        async function uploadImage(file) {
-            try {
-                const cloudName = "dhfkb6xv2";
-                const uploadPreset = "unsigned_preset";
-                
-                const formData = new FormData();
-                formData.append("file", file);
-                formData.append("upload_preset", uploadPreset);
-                formData.append("folder", "recipe_images");
-                
-                const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-                    method: "POST",
-                    body: formData
-                });
-                
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error.message || "Ошибка Cloudinary");
-                }
-                
-                const data = await response.json();
-                
-                if (data.secure_url) {
-                    // Добавляем параметры для оптимизации
-                    return data.secure_url.replace('/upload/', '/upload/q_auto,f_auto/');
-                } else {
-                    throw new Error("Не удалось получить URL изображения");
-                }
-            } catch (error) {
-                console.error("Ошибка загрузки изображения:", error);
-                throw new Error("Не удалось загрузить изображение");
-            }
-        }
-
-        // Обработка отправки формы
-        async function handleFormSubmit(e) {
-            e.preventDefault();
-            
-            // Показываем спиннер
-            $('#submitSpinner').show();
-            $('#recipeForm button').prop('disabled', true);
-            
-            try {
-                const fileInput = document.getElementById('recipeImageFile');
-                const file = fileInput.files[0];
-                
-                let imageUrl = 'images/default-recipe.jpg';
-                
-                // Загружаем изображение, если оно есть
-                if (file) {
-                    imageUrl = await uploadImage(file);
-                }
-                
-                // Создаем объект рецепта
-                const recipe = {
-                    title: $('#recipeTitle').val(),
-                    category: $('#recipeCategory').val(),
-                    image: imageUrl,
-                    ingredients: $('#recipeIngredients').val(),
-                    instructions: $('#recipeInstructions').val(),
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                };
-                
-                // Сохраняем в Firestore
-                await db.collection("recipes").add(recipe);
-                
-                // Сброс формы
-                $('#recipeForm')[0].reset();
-                $('#recipePreview').hide();
-                resetFileInput();
-                selectedFile = null;
-                
-                // Перезагружаем рецепты
-                await loadRecipes();
-                
-                alert('Рецепт успешно добавлен!');
-                
-                // Прокрутка к новому рецепту
-                $('html, body').animate({
-                    scrollTop: $('#user-recipes').offset().top - 100
-                }, 800);
-            } catch (error) {
-                console.error("Ошибка сохранения рецепта:", error);
-                alert('Произошла ошибка: ' + error.message);
-            } finally {
-                // Скрываем спиннер и активируем кнопку
-                $('#submitSpinner').hide();
-                $('#recipeForm button').prop('disabled', false);
-            }
-        }
-
-        // Загрузка рецептов
-        async function loadRecipes() {
-            try {
-                // Показываем индикатор загрузки
-                $('#loadingRecipes').show();
-                $('#recipesContainer').empty();
-                $('#noRecipesMessage').addClass('d-none');
-                $('#loadMoreBtn').addClass('d-none');
-                
-                // Запрос к Firestore
-                const query = db.collection("recipes")
-                    .orderBy("createdAt", "desc")
-                    .limit(PAGE_SIZE);
-                
-                const snapshot = await query.get();
-                
-                // Скрываем индикатор загрузки
-                $('#loadingRecipes').hide();
-                
-                if (snapshot.empty) {
-                    $('#noRecipesMessage').removeClass('d-none');
-                    return;
-                }
-                
-                // Сохраняем последний документ для пагинации
-                lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                
-                // Отображаем рецепты
-                displayRecipes(snapshot);
-                
-                // Показываем кнопку "Загрузить еще", если есть еще рецепты
-                if (snapshot.size === PAGE_SIZE) {
-                    $('#loadMoreBtn').removeClass('d-none');
-                }
-            } catch (error) {
-                console.error("Ошибка загрузки рецептов:", error);
-                $('#loadingRecipes').html('<p class="text-danger">Ошибка загрузки рецептов. Попробуйте обновить страницу.</p>');
-            }
-        }
-
-        // Загрузка дополнительных рецептов
-        async function loadMoreRecipes() {
-            try {
-                $('#loadMoreBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Загрузка...');
-                
-                const query = db.collection("recipes")
-                    .orderBy("createdAt", "desc")
-                    .startAfter(lastVisible)
-                    .limit(PAGE_SIZE);
-                
-                const snapshot = await query.get();
-                
-                if (snapshot.empty) {
-                    $('#loadMoreBtn').hide();
-                    return;
-                }
-                
-                // Обновляем последний документ
-                lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                
-                // Добавляем новые рецепты
-                displayRecipes(snapshot);
-                
-                // Скрываем кнопку, если больше нет рецептов
-                if (snapshot.size < PAGE_SIZE) {
-                    $('#loadMoreBtn').hide();
-                } else {
-                    $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
-                }
-            } catch (error) {
-                console.error("Ошибка загрузки рецептов:", error);
-                $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
-                alert('Ошибка загрузки дополнительных рецептов');
-            }
-        }
-
-        // Отображение рецептов на странице
-        function displayRecipes(snapshot) {
-            const container = $('#recipesContainer');
-            
-            snapshot.forEach(doc => {
-                const recipe = doc.data();
-                const recipeId = doc.id;
-                
-                // Форматируем дату
-                const date = recipe.createdAt ? 
-                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                    }) : 'Дата не указана';
-                
-                const recipeHtml = `
-                <div class="col-lg-4 col-md-6 col-12 mb-4">
-                    <div class="menu-thumb recipe-card">
-                        <div class="menu-image-wrap position-relative">
-                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
-                                <img src="${recipe.image}" class="img-fluid menu-image" alt="${recipe.title}" loading="lazy">
-                                <span class="user-recipe-tag bg-success">Пользовательский</span>
-                            </a>
-                        </div>
-                        <div class="menu-info d-flex flex-wrap align-items-center">
-                            <h4 class="mb-0">${recipe.title}</h4>
-                            <span class="text-muted small ms-2">${date}</span>
-                        </div>
-                    </div>
-                </div>`;
-                
-                container.append(recipeHtml);
-            });
-        }
-
-        // Показ деталей рецепта
-        window.showRecipeDetails = async function(recipeId) {
-            try {
-                const doc = await db.collection("recipes").doc(recipeId).get();
-                
-                if (!doc.exists) {
-                    alert('Рецепт не найден');
-                    return;
-                }
-                
-                const recipe = doc.data();
-                
-                // Форматируем дату
-                const date = recipe.createdAt ? 
-                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    }) : 'Дата не указана';
-                
-                // Создаем HTML для модального окна
-                const modalHtml = `
-                <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">${recipe.title}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-5 mb-3 mb-md-0">
-                                        <img src="${recipe.image}" class="img-fluid rounded mb-3" alt="${recipe.title}">
-                                        <div class="recipe-meta">
-                                            <p><strong>Категория:</strong> ${recipe.category || 'Не указана'}</p>
-                                            <p><strong>Добавлено:</strong> ${date}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="mb-4">
-                                            <h5>Ингредиенты:</h5>
-                                            <div class="recipe-ingredients">${formatText(recipe.ingredients)}</div>
-                                        </div>
-                                        <div>
-                                            <h5>Инструкция:</h5>
-                                            <div class="recipe-instructions">${formatText(recipe.instructions)}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-                
-                // Добавляем модальное окно в DOM
-                $('body').append(modalHtml);
-                
-                // Показываем модальное окно
-                const modal = new bootstrap.Modal(document.getElementById('recipeDetailModal'));
-                modal.show();
-                
-                // Удаляем модальное окно после закрытия
-                $('#recipeDetailModal').on('hidden.bs.modal', function() {
-                    $(this).remove();
-                });
-            } catch (error) {
-                console.error("Ошибка загрузки рецепта:", error);
-                alert('Не удалось загрузить рецепт');
-            }
-        }
-
-        // Форматирование текста (замена переносов строк)
-        function formatText(text) {
-            return text.replace(/\n/g, '<br>');
-        }
+          });
+      });
     </script>
-</body>
+  </body>
 </html>
