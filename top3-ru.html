@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Хрустящая кухня - Топ рецептов</title>
+    <title>Хрустящая кухня - Завтраки</title>
     
     <!-- CSS FILES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,161 +15,190 @@
     <link href="css/bootstrap-icons.css" rel="stylesheet">
     <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
     <style>
-        .file-input-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            width: 100%;
+        .recipe-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
         
-        .file-input-label {
-            display: block;
-            padding: 0.375rem 0.75rem;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #212529;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid #ced4da;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
-        
-        .file-input-label:hover {
-            background-color: #f8f9fa;
-        }
-        
-        .file-input-label input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .file-name {
-            display: block;
-            margin-top: 0.25rem;
-            font-size: 0.875rem;
-            color: #6c757d;
-        }
-        
-        .recipe-preview {
-            margin-top: 2rem;
-            display: none;
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #f8f9fa;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
         }
         
         .recipe-card {
-            border-radius: 0.5rem;
+            border-radius: 0.8rem;
             overflow: hidden;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
+            margin-bottom: 25px;
+            background: white;
         }
         
         .recipe-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
         }
         
-        .user-recipe-tag {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: white;
+        .recipe-header {
+            padding: 1.5rem 1.5rem 0.5rem;
+            border-bottom: 1px solid #eee;
         }
         
-        .menu-image-wrap {
-            position: relative;
+        .recipe-body {
+            padding: 1rem 1.5rem;
         }
         
-        .recipe-form {
-            background-color: #f8f9fa;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        .recipe-footer {
+            padding: 1rem 1.5rem;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
         }
         
-        .form-title {
+        .ingredients-list, .instructions-list {
+            padding-left: 1.5rem;
             margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #198754;
         }
         
-        /* Добавленные стили для кликабельных слайдов */
-        .carousel-link {
-            display: block;
-            position: relative;
-            color: inherit;
-            text-decoration: none;
+        .ingredients-list li, .instructions-list li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
         }
         
-        .carousel-link:hover {
-            text-decoration: none;
+        .instructions-list li {
+            margin-bottom: 1rem;
         }
         
-        .carousel-link .carousel-caption {
-            z-index: 10;
+        .tips-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
         }
         
-        .carousel-link::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;
+        .category-tabs {
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #dee2e6;
         }
         
-        /* Добавим спиннер загрузки */
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-            display: none;
+        .category-tabs .nav-link {
+            font-weight: 600;
+            color: #6c757d;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-bottom: 3px solid transparent;
         }
         
-        #loadingRecipes {
+        .category-tabs .nav-link.active {
+            color: #198754;
+            background: transparent;
+            border-bottom: 3px solid #198754;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .difficulty-easy {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .difficulty-medium {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .difficulty-hard {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .nutrition-info {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        
+        .nutrition-item {
             text-align: center;
-            padding: 2rem;
+            padding: 0.5rem;
+            min-width: 80px;
+            background: #f1f8e9;
+            border-radius: 8px;
         }
         
-        /* Улучшенный вид модального окна */
-        .recipe-modal .modal-content {
+        .nutrition-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #388e3c;
+        }
+        
+        .nutrition-label {
+            font-size: 0.8rem;
+            color: #616161;
+        }
+        
+        .rating {
+            color: #ffc107;
+            margin-bottom: 0.5rem;
+        }
+        
+        .accordion-button:not(.collapsed) {
+            background-color: #e8f5e9;
+            color: #198754;
+            font-weight: 600;
+        }
+        
+        .recipe-image {
             border-radius: 0.8rem;
             overflow: hidden;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
         }
         
-        .recipe-modal .modal-header {
-            background: linear-gradient(to right, #28a745, #20c997);
+        .time-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
             color: white;
-            border-bottom: none;
+            padding: 0.35rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
         
-        .recipe-modal .modal-body {
-            padding: 1.5rem;
-        }
-        
-        .recipe-modal .modal-footer {
-            background-color: #f8f9fa;
-            border-top: 1px solid #dee2e6;
-        }
-        
-        .recipe-ingredients {
-            background-color: #f8f9fa;
-            border-radius: 0.5rem;
-            padding: 1rem;
-        }
-        
-        .recipe-instructions {
-            white-space: pre-line;
-            line-height: 1.8;
+        @media (max-width: 768px) {
+            .recipe-meta {
+                gap: 10px;
+            }
+            
+            .meta-item {
+                font-size: 0.8rem;
+                padding: 4px 10px;
+            }
+            
+            .nutrition-info {
+                gap: 10px;
+            }
+            
+            .nutrition-item {
+                min-width: 70px;
+                padding: 0.4rem;
+            }
         }
     </style>
 </head>
@@ -193,10 +222,10 @@
                         <a class="nav-link" href="index-ru.html">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="top-ru.html">Первые</a>
+                        <a class="nav-link" href="top-ru.html">Первые блюда</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="top2-ru.html">Вторые</a>
+                        <a class="nav-link" href="top2-ru.html">Вторые блюда</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="desert-ru.html">Десерты</a>
@@ -216,6 +245,7 @@
                 <div class="row">
                     <div class="col-12">
                         <h2>ЗАВТРАКИ</h2>
+                        <p class="text-center">Начните свой день с этих вкусных и питательных рецептов</p>
                     </div>
                 </div>
             </div>
@@ -225,195 +255,1383 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-12">
-                        <!-- Изображение заменено на завтрак -->
                         <img src="images/news/pablo-merchan-montes-Orz90t6o0e4-unsplash.jpg" class="img-fluid news-detail-image" alt="Завтрак">
                         
-                        <div class="col-lg-10 col-10 mx-auto mt-5">
-                            <!-- Все рецепты заменены на завтраки -->
-                            <h4 class="mb-3">Омлет с овощами</h4>
-                            <p>Идеальный питательный завтрак, богатый белком и витаминами. Этот омлет с овощами готовится быстро и просто, что делает его отличным вариантом для утренней трапезы.</p>
-                            <p>Секрет пышного омлета - в правильном взбивании яиц и умеренной температуре приготовления. Добавление молока или сливок делает омлет более нежным и воздушным.</p>
-                            <p>Овощи можно использовать сезонные или замороженные, что делает этот завтрак доступным в любое время года. Для пикантности можно добавить немного сыра или свежей зелени.</p>
+                        <div class="col-lg-12 col-12 mx-auto mt-5">
+                            <ul class="nav nav-tabs category-tabs" id="breakfastTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="classic-tab" data-bs-toggle="tab" data-bs-target="#classic" type="button" role="tab" aria-controls="classic" aria-selected="true">Классические</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="quick-tab" data-bs-toggle="tab" data-bs-target="#quick" type="button" role="tab" aria-controls="quick" aria-selected="false">Быстрые</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="healthy-tab" data-bs-toggle="tab" data-bs-target="#healthy" type="button" role="tab" aria-controls="healthy" aria-selected="false">Здоровые</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="sweet-tab" data-bs-toggle="tab" data-bs-target="#sweet" type="button" role="tab" aria-controls="sweet" aria-selected="false">Сладкие</button>
+                                </li>
+                            </ul>
                             
-                            <h4 class="mb-3">Классический омлет</h4>
-                            <ul class="list">
-                                <li class="list-item">4 яйца, 50 мл молока, 1 помидор, 1/2 болгарского перца.</li>
-                                <li class="list-item">1/2 луковицы, 50 г сыра, соль, перец, зелень.</li>
-                                <li class="list-item">1 ст. ложка растительного масла.</li>
-                            </ul>
-                            <p>1. Яйца взбить с молоком, солью и перцем до однородности.</p>
-                            <p>2. Лук мелко нарезать, перец нарезать кубиками. Помидор очистить от кожицы и нарезать.</p>
-                            <p>3. На разогретой сковороде обжарить лук до прозрачности, добавить перец, жарить 3 минуты.</p>
-                            <p>4. Добавить помидоры, жарить еще 2 минуты.</p>
-                            <p>5. Залить овощи яичной смесью, готовить на среднем огне 4-5 минут под крышкой.</p>
-                            <p>6. Посыпать тертым сыром и зеленью, подавать горячим.</p>
+                            <div class="tab-content" id="breakfastTabsContent">
+                                <div class="tab-pane fade show active" id="classic" role="tabpanel" aria-labelledby="classic-tab">
+                                    <div class="accordion" id="classicAccordion">
+                                        <!-- Омлет с овощами -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingOne">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    <div>
+                                                        <h4 class="mb-1">Омлет с овощами</h4>
+                                                        <div class="recipe-meta">
+                                                            <span class="meta-item"><i class="bi bi-clock"></i> 20 мин</span>
+                                                            <span class="meta-item"><i class="bi bi-people"></i> 2 порции</span>
+                                                            <span class="difficulty difficulty-easy">Легко</span>
+                                                            <div class="rating">
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-half"></i>
+                                                                <span class="ms-1">4.5</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#classicAccordion">
+                                                <div class="accordion-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="recipe-image position-relative">
+                                                                <img src="images/news/Screenshot_20250910-124116 (1).png" class="img-fluid rounded" alt="Омлет с овощами">
+                                                                <span class="time-badge"><i class="bi bi-clock"></i> 20 мин</span>
+                                                            </div>
+                                                            <div class="nutrition-info">
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">320</div>
+                                                                    <div class="nutrition-label">ккал</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">22г</div>
+                                                                    <div class="nutrition-label">белки</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">18г</div>
+                                                                    <div class="nutrition-label">жиры</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">12г</div>
+                                                                    <div class="nutrition-label">углеводы</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p>Идеальный питательный завтрак, богатый белком и витаминами. Этот омлет с овощами готовится быстро и просто, что делает его отличным вариантом для утреннего приема пищи.</p>
+                                                            <p>Секрет пышного омлета - в правильном взбивании яиц и умеренной температуре приготовления. Добавление молока или сливок делает омлет более нежным и воздушным.</p>
+                                                            <h5>Ингредиенты:</h5>
+                                                            <ul class="ingredients-list">
+                                                                <li>4 крупных яйца</li>
+                                                                <li>50 мл молока или сливок</li>
+                                                                <li>1 помидор среднего размера</li>
+                                                                <li>½ сладкого перца</li>
+                                                                <li>½ луковицы</li>
+                                                                <li>50 г твердого сыра</li>
+                                                                <li>2 ст. ложки масла</li>
+                                                                <li>Соль, перец по вкусу</li>
+                                                                <li>Свежая зелень (петрушка, укроп)</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li><strong>Подготовьте овощи:</strong> лук мелко нарежьте, перец нарежьте кубиками. Помидор обдайте кипятком, снимите кожицу и нарежьте кубиками.</li>
+                                                        <li><strong>Взбейте яйца:</strong> в глубокой миске взбейте яйца с молоком, солью и перцем до однородности. Не взбивайте слишком сильно - достаточно просто соединить желтки с белками.</li>
+                                                        <li><strong>Обжарьте овощи:</strong> на разогретой сковороде с маслом обжарьте лук до прозрачности (2-3 минуты). Добавьте перец, жарьте еще 3 минуты. Добавьте помидоры и жарьте 2 минуты, умеренно посолив.</li>
+                                                        <li><strong>Добавьте яичную смесь:</strong> уменьшите огонь до среднего, вылейте яичную смесь на овощи. Равномерно распределите по всей поверхности сковороды.</li>
+                                                        <li><strong>Готовьте под крышкой:</strong> накройте крышкой и готовьте 4-5 минут, пока верхняя часть омлета не станет матовой.</li>
+                                                        <li><strong>Добавьте сыр:</strong> посыпьте тертым сыром и мелко нарезанной зеленью. Накройте крышкой еще на 1-2 минуты, чтобы сыр расплавился.</li>
+                                                        <li><strong>Подавайте:</strong> снимите с огня, дайте постоять 1 минуту, затем порционно переложите на тарелки. Подавайте горячим со свежим хлебом.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Советы:</h6>
+                                                        <ul>
+                                                            <li>Для более пышного омлета можно отдельно взбить белки до пены и затем аккуратно соединить с желтками</li>
+                                                            <li>Добавьте щепотку кукурузного крахмала - он поможет омлету лучше держать форму</li>
+                                                            <li>Экспериментируйте с начинкой: грибы, шпинат, брокколи прекрасно сочетаются с яйцами</li>
+                                                            <li>Если вы на диете, замените цельное молоко на обезжиренное или даже воду</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="recipe-variations">
+                                                        <h6>Вариации:</h6>
+                                                        <p><strong>Итальянский вариант:</strong> добавьте влажную моцареллу, базилик и вяленые томаты.</p>
+                                                        <p><strong>Мексиканский вариант:</strong> добавьте черную фасоль, кукурузу, кинзу и немного перца чили.</p>
+                                                        <p><strong>Средиземноморский вариант:</strong> добавьте шпинат, фету и оливки.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Сырники с изюмом -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingTwo">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                    <div>
+                                                        <h4 class="mb-1">Сырники с изюмом</h4>
+                                                        <div class="recipe-meta">
+                                                            <span class="meta-item"><i class="bi bi-clock"></i> 35 мин</span>
+                                                            <span class="meta-item"><i class="bi bi-people"></i> 4 порции</span>
+                                                            <span class="difficulty difficulty-medium">Средняя</span>
+                                                            <div class="rating">
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star"></i>
+                                                                <span class="ms-1">4.0</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#classicAccordion">
+                                                <div class="accordion-body">
+                                                    <!-- Детали рецепта сырников -->
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="recipe-image position-relative">
+                                                                <img src="images/news/Screenshot_20250906-171219 (1).png" class="img-fluid rounded" alt="Сырники с изюмом">
+                                                                <span class="time-badge"><i class="bi bi-clock"></i> 35 мин</span>
+                                                            </div>
+                                                            <div class="nutrition-info">
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">285</div>
+                                                                    <div class="nutrition-label">ккал</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">18г</div>
+                                                                    <div class="nutrition-label">белки</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">10г</div>
+                                                                    <div class="nutrition-label">жиры</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">30г</div>
+                                                                    <div class="nutrition-label">углеводы</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p>Нежные, мягкие сырники с ароматным изюмом - классика славянской кухни. Идеальный завтрак для всей семьи, богатый кальцием и белком.</p>
+                                                            <p>Ключ к успеху - правильный творог. Он должен быть не слишком влажным, но и не слишком сухим. Идеально подходит творог с 5-9% жирности.</p>
+                                                            <h5>Ингредиенты:</h5>
+                                                            <ul class="ingredients-list">
+                                                                <li>500 г творога (не слишком влажного)</li>
+                                                                <li>2 яйца</li>
+                                                                <li>4 ст. ложки муки + еще для панировки</li>
+                                                                <li>2 ст. ложки сахара</li>
+                                                                <li>1 пакетик ванильного сахара</li>
+                                                                <li>50 г изюма</li>
+                                                                <li>Щепотка соли</li>
+                                                                <li>Масло для жарки</li>
+                                                                <li>Сметана и ягодный соус для подачи</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li><strong>Подготовьте изюм:</strong> залейте изюм кипятком на 10 минут, затем слейте воду и просушите бумажным полотенцем.</li>
+                                                        <li><strong>Подготовьте творог:</strong> если творог зернистый, протрите его через сито или измельчите блендером до однородной консистенции.</li>
+                                                        <li><strong>Смешайте ингредиенты:</strong> в большой миске соедините творог, яйца, сахар, ванильный сахар и соль. Тщательно перемешайте.</li>
+                                                        <li><strong>Добавьте муку и изюм:</strong> постепенно добавьте муку, перемешивая после каждой порции. Добавьте изюм и снова перемешайте.</li>
+                                                        <li><strong>Сформируйте сырники:</strong> на присыпанной мукой поверхности сформируйте из теста колбаску диаметром 4-5 см. Нарежьте ее на равные части толщиной 1,5-2 см. Слегка прижмите каждую часть, чтобы образовались круглые сырники.</li>
+                                                        <li><strong>Панируйте:</strong> обваляйте каждый сырник в муке с обеих сторон, лишнее стряхните.</li>
+                                                        <li><strong>Жарьте:</strong> разогрейте масло на среднем огне. Выложите сырники и жарьте по 3-4 минуты с каждой стороны до золотистой корочки.</li>
+                                                        <li><strong>Подавайте:</strong> подавайте горячими со сметаной, медом, сгущенным молоком или ягодным соусом.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Советы:</h6>
+                                                        <ul>
+                                                            <li>Чтобы сырники не развалились во время жарки, тесто не должно быть слишком жидким. Если нужно, добавьте немного больше муки</li>
+                                                            <li>Не делайте огонь слишком сильным - сырники подгорят снаружи и останутся сырыми внутри</li>
+                                                            <li>Для диетического варианта используйте творог с низким содержанием жира и жарьте на антипригарной сковороде без масла</li>
+                                                            <li>Вместо изюма можно использовать другие сухофрукты: измельченную курагу, финики или вишню без косточек</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="recipe-variations">
+                                                        <h6>Вариации:</h6>
+                                                        <p><strong>Шоколадные сырники:</strong> добавьте 2 ст. ложки какао-порошка и кусочки темного шоколада.</p>
+                                                        <p><strong>Кокосовые сырники:</strong> добавьте 3 ст. ложки измельченного кокоса и немного кокосового экстракта.</p>
+                                                        <p><strong>Пряные сырники:</strong> добавьте корицу, мускатный орех и имбирь по вкусу.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Овсяная каша с фруктами -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingThree">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                    <div>
+                                                        <h4 class="mb-1">Овсяная каша с фруктами</h4>
+                                                        <div class="recipe-meta">
+                                                            <span class="meta-item"><i class="bi bi-clock"></i> 15 мин</span>
+                                                            <span class="meta-item"><i class="bi bi-people"></i> 2 порции</span>
+                                                            <span class="difficulty difficulty-easy">Легко</span>
+                                                            <div class="rating">
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <span class="ms-1">4.8</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#classicAccordion">
+                                                <div class="accordion-body">
+                                                    <!-- Детали рецепта овсяной каши -->
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="recipe-image position-relative">
+                                                                <img src="images/news/Screenshot_20250909-100759 (1).png" class="img-fluid rounded" alt="Овсяная каша с фруктами">
+                                                                <span class="time-badge"><i class="bi bi-clock"></i> 15 мин</span>
+                                                            </div>
+                                                            <div class="nutrition-info">
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">350</div>
+                                                                    <div class="nutrition-label">ккал</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">12г</div>
+                                                                    <div class="nutrition-label">белки</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">8г</div>
+                                                                    <div class="nutrition-label">жиры</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">60г</div>
+                                                                    <div class="nutrition-label">углеводы</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p>Кремовая, питательная овсяная каша со свежими фруктами - идеальный здоровый завтрак, который придаст вам энергии на всю первую половину дня.</p>
+                                                            <p>Овсянка богата клетчаткой, способствующей здоровому пищеварению, и медленно усваиваемыми углеводами, которые обеспечивают длительное чувство сытости.</p>
+                                                            <h5>Ингредиенты:</h5>
+                                                            <ul class="ingredients-list">
+                                                                <li>1 стакан овсяных хлопьев</li>
+                                                                <li>2 стакана молока (или растительного молока)</li>
+                                                                <li>1 спелый банан</li>
+                                                                <li>1 яблоко</li>
+                                                                <li>½ чашки ягод (клубника, малина, черника)</li>
+                                                                <li>1 ст. ложка меда или кленового сиропа</li>
+                                                                <li>½ ч. ложки корицы</li>
+                                                                <li>Щепотка соли</li>
+                                                                <li>Орехи и семена для подачи</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li><strong>Подготовьте фрукты:</strong> банан разомните вилкой или нарежьте кружочками. Яблоко натрите на крупной терке или мелко нарежьте. Ягоды помойте и просушите.</li>
+                                                        <li><strong>Сварите кашу:</strong> в небольшой кастрюле соедините овсяные хлопья, молоко и щепотку соли. Доведите до кипения, затем уменьшите огонь до минимума.</li>
+                                                        <li><strong>Помешивайте:</strong> варите кашу 5-7 минут, периодически помешивая, пока она не загустеет до желаемой консистенции. Если каша становится слишком густой, добавьте немного больше молока.</li>
+                                                        <li><strong>Добавьте банан:</strong> за 2 минуты до конца приготовления добавьте размятый банан - это придаст каше естественной сладости и кремовой текстуры.</li>
+                                                        <li><strong>Обжарьте яблоко:</strong> пока каша варится, на сухой сковороде слегка обжарьте тертое яблоко с корицей в течение 2-3 минут.</li>
+                                                        <li><strong>Соберите блюдо:</strong> готовую кашу разлейте по тарелкам, сверху выложите обжаренное яблоко, свежие ягоды, полейте медом.</li>
+                                                        <li><strong>Украсьте:</strong> посыпьте орехами, семенами (чиа, льняное, подсолнечное) и дополнительной корицей.</li>
+                                                        <li><strong>Подавайте:</strong> подавайте кашу немедленно, пока она горячая. Можно добавить каплю сливочного масла для более нежного вкуса.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Советы:</h6>
+                                                        <ul>
+                                                            <li>Для более кремовой текстуры используйте овсяные хлопья мелкого помола или даже овсяную муку</li>
+                                                            <li>Оставьте кашу под крышкой на 5 минут после приготовления - она станет еще нежнее</li>
+                                                            <li>Экспериментируйте с разными видами молока: миндальное, кокосовое, овсяное придают каше особенный вкус</li>
+                                                            <li>Приготовьте кашу вечером: залейте овсянку молоком и оставьте на ночь в холодильнике - утром добавьте фрукты и наслаждайтесь</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="recipe-variations">
+                                                        <h6>Вариации:</h6>
+                                                        <p><strong>Тропическая каша:</strong> добавьте манго, ананас, кокосовую стружку и сок лайма.</p>
+                                                        <p><strong>Шоколадная каша:</strong> добавьте 1 ст. ложку какао-порошка во время варки и сверху украсьте кусочками шоколада.</p>
+                                                        <p><strong>Пряная каша:</strong> добавьте мускатный орех, кардамон и гвоздику вместе с корицей.</p>
+                                                        <p><strong>Протеиновая каша:</strong> добавьте ложку протеинового порошка после приготовления каши.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                            <h4 class="mb-3">Сырники с изюмом</h4>
-                            <ul class="list">
-                                <li class="list-item">500 г творога, 2 яйца, 4 ст. ложки муки.</li>
-                                <li class="list-item">2 ст. ложки сахара, щепотка соли, ванилин.</li>
-                                <li class="list-item">50 г изюма, масло для жарки.</li>
-                            </ul>
-                            <p>1. Творог протереть через сито или измельчить блендером.</p>
-                            <p>2. Добавить яйца, сахар, соль, ванилин, тщательно перемешать.</p>
-                            <p>3. Добавить промытый изюм и муку, замесить тесто.</p>
-                            <p>4. Сформировать сырники, обвалять в муке.</p>
-                            <p>5. Жарить на среднем огне по 3-4 минуты с каждой стороны до золотистой корочки.</p>
-                            <p>6. Подавать со сметаной, джемом или медом.</p>
+                                        <!-- Яичница с беконом и грибами -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingFour">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                    <div>
+                                                        <h4 class="mb-1">Яичница с беконом и грибами</h4>
+                                                        <div class="recipe-meta">
+                                                            <span class="meta-item"><i class="bi bi-clock"></i> 25 мин</span>
+                                                            <span class="meta-item"><i class="bi bi-people"></i> 2 порции</span>
+                                                            <span class="difficulty difficulty-medium">Средняя</span>
+                                                            <div class="rating">
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-half"></i>
+                                                                <span class="ms-1">4.3</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#classicAccordion">
+                                                <div class="accordion-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="recipe-image position-relative">
+                                                                <img src="images/news/Screenshot_20250910-131510 (1).png" class="img-fluid rounded" alt="Яичница с беконом и грибами">
+                                                                <span class="time-badge"><i class="bi bi-clock"></i> 25 мин</span>
+                                                            </div>
+                                                            <div class="nutrition-info">
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">420</div>
+                                                                    <div class="nutrition-label">ккал</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">25г</div>
+                                                                    <div class="nutrition-label">белки</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">32г</div>
+                                                                    <div class="nutrition-label">жиры</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">8г</div>
+                                                                    <div class="nutrition-label">углеводы</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p>Сочная ароматная яичница с хрустящим беконом и нежными грибами - идеальный сытный завтрак для тех, кто любит позавтракать чем-то более существенным.</p>
+                                                            <p>Сочетание белков из яиц и бекона с грибами создает гармоничный вкусовой ансамбль, который удовлетворит даже самых требовательных гурманов.</p>
+                                                            <h5>Ингредиенты:</h5>
+                                                            <ul class="ingredients-list">
+                                                                <li>4 крупных яйца</li>
+                                                                <li>6 полосок бекона</li>
+                                                                <li>200 г свежих шампиньонов</li>
+                                                                <li>1 небольшая луковица</li>
+                                                                <li>2 ст. ложки сливок (не обязательно)</li>
+                                                                <li>2 ст. ложки масла</li>
+                                                                <li>Соль, перец по вкусу</li>
+                                                                <li>Свежая петрушка или зеленый лук</li>
+                                                                <li>Тостовый хлеб для подачи</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li><strong>Подготовьте ингредиенты:</strong> бекон нарежьте небольшими кусочками, грибы нарежьте пластинками, лук мелко нарежьте.</li>
+                                                        <li><strong>Обжарьте бекон:</strong> на разогретой сковороде без масла обжарьте бекон до хрусткости и золотистого цвета. Выложите на бумажное полотенце, чтобы удалить лишний жир.</li>
+                                                        <li><strong>Обжарьте грибы с луком:</strong> в жире от бекона обжарьте лук до прозрачности, добавьте грибы и жарьте до золотистого цвета, посолив по вкусу.</li>
+                                                        <li><strong>Взбейте яйца:</strong> в миске взбейте яйца с солью, перцем и сливками (если используете).</li>
+                                                        <li><strong>Приготовьте яичницу:</strong> добавьте яичную смесь к грибам и луку, уменьшите огонь до среднего. Помешивайте, пока яйца не начнут схватываться.</li>
+                                                        <li><strong>Добавьте бекон:</strong> добавьте обжаренный бекон к яичнице и продолжайте готовить до желаемой консистенции.</li>
+                                                        <li><strong>Подавайте:</strong> украсьте свежей зеленью и подавайте с поджаренным тостовым хлебом.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Советы:</h6>
+                                                        <ul>
+                                                            <li>Для более нежной яичницы добавьте немного сливок или молока</li>
+                                                            <li>Не пережаривайте яйца - они должны оставаться нежными и сочными</li>
+                                                            <li>Экспериментируйте с разными видами грибов: лесные грибы придадут блюду особый аромат</li>
+                                                            <li>Для диетического варианта замените бекон на индейку или курицу</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                            <h4 class="mb-3">Овсяная каша с фруктами</h4>
-                            <ul class="list">
-                                <li class="list-item">1 стакан овсяных хлопьев, 2 стакана молока.</li>
-                                <li class="list-item">1 банан, 1 яблоко, горсть ягод (свежих или замороженных).</li>
-                                <li class="list-item">1 ст. ложка меда, корица по вкусу.</li>
-                            </ul>
-                            <p>1. Молоко довести до кипения, добавить овсяные хлопья.</p>
-                            <p>2. Варить на медленном огне 5-7 минут, постоянно помешивая.</p>
-                            <p>3. Банан нарезать кружочками, яблоко натереть на крупной терке.</p>
-                            <p>4. В готовую кашу добавить фрукты, мед и корицу, тщательно перемешать.</p>
-                            <p>5. Подавать горячей, украсив свежими ягодами.</p>
+                                        <!-- Блинчики с творогом -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingFive">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                                    <div>
+                                                        <h4 class="mb-1">Блинчики с творогом</h4>
+                                                        <div class="recipe-meta">
+                                                            <span class="meta-item"><i class="bi bi-clock"></i> 40 мин</span>
+                                                            <span class="meta-item"><i class="bi bi-people"></i> 4 порции</span>
+                                                            <span class="difficulty difficulty-medium">Средняя</span>
+                                                            <div class="rating">
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star"></i>
+                                                                <span class="ms-1">4.2</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#classicAccordion">
+                                                <div class="accordion-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="recipe-image position-relative">
+                                                                <img src="images/news/Screenshot_20250910-132405 (1).png" class="img-fluid rounded" alt="Блинчики с творогом">
+                                                                <span class="time-badge"><i class="bi bi-clock"></i> 40 мин</span>
+                                                            </div>
+                                                            <div class="nutrition-info">
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">320</div>
+                                                                    <div class="nutrition-label">ккал</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">15г</div>
+                                                                    <div class="nutrition-label">белки</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">12г</div>
+                                                                    <div class="nutrition-label">жиры</div>
+                                                                </div>
+                                                                <div class="nutrition-item">
+                                                                    <div class="nutrition-value">38г</div>
+                                                                    <div class="nutrition-label">углеводы</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p>Нежные, воздушные блинчики с творожной начинкой - отличный выбор для завтрака в выходной день, когда есть немного больше времени для приготовления.</p>
+                                                            <p>Сочетание нежного теста с ароматной творожной начинкой создает непревзойденный вкусовой опыт, который обязательно понравится всей семье.</p>
+                                                            <h5>Ингредиенты для теста:</h5>
+                                                            <ul class="ingredients-list">
+                                                                <li>2 стакана муки</li>
+                                                                <li>2 яйца</li>
+                                                                <li>2 стакана молока</li>
+                                                                <li>2 ст. ложки сахара</li>
+                                                                <li>½ ч. ложки соли</li>
+                                                                <li>2 ст. ложки растительного масла</li>
+                                                                <li>1 ч. ложка разрыхлителя</li>
+                                                            </ul>
+                                                            <h5>Для начинки:</h5>
+                                                            <ul class="ingredients-list">
+                                                                <li>400 г творога</li>
+                                                                <li>1 яйцо</li>
+                                                                <li>3 ст. ложки сахара</li>
+                                                                <li>1 пакетик ванильного сахара</li>
+                                                                <li>Цедра половины лимона</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li><strong>Приготовьте тесто:</strong> смешайте муку, сахар, соль и разрыхлитель. Отдельно взбейте яйца с молоком и маслом. Постепенно добавляйте жидкие ингредиенты к сухим, перемешивая до однородной консистенции. Оставьте тесто на 15-20 минут.</li>
+                                                        <li><strong>Приготовьте начинку:</strong> смешайте творог, яйцо, сахар, ванильный сахар и цедру лимона до однородности.</li>
+                                                        <li><strong>Жарьте блинчики:</strong> разогрейте сковороду, смажьте маслом. Вылейте небольшое количество теста, распределите по сковороде. Жарьте с одной стороны до золотистого цвета.</li>
+                                                        <li><strong>Добавьте начинку:</strong> переверните блинчик, на одну половину выложите 1-2 ст. ложки творожной начинки. Накройте второй половиной и обжарьте с обеих сторон до золотистого цвета.</li>
+                                                        <li><strong>Подавайте:</strong> подавайте горячими со сметаной, медом или фруктовым соусом.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Советы:</h6>
+                                                        <ul>
+                                                            <li>Для более пышных блинчиков дайте тесту настояться 20-30 минут</li>
+                                                            <li>Не делайте огонь слишком сильным - блинчики будут гореть снаружи и оставаться сырыми внутри</li>
+                                                            <li>Экспериментируйте с начинкой: добавляйте изюм, курагу или корицу</li>
+                                                            <li>Храните готовые блинчики в теплой духовке, пока жарите остальные</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                            <h4 class="mb-3">Авокадо-тост с яйцом</h4>
-                            <ul class="list">
-                                <li class="list-item">2 ломтика цельнозернового хлеба, 1 спелый авокадо.</li>
-                                <li class="list-item">2 яйца, соль, перец, лимонный сок.</li>
-                                <li class="list-item">Помидор черри, руккола для подачи.</li>
-                            </ul>
-                            <p>1. Хлеб поджарить в тостере или на сухой сковороде.</p>
-                            <p>2. Авокадо очистить, размять вилкой, сбрызнуть лимонным соком.</p>
-                            <p>3. Приготовить яйца пашот или глазунью.</p>
-                            <p>4. На тосты выложить пюре из авокадо, сверху - яйцо.</p>
-                            <p>5. Посолить, поперчить, украсить помидорами и рукколой.</p>
-                            
-                            <h4 class="mb-3">Гречневая каша с молоком</h4>
-                            <ul class="list">
-                                <li class="list-item">1 стакан гречневой крупы, 2 стакана воды.</li>
-                                <li class="list-item">2 стакана молока, соль, сахар по вкусу.</li>
-                                <li class="list-item">Сливочное масло, мед или варенье для подачи.</li>
-                            </ul>
-                            <p>1. Гречневую крупу перебрать, промыть.</p>
-                            <p>2. Залить водой, довести до кипения, посолить.</p>
-                            <p>3. Варить на медленном огне 15 минут до готовности.</p>
-                            <p>4. Отдельно подогреть молоко.</p>
-                            <p>5. В тарелки разложить кашу, залить теплым молоком.</p>
-                            <p>6. Добавить масло, сахар или мед по вкусу.</p>
-                            
-                            <h4 class="mb-3">Творожная запеканка</h4>
-                            <ul class="list">
-                                <li class="list-item">500 г творога, 3 яйца, 5 ст. ложек манки.</li>
-                                <li class="list-item">100 г сахара, ванилин, цедра лимона.</li>
-                                <li class="list-item">100 г изюма, сметана для подачи.</li>
-                            </ul>
-                            <p>1. Творог протереть через сино или взбить блендером.</p>
-                            <p>2. Отделить желтки от белков. Желтки растереть с сахаром.</p>
-                            <p>3. Соединить творог, желтки, манку, ванилин и цедру лимона.</p>
-                            <p>4. Белки взбить в крепкую пену, аккуратно вмешать в творожную массу.</p>
-                            <p>5. Добавить промытый изюм, перемешать.</p>
-                            <p>6. Выложить массу в смазанную маслом форму, выпекать 40 мин при 180°C.</p>
-                            <p>7. Подавать со сметаной или фруктовым соусом.</p>
-                            
-                            <div class="row mb-5">
-                                <div class="col-12">
-                                    <h3 class="mb-4 text-success">Другие вкусные завтраки</h3> <!-- Заголовок изменен -->
-                                </div>
+                                        <!-- НОВЫЙ РЕЦЕПТ: Гренки с яйцом пашот -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingSix">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                                    <div>
+                                                        <h4 class="mb-1">Гренки с яйцом пашот</h4>
+                                                        <div class="recipe-meta">
+                                                            <span class="meta-item"><i class="bi bi-clock"></i> 20 мин</span>
+                                                            <span class="meta-item"><i class="bi bi-people"></i> 2 порции</span>
+                                                            <span class="difficulty difficulty-medium">Средняя</span>
+                                                            <div class="rating">
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star"></i>
+                                                                <span class="ms-1">4.2</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#classicAccordion">
+                                                <div class="accordion-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <p>Элегантный завтрак, который идеально подходит для особых случаев или когда хочется сделать себе приятное. Нежное яйцо пашот с золотистым желтком на хрустящих гренках с авокадо.</p>
+                                                            <h5>Ингредиенты:</h5>
+                                                            <ul class="ingredients-list">
+                                                                <li>4 свежих яйца</li>
+                                                                <li>4 ломтика хлеба для гренок</li>
+                                                                <li>1 спелый авокадо</li>
+                                                                <li>1 ст. ложка лимонного сока</li>
+                                                                <li>Соль, перец по вкусу</li>
+                                                                <li>Свежая зелень (укроп, петрушка)</li>
+                                                                <li>1 ст. ложка белого винного уксуса</li>
+                                                                <li>Красный перец или паприка для посыпки</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li><strong>Подготовьте гренки:</strong> поджарьте хлеб в тостере или на сухой сковороде до золотистого цвета с обеих сторон.</li>
+                                                        <li><strong>Приготовьте авокадо:</strong> разомните авокадо вилкой, добавьте лимонный сок, соль и перец по вкусу.</li>
+                                                        <li><strong>Приготовьте яйцо пашот:</strong> в небольшой кастрюле доведите воду до кипения, добавьте уксус. Взбейте воду, чтобы образовалась воронка, и влейте в нее яйцо. Варите 3-4 минуты.</li>
+                                                        <li><strong>Соберите блюдо:</strong> на гренки намажьте пюре из авокадо, сверху выложите яйцо пашот.</li>
+                                                        <li><strong>Подавайте:</strong> посыпьте свежей зеленью, красным перцем и щепоткой соли. Подавайте немедленно.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Советы:</h6>
+                                                        <ul>
+                                                            <li>Используйте только свежие яйца для приготовления пашот - они лучше держат форму</li>
+                                                            <li>Добавление уксуса в воду помогает яйцу быстрее свернуться</li>
+                                                            <li>Если вода сильно кипит, уменьшите огонь перед добавлением яиц</li>
+                                                            <li>Для аромата добавьте в воду пару лавровых листьев или зерна черного перца</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Французские тосты</h5>
-                                        <p><strong>Ингредиенты:</strong><br>
-                                            Багет, 2 яйца, 100 мл молока, корица, ваниль, мед.
-                                        </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Хлеб обмакнуть в смесь яиц с молоком, обжарить на сковороде. Подавать с медом.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Овсяноблин</h5>
-                                        <p><strong>Ингредиенты:</strong><br>
-                                            4 ст.л. овсяных хлопьев, 1 яйцо, 50 мл молока, начинка по вкусу.
-                                        </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Смешать ингредиенты, вылить на сковороду, жарить с двух сторон. Заполнить начинкой.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Гранола с йогуртом</h5>
-                                        <p><strong>Ингредиенты:</strong><br>
-                                            Овсяные хлопья, орехи, мед, корица, йогурт, свежие фрукты.
-                                        </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Овсянку смешать с орехами и медом, запечь. Подавать с йогуртом и фруктами.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Яичные маффины</h5>
-                                        <p><strong>Ингредиенты:</strong><br>
-                                            6 яиц, овощи, сыр, ветчина, зелень, соль, перец.
-                                        </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Взбить яйца, добавить начинку, разлить по формам, запекать 20 мин при 180°C.
-                                        </p>
+                                        <!-- НОВЫЙ РЕЦЕПТ: Шакшука -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingSeven">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                                    <div>
+                                                        <h4 class="mb-1">Шакшука</h4>
+                                                        <div class="recipe-meta">
+                                                            <span class="meta-item"><i class="bi bi-clock"></i> 30 мин</span>
+                                                            <span class="meta-item"><i class="bi bi-people"></i> 3 порции</span>
+                                                            <span class="difficulty difficulty-medium">Средняя</span>
+                                                            <div class="rating">
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-fill"></i>
+                                                                <i class="bi bi-star-half"></i>
+                                                                <span class="ms-1">4.6</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#classicAccordion">
+                                                <div class="accordion-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <p>Традиционное блюдо средиземноморской кухни, которое состоит из яиц, запеченных в томатном соусе с перцем, луком и специями. Идеальный завтрак для тех, кто любит пикантные блюда.</p>
+                                                            <h5>Ингредиенты:</h5>
+                                                            <ul class="ingredients-list">
+                                                                <li>6 яиц</li>
+                                                                <li>1 луковица</li>
+                                                                <li>1 сладкий перец</li>
+                                                                <li>2 зубчика чеснока</li>
+                                                                <li>400 г консервированных томатов в собственном соку</li>
+                                                                <li>2 ст. ложки оливкового масла</li>
+                                                                <li>1 ч. ложка паприки</li>
+                                                                <li>½ ч. ложки кумина</li>
+                                                                <li>½ ч. ложки соли</li>
+                                                                <li>Свежая петрушка или кинза</li>
+                                                                <li>Хлеб для подачи</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li><strong>Подготовьте овощи:</strong> лук нарежьте кубиками, перец - полосками, чеснок мелко порубите.</li>
+                                                        <li><strong>Обжарьте овощи:</strong> на оливковом масле обжарьте лук до прозрачности, добавьте перец и жарьте еще 5 минут. Добавьте чеснок и специи, жарьте 1 минуту.</li>
+                                                        <li><strong>Добавьте томаты:</strong> добавьте измельченные томаты, перемешайте и тушите 10-15 минут на среднем огне.</li>
+                                                        <li><strong>Добавьте яйца:</strong> сделайте в соусе углубления, влейте в них яйца. Накройте крышкой и готовьте 5-7 минут, пока яйца не приготовятся.</li>
+                                                        <li><strong>Подавайте:</strong> посыпьте свежей зеленью и подавайте с хлебом.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Советы:</h6>
+                                                        <ul>
+                                                            <li>Для более пикантного варианта добавьте мелко нарезанный перец чили или чили-пасту</li>
+                                                            <li>Если соус слишком густой, добавьте немного воды или томатного сока</li>
+                                                            <li>Можно добавить сыр фета или брынзу непосредственно перед подачей</li>
+                                                            <li>Шакшуку можно приготовить в духовке - запекайте при 180°C 10-12 минут</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 
-                                <div class="col-12">
-                                    <h3 class="mb-4 text-success">Быстрые завтраки</h3> <!-- Заголовок изменен -->
-                                </div>
+                                <div class="tab-pane fade" id="quick" role="tabpanel" aria-labelledby="quick-tab">
+                                    <!-- Контент для быстрых завтраков -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Тост с авокадо и яйцом</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 10 мин</span>
+                                                        <span class="difficulty difficulty-easy">Легко</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>2 ломтика цельнозернового хлеба</li>
+                                                        <li>1 спелый авокадо</li>
+                                                        <li>2 яйца</li>
+                                                        <li>Соль, перец, лимонный сок</li>
+                                                        <li>Помидоры черри, руккола для подачи</li>
+                                                        <li>Красный лук, семена чиа (по желанию)</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>Хлеб поджарьте в тостере или на сухой сковороде до золотистого цвета.</li>
+                                                        <li>Авокадо разрежьте пополам, удалите косточку, выберите мякоть вилкой. Добавьте соль, перец и несколько капель лимонного сока, разомните до консистенции пюре.</li>
+                                                        <li>Приготовьте яйца: сварите всмятку, сделайте яичницу-глазунью или яйца пашот.</li>
+                                                        <li>На поджаренный хлеб намажьте пюре из авокадо, сверху выложите яйцо.</li>
+                                                        <li>Украсьте мелко нарезанным красным луком, семенами чиа, помидорами черри и рукколой.</li>
+                                                        <li>Подавайте немедленно, пока тосты хрустящие, а яйцо горячее.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для дополнительного аромата посыпьте тосты трюфельным маслом или смесью "все приправы".</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Смузи-боул</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 8 мин</span>
+                                                        <span class="difficulty difficulty-easy">Легко</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты для основы:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>1 замороженный банан</li>
+                                                        <li>1 чашка замороженных ягод (клубника, малина, черника)</li>
+                                                        <li>½ чашки молока или йогурта</li>
+                                                        <li>1 ст. ложка семян чиа</li>
+                                                        <li>1 ч. ложка меда (по желанию)</li>
+                                                    </ul>
+                                                    <h5>Для топпинга:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>Свежие фрукты (клубника, банан, киви)</li>
+                                                        <li>Орехи (миндаль, грецкие, кешью)</li>
+                                                        <li>Семена (чиа, льняные, тыквенные)</li>
+                                                        <li>Кокосовая стружка</li>
+                                                        <li>Гранола</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>В блендер положите замороженные фрукты, добавьте молоко или йогурт, семена чиа и мед.</li>
+                                                        <li>Взбивайте до однородной кремовой консистенции. Если смесь слишком густая, добавьте еще немного жидкости.</li>
+                                                        <li>Перелейте смузи в глубокую миску, разровняйте поверхность.</li>
+                                                        <li>Красиво выложите топпинги: нарезанные фрукты, орехи, семена, кокосовую стружку, гранолу.</li>
+                                                        <li>Можно добавить дополнительную ложку йогурта или арахисовой пасты для вкуса.</li>
+                                                        <li>Подавайте сразу, пока смузи не потерял свою текстуру.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для более питательного завтрака добавьте в смузи протеиновый порошок или овсяные хлопья.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Смузи-боул</h5>
-                                        <p><strong>Ингредиенты:</strong><br>
-                                            Банан, ягоды, шпинат, йогурт, орехи, семена чиа, мед.
-                                        </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Взбить фрукты с йогуртом, выложить в миску, украсить топпингами.
-                                        </p>
+                                    <!-- Дополнительные рецепты для быстрых завтраков -->
+                                    <div class="row mt-4">
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Гранола с йогуртом</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 5 мин</span>
+                                                        <span class="difficulty difficulty-easy">Легко</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>1 стакан готовой гранолы</li>
+                                                        <li>200 г греческого йогурта</li>
+                                                        <li>Свежие ягоды (клубника, малина, черника)</li>
+                                                        <li>1 ст. ложка меда или кленового сиропа</li>
+                                                        <li>Орехи и семена по желанию</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>В стакан или миску выложите половину йогурта.</li>
+                                                        <li>Добавьте слой гранолы.</li>
+                                                        <li>Повторите слои еще раз.</li>
+                                                        <li>Сверху украсьте свежими ягодами, орехами и семенами.</li>
+                                                        <li>Полейте медом или кленовым сиропом.</li>
+                                                        <li>Подавайте немедленно, чтобы гранола оставалась хрустящей.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для более насыщенного вкуса оставьте на ночь в холодильнике - получится вариант овсянки на ночь.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Яйца в авокадо</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 15 мин</span>
+                                                        <span class="difficulty difficulty-easy">Легко</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>1 спелый авокадо</li>
+                                                        <li>2 яйца</li>
+                                                        <li>Соль, перец по вкусу</li>
+                                                        <li>Паприка, чеснок</li>
+                                                        <li>Свежая зелень для украшения</li>
+                                                        <li>Лимонный сок</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>Разогрейте духовку до 200°C.</li>
+                                                        <li>Авокадо разрежьте пополам, удалите косточку.</li>
+                                                        <li>Увеличьте углубление, выбрав часть мякоти ложкой.</li>
+                                                        <li>Сбрызните авокадо лимонным соком, чтобы не потемнело.</li>
+                                                        <li>В каждую половинку авокадо вбейте по яйцу.</li>
+                                                        <li>Посолите, поперчите, посыпьте специями.</li>
+                                                        <li>Выпекайте 12-15 минут, пока яйцо не приготовится до желаемого состояния.</li>
+                                                        <li>Украсьте зеленью и подавайте.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для дополнительного аромата перед запеканием посыпьте тертым сыром или добавьте кусочки бекона.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- НОВЫЕ РЕЦЕПТЫ ДЛЯ БЫСТРЫХ ЗАВТРАКОВ -->
+                                    <div class="row mt-4">
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Бутерброд с лососем</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 10 мин</span>
+                                                        <span class="difficulty difficulty-easy">Легко</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>4 ломтика хлеба с семенами</li>
+                                                        <li>200 г слабосоленого лосося</li>
+                                                        <li>100 г сливочного сыра</li>
+                                                        <li>1/2 огурца</li>
+                                                        <li>Свежий укроп</li>
+                                                        <li>Лимонный сок</li>
+                                                        <li>Черный перец</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>Хлеб поджарьте в тостере до золотистого цвета.</li>
+                                                        <li>Огурец нарежьте тонкими кружочками.</li>
+                                                        <li>Намажьте хлеб сливочным сыром.</li>
+                                                        <li>Выложите кусочки лосося и огурца.</li>
+                                                        <li>Украсьте укропом, сбрызните лимонным соком и поперчите.</li>
+                                                        <li>Подавайте немедленно.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для дополнительного вкуса добавьте каперсы или красный лук.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Мюсли с фруктами</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 5 мин</span>
+                                                        <span class="difficulty difficulty-easy">Легко</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>1 стакан мюсли</li>
+                                                        <li>200 мл молока или йогурта</li>
+                                                        <li>1 банан</li>
+                                                        <li>1 яблоко</li>
+                                                        <li>Орехи и изюм</li>
+                                                        <li>Мед по желанию</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>В глубокую миску насыпьте мюсли.</li>
+                                                        <li>Залейте молоком или йогуртом.</li>
+                                                        <li>Банан и яблоко нарежьте кубиками.</li>
+                                                        <li>Добавьте фрукты к мюсли.</li>
+                                                        <li>Украсьте орехами, изюмом и полейте медом.</li>
+                                                        <li>Подавайте сразу.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Можно оставить на 10 минут, чтобы мюсли стали мягче.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                
+                                <div class="tab-pane fade" id="healthy" role="tabpanel" aria-labelledby="healthy-tab">
+                                    <!-- Контент для здоровых завтраков -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Чиа пудинг с ягодами</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 10 мин + ночь</span>
+                                                        <span class="difficulty difficulty-easy">Легко</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>¼ стакана семян чиа</li>
+                                                        <li>1 стакан миндального молока</li>
+                                                        <li>1 ст. ложка меда или кленового сиропа</li>
+                                                        <li>½ ч. ложки ванильного экстракта</li>
+                                                        <li>Щепотка соли</li>
+                                                        <li>Свежие ягоды для подачи</li>
+                                                        <li>Мята для украшения</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>В банке или миске смешайте семена чиа, миндальное молоко, мед, ваниль и соль.</li>
+                                                        <li>Тщательно перемешайте, чтобы избежать комочков.</li>
+                                                        <li>Накройте и поставьте в холодильник минимум на 4 часа, лучше на ночь.</li>
+                                                        <li>Перед подачей перемешайте пудинг, добавьте немного молока, если консистенция слишком густая.</li>
+                                                        <li>Разлейте по стаканам, сверху украсьте свежими ягодами и мятой.</li>
+                                                        <li>Можно добавить орехи или гранолу для хрусткости.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для шоколадного варианта добавьте 1 ст. ложку какао-порошка во время приготовления.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Скрембл с тофу</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 15 мин</span>
+                                                        <span class="difficulty difficulty-easy">Легко</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>400 г мягкого тофу</li>
+                                                        <li>1 луковица</li>
+                                                        <li>1 сладкий перец</li>
+                                                        <li>2 ст. ложки масла</li>
+                                                        <li>1 ч. ложка куркумы</li>
+                                                        <li>½ ч. ложки паприки</li>
+                                                        <li>2 ст. ложки соевого соуса</li>
+                                                        <li>Соль, перец по вкусу</li>
+                                                        <li>Свежая зелень</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>Тофу разомните вилкой, не слишком мелко, чтобы сохранить текстуру.</li>
+                                                        <li>Лук мелко нарежьте, перец - кубиками.</li>
+                                                        <li>На разогретом масле обжарьте лук до прозрачности, добавьте перец, жарьте еще 3 минуты.</li>
+                                                        <li>Добавьте тофу, куркуму, паприку, соль и перец. Перемешайте.</li>
+                                                        <li>Жарьте на среднем огне 5-7 минут, периодически помешивая.</li>
+                                                        <li>Влейте соевый соус, перемешайте и готовьте еще 2 минуты.</li>
+                                                        <li>Посыпьте свежей зеленью и подавайте с цельнозерновым хлебом.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для пикантности добавьте мелко нарезанный перец чили или чили-пасту.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Бутерброды с авокадо</h5>
-                                        <p><strong>Ингредиенты:</strong><br>
-                                            Цельнозерновой хлеб, авокадо, творожный сыр, помидор, руккола.
-                                        </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Намазать хлеб сыром, выложить пюре из авокадо, украсить овощами и зеленью.
-                                        </p>
+                                    <!-- Дополнительные рецепты для здоровых завтраков -->
+                                    <div class="row mt-4">
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Веганские оладьи с бананом</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 20 мин</span>
+                                                        <span class="difficulty difficulty-easy">Легко</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>2 спелых банана</li>
+                                                        <li>1 стакан овсяных хлопьев</li>
+                                                        <li>½ стакана растительного молока</li>
+                                                        <li>1 ч. ложка разрыхлителя</li>
+                                                        <li>1 ч. ложка корицы</li>
+                                                        <li>Щепотка соли</li>
+                                                        <li>Кокосовое масло для жарки</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>Бананы разомните вилкой в пюре.</li>
+                                                        <li>Добавьте овсяные хлопья, растительное молоко, разрыхлитель, корицу и соль.</li>
+                                                        <li>Перемешайте до однородной консистенции.</li>
+                                                        <li>Разогрейте кокосовое масло на сковороде.</li>
+                                                        <li>Выливайте тесто ложкой, формируя небольшие оладьи.</li>
+                                                        <li>Жарьте по 2-3 минуты с каждой стороны до золотистого цвета.</li>
+                                                        <li>Подавайте с ягодами, медом или ореховой пастой.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для разнообразия добавьте в тесто ягоды, измельченные орехи или семена чиа.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Киноа с овощами</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 25 мин</span>
+                                                        <span class="difficulty difficulty-medium">Средняя</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>1 стакан киноа</li>
+                                                        <li>2 стакана овощного бульона</li>
+                                                        <li>1 луковица</li>
+                                                        <li>1 морковь</li>
+                                                        <li>1 сладкий перец</li>
+                                                        <li>2 ст. ложки масла</li>
+                                                        <li>Соль, перец, куркума</li>
+                                                        <li>Свежая зелень</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>Киноа тщательно промойте.</li>
+                                                        <li>Лук, морковь и перец нарежьте мелкими кубиками.</li>
+                                                        <li>На масле обжарьте лук до прозрачности, добавьте морковь и перец, жарьте 5 минут.</li>
+                                                        <li>Добавьте киноа, обжарьте 2 минуты.</li>
+                                                        <li>Добавьте бульон, доведите до кипения.</li>
+                                                        <li>Уменьшите огонь, накройте крышкой и варите 15 минут.</li>
+                                                        <li>Выключите огонь, оставьте под крышкой на 5 минут.</li>
+                                                        <li>Украсьте свежей зеленью и подавайте.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для большего белка добавьте нарезанное куриное филе или тофу.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- НОВЫЕ РЕЦЕПТЫ ДЛЯ ЗДОРОВЫХ ЗАВТРАКОВ -->
+                                    <div class="row mt-4">
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Салат с авокадо и киноа</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 20 мин</span>
+                                                        <span class="difficulty difficulty-easy">Легко</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>1 стакан вареной киноа</li>
+                                                        <li>1 спелый авокадо</li>
+                                                        <li>1/2 огурца</li>
+                                                        <li>10 шт. помидоров черри</li>
+                                                        <li>Сок половины лимона</li>
+                                                        <li>2 ст. ложки оливкового масла</li>
+                                                        <li>Соль, перец по вкусу</li>
+                                                        <li>Свежая зелень</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>Киноа отварите согласно инструкции на упаковке.</li>
+                                                        <li>Авокадо нарежьте кубиками, огурец - кружочками, помидоры - половинками.</li>
+                                                        <li>Смешайте все ингредиенты в большой миске.</li>
+                                                        <li>Взбейте оливковое масло, лимонный сок, соль и перец.</li>
+                                                        <li>Заправьте салат соусом, перемешайте.</li>
+                                                        <li>Украсьте свежей зеленью.</li>
+                                                        <li>Подавайте охлажденным.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Можно добавить семена чиа или тыквенные семечки для хрусткости.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Зеленый смузи</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 5 мин</span>
+                                                        <span class="difficulty difficulty-easy">Легко</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>1 банан</li>
+                                                        <li>1/2 авокадо</li>
+                                                        <li>1 горсть шпината</li>
+                                                        <li>200 мл миндального молока</li>
+                                                        <li>1 ст. ложка льняных семян</li>
+                                                        <li>1 ч. ложка меда</li>
+                                                        <li>Лед по желанию</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>Положите все ингредиенты в блендер.</li>
+                                                        <li>Взбивайте до однородной консистенции.</li>
+                                                        <li>Если смузи слишком густой, добавьте больше молока.</li>
+                                                        <li>Перелейте в стакан.</li>
+                                                        <li>Подавайте сразу.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для большего витамина C добавьте сок половины лимона.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Мюсли домашние</h5>
-                                        <p><strong>Ингредиенты:</strong><br>
-                                            Овсяные хлопья, орехи, сухофрукты, семечки, мед, корица.
-                                        </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Смешать ингредиенты, запечь в духовке. Хранить в банке, подавать с молоком.
-                                        </p>
+                                
+                                <div class="tab-pane fade" id="sweet" role="tabpanel" aria-labelledby="sweet-tab">
+                                    <!-- Контент для сладких завтраков -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Французские тосты</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 20 мин</span>
+                                                        <span class="difficulty difficulty-easy">Легко</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>8 ломтиков белого хлеба (лучше немного черствого)</li>
+                                                        <li>2 яйца</li>
+                                                        <li>½ стакана молока</li>
+                                                        <li>1 ч. ложка ванильного сахара</li>
+                                                        <li>½ ч. ложки корицы</li>
+                                                        <li>Щепотка соли</li>
+                                                        <li>2 ст. ложки сливочного масла</li>
+                                                        <li>Кленовый сироп, мед или сахарная пудра для подачи</li>
+                                                        <li>Свежие ягоды</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>В миске взбейте яйца, молоко, ваниль, корицу и соль.</li>
+                                                        <li>Перелейте смесь в широкую емкость, чтобы удобно было погружать хлеб.</li>
+                                                        <li>Каждый ломтик хлеба погружайте в яичную смесь на 20-30 секунд с каждой стороны.</li>
+                                                        <li>Разогрейте масло на большой сковороде на среднем огне.</li>
+                                                        <li>Выложите пропитанный хлеб и жарьте по 2-3 минуты с каждой стороны до золотисто-коричневого цвета.</li>
+                                                        <li>Подавайте горячими, политыми кленовым сиропом или медом, посыпанными сахарной пудрой и украшенными ягодами.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для особого аромата добавьте в яичную смесь цедру апельсина или лимона.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Американские блины</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 25 мин</span>
+                                                        <span class="difficulty difficulty-medium">Средняя</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>1½ стакана муки</li>
+                                                        <li>3½ ч. ложки разрыхлителя</li>
+                                                        <li>1 ч. ложка соли</li>
+                                                        <li>1 ст. ложка сахара</li>
+                                                        <li>1¼ стакана молока</li>
+                                                        <li>1 яйцо</li>
+                                                        <li>3 ст. ложки растопленного сливочного масла</li>
+                                                        <li>Сливочное масло для жарки</li>
+                                                        <li>Кленовый сироп, ягоды, бананы для подачи</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>В большой миске смешайте муку, разрыхлитель, соль и сахар.</li>
+                                                        <li>В другой миске взбейте молоко, яйцо и растопленное масло.</li>
+                                                        <li>Влейте жидкие ингредиенты к сухим и перемешайте до однородности. Тесто должно быть немного с комочками - не перемешивайте слишком сильно.</li>
+                                                        <li>Разогрейте смазанную маслом сковороду на среднем огне.</li>
+                                                        <li>Выливайте примерно ¼ стакана теста для каждого блина. Жарьте до появления пузырьков на поверхности (2-3 минуты).</li>
+                                                        <li>Переверните и жарьте с другой стороны до золотистого цвета (1-2 минуты).</li>
+                                                        <li>Подавайте стопкой, поливая кленовым сиропом и украшая ягодами и бананами.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для более воздушных блинов дайте тесту постоять 5-10 минут перед жаркой.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-lg-6 col-md-6 col-12 mb-4">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Творог с фруктами</h5>
-                                        <p><strong>Ингредиенты:</strong><br>
-                                            Творог, йогурт, мед, сезонные фрукты, орехи, семена льна.
-                                        </p>
-                                        <p><strong>Приготовление:</strong><br>
-                                            Смешать творог с йогуртом, выложить в тарелку, украсить фруктами и орехами.
-                                        </p>
+                                    <!-- Дополнительные рецепты для сладких завтраков -->
+                                    <div class="row mt-4">
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Французские круассаны</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 30 мин</span>
+                                                        <span class="difficulty difficulty-medium">Средняя</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>1 упаковка готового слоеного теста</li>
+                                                        <li>1 яйцо для смазывания</li>
+                                                        <li>2 ст. ложки сливочного масла</li>
+                                                        <li>Ореховая паста, джем или шоколад для начинки</li>
+                                                        <li>Сахарная пудра для посыпки</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>Разогрейте духовку до 200°C.</li>
+                                                        <li>Раскатайте тесто, разрежьте на треугольники.</li>
+                                                        <li>На широкую часть каждого треугольника выложите начинку.</li>
+                                                        <li>Сверните тесто в форме круассана, начиная с широкого края.</li>
+                                                        <li>Смажьте взбитым яйцом.</li>
+                                                        <li>Выпекайте 15-20 минут до золотистого цвета.</li>
+                                                        <li>Посыпьте сахарной пудрой и подавайте теплыми.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для аутентичных круассанов используйте тесто со сливочным маслом, а не маргарином.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Ватрушки с творогом</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 40 мин</span>
+                                                        <span class="difficulty difficulty-medium">Средняя</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты для теста:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>2 стакана муки</li>
+                                                        <li>100 г сливочного масла</li>
+                                                        <li>½ стакана сметаны</li>
+                                                        <li>1 яйцо</li>
+                                                        <li>1 ч. ложка разрыхлителя</li>
+                                                        <li>Щепотка соли</li>
+                                                    </ul>
+                                                    <h5>Для начинки:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>400 г творога</li>
+                                                        <li>2 яйца</li>
+                                                        <li>½ стакана сахара</li>
+                                                        <li>1 пакетик ванильного сахара</li>
+                                                        <li>Цедра половины лимона</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>Смешайте муку, масло, сметану, яйцо, разрыхлитель и соль.</li>
+                                                        <li>Замесите тесто, оставьте на 30 минут.</li>
+                                                        <li>Смешайте творог, яйца, сахар, ваниль и цедру.</li>
+                                                        <li>Разделите тесто на части, раскатайте колобки.</li>
+                                                        <li>Сделайте углубления, наполните творожной начинкой.</li>
+                                                        <li>Выпекайте при 180°C 25-30 минут.</li>
+                                                        <li>Посыпьте сахарной пудрой и подавайте.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для более нежного теста используйте сливочный сыр или рикотту.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- НОВЫЕ РЕЦЕПТЫ ДЛЯ СЛАДКИХ ЗАВТРАКОВ -->
+                                    <div class="row mt-4">
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Банановые панкейки</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 20 мин</span>
+                                                        <span class="difficulty difficulty-easy">Легко</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>2 спелых банана</li>
+                                                        <li>2 яйца</li>
+                                                        <li>1 стакан муки</li>
+                                                        <li>1 ч. ложка разрыхлителя</li>
+                                                        <li>1/2 стакана молока</li>
+                                                        <li>2 ст. ложки сахара</li>
+                                                        <li>1 ч. ложка ванильного сахара</li>
+                                                        <li>Щепотка соли</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>Бананы разомните вилкой.</li>
+                                                        <li>Добавьте яйца, сахар, молоко и перемешайте.</li>
+                                                        <li>Добавьте муку, разрыхлитель, ванильный сахар и соль.</li>
+                                                        <li>Перемешайте до однородной консистенции.</li>
+                                                        <li>Разогрейте сковороду, смажьте маслом.</li>
+                                                        <li>Выливайте тесто ложкой, жарьте по 2-3 минуты с каждой стороны.</li>
+                                                        <li>Подавайте с медом, ягодами или шоколадным соусом.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Для более пышных панкейков дайте тесту постоять 10 минут.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="recipe-card">
+                                                <div class="recipe-header">
+                                                    <h4>Шоколадная овсянка</h4>
+                                                    <div class="recipe-meta">
+                                                        <span class="meta-item"><i class="bi bi-clock"></i> 15 мин</span>
+                                                        <span class="difficulty difficulty-easy">Легко</span>
+                                                    </div>
+                                                </div>
+                                                <div class="recipe-body">
+                                                    <h5>Ингредиенты:</h5>
+                                                    <ul class="ingredients-list">
+                                                        <li>1/2 стакана овсяных хлопьев</li>
+                                                        <li>1 стакан молока</li>
+                                                        <li>1 ст. ложка какао</li>
+                                                        <li>1 ст. ложка меда</li>
+                                                        <li>1/2 ч. ложки ванильного экстракта</li>
+                                                        <li>Щепотка соли</li>
+                                                        <li>Шоколадная стружка для подачи</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="recipe-footer">
+                                                    <h5>Приготовление:</h5>
+                                                    <ol class="instructions-list">
+                                                        <li>В небольшой кастрюле смешайте овсяные хлопья, молоко, какао, мед, ваниль и соль.</li>
+                                                        <li>Доведите до кипения, уменьшите огонь.</li>
+                                                        <li>Варите 5-7 минут, помешивая.</li>
+                                                        <li>Когда овсянка загустеет, снимите с огня.</li>
+                                                        <li>Перелейте в миску, посыпьте шоколадной стружкой.</li>
+                                                        <li>Подавайте горячим.</li>
+                                                    </ol>
+                                                    <div class="tips-box">
+                                                        <h6><i class="bi bi-lightbulb"></i> Совет:</h6>
+                                                        <p>Можно добавить измельченные орехи или банан.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -424,109 +1642,6 @@
         </section>
 
         <section class="BgImage"></section>
-        
-        <!-- Секция для добавления рецептов -->
-        <section id="add-recipe" class="section-padding">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-12">
-                        <div class="recipe-form">
-                            <h2 class="form-title">Добавить свой рецепт</h2>
-                            <form id="recipeForm">
-                                <div class="mb-3">
-                                    <label for="recipeTitle" class="form-label">Название рецепта*</label>
-                                    <input type="text" class="form-control" id="recipeTitle" required 
-                                        placeholder="Введите название вашего рецепта">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeCategory" class="form-label">Категория*</label>
-                                    <select class="form-select" id="recipeCategory" required>
-                                        <option value="">Выберите категорию</option>
-                                        <option value="Завтрак">Завтрак</option>
-                                        <option value="Обед">Обед</option>
-                                        <option value="Ужин">Ужин</option>
-                                        <option value="Десерт">Десерт</option>
-                                        <option value="Постное">Постное</option>
-                                        <option value="Консервация">Консервация</option>
-                                        <option value="Выпечка">Выпечка</option>
-                                        <option value="Напитки">Напитки</option>
-                                        <option value="Салаты">Салаты</option>
-                                        <option value="Закуски">Закуски</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Изображение (опционально)</label>
-                                    <div class="file-input-wrapper">
-                                        <div class="file-input-label">
-                                            <i class="bi bi-upload me-2"></i>Выбрать файл
-                                            <input type="file" class="form-control" id="recipeImageFile" accept="image/*">
-                                        </div>
-                                        <span id="fileName" class="file-name">Файл не выбран</span>
-                                    </div>
-                                    <div class="form-text">Максимальный размер: 1MB (JPG, PNG)</div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeIngredients" class="form-label">Ингредиенты*</label>
-                                    <textarea class="form-control" id="recipeIngredients" rows="4" required 
-                                        placeholder="Перечислите ингредиенты, каждый с новой строки"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipeInstructions" class="form-label">Инструкция приготовления*</label>
-                                    <textarea class="form-control" id="recipeInstructions" rows="6" required 
-                                        placeholder="Опишите шаги приготовления"></textarea>
-                                </div>
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg">
-                                        <span id="submitSpinner" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                        Добавить рецепт
-                                    </button>
-                                </div>
-                            </form>
-                            
-                            <div id="recipePreview" class="recipe-preview mt-4">
-                                <h4>Предварительный просмотр:</h4>
-                                <div class="card recipe-card">
-                                    <img id="previewImage" src="images/default-recipe.jpg" class="card-img-top" 
-                                        alt="Предварительный просмотр">
-                                    <div class="card-body">
-                                        <h5 id="previewTitle" class="card-title">Название рецепта</h5>
-                                        <p id="previewCategory" class="card-text text-muted">Категория: не выбрано</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Раздел для отображения пользовательских рецептов -->
-        <section id="user-recipes" class="section-padding bg-white">
-            <div class="container">
-                <div class="row">
-                    <h2 class="text-center mb-lg-5 mb-4">Рецепты от пользователей</h2>
-                    
-                    <div id="loadingRecipes">
-                        <div class="spinner-border text-success" role="status">
-                            <span class="visually-hidden">Загрузка...</span>
-                        </div>
-                        <p class="mt-3">Загружаем рецепты...</p>
-                    </div>
-                    
-                    <div id="recipesContainer" class="row">
-                        <!-- Сюда будут добавляться рецепты через JS -->
-                    </div>
-                    
-                    <div id="noRecipesMessage" class="col-12 text-center d-none">
-                        <p>Пока нет добавленных рецептов. Будьте первым!</p>
-                    </div>
-                    
-                    <div class="text-center mt-4">
-                        <button id="loadMoreBtn" class="btn btn-outline-success d-none">Показать еще</button>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
     <footer class="site-footer section-padding">
@@ -534,6 +1649,51 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="text-white mb-4 me-5">Хрустящая кухня</h4>
+                    <div style="
+                      background-color: #fafafa;
+                      padding: 25px 20px;
+                      text-align: center;
+                      font-size: 14px;
+                      color: #777;
+                      border-top: 1px solid #f0f0f0;
+                    ">
+                      <p style="margin: 0 0 10px 0; font-weight: 500; color: #555;">
+                        © 2025 Домашние кулинарные рецепты
+                      </p>
+                      
+                      <nav style="margin-top: 15px;">
+                        <a href="about-ru.html" style="
+                          margin: 0 12px;
+                          color: #666;
+                          text-decoration: none;
+                          transition: color 0.2s;
+                        ">О нас</a>
+                        
+                        <a href="mailto:korovinkonstantin0@gmail.com" style="
+                          margin: 0 12px;
+                          color: #666;
+                          text-decoration: none;
+                          transition: color 0.2s;
+                        ">Контакты</a>
+                        
+                        <a href="privacy-ru.html" style="
+                          margin: 0 12px;
+                          color: #666;
+                          text-decoration: none;
+                          transition: color 0.2s;
+                        ">Политика конфиденциальности</a>
+                      </nav>
+                      
+                      <div style="margin-top: 20px; color: #aaa; font-size: 12px;">
+                        Все права защищены
+                      </div>
+                    </div>
+                    <div style="text-align:center; margin-top: 2rem;">
+                      <img 
+                        src="https://hits.sh/crispy-cuisine-7334c.web.app.svg?style=flat-square&label=Просмотры&color=blue&logo=github" 
+                        alt="Просмотры"
+                      />
+                    </div>
                 </div>
             </div>
         </div>
@@ -543,378 +1703,5 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/custom.js"></script>
-    
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    
-    <script>
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCmO3UwOLexKfUsNBiDhfVsJ7WWS9K_ft4",
-  authDomain: "crispy-cuisine-7334c.firebaseapp.com",
-  projectId: "crispy-cuisine-7334c",
-  storageBucket: "crispy-cuisine-7334c.firebasestorage.app",
-  messagingSenderId: "18003644183",
-  appId: "1:18003644183:web:4abb0800c18b00d7b83152",
-  measurementId: "G-250S27R82Y"
-};
-
-        // Инициализация Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        
-        // Глобальные переменные
-        let lastVisible = null;
-        let selectedFile = null;
-        const PAGE_SIZE = 6; // Количество рецептов за одну загрузку
-
-        $(document).ready(function() {
-            // Загрузка первых рецептов
-            loadRecipes();
-            
-            // Обработчики событий
-            $('#recipeForm').submit(handleFormSubmit);
-            $('#recipeImageFile').on('change', handleImageUpload);
-            $('#recipeTitle, #recipeCategory').on('input change', updatePreview);
-            $('#loadMoreBtn').on('click', loadMoreRecipes);
-        });
-
-        // Обработка загрузки изображения
-        function handleImageUpload(e) {
-            const file = e.target.files[0];
-            if (!file) {
-                $('#fileName').text('Файл не выбран');
-                selectedFile = null;
-                return;
-            }
-
-            // Проверка типа файла
-            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
-                alert('Пожалуйста, выберите файл в формате JPG или PNG.');
-                resetFileInput();
-                return;
-            }
-
-            // Проверка размера файла
-            if (file.size > 1048576) {
-                alert('Файл слишком большой. Максимальный размер 1MB.');
-                resetFileInput();
-                return;
-            }
-
-            $('#fileName').text(file.name);
-            
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                selectedFile = event.target.result;
-                updatePreview();
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function resetFileInput() {
-            $('#recipeImageFile').val('');
-            $('#fileName').text('Файл не выбран');
-        }
-
-        function updatePreview() {
-            const title = $('#recipeTitle').val() || 'Название рецепта';
-            const category = $('#recipeCategory').val() || 'не выбрано';
-            
-            if (selectedFile) {
-                $('#previewImage').attr('src', selectedFile);
-            }
-            
-            $('#previewTitle').text(title);
-            $('#previewCategory').text('Категория: ' + category);
-            $('#recipePreview').show();
-        }
-
-        // Загрузка изображения в Cloudinary
-        async function uploadImage(file) {
-            try {
-                const cloudName = "dhfkb6xv2";
-                const uploadPreset = "unsigned_preset";
-                
-                const formData = new FormData();
-                formData.append("file", file);
-                formData.append("upload_preset", uploadPreset);
-                formData.append("folder", "recipe_images");
-                
-                const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-                    method: "POST",
-                    body: formData
-                });
-                
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error.message || "Ошибка Cloudinary");
-                }
-                
-                const data = await response.json();
-                
-                if (data.secure_url) {
-                    // Добавляем параметры для оптимизации
-                    return data.secure_url.replace('/upload/', '/upload/q_auto,f_auto/');
-                } else {
-                    throw new Error("Не удалось получить URL изображения");
-                }
-            } catch (error) {
-                console.error("Ошибка загрузки изображения:", error);
-                throw new Error("Не удалось загрузить изображение");
-            }
-        }
-
-        // Обработка отправки формы
-        async function handleFormSubmit(e) {
-            e.preventDefault();
-            
-            // Показываем спиннер
-            $('#submitSpinner').show();
-            $('#recipeForm button').prop('disabled', true);
-            
-            try {
-                const fileInput = document.getElementById('recipeImageFile');
-                const file = fileInput.files[0];
-                
-                let imageUrl = 'images/default-recipe.jpg';
-                
-                // Загружаем изображение, если оно есть
-                if (file) {
-                    imageUrl = await uploadImage(file);
-                }
-                
-                // Создаем объект рецепта
-                const recipe = {
-                    title: $('#recipeTitle').val(),
-                    category: $('#recipeCategory').val(),
-                    image: imageUrl,
-                    ingredients: $('#recipeIngredients').val(),
-                    instructions: $('#recipeInstructions').val(),
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                };
-                
-                // Сохраняем в Firestore
-                await db.collection("recipes").add(recipe);
-                
-                // Сброс формы
-                $('#recipeForm')[0].reset();
-                $('#recipePreview').hide();
-                resetFileInput();
-                selectedFile = null;
-                
-                // Перезагружаем рецепты
-                await loadRecipes();
-                
-                alert('Рецепт успешно добавлен!');
-                
-                // Прокрутка к новому рецепту
-                $('html, body').animate({
-                    scrollTop: $('#user-recipes').offset().top - 100
-                }, 800);
-            } catch (error) {
-                console.error("Ошибка сохранения рецепта:", error);
-                alert('Произошла ошибка: ' + error.message);
-            } finally {
-                // Скрываем спиннер и активируем кнопку
-                $('#submitSpinner').hide();
-                $('#recipeForm button').prop('disabled', false);
-            }
-        }
-
-        // Загрузка рецептов
-        async function loadRecipes() {
-            try {
-                // Показываем индикатор загрузки
-                $('#loadingRecipes').show();
-                $('#recipesContainer').empty();
-                $('#noRecipesMessage').addClass('d-none');
-                $('#loadMoreBtn').addClass('d-none');
-                
-                // Запрос к Firestore
-                const query = db.collection("recipes")
-                    .orderBy("createdAt", "desc")
-                    .limit(PAGE_SIZE);
-                
-                const snapshot = await query.get();
-                
-                // Скрываем индикатор загрузки
-                $('#loadingRecipes').hide();
-                
-                if (snapshot.empty) {
-                    $('#noRecipesMessage').removeClass('d-none');
-                    return;
-                }
-                
-                // Сохраняем последний документ для пагинации
-                lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                
-                // Отображаем рецепты
-                displayRecipes(snapshot);
-                
-                // Показываем кнопку "Загрузить еще", если есть еще рецепты
-                if (snapshot.size === PAGE_SIZE) {
-                    $('#loadMoreBtn').removeClass('d-none');
-                }
-            } catch (error) {
-                console.error("Ошибка загрузки рецептов:", error);
-                $('#loadingRecipes').html('<p class="text-danger">Ошибка загрузки рецептов. Попробуйте обновить страницу.</p>');
-            }
-        }
-
-        // Загрузка дополнительных рецептов
-        async function loadMoreRecipes() {
-            try {
-                $('#loadMoreBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Загрузка...');
-                
-                const query = db.collection("recipes")
-                    .orderBy("createdAt", "desc")
-                    .startAfter(lastVisible)
-                    .limit(PAGE_SIZE);
-                
-                const snapshot = await query.get();
-                
-                if (snapshot.empty) {
-                    $('#loadMoreBtn').hide();
-                    return;
-                }
-                
-                // Обновляем последний документ
-                lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                
-                // Добавляем новые рецепты
-                displayRecipes(snapshot);
-                
-                // Скрываем кнопку, если больше нет рецептов
-                if (snapshot.size < PAGE_SIZE) {
-                    $('#loadMoreBtn').hide();
-                } else {
-                    $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
-                }
-            } catch (error) {
-                console.error("Ошибка загрузки рецептов:", error);
-                $('#loadMoreBtn').prop('disabled', false).text('Показать еще');
-                alert('Ошибка загрузки дополнительных рецептов');
-            }
-        }
-
-        // Отображение рецептов на странице
-        function displayRecipes(snapshot) {
-            const container = $('#recipesContainer');
-            
-            snapshot.forEach(doc => {
-                const recipe = doc.data();
-                const recipeId = doc.id;
-                
-                // Форматируем дату
-                const date = recipe.createdAt ? 
-                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                    }) : 'Дата не указана';
-                
-                const recipeHtml = `
-                <div class="col-lg-4 col-md-6 col-12 mb-4">
-                    <div class="menu-thumb recipe-card">
-                        <div class="menu-image-wrap position-relative">
-                            <a href="javascript:void(0);" onclick="showRecipeDetails('${recipeId}')">
-                                <img src="${recipe.image}" class="img-fluid menu-image" alt="${recipe.title}" loading="lazy">
-                                <span class="user-recipe-tag bg-success">Пользовательский</span>
-                            </a>
-                        </div>
-                        <div class="menu-info d-flex flex-wrap align-items-center">
-                            <h4 class="mb-0">${recipe.title}</h4>
-                            <span class="text-muted small ms-2">${date}</span>
-                        </div>
-                    </div>
-                </div>`;
-                
-                container.append(recipeHtml);
-            });
-        }
-
-        // Показ деталей рецепта
-        window.showRecipeDetails = async function(recipeId) {
-            try {
-                const doc = await db.collection("recipes").doc(recipeId).get();
-                
-                if (!doc.exists) {
-                    alert('Рецепт не найден');
-                    return;
-                }
-                
-                const recipe = doc.data();
-                
-                // Форматируем дату
-                const date = recipe.createdAt ? 
-                    new Date(recipe.createdAt.toDate()).toLocaleDateString('ru-RU', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    }) : 'Дата не указана';
-                
-                // Создаем HTML для модального окна
-                const modalHtml = `
-                <div class="modal fade recipe-modal" id="recipeDetailModal" tabindex="-1">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">${recipe.title}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-5 mb-3 mb-md-0">
-                                        <img src="${recipe.image}" class="img-fluid rounded mb-3" alt="${recipe.title}">
-                                        <div class="recipe-meta">
-                                            <p><strong>Категория:</strong> ${recipe.category || 'Не указана'}</p>
-                                            <p><strong>Добавлено:</strong> ${date}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="mb-4">
-                                            <h5>Ингредиенты:</h5>
-                                            <div class="recipe-ingredients">${formatText(recipe.ingredients)}</div>
-                                        </div>
-                                        <div>
-                                            <h5>Инструкция:</h5>
-                                            <div class="recipe-instructions">${formatText(recipe.instructions)}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-                
-                // Добавляем модальное окно в DOM
-                $('body').append(modalHtml);
-                
-                // Показываем модальное окно
-                const modal = new bootstrap.Modal(document.getElementById('recipeDetailModal'));
-                modal.show();
-                
-                // Удаляем модальное окно после закрытия
-                $('#recipeDetailModal').on('hidden.bs.modal', function() {
-                    $(this).remove();
-                });
-            } catch (error) {
-                console.error("Ошибка загрузки рецепта:", error);
-                alert('Не удалось загрузить рецепт');
-            }
-        }
-
-        // Форматирование текста (замена переносов строк)
-        function formatText(text) {
-            return text.replace(/\n/g, '<br>');
-        }
-    </script>
 </body>
 </html>
