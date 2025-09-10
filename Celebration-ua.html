@@ -1,879 +1,1746 @@
 <!doctype html>
 <html lang="uk">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Рецепти для святкового столу: урочисті страви української та світової кухні">
-    <meta name="author" content="Хрустка кухня">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Рецепти для святкового столу: урочисті страви української та світової кухні"
+    />
+    <meta name="author" content="Хрустка кухня" />
     <title>Хрустка кухня - Святкові рецепти</title>
-    
+
     <!-- CSS FILES -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-icons.css" rel="stylesheet">
-    <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+    <link href="css/tooplate-crispy-kitchen.css" rel="stylesheet" />
     <style>
-        .recipe-card {
-            border-radius: 0.5rem;
-            overflow: hidden;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            transition: transform 0.3s ease;
-            height: 100%;
-            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-            border: 1px solid #e9ecef;
-        }
-        
-        .recipe-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-        }
-        
+      .recipe-card {
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        transition: transform 0.3s ease;
+        height: 100%;
+        background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+        border: 1px solid #e9ecef;
+      }
+
+      .recipe-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      }
+
+      .recipe-content {
+        background-color: #f8f9fa;
+        border-radius: 0.5rem;
+        padding: 2rem;
+      }
+
+      .recipe-header {
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid #dc3545;
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        padding: 2rem;
+        border-radius: 0.5rem;
+        color: #fff;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+      }
+
+      .recipe-image {
+        border-radius: 0.5rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      }
+
+      .ingredients-list {
+        background-color: white;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      }
+
+      .recipe-tags {
+        margin-top: 1rem;
+      }
+
+      .tag {
+        display: inline-block;
+        background-color: #ffe6e6;
+        color: #dc3545;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.875rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .nutrition-info {
+        background-color: white;
+        border-left: 4px solid #dc3545;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+      }
+
+      .recipe-filter {
+        background-color: white;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        margin-bottom: 2rem;
+        border: 1px solid #e9ecef;
+      }
+
+      .filter-btn {
+        margin: 0.25rem;
+      }
+
+      .rating {
+        color: #fd7e14;
+        margin-bottom: 0.5rem;
+      }
+
+      .recipe-accordion .accordion-button:not(.collapsed) {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      .difficulty-easy {
+        color: #198754;
+      }
+
+      .difficulty-medium {
+        color: #fd7e14;
+      }
+
+      .difficulty-hard {
+        color: #dc3545;
+      }
+
+      .print-btn,
+      .share-btn {
+        margin-left: 0.5rem;
+      }
+
+      .cooking-time {
+        background-color: #ffe6e6;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        display: inline-block;
+        margin-bottom: 1rem;
+        color: #dc3545;
+      }
+
+      @media (max-width: 768px) {
         .recipe-content {
-            background-color: #f8f9fa;
-            border-radius: 0.5rem;
-            padding: 2rem;
+          padding: 1rem;
         }
-        
+
         .recipe-header {
-            padding-bottom: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #dc3545;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            padding: 2rem;
-            border-radius: 0.5rem;
-            color: #fff;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+          margin-bottom: 1.5rem;
         }
-        
-        .recipe-image {
-            border-radius: 0.5rem;
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-        }
-        
-        .ingredients-list {
-            background-color: white;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-        }
-        
-        .recipe-tags {
-            margin-top: 1rem;
-        }
-        
-        .tag {
-            display: inline-block;
-            background-color: #ffe6e6;
-            color: #dc3545;
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            font-size: 0.875rem;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .nutrition-info {
-            background-color: white;
-            border-left: 4px solid #dc3545;
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0;
-        }
-        
-        .recipe-filter {
-            background-color: white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            margin-bottom: 2rem;
-            border: 1px solid #e9ecef;
-        }
-        
+
         .filter-btn {
-            margin: 0.25rem;
+          margin-bottom: 0.5rem;
         }
-        
-        .rating {
-            color: #fd7e14;
-            margin-bottom: 0.5rem;
-        }
-        
-        .recipe-accordion .accordion-button:not(.collapsed) {
-            background-color: #dc3545;
-            color: white;
-        }
-        
-        .difficulty-easy { color: #198754; }
-        .difficulty-medium { color: #fd7e14; }
-        .difficulty-hard { color: #dc3545; }
-        
-        .print-btn, .share-btn {
-            margin-left: 0.5rem;
-        }
-        
-        .cooking-time {
-            background-color: #ffe6e6;
-            padding: 0.5rem 1rem;
-            border-radius: 1rem;
-            display: inline-block;
-            margin-bottom: 1rem;
-            color: #dc3545;
-        }
-        
-        @media (max-width: 768px) {
-            .recipe-content {
-                padding: 1rem;
-            }
-            
-            .recipe-header {
-                margin-bottom: 1.5rem;
-            }
-            
-            .filter-btn {
-                margin-bottom: 0.5rem;
-            }
-        }
-        
-        .new-recipe-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 5;
-        }
-        
-        .serving-size {
-            display: inline-block;
-            background-color: #e9ecef;
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            font-size: 0.875rem;
-            margin-right: 0.5rem;
-        }
-        
-        .filterable {
-            transition: all 0.3s ease;
-        }
-        
-        .hidden {
-            display: none !important;
-        }
-        
-        .step-number {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            background-color: #dc3545;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 30px;
-            margin-right: 10px;
-        }
-        
-        .detail-box {
-            background-color: #f8f9fa;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid #dc3545;
-        }
-        
-        .holiday-theme {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            color: white;
-            padding: 3rem 0;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        
-        .festive-decoration {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%23dc3545' fill-opacity='0.2' d='M0 0h20v20H0V0zm10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm0-12a5 5 0 1 1 0 10 5 5 0 0 1 0-10z'/%3E%3C/svg%3E");
-        }
+      }
+
+      .new-recipe-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 5;
+      }
+
+      .serving-size {
+        display: inline-block;
+        background-color: #e9ecef;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.875rem;
+        margin-right: 0.5rem;
+      }
+
+      .filterable {
+        transition: all 0.3s ease;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .step-number {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-color: #dc3545;
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 30px;
+        margin-right: 10px;
+      }
+
+      .detail-box {
+        background-color: #f8f9fa;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid #dc3545;
+      }
+
+      .holiday-theme {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        color: white;
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .festive-decoration {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%23dc3545' fill-opacity='0.2' d='M0 0h20v20H0V0zm10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm0-12a5 5 0 1 1 0 10 5 5 0 0 1 0-10z'/%3E%3C/svg%3E");
+      }
     </style>
-</head>
+  </head>
 
-<body class="festive-decoration">
+  <body class="festive-decoration">
     <nav class="navbar navbar-expand-lg bg-white shadow-lg">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <a class="navbar-brand" href="index.html">
-                Хрустка кухня
-            </a>
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="d-lg-none"></div>
+        <a class="navbar-brand" href="index.html"> Хрустка кухня </a>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Головна</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="top-ua.html">Перше</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="top2-ua.html">Друге</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="desert-ua.html">Десерт</a>
-                    </li>
+        <div class="d-lg-none"></div>
 
-                    <li class="nav-item">
-                        <a href="Celebration-ru.html"><span class="category-tag me-3 bg-info">RU</span></a>
-                    </li>
-                </ul>
-            </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Головна</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="top-ua.html">Перше</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="top2-ua.html">Друге</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="desert-ua.html">Десерт</a>
+            </li>
+
+            <li class="nav-item">
+              <a href="Celebration-ru.html"
+                ><span class="category-tag me-3 bg-info">RU</span></a
+              >
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
     <main>
-        <section class="holiday-theme">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h2>СВЯТКОВИЙ СТІЛ</h2>
-                        <p class="text-center">Урочисті страви для особливих подій та святочних обідів</p>
-                    </div>
-                </div>
+      <section class="holiday-theme">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <h2>СВЯТКОВИЙ СТІЛ</h2>
+              <p class="text-center">
+                Урочисті страви для особливих подій та святочних обідів
+              </p>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <section class="news-detail section-padding pt-0">
-            <div class="container">
-                <!-- Фільтр рецептів -->
-                <div class="recipe-filter">
-                    <h5 class="mb-3">Фільтр рецептів:</h5>
-                    <div class="d-flex flex-wrap">
-                        <button class="btn btn-outline-danger filter-btn active" data-filter="all">Всі</button>
-                        <button class="btn btn-outline-danger filter-btn" data-filter="newyear">Новорічні</button>
-                        <button class="btn btn-outline-danger filter-btn" data-filter="easter">Великодні</button>
-                        <button class="btn btn-outline-danger filter-btn" data-filter="birthday">День народження</button>
-                        <button class="btn btn-outline-danger filter-btn" data-filter="meat">М'ясні</button>
-                        <button class="btn btn-outline-danger filter-btn" data-filter="fish">Рибні</button>
-                        <button class="btn btn-outline-danger filter-btn" data-filter="easy">Легкі</button>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-lg-12 col-12">
-                        <div class="recipe-header text-center">
-                            <h1 class="mb-3">Фарширована курка з яблуками та горіхами</h1>
-                            <div class="d-flex justify-content-center align-items-center flex-wrap">
-                                <div class="rating">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-half"></i>
-                                    <span class="ms-2">4.5 (98)</span>
-                                </div>
-                                <div class="cooking-time">
-                                    <i class="bi bi-clock"></i> Час приготування: 2 год
-                                </div>
-                                <div class="serving-size">
-                                    <i class="bi bi-people"></i> 6-8 порцій
-                                </div>
-                            </div>
-                            <div class="recipe-tags">
-                                <span class="tag">Святкова страва</span>
-                                <span class="tag">Урочиста</span>
-                                <span class="tag">Ароматна</span>
-                                <span class="tag difficulty-medium">Середня складність</span>
-                            </div>
-                            <div class="mt-3">
-                                <button class="btn btn-outline-secondary print-btn" onclick="window.print()">
-                                    <i class="bi bi-printer"></i> Друк
-                                </button>
-                                <button class="btn btn-outline-primary share-btn" id="shareRecipe">
-                                    <i class="bi bi-share"></i> Поділитися
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <img src="images/news/ivan-torres-MQUqbmszGGM-unsplash.jpg" class="img-fluid recipe-image w-100 mb-4" alt="Фарширована курка з яблуками">
-                        
-                        <div class="recipe-content">
-                            <div class="row">
-                                <div class="col-lg-8">
-                                    <h3 class="mb-4">Ідеальна святкова страва для родинного обіду</h3>
-                                    <p>Фарширована курка - це класична святкова страва, яка прекрасно підходить для особливих випадків. Ніжне м'ясо курки в поєднанні з солодкувато-кислими яблуками та горіховою ноткою створює неперевершений смаковий букет.</p>
-                                    <p>Ця страва особливо популярна під час святкових обідів, таких як Різдво, Новий рік чи Великдень. Вона не лише смачна, але й дуже презентабельна, що робить її ідеальним центром святкового столу.</p>
-                                    
-                                    <div class="nutrition-info">
-                                        <h5>Поживна цінность (на порцію):</h5>
-                                        <p>Калорійність: 350-400 ккал | Білки: 35г | Жири: 18г | Вуглеводи: 15г</p>
-                                    </div>
-                                    
-                                    <h4 class="mb-3">Фарширована курка з яблуками та горіхами</h4>
-                                    <div class="ingredients-list">
-                                        <h5>Інгредієнти:</h5>
-                                        <ul class="list">
-                                            <li class="list-item">1 ціла курка (приблизно 1,5-2 кг)</li>
-                                            <li class="list-item">2 великих яблука (краще кисло-солодкі сорти)</li>
-                                            <li class="list-item">1 цибулина</li>
-                                            <li class="list-item">100 г волоських горіхів</li>
-                                            <li class="list-item">50 г родзинок</li>
-                                            <li class="list-item">3 ст. л. меду</li>
-                                            <li class="list-item">2 ст. л. гірчиці</li>
-                                            <li class="list-item">3 зубчики часнику</li>
-                                            <li class="list-item">Сіль, перець за смаком</li>
-                                            <li class="list-item">Сушений розмарин і чебрець</li>
-                                            <li class="list-item">50 г вершкового масла</li>
-                                            <li class="list-item">Оливкова олія для змащування</li>
-                                        </ul>
-                                    </div>
-                                    
-                                    <h5>Детальний спосіб приготування:</h5>
-                                    <div class="detail-box">
-                                        <p><strong>Підготовка курки (20 хвилин):</strong></p>
-                                        <p><span class="step-number">1</span> Курку ретельно промити і обсушити паперовими рушниками. Зовні і всередині натерти сіллю, перцем, розмарином і чебрецем.</p>
-                                        <p><span class="step-number">2</span> Змішати мед, гірчицю і подрібнений часник. Обмазати курку цією сумішшю з усіх боків і залишити маринуватися на 30 хвилин.</p>
-                                    </div>
-                                    
-                                    <div class="detail-box">
-                                        <p><strong>Приготування начинки (15 хвилин):</strong></p>
-                                        <p><span class="step-number">3</span> Яблука очистити від шкірки і насіння, нарізати невеликими кубиками.</p>
-                                        <p><span class="step-number">4</span> Цибулю дрібно нарізати і обсмажити на вершковому маслі до прозорості.</p>
-                                        <p><span class="step-number">5</span> Додати яблука, родзинки і подрібнені горіхи. Смажити 5-7 хвилин, помішуючи.</p>
-                                        <p><span class="step-number">6</span> Остудити начинку і наповнити нею курку. З'єднати краї шкіри за допомогою зубочисток або кулінарної нитки.</p>
-                                    </div>
-                                    
-                                    <div class="detail-box">
-                                        <p><strong>Запікання (1,5 години):</strong></p>
-                                        <p><span class="step-number">7</span> Духовку розігріти до 180°C.</p>
-                                        <p><span class="step-number">8</span> Курку покласти в форму для запікання, змащену олією. Зверху покласти шматочки вершкового масла.</p>
-                                        <p><span class="step-number">9</span> Запікати 1,5 години, періодично поливаючи соком, що виділяється.</p>
-                                        <p><span class="step-number">10</span> Готовність перевірити за допомогою кулінарного термометра (внутрішня температура повинна бути 75°C) або проколоти ніжкою - сік має бути прозорим.</p>
-                                    </div>
-                                    
-                                    <div class="detail-box">
-                                        <p><strong>Подача:</strong></p>
-                                        <p>Дати курці відпочити 10-15 хвилин перед подачею. Подавати з запеченими овочами або картопляним пюре. Прикрасити свіжою зеленню.</p>
-                                        <p><strong>Порада:</strong> Для більш хрусткої шкірки за 15 хвилин до кінця приготування збільште температуру духовки до 200°C.</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-lg-4">
-                                    <div class="p-3 bg-light rounded mb-4">
-                                        <h5>Поради шеф-кухаря:</h5>
-                                        <ul>
-                                            <li>Використовуйте свіжу, а не морожену курку для кращого смаку</li>
-                                            <li>Дайте курці кімнатної температури перед приготуванням</li>
-                                            <li>Не наповнюйте курку начинкою занадто щільно</li>
-                                            <li>Дайте м'ясу "відпочити" після приготування перед порізуванням</li>
-                                        </ul>
-                                    </div>
-                                    
-                                    <div class="p-3 bg-light rounded">
-                                        <h5>Варіації:</h5>
-                                        <ul>
-                                            <li>З рисом: замініть яблука рисом, зваренним до напівготовності</li>
-                                            <li>З грибами: додайте обсмажені гриби до начинки</li>
-                                            <li>З апельсинами: додайте шматочки апельсина для цитрусової нотки</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <h4 class="mt-5 mb-4">Інші святкові страви з птиці</h4>
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <div class="recipe-card p-4 bg-light h-100">
-                                        <h5>Качка з апельсиновим соусом</h5>
-                                        <p><strong>Особливості:</strong> Ніжне м'ясо качки з солодкувато-кислим апельсиновим соусом.</p>
-                                        <p><strong>Інгредієнти:</strong> Качка, апельсини, мед, соєвий соус, імбир, часник, спеції.</p>
-                                        <div class="detail-box mt-3">
-                                            <p><strong>Приготування:</strong> Качку натерти спеціями, запікати 1,5 години. Приготувати соус з апельсинового соку, цедри, меду та спецій. Полити качку соусом за 15 хвилин до готовності.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6 mb-4">
-                                    <div class="recipe-card p-4 bg-light h-100">
-                                        <h5>Индичка з клюквеним соусом</h5>
-                                        <p><strong>Особливості:</strong> Традиційна святкова страва з пікантним клюквеним соусом.</p>
-                                        <p><strong>Інгредієнти:</strong> Індичка, клюква, апельсиновий сік, цукор, корица, гвоздика.</p>
-                                        <div class="detail-box mt-3">
-                                            <p><strong>Приготування:</strong> Индичку запікати при 160°C 3-4 години. Для соусу зварити клюкву з апельсиновим соком, цукром і спеціями до загуснення.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <h3 class="mb-4 mt-5 text-danger">Святкові закуски та салати</h3>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="newyear birthday">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Оселедець під шубою</h5>
-                                        <p><strong>Інгредієнти:</strong><br>
-                                            Оселедець (2 шт.), картопля (4 шт.), морква (3 шт.), буряк (2 шт.), яйця (4 шт.), цибуля (1 шт.), майонез.
-                                        </p>
-                                        <div class="detail-box mt-3">
-                                            <p><strong>Детальне приготування:</strong></p>
-                                            <p><span class="step-number">1</span> Картоплю, моркву, буряк і яйця відварити до готовності, охолодити і очистити.</p>
-                                            <p><span class="step-number">2</span> Оселедець очистити від шкірки і кісток, нарізати дрібними кубиками.</p>
-                                            <p><span class="step-number">3</span> Цибулю дрібно нарізати, збризнути оцтом.</p>
-                                            <p><span class="step-number">4</span> Картоплю, моркву і буряк натерти на крупній тертці окремо.</p>
-                                            <p><span class="step-number">5</span> Збирати салат шарами: картопля, оселедець, цибуля, морква, яйця, буряк. Кожен шар змащувати майонезом.</p>
-                                            <p><span class="step-number">6</span> Прикрасити зеленню і залишити в холодильнику на 2-3 години для пропитки.</p>
-                                            <p><strong>Час приготування:</strong> 1,5 години + час для пропитки. Класична новорічна страва.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="newyear birthday">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Салат "Цезар" з куркою</h5>
-                                        <p><strong>Інгредієнти:</strong><br>
-                                            Куряче філе (300 г), айсберг (1 шт.), помідори чері (150 г), пармезан (70 г), крутони (100 г), соус "Цезар", оливкова олія, часник.
-                                        </p>
-                                        <div class="detail-box mt-3">
-                                            <p><strong>Детальне приготування:</strong></p>
-                                            <p><span class="step-number">1</span> Куряче філе обсмажити на олії з часником до золотистої скоринки.</p>
-                                            <p><span class="step-number">2</span> Листя салата порвати руками, помідори чері розрізати навпіл.</p>
-                                            <p><span class="step-number">3</span> Пармезан натерти на великій тертці.</p>
-                                            <p><span class="step-number">4</span> Приготувати крутони: бaguette нарізати кубиками, змішати з олією і часником, запікати 10 хвилин при 180°C.</p>
-                                            <p><span class="step-number">5</span> З'єднати всі інгредієнти, заправити соусом, посипати пармезаном.</p>
-                                            <p><strong>Час приготування:</strong> 30 хвилин. Популярна страва для будь-якого свята.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="newyear birthday">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Канапки з червоною ікрою</h5>
-                                        <p><strong>Інгредієнти:</strong><br>
-                                            Білий хліб або багет, червона ікра (100 г), вершкове масло, лимон, кріп.
-                                        </p>
-                                        <div class="detail-box mt-3">
-                                            <p><strong>Детальне приготування:</strong></p>
-                                            <p><span class="step-number">1</span> Хліб нарізати невеликими шматочками, можна використати формочки для печива.</p>
-                                            <p><span class="step-number">2</span> Злегка обсмажити хліб або підсушіть у духовці.</p>
-                                            <p><span class="step-number">3</span> Змазати кожен шматочок вершковим маслом.</p>
-                                            <p><span class="step-number">4</span> Аккуратно викласти ікру на канапки.</p>
-                                            <p><span class="step-number">5</span> Прикрасити гілочками кропу і шматочками лимона.</p>
-                                            <p><strong>Час приготування:</strong> 20 хвилин. Елегантна закуска для святкового столу.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="easy">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Фаршировані яйця</h5>
-                                        <p><strong>Інгредієнти:</strong><br>
-                                            Яйця (8 шт.), майонез (3 ст. л.), гірчиця (1 ч. л.), сіль, перець, паприка, оливки, зелень.
-                                        </p>
-                                        <div class="detail-box mt-3">
-                                            <p><strong>Детальне приготування:</strong></p>
-                                            <p><span class="step-number">1</span> Яйця зварити вкруту, охолодити, очистити.</p>
-                                            <p><span class="step-number">2</span> Розрізати яйця навпіл, вийняти жовтки.</p>
-                                            <p><span class="step-number">3</span> Жовтки розімніть виделкою, додати майонез, гірчицю, сіль, перець.</p>
-                                            <p><span class="step-number">4</span> Отриману масу викласти в половинки білків.</p>
-                                            <p><span class="step-number">5</span> Прикрасити паприкою, оливками, зеленню.</p>
-                                            <p><strong>Час приготування:</strong> 25 хвилин. Проста і популярна закуска.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <h3 class="mb-4 mt-5 text-danger">Святкові м'ясні страви</h3>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="meat newyear">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Свиняче реберця в медово-гірчичному маринаді</h5>
-                                        <p><strong>Інгредієнти:</strong><br>
-                                            Свинячі реберця (1 кг), мед (3 ст. л.), гірчиця (2 ст. л.), соєвий соус (4 ст. л.), часник (4 зубчики), цибуля (1 шт.), спеції.
-                                        </p>
-                                        <div class="detail-box mt-3">
-                                            <p><strong>Детальне приготування:</strong></p>
-                                            <p><span class="step-number">1</span> Приготувати маринад: змішати мед, гірчицю, соєвий соус, подрібнений часник, спеції.</p>
-                                            <p><span class="step-number">2</span> Реберця покласти в маринад, залишити на 2-4 години (або на ніч у холодильнику).</p>
-                                            <p><span class="step-number">3</span> Цибулю нарізати кільцями, покласти на дно форми для запікання.</p>
-                                            <p><span class="step-number">4</span> Викласти реберця на цибулю, полити маринадом.</p>
-                                            <p><span class="step-number">5</span> Запікати при 180°C 1-1,5 години, періодично поливаючи соком.</p>
-                                            <p><span class="step-number">6</span> За 10 хвилин до готовності можна збільшити температуру для утворення скоринки.</p>
-                                            <p><strong>Час приготування:</strong> 1,5 години + час маринування. Соковита та ароматна страва.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="meat birthday">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Бефстроганов з телятини</h5>
-                                        <p><strong>Інгредієнти:</strong><br>
-                                            Телятина (600 г), цибуля (2 шт.), печериці (300 г), сметана (200 г), томатна паста (1 ст. л.), борошно (1 ст. л.), бульйон (200 мл), вершкове масло, спеції.
-                                        </p>
-                                        <div class="detail-box mt-3">
-                                            <p><strong>Детальне приготування:</strong></p>
-                                            <p><span class="step-number">1</span> М'ясо нарізати тонкими смужками, відбити, посолити, поперчити.</p>
-                                            <p><span class="step-number">2</span> Обсмажити м'ясо на сильному вогні до утворення скоринки.</p>
-                                            <p><span class="step-number">3</span> Цибулю нарізати півкільцями, гриби - пластинками.</p>
-                                            <p><span class="step-number">4</span> На окремій сковороді обсмажити цибулю, додати гриби, смажити до випаровування рідини.</p>
-                                            <p><span class="step-number">5</span> З'єднати м'ясо, цибулю і гриби. Додати борошно, перемішати.</p>
-                                            <p><span class="step-number">6</span> Додати томатну пасту, бульйон і сметану. Тушкувати 15-20 хвилин на повільному вогні.</p>
-                                            <p><strong>Час приготування:</strong> 50 хвилин. Ніжна м'ясна страва з ноткою історії.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="meat easter">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Баранячий голяш з овочами</h5>
-                                        <p><strong>Інгредієнти:</strong><br>
-                                            Баранячий голяш (1 кг), картопля (6 шт.), морква (3 шт.), цибуля (2 шт.), часник (1 головка), розмарин, оливкова олія, червоне вино (200 мл), томатна паста (2 ст. л.), бульйон (500 мл).
-                                        </p>
-                                        <div class="detail-box mt-3">
-                                            <p><strong>Детальне приготування:</strong></p>
-                                            <p><span class="step-number">1</span> М'ясо обсмажити з усіх боків до рум'яної скоринки.</p>
-                                            <p><span class="step-number">2</span> Цибулю, моркву і картоплю нарізати великими шматками.</p>
-                                            <p><span class="step-number">3</span> У форму для запікання викласти овочі, зверху - м'ясо.</p>
-                                            <p><span class="step-number">4</span> Додати цілі зубчики часнику, гілки розмарину.</p>
-                                            <p><span class="step-number">5</span> Змішати вино, томатну пасту і бульйон, залити м'ясо.</p>
-                                            <p><span class="step-number">6</span> Накрити крышкою або фольгою, запікати при 160°C 2,5-3 години.</p>
-                                            <p><strong>Час приготування:</strong> 3,5 години. Ніжне м'ясо, що розпадається на волокна.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="meat">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Свиняча вирізка в беконі</h5>
-                                        <p><strong>Інгредієнти:</strong><br>
-                                            Свиняча вирізка (800 г), бекон (200 г), часник (3 зубчики), гірчиця (2 ст. л.), розмарин, оливкова олія, сіль, перець.
-                                        </p>
-                                        <div class="detail-box mt-3">
-                                            <p><strong>Детальне приготування:</strong></p>
-                                            <p><span class="step-number">1</span> Вирізку натерти сіллю, перцем, розмарином і олією.</p>
-                                            <p><span class="step-number">2</span> Зробити неглибокі надрізи, вкласти в них скибочки часнику.</p>
-                                            <p><span class="step-number">3</span> Обмазати вирізку гірчицею.</p>
-                                            <p><span class="step-number">4</span> Загорнути м'ясо в скибочки бекона, закріпити зубочистками.</p>
-                                            <p><span class="step-number">5</span> Запікати при 200°C 25-30 хвилин до рум'яної скоринки.</p>
-                                            <p><span class="step-number">6</span> Дати "відпочити" 10 хвилин перед порізуванням.</p>
-                                            <p><strong>Час приготування:</strong> 45 хвилин. Соковита та ароматна страва.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <h3 class="mb-4 mt-5 text-danger">Рибні святкові страви</h3>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="fish newyear">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Лосось в апельсиновому маринаді</h5>
-                                        <p><strong>Інгредієнти:</strong><br>
-                                            Філе лосося (600 г), апельсин (2 шт.), соєвий соус (3 ст. л.), мед (2 ст. л.), імбир (2 см), часник (2 зубчики), кунжут.
-                                        </p>
-                                        <div class="detail-box mt-3">
-                                            <p><strong>Детальне приготування:</strong></p>
-                                            <p><span class="step-number">1</span> З одного апельсина вичавити сік, другий нарізати тонкими кільцями.</p>
-                                            <p><span class="step-number">2</span> Приготувати маринад: апельсиновий сік, соєвий соус, мед, тертий імбир, подрібнений часник.</p>
-                                            <p><span class="step-number">3</span> Філе лосося покласти в маринад на 30 хвилин.</p>
-                                            <p><span class="step-number">4</span> Рибу викласти на деко, зверху покласти кільця апельсина.</p>
-                                            <p><span class="step-number">5</span> Запікати при 180°C 15-20 хвилин.</p>
-                                            <p><span class="step-number">6</span> Прикрасити кунжутом і зеленню.</p>
-                                            <p><strong>Час приготування:</strong> 40 хвилин. Ніжна риба з цитрусовою ноткою.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6 col-12 mb-4 filterable" data-category="fish easter">
-                                    <div class="recipe-card p-4 bg-light">
-                                        <h5>Форель з мигдалем</h5>
-                                        <p><strong>Інгредієнти:</strong><br>
-                                            Форель (2 шт.), мигдаль (100 г), вершкове масло (50 г), лимон (1 шт.), петрушка, оливкова олія, сіль, перець.
-                                        </p>
-                                        <div class="detail-box mt-3">
-                                            <p><strong>Детальне приготування:</strong></p>
-                                            <p><span class="step-number">1</span> Рибу очистити, помити, обсушити. Всередині і зовні натерти сіллю, перцем, олією.</p>
-                                            <p><span class="step-number">2</span> Мигдаль подрібнити, змішати з дрібно порізаною петрушкою і цедрою лимона.</p>
-                                            <p><span class="step-number">3</span> Начинити рибу частиною мигдальної суміші.</p>
-                                            <p><span class="step-number">4</span> Зверху покласти шматочки вершкового масла і решту мигдальної суміші.</p>
-                                            <p><span class="step-number">5</span> Запікати при 200°C 20-25 хвилин.</p>
-                                            <p><span class="step-number">6</span> Полити лимонним соком перед подачею.</p>
-                                            <p><strong>Час приготування:</strong> 40 хвилин. Ароматна страва з хрусткою скоринкою.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- НОВІ РЕЦЕПТИ -->
-                            <h3 class="mb-4 mt-5 text-danger">Нові святкові рецепти</h3>
-                            <div class="accordion recipe-accordion" id="newRecipesAccordion">
-                                <!-- Рецепт 1 -->
-                                <div class="accordion-item filterable" data-category="newyear new">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            <div>
-                                                <h5 class="mb-0">Новорічна індичка з каштанами</h5>
-                                                <div class="rating small mt-1">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star"></i>
-                                                    <span class="ms-2">4.0 (56)</span>
-                                                </div>
-                                            </div>
-                                        </button>
-                                    </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#newRecipesAccordion">
-                                        <div class="accordion-body">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <h6>Інгредієнти:</h6>
-                                                    <ul>
-                                                        <li>1 індичка (4-5 кг)</li>
-                                                        <li>500 г каштанів</li>
-                                                        <li>200 г фаршу з телятини</li>
-                                                        <li>1 яблуко</li>
-                                                        <li>1 цибулина</li>
-                                                        <li>2 ст. л. меду</li>
-                                                        <li>100 мл білого вина</li>
-                                                        <li>Розмарин, чебрець, сіль, перець</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <h6>Детальне приготування:</h6>
-                                                    <div class="detail-box">
-                                                        <p><span class="step-number">1</span> Каштани надрізати, запікати 20 хвилин при 200°C, очистити.</p>
-                                                        <p><span class="step-number">2</span> Приготувати начинку: обсмажити цибулю, додати фарш, смажити 10 хвилин. Додати каштани, нарізане яблуко, спеції.</p>
-                                                        <p><span class="step-number">3</span> Индичку начинити, зашити. Натерти сіллю, перцем, медом.</p>
-                                                        <p><span class="step-number">4</span> Запікати при 180°C 3-3,5 години, поливаючи соком і вином.</p>
-                                                        <p><span class="step-number">5</span> Готовність перевіряти термометром (85°C у стегні).</p>
-                                                        <p><span class="step-number">6</span> Дати "відпочити" 20 хвилин перед подачею.</p>
-                                                        <p><strong>Час приготування:</strong> 4,5 години. Ідеальна страва для новорічного столу.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Рецепт 2 -->
-                                <div class="accordion-item filterable" data-category="easter new">
-                                    <h2 class="accordion-header" id="headingTwo">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            <div>
-                                                <h5 class="mb-0">Великодний бабка з родзинками</h5>
-                                                <div class="rating small mt-1">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-half"></i>
-                                                    <span class="ms-2">4.5 (42)</span>
-                                                </div>
-                                            </div>
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#newRecipesAccordion">
-                                        <div class="accordion-body">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <h6>Інгредієнти:</h6>
-                                                    <ul>
-                                                        <li>1 кг пшеничного борошна</li>
-                                                        <li>300 мл молока</li>
-                                                        <li>100 г вершкового масла</li>
-                                                        <li>6 яєць</li>
-                                                        <li>150 г цукру</li>
-                                                        <li>100 г родзинок</li>
-                                                        <li>50 мл рому</li>
-                                                        <li>20 г дріжджів</li>
-                                                        <li>1 ч. л. ванільного цукру</li>
-                                                        <li>Цедра 1 лимона</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <h6>Детальне приготування:</h6>
-                                                    <div class="detail-box">
-                                                        <p><span class="step-number">1</span> Родзинки залити ромом на 30 хвилин.</p>
-                                                        <p><span class="step-number">2</span> Дріжджі розчинити в теплому молоці з ложкою цукру.</p>
-                                                        <p><span class="step-number">3</span> Борошно просіяти, зробити заглиблення, влити дріжджі.</p>
-                                                        <p><span class="step-number">4</span> Додати розтоплене масло, яйця, цукор, ваніль, цедру.</p>
-                                                        <p><span class="step-number">5</span> Замісити тісто, додати родзинки. Залишити на 1,5 години.</p>
-                                                        <p><span class="step-number">6</span> Викласти в змащену форму, дати підійти ще 30 хвилин.</p>
-                                                        <p><span class="step-number">7</span> Випікати при 180°C 40-50 хвилин.</p>
-                                                        <p><span class="step-number">8</span> Готовність перевіряти дерев'яною паличкою.</p>
-                                                        <p><strong>Час приготування:</strong> 3 години. Традиційна великодня випічка.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Рецепт 3 -->
-                                <div class="accordion-item filterable" data-category="birthday new">
-                                    <h2 class="accordion-header" id="headingThree">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            <div>
-                                                <h5 class="mb-0">Тірамісу без випічки</h5>
-                                                <div class="rating small mt-1">
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <span class="ms-2">4.8 (37)</span>
-                                                </div>
-                                            </div>
-                                        </button>
-                                    </h2>
-                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#newRecipesAccordion">
-                                        <div class="accordion-body">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <h6>Інгредієнти:</h6>
-                                                    <ul>
-                                                        <li>500 г маскарпоне</li>
-                                                        <li>300 мл вершків 33%</li>
-                                                        <li>5 яєць</li>
-                                                        <li>150 г цукру</li>
-                                                        <li>200 г савоярді</li>
-                                                        <li>200 мл міцної кави</li>
-                                                        <li>2 ст. л. какао</li>
-                                                        <li>50 мл амаретто</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <h6>Детальне приготування:</h6>
-                                                    <div class="detail-box">
-                                                        <p><span class="step-number">1</span> Каву охолодити, змішати з амаретто.</p>
-                                                        <p><span class="step-number">2</span> Жовтки збити з цукром до білої маси.</p>
-                                                        <p><span class="step-number">3</span> Додати маскарпоне, перемішати.</p>
-                                                        <p><span class="step-number">4</span> Окремо збити вершки до густих піків.</p>
-                                                        <p><span class="step-number">5</span> Білки збити до густої піни.</p>
-                                                        <p><span class="step-number">6</span> Обережно з'єднати всі компоненти.</p>
-                                                        <p><span class="step-number">7</span> Савоярді обмочити в каві, викласти в форму.</p>
-                                                        <p><span class="step-number">8</span> Чергувати шари печива і крему. Присипати какао.</p>
-                                                        <p><span class="step-number">9</span> Охолодити 6-8 годин.</p>
-                                                        <p><strong>Час приготування:</strong> 40 хвилин + час охолодження. Ніжний десерт для дня народження.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <section class="news-detail section-padding pt-0">
+        <div class="container">
+          <!-- Фільтр рецептів -->
+          <div class="recipe-filter">
+            <h5 class="mb-3">Фільтр рецептів:</h5>
+            <div class="d-flex flex-wrap">
+              <button
+                class="btn btn-outline-danger filter-btn active"
+                data-filter="all"
+              >
+                Всі
+              </button>
+              <button
+                class="btn btn-outline-danger filter-btn"
+                data-filter="newyear"
+              >
+                Новорічні
+              </button>
+              <button
+                class="btn btn-outline-danger filter-btn"
+                data-filter="easter"
+              >
+                Великодні
+              </button>
+              <button
+                class="btn btn-outline-danger filter-btn"
+                data-filter="birthday"
+              >
+                День народження
+              </button>
+              <button
+                class="btn btn-outline-danger filter-btn"
+                data-filter="meat"
+              >
+                М'ясні
+              </button>
+              <button
+                class="btn btn-outline-danger filter-btn"
+                data-filter="fish"
+              >
+                Рибні
+              </button>
+              <button
+                class="btn btn-outline-danger filter-btn"
+                data-filter="easy"
+              >
+                Легкі
+              </button>
             </div>
-        </section>
+          </div>
 
-        <section class="BgImage"></section>
+          <div class="row">
+            <div class="col-lg-12 col-12">
+              <div class="recipe-header text-center">
+                <h1 class="mb-3">
+                  Фарширована курка з яблуками та горіхами
+                </h1>
+                <div
+                  class="d-flex justify-content-center align-items-center flex-wrap"
+                >
+                  <div class="rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                    <span class="ms-2">4.5 (98)</span>
+                  </div>
+                  <div class="cooking-time">
+                    <i class="bi bi-clock"></i> Час приготування: 2 год
+                  </div>
+                  <div class="serving-size">
+                    <i class="bi bi-people"></i> 6-8 порцій
+                  </div>
+                </div>
+                <div class="recipe-tags">
+                  <span class="tag">Святкова страва</span>
+                  <span class="tag">Урочиста</span>
+                  <span class="tag">Ароматна</span>
+                  <span class="tag difficulty-medium">Середня складність</span>
+                </div>
+                <div class="mt-3">
+                  <button
+                    class="btn btn-outline-secondary print-btn"
+                    onclick="window.print()"
+                  >
+                    <i class="bi bi-printer"></i> Друк
+                  </button>
+                  <button
+                    class="btn btn-outline-primary share-btn"
+                    id="shareRecipe"
+                  >
+                    <i class="bi bi-share"></i> Поділитися
+                  </button>
+                </div>
+              </div>
+
+              <img
+                src="images/news/ivan-torres-MQUqbmszGGM-unsplash.jpg"
+                class="img-fluid recipe-image w-100 mb-4"
+                alt="Фарширована курка з яблуками"
+              />
+
+              <div class="recipe-content">
+                <div class="row">
+                  <div class="col-lg-8">
+                    <h3 class="mb-4">
+                      Ідеальна святкова страва для родинного обіду
+                    </h3>
+                    <p>
+                      Фарширована курка - це класична святкова страва, яка
+                      прекрасно підходить для особливих випадків. Ніжне м'ясо
+                      курки в поєднанні з солодкувато-кислими яблуками та
+                      горіховою ноткою створює неперевершений смаковий букет.
+                    </p>
+                    <p>
+                      Ця страва особливо популярна під час святкових обідів,
+                      таких як Різдво, Новий рік чи Великдень. Вона не лише
+                      смачна, але й дуже презентабельна, що робить її ідеальним
+                      центром святкового столу.
+                    </p>
+
+                    <div class="nutrition-info">
+                      <h5>Поживна цінность (на порцію):</h5>
+                      <p>
+                        Калорійність: 350-400 ккал | Білки: 35г | Жири: 18г |
+                        Вуглеводи: 15г
+                      </p>
+                    </div>
+
+                    <h4 class="mb-3">
+                      Фарширована курка з яблуками та горіхами
+                    </h4>
+                    <div class="ingredients-list">
+                      <h5>Інгредієнти:</h5>
+                      <ul class="list">
+                        <li class="list-item">
+                          1 ціла курка (приблизно 1,5-2 кг)
+                        </li>
+                        <li class="list-item">
+                          2 великих яблука (краще кисло-солодкі сорти)
+                        </li>
+                        <li class="list-item">1 цибулина</li>
+                        <li class="list-item">100 г волоських горіхів</li>
+                        <li class="list-item">50 г родзинок</li>
+                        <li class="list-item">3 ст. л. меду</li>
+                        <li class="list-item">2 ст. л. гірчиці</li>
+                        <li class="list-item">3 зубчики часнику</li>
+                        <li class="list-item">Сіль, перець за смаком</li>
+                        <li class="list-item">Сушений розмарин і чебрець</li>
+                        <li class="list-item">50 г вершкового масла</li>
+                        <li class="list-item">
+                          Оливкова олія для змащування
+                        </li>
+                      </ul>
+                    </div>
+
+                    <h5>Детальний спосіб приготування:</h5>
+                    <div class="detail-box">
+                      <p><strong>Підготовка курки (20 хвилин):</strong></p>
+                      <p>
+                        <span class="step-number">1</span> Курку ретельно
+                        промити і обсушити паперовими рушниками. Зовні і
+                        всередині натерти сіллю, перцем, розмарином і чебрецем.
+                      </p>
+                      <p>
+                        <span class="step-number">2</span> Змішати мед,
+                        гірчицю і подрібнений часник. Обмазати курку цією
+                        сумішшю з усіх боків і залишити маринуватися на 30
+                        хвилин.
+                      </p>
+                    </div>
+
+                    <div class="detail-box">
+                      <p><strong>Приготування начинки (15 хвилин):</strong></p>
+                      <p>
+                        <span class="step-number">3</span> Яблука очистити від
+                        шкірки и насіння, нарізати невеликими кубиками.
+                      </p>
+                      <p>
+                        <span class="step-number">4</span> Цибулю дрібно
+                        нарізати и обсмажити на вершковому маслі до прозорості.
+                      </p>
+                      <p>
+                        <span class="step-number">5</span> Додати яблука,
+                        родзинки и подрібнені горіхи. Смажити 5-7 хвилин,
+                        помішуючи.
+                      </p>
+                      <p>
+                        <span class="step-number">6</span> Остудити начинку и
+                        наповнити нею курку. З'єднати краї шкіри за допомогою
+                        зубочисток або кулінарної нитки.
+                      </p>
+                    </div>
+
+                    <div class="detail-box">
+                      <p><strong>Запікання (1,5 години):</strong></p>
+                      <p>
+                        <span class="step-number">7</span> Духовку розігріти до
+                        180°C.
+                      </p>
+                      <p>
+                        <span class="step-number">8</span> Курку покласти в
+                        форму для запікання, змащену олією. Зверху покласти
+                        шматочки вершкового масла.
+                      </p>
+                      <p>
+                        <span class="step-number">9</span> Запікати 1,5 години,
+                        періодично поливаючи соком, що виділяється.
+                      </p>
+                      <p>
+                        <span class="step-number">10</span> Готовність
+                        перевірити за допомогою кулінарного термометра
+                        (внутрішня температура повинна бути 75°C) або проколоти
+                        ніжкою - сік має бути прозорим.
+                      </p>
+                    </div>
+
+                    <div class="detail-box">
+                      <p><strong>Подача:</strong></p>
+                      <p>
+                        Дати курці відпочити 10-15 хвилин перед подачею.
+                        Подавати з запеченими овочами або картопляним пюре.
+                        Прикрасити свіжою зеленню.
+                      </p>
+                      <p>
+                        <strong>Порада:</strong> Для більш хрусткої шкірки за
+                        15 хвилин до кінця приготування збільште температуру
+                        духовки до 200°C.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4">
+                    <div class="p-3 bg-light rounded mb-4">
+                      <h5>Поради шеф-кухаря:</h5>
+                      <ul>
+                        <li>
+                          Використовуйте свіжу, а не морожену курку для кращого
+                          смаку
+                        </li>
+                        <li>
+                          Дайте курці кімнатної температури перед приготуванням
+                        </li>
+                        <li>Не наповнюйте курку начинкою занадто щільно</li>
+                        <li>
+                          Дайте м'ясу "відпочити" після приготування перед
+                          порізуванням
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="p-3 bg-light rounded">
+                      <h5>Варіації:</h5>
+                      <ul>
+                        <li>
+                          З рисом: замініть яблука рисом, зваренним до
+                          напівготовності
+                        </li>
+                        <li>
+                          З грибами: додайте обсмажені гриби до начинки
+                        </li>
+                        <li>
+                          З апельсинами: додайте шматочки апельсина для
+                          цитрусової нотки
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <h4 class="mt-5 mb-4">Інші святкові страви з птиці</h4>
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="recipe-card p-4 bg-light h-100">
+                      <h5>Качка з апельсиновим соусом</h5>
+                      <p>
+                        <strong>Особливості:</strong> Ніжне м'ясо качки з
+                        солодкувато-кислим апельсиновим соусом.
+                      </p>
+                      <p>
+                        <strong>Інгредієнти:</strong> Качка, апельсини, мед,
+                        соєвий соус, імбир, часник, спеції.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p>
+                          <strong>Приготування:</strong> Качку натерти
+                          спеціями, запікати 1,5 години. Приготувати соус з
+                          апельсинового соку, цедри, меду та спецій. Полити
+                          качку соусом за 15 хвилин до готовності.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-4">
+                    <div class="recipe-card p-4 bg-light h-100">
+                      <h5>Индичка з клюквеним соусом</h5>
+                      <p>
+                        <strong>Особливості:</strong> Традиційна святкова
+                        страва з пікантним клюквеним соусом.
+                      </p>
+                      <p>
+                        <strong>Інгредієнти:</strong> Індичка, клюква,
+                        апельсиновий сік, цукор, корица, гвоздика.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p>
+                          <strong>Приготування:</strong> Индичку запікати при
+                          160°C 3-4 години. Для соусу зварити клюкву з
+                          апельсиновим соком, цукром і спеціями до загуснення.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <h3 class="mb-4 mt-5 text-danger">
+                  Святкові закуски та салати
+                </h3>
+                <div class="row">
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="newyear birthday"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Оселедець під шубою</h5>
+                      <p>
+                        <strong>Інгредієнти:</strong><br />
+                        Оселедець (2 шт.), картопля (4 шт.), морква (3 шт.),
+                        буряк (2 шт.), яйця (4 шт.), цибуля (1 шт.), майонез.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Детальне приготування:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Картоплю, моркву,
+                          буряк і яйця відварити до готовності, охолодити и
+                          очистити.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Оселедець очистити
+                          від шкірки и кісток, нарізати дрібними кубиками.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Цибулю дрібно
+                          нарізати, збризнути оцтом.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Картоплю, моркву и
+                          буряк натерти на крупній тертці окремо.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Збирати салат
+                          шарами: картопля, оселедець, цибуля, морква, яйця,
+                          буряк. Кожен шар змащувати майонезом.
+                        </p>
+                        <p>
+                          <span class="step-number">6</span> Прикрасити
+                          зеленню и залишити в холодильнику на 2-3 години для
+                          пропитки.
+                        </p>
+                        <p>
+                          <strong>Час приготування:</strong> 1,5 години + час
+                          для пропитки. Класична новорічна страва.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="newyear birthday"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Салат "Цезар" з куркою</h5>
+                      <p>
+                        <strong>Інгредієнти:</strong><br />
+                        Куряче філе (300 г), айсберг (1 шт.), помідори чері
+                        (150 г), пармезан (70 г), крутони (100 г), соус
+                        "Цезар", оливкова олія, часник.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Детальне приготування:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Куряче філе
+                          обсмажити на олії з часником до золотистої скоринки.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Листя салата
+                          порвати руками, помідори чері розрізати навпіл.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Пармезан натерти
+                          на великій тертці.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Приготувати
+                          крутони: бaguette нарізати кубиками, змішати з олією
+                          и часником, запікати 10 хвилин при 180°C.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> З'єднати всі
+                          інгредієнти, заправити соусом, посипати пармезаном.
+                        </p>
+                        <p>
+                          <strong>Час приготування:</strong> 30 хвилин.
+                          Популярна страва для будь-якого свята.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="newyear birthday"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Канапки з червоною ікрою</h5>
+                      <p>
+                        <strong>Інгредієнти:</strong><br />
+                        Білий хліб або багет, червона ікра (100 г), вершкове
+                        масло, лимон, кріп.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Детальне приготування:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Хліб нарізати
+                          невеликими шматочками, можна використати формочки для
+                          печива.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Злегка обсмажити
+                          хліб або підсушіть у духовці.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Змазати кожен
+                          шматочок вершковим маслом.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Аккуратно викласти
+                          ікру на канапки.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Прикрасити
+                          гілочками кропу и шматочками лимона.
+                        </p>
+                        <p>
+                          <strong>Час приготування:</strong> 20 хвилин.
+                          Елегантна закуска для святкового столу.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="easy"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Фаршировані яйця</h5>
+                      <p>
+                        <strong>Інгредієнти:</strong><br />
+                        Яйця (8 шт.), майонез (3 ст. л.), гірчиця (1 ч. л.),
+                        сіль, перець, паприка, оливки, зелень.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Детальне приготування:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Яйця зварити
+                          вкруту, охолодити, очистити.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Розрізати яйця
+                          навпіл, вийняти жовтки.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Жовтки розімніть
+                          виделкою, додати майонез, гірчицю, сіль, перець.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Отриману масу
+                          викласти в половинки білків.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Прикрасити
+                          паприкою, оливками, зеленню.
+                        </p>
+                        <p>
+                          <strong>Час приготування:</strong> 25 хвилин. Проста
+                          и популярна закуска.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <h3 class="mb-4 mt-5 text-danger">Святкові м'ясні страви</h3>
+                <div class="row">
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="meat newyear"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Свиняче реберця в медово-гірчичному маринаді</h5>
+                      <p>
+                        <strong>Інгредієнти:</strong><br />
+                        Свинячі реберця (1 кг), мед (3 ст. л.), гірчиця (2 ст.
+                        л.), соєвий соус (4 ст. л.), часник (4 зубчики),
+                        цибуля (1 шт.), спеції.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Детальне приготування:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Приготувати
+                          маринад: змішати мед, гірчицю, соєвий соус,
+                          подрібнений часник, спеції.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Реберця покласти в
+                          маринад, залишити на 2-4 години (або на ніч у
+                          холодильнику).
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Цибулю нарізати
+                          кільцями, покласти на дно форми для запікання.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Викласти реберця
+                          на цибулю, полити маринадом.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Запікати при 180°C
+                          1-1,5 години, періодично поливаючи соком.
+                        </p>
+                        <p>
+                          <span class="step-number">6</span> За 10 хвилин до
+                          готовності можна збільшити температуру для утворення
+                          скоринки.
+                        </p>
+                        <p>
+                          <strong>Час приготування:</strong> 1,5 години + час
+                          маринування. Соковита та ароматна страва.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="meat birthday"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Бефстроганов з телятини</h5>
+                      <p>
+                        <strong>Інгредієнти:</strong><br />
+                        Телятина (600 г), цибуля (2 шт.), печериці (300 г),
+                        сметана (200 г), томатна паста (1 ст. л.), борошно (1
+                        ст. л.), бульйон (200 мл), вершкове масло, спеції.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Детальне приготування:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> М'ясо нарізати
+                          тонкими смужками, відбити, посолити, поперчити.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Обсмажити м'ясо на
+                          сильному вогні до утворення скоринки.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Цибулю нарізати
+                          півкільцями, гриби - пластинками.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> На окремій
+                          сковороді обсмажити цибулю, додати гриби, смажити до
+                          випаровування рідини.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> З'єднати м'ясо,
+                          цибулю и гриби. Додати борошно, перемішати.
+                        </p>
+                        <p>
+                          <span class="step-number">6</span> Додати томатну
+                          пасту, бульйон и сметану. Тушкувати 15-20 хвилин на
+                          повільному вогні.
+                        </p>
+                        <p>
+                          <strong>Час приготування:</strong> 50 хвилин. Ніжна
+                          м'ясна страва з ноткою історії.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="meat easter"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Баранячий голяш з овочами</h5>
+                      <p>
+                        <strong>Інгредієнти:</strong><br />
+                        Баранячий голяш (1 кг), картопля (6 шт.), морква (3
+                        шт.), цибуля (2 шт.), часник (1 головка), розмарин,
+                        оливкова олія, червоне вино (200 мл), томатна паста (2
+                        ст. л.), бульйон (500 мл).
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Детальне приготування:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> М'ясо обсмажити з
+                          усіх боків до рум'яної скоринки.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Цибулю, моркву и
+                          картоплю нарізати великими шматками.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> У форму для
+                          запікання викласти овочі, зверху - м'ясо.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Додати цілі
+                          зубчики часнику, гілки розмарину.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Змішати вино,
+                          томатну пасту и бульйон, залити м'ясо.
+                        </p>
+                        <p>
+                          <span class="step-number">6</span> Накрити крышкою
+                          або фольгою, запікати при 160°C 2,5-3 години.
+                        </p>
+                        <p>
+                          <strong>Час приготування:</strong> 3,5 години. Ніжне
+                          м'ясо, що розпадається на волокна.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="meat"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Свиняча вирізка в беконі</h5>
+                      <p>
+                        <strong>Інгредієнти:</strong><br />
+                        Свиняча вирізка (800 г), бекон (200 г), часник (3
+                        зубчики), гірчиця (2 ст. л.), розмарин, оливкова олія,
+                        сіль, перець.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Детальне приготування:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Вирізку натерти
+                          сіллю, перцем, розмарином и олією.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Зробити неглибокі
+                          надрізи, вкласти в них скибочки часнику.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Обмазати вирізку
+                          гірчицею.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Загорнути м'ясо в
+                          скибочки бекона, закріпити зубочистками.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Запікати при 200°C
+                          25-30 хвилин до рум'яної скоринки.
+                        </p>
+                        <p>
+                          <span class="step-number">6</span> Дати "відпочити"
+                          10 хвилин перед порізуванням.
+                        </p>
+                        <p>
+                          <strong>Час приготування:</strong> 45 хвилин.
+                          Соковита та ароматна страва.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <h3 class="mb-4 mt-5 text-danger">Рибні святкові страви</h3>
+                <div class="row">
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="fish newyear"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Лосось в апельсиновому маринаді</h5>
+                      <p>
+                        <strong>Інгредієнти:</strong><br />
+                        Філе лосося (600 г), апельсин (2 шт.), соєвий соус (3
+                        ст. л.), мед (2 ст. л.), імбир (2 см), часник (2
+                        зубчики), кунжут.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Детальне приготування:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> З одного апельсина
+                          вичавити сік, другий нарізати тонкими кільцями.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Приготувати
+                          маринад: апельсиновий сік, соєвий соус, мед, тертий
+                          імбир, подрібнений часник.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Філе лосося
+                          покласти в маринад на 30 хвилин.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Рибу викласти на
+                          деко, зверху покласти кільця апельсина.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Запікати при 180°C
+                          15-20 хвилин.
+                        </p>
+                        <p>
+                          <span class="step-number">6</span> Прикрасити
+                          кунжутом и зеленню.
+                        </p>
+                        <p>
+                          <strong>Час приготування:</strong> 40 хвилин. Ніжна
+                          риба з цитрусовою ноткою.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 col-md-6 col-12 mb-4 filterable"
+                    data-category="fish easter"
+                  >
+                    <div class="recipe-card p-4 bg-light">
+                      <h5>Форель з мигдалем</h5>
+                      <p>
+                        <strong>Інгредієнти:</strong><br />
+                        Форель (2 шт.), мигдаль (100 г), вершкове масло (50 г),
+                        лимон (1 шт.), петрушка, оливкова олія, сіль, перець.
+                      </p>
+                      <div class="detail-box mt-3">
+                        <p><strong>Детальне приготування:</strong></p>
+                        <p>
+                          <span class="step-number">1</span> Рибу очистити,
+                          помити, обсушити. Всередині и зовні натерти сіллю,
+                          перцем, олією.
+                        </p>
+                        <p>
+                          <span class="step-number">2</span> Мигдаль
+                          подрібнити, змішати з дрібно порізаною петрушкою и
+                          цедрою лимона.
+                        </p>
+                        <p>
+                          <span class="step-number">3</span> Начинити рибу
+                          частиною мигдальної суміші.
+                        </p>
+                        <p>
+                          <span class="step-number">4</span> Зверху покласти
+                          шматочки вершкового масла и решту мигдальної суміші.
+                        </p>
+                        <p>
+                          <span class="step-number">5</span> Запікати при 200°C
+                          20-25 хвилин.
+                        </p>
+                        <p>
+                          <span class="step-number">6</span> Полити лимонним
+                          соком перед подачею.
+                        </p>
+                        <p>
+                          <strong>Час приготування:</strong> 40 хвилин.
+                          Ароматна страва з хрусткою скоринкою.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- НОВІ РЕЦЕПТИ -->
+                <h3 class="mb-4 mt-5 text-danger">Нові святкові рецепти</h3>
+                <div class="accordion recipe-accordion" id="newRecipesAccordion">
+                  <!-- Рецепт 1 -->
+                  <div
+                    class="accordion-item filterable"
+                    data-category="newyear new"
+                  >
+                    <h2 class="accordion-header" id="headingOne">
+                      <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne"
+                        aria-expanded="true"
+                        aria-controls="collapseOne"
+                      >
+                        <div>
+                          <h5 class="mb-0">Новорічна індичка з каштанами</h5>
+                          <div class="rating small mt-1">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star"></i>
+                            <span class="ms-2">4.0 (56)</span>
+                          </div>
+                        </div>
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseOne"
+                      class="accordion-collapse collapse show"
+                      aria-labelledby="headingOne"
+                      data-bs-parent="#newRecipesAccordion"
+                    >
+                      <div class="accordion-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <h6>Інгредієнти:</h6>
+                            <ul>
+                              <li>1 індичка (4-5 кг)</li>
+                              <li>500 г каштанів</li>
+                              <li>200 г фаршу з телятини</li>
+                              <li>1 яблуко</li>
+                              <li>1 цибулина</li>
+                              <li>2 ст. л. меду</li>
+                              <li>100 мл білого вина</li>
+                              <li>Розмарин, чебрець, сіль, перець</li>
+                            </ul>
+                          </div>
+                          <div class="col-md-6">
+                            <h6>Детальне приготування:</h6>
+                            <div class="detail-box">
+                              <p>
+                                <span class="step-number">1</span> Каштани
+                                надрізати, запікати 20 хвилин при 200°C,
+                                очистити.
+                              </p>
+                              <p>
+                                <span class="step-number">2</span> Приготувати
+                                начинку: обсмажити цибулю, додати фарш, смажити
+                                10 хвилин. Додати каштани, нарізане яблуко,
+                                спеції.
+                              </p>
+                              <p>
+                                <span class="step-number">3</span> Индичку
+                                начинити, зашити. Натерти сіллю, перцем,
+                                медом.
+                              </p>
+                              <p>
+                                <span class="step-number">4</span> Запікати при
+                                180°C 3-3,5 години, поливаючи соком и вином.
+                              </p>
+                              <p>
+                                <span class="step-number">5</span> Готовність
+                                перевіряти термометром (85°C у стегні).
+                              </p>
+                              <p>
+                                <span class="step-number">6</span> Дати
+                                "відпочити" 20 хвилин перед подачею.
+                              </p>
+                              <p>
+                                <strong>Час приготування:</strong> 4,5 години.
+                                Ідеальна страва для новорічного столу.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Рецепт 2 -->
+                  <div
+                    class="accordion-item filterable"
+                    data-category="easter new"
+                  >
+                    <h2 class="accordion-header" id="headingTwo">
+                      <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo"
+                        aria-expanded="false"
+                        aria-controls="collapseTwo"
+                      >
+                        <div>
+                          <h5 class="mb-0">Великодний бабка з родзинками</h5>
+                          <div class="rating small mt-1">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-half"></i>
+                            <span class="ms-2">4.5 (42)</span>
+                          </div>
+                        </div>
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseTwo"
+                      class="accordion-collapse collapse"
+                      aria-labelledby="headingTwo"
+                      data-bs-parent="#newRecipesAccordion"
+                    >
+                      <div class="accordion-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <h6>Інгредієнти:</h6>
+                            <ul>
+                              <li>1 кг пшеничного борошна</li>
+                              <li>300 мл молока</li>
+                              <li>100 г вершкового масла</li>
+                              <li>6 яєць</li>
+                              <li>150 г цукру</li>
+                              <li>100 г родзинок</li>
+                              <li>50 мл рому</li>
+                              <li>20 г дріжджів</li>
+                              <li>1 ч. л. ванільного цукру</li>
+                              <li>Цедра 1 лимона</li>
+                            </ul>
+                          </div>
+                          <div class="col-md-6">
+                            <h6>Детальне приготування:</h6>
+                            <div class="detail-box">
+                              <p>
+                                <span class="step-number">1</span> Родзинки
+                                залити ромом на 30 хвилин.
+                              </p>
+                              <p>
+                                <span class="step-number">2</span> Дріжджі
+                                розчинити в теплому молоці з ложкою цукру.
+                              </p>
+                              <p>
+                                <span class="step-number">3</span> Борошно
+                                просіяти, зробити заглиблення, влити дріжджі.
+                              </p>
+                              <p>
+                                <span class="step-number">4</span> Додати
+                                розтоплене масло, яйця, цукор, ваніль, цедру.
+                              </p>
+                              <p>
+                                <span class="step-number">5</span> Замісити
+                                тісто, додати родзинки. Залишити на 1,5 години.
+                              </p>
+                              <p>
+                                <span class="step-number">6</span> Викласти в
+                                змащену форму, дати підійти ще 30 хвилин.
+                              </p>
+                              <p>
+                                <span class="step-number">7</span> Випікати при
+                                180°C 40-50 хвилин.
+                              </p>
+                              <p>
+                                <span class="step-number">8</span> Готовність
+                                перевіряти дерев'яною паличкою.
+                              </p>
+                              <p>
+                                <strong>Час приготування:</strong> 3 години.
+                                Традиційна великодня випічка.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Рецепт 3 -->
+                  <div
+                    class="accordion-item filterable"
+                    data-category="birthday new"
+                  >
+                    <h2 class="accordion-header" id="headingThree">
+                      <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree"
+                        aria-expanded="false"
+                        aria-controls="collapseThree"
+                      >
+                        <div>
+                          <h5 class="mb-0">Тірамісу без випічки</h5>
+                          <div class="rating small mt-1">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <span class="ms-2">4.8 (37)</span>
+                          </div>
+                        </div>
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseThree"
+                      class="accordion-collapse collapse"
+                      aria-labelledby="headingThree"
+                      data-bs-parent="#newRecipesAccordion"
+                    >
+                      <div class="accordion-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <h6>Інгредієнти:</h6>
+                            <ul>
+                              <li>500 г маскарпоне</li>
+                              <li>300 мл вершків 33%</li>
+                              <li>5 яєць</li>
+                              <li>150 г цукру</li>
+                              <li>200 г савоярді</li>
+                              <li>200 мл міцної кави</li>
+                              <li>2 ст. л. какао</li>
+                              <li>50 мл амаретто</li>
+                            </ul>
+                          </div>
+                          <div class="col-md-6">
+                            <h6>Детальне приготування:</h6>
+                            <div class="detail-box">
+                              <p>
+                                <span class="step-number">1</span> Каву
+                                охолодити, змішати з амаретто.
+                              </p>
+                              <p>
+                                <span class="step-number">2</span> Жовтки
+                                збити з цукром до білої маси.
+                              </p>
+                              <p>
+                                <span class="step-number">3</span> Додати
+                                маскарпоне, перемішати.
+                              </p>
+                              <p>
+                                <span class="step-number">4</span> Окремо
+                                збити вершки до густих піків.
+                              </p>
+                              <p>
+                                <span class="step-number">5</span> Білки збити
+                                до густої піни.
+                              </p>
+                              <p>
+                                <span class="step-number">6</span> Обережно
+                                з'єднати всі компоненти.
+                              </p>
+                              <p>
+                                <span class="step-number">7</span> Савоярді
+                                обмочити в каві, викласти в форму.
+                              </p>
+                              <p>
+                                <span class="step-number">8</span> Чергувати
+                                шари печива и крему. Присипати какао.
+                              </p>
+                              <p>
+                                <span class="step-number">9</span> Охолодити
+                                6-8 годин.
+                              </p>
+                              <p>
+                                <strong>Час приготування:</strong> 40 хвилин +
+                                час охолодження. Ніжний десерт для дня
+                                народження.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Рецепт 4 -->
+                  <div
+                    class="accordion-item filterable"
+                    data-category="newyear birthday new"
+                  >
+                    <h2 class="accordion-header" id="headingFour">
+                      <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour"
+                        aria-expanded="false"
+                        aria-controls="collapseFour"
+                      >
+                        <div>
+                          <h5 class="mb-0">Салат "Олів’є"</h5>
+                          <div class="rating small mt-1">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-half"></i>
+                            <span class="ms-2">4.6 (128)</span>
+                          </div>
+                        </div>
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseFour"
+                      class="accordion-collapse collapse"
+                      aria-labelledby="headingFour"
+                      data-bs-parent="#newRecipesAccordion"
+                    >
+                      <div class="accordion-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <h6>Інгредієнти:</h6>
+                            <ul>
+                              <li>Картопля – 4 шт.</li>
+                              <li>Морква – 2 шт.</li>
+                              <li>Яйця – 4 шт.</li>
+                              <li>Ковбаса варена – 300 г</li>
+                              <li>Горошок консервований – 1 банка</li>
+                              <li>Солоні огірки – 3 шт.</li>
+                              <li>Майонез – 200 г</li>
+                              <li>Сіль, перець – за смаком</li>
+                            </ul>
+                          </div>
+                          <div class="col-md-6">
+                            <h6>Детальне приготування:</h6>
+                            <div class="detail-box">
+                              <p>
+                                <span class="step-number">1</span> Відваріть
+                                картоплю, моркву та яйця, остудіть и очистіть.
+                              </p>
+                              <p>
+                                <span class="step-number">2</span> Наріжте всі
+                                інгредієнти кубиками.
+                              </p>
+                              <p>
+                                <span class="step-number">3</span> Змішайте в
+                                мисці картоплю, моркву, яйця, ковбасу, огірки
+                                и горошок.
+                              </p>
+                              <p>
+                                <span class="step-number">4</span> Заправте
+                                майонезом, посоліть и поперчіть за смаком.
+                              </p>
+                              <p>
+                                <span class="step-number">5</span> Перемішайте
+                                та дайте настоятися 1 годину в холодильнику.
+                              </p>
+                              <p>
+                                <strong>Час приготування:</strong> 50 хвилин.
+                                Класичний новорічний салат.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Рецепт 5 -->
+                  <div
+                    class="accordion-item filterable"
+                    data-category="meat newyear new"
+                  >
+                    <h2 class="accordion-header" id="headingFive">
+                      <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseFive"
+                        aria-expanded="false"
+                        aria-controls="collapseFive"
+                      >
+                        <div>
+                          <h5 class="mb-0">Холодець м’ясний</h5>
+                          <div class="rating small mt-1">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star"></i>
+                            <span class="ms-2">4.2 (84)</span>
+                          </div>
+                        </div>
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseFive"
+                      class="accordion-collapse collapse"
+                      aria-labelledby="headingFive"
+                      data-bs-parent="#newRecipesAccordion"
+                    >
+                      <div class="accordion-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <h6>Інгредієнти:</h6>
+                            <ul>
+                              <li>Свинячі ніжки – 2 шт.</li>
+                              <li>Курка (гомілки або стегна) – 500 г</li>
+                              <li>Цибуля – 1 шт.</li>
+                              <li>Морква – 1 шт.</li>
+                              <li>Часник – 4 зубчики</li>
+                              <li>Лавровий лист, перець горошком</li>
+                              <li>Сіль – за смаком</li>
+                            </ul>
+                          </div>
+                          <div class="col-md-6">
+                            <h6>Детальне приготування:</h6>
+                            <div class="detail-box">
+                              <p>
+                                <span class="step-number">1</span> М’ясо
+                                промийте, залийте холодною водою, доведіть до
+                                кипіння и зніміть піну.
+                              </p>
+                              <p>
+                                <span class="step-number">2</span> Додайте
+                                цибулю, моркву, лавровий лист и варіть на
+                                малому вогні 4-5 годин.
+                              </p>
+                              <p>
+                                <span class="step-number">3</span> Вийміть
+                                м’ясо, відокремте від кісток и розберіть на
+                                шматочки.
+                              </p>
+                              <p>
+                                <span class="step-number">4</span> Бульйон
+                                процідіть, додайте подрібнений часник.
+                              </p>
+                              <p>
+                                <span class="step-number">5</span> У форми
+                                викладіть м’ясо, залийте бульйоном и охолодіть
+                                у холодильнику до застигання.
+                              </p>
+                              <p>
+                                <strong>Час приготування:</strong> 6 годин
+                                (включно з охолодженням). Традиційна страва до
+                                свят.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Рецепт 6 -->
+                  <div
+                    class="accordion-item filterable"
+                    data-category="meat birthday new"
+                  >
+                    <h2 class="accordion-header" id="headingSix">
+                      <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseSix"
+                        aria-expanded="false"
+                        aria-controls="collapseSix"
+                      >
+                        <div>
+                          <h5 class="mb-0">М’ясний рулет</h5>
+                          <div class="rating small mt-1">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-half"></i>
+                            <span class="ms-2">4.7 (91)</span>
+                          </div>
+                        </div>
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseSix"
+                      class="accordion-collapse collapse"
+                      aria-labelledby="headingSix"
+                      data-bs-parent="#newRecipesAccordion"
+                    >
+                      <div class="accordion-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <h6>Інгредієнти:</h6>
+                            <ul>
+                              <li>Фарш (свинина + яловичина) – 700 г</li>
+                              <li>Яйця – 2 шт.</li>
+                              <li>Цибуля – 1 шт.</li>
+                              <li>Часник – 2 зубчики</li>
+                              <li>Батон – 2 скибки</li>
+                              <li>Молоко – 100 мл</li>
+                              <li>Сир твердий – 100 г</li>
+                              <li>Зелень – за смаком</li>
+                              <li>Сіль, перець</li>
+                            </ul>
+                          </div>
+                          <div class="col-md-6">
+                            <h6>Детальне приготування:</h6>
+                            <div class="detail-box">
+                              <p>
+                                <span class="step-number">1</span> Батон
+                                замочіть у молоці, потім відтисніть.
+                              </p>
+                              <p>
+                                <span class="step-number">2</span> Змішайте
+                                фарш із батоном, яйцями, цибулею, часником,
+                                сіллю та перцем.
+                              </p>
+                              <p>
+                                <span class="step-number">3</span> Розкачайте
+                                масу у вигляді прямокутника на фользі.
+                              </p>
+                              <p>
+                                <span class="step-number">4</span> Викладіть
+                                сир и зелень посередині, згорніть у рулет.
+                              </p>
+                              <p>
+                                <span class="step-number">5</span> Запікайте
+                                при 180°C близько 45-50 хвилин.
+                              </p>
+                              <p>
+                                <strong>Час приготування:</strong> 1 година.
+                                Ситна и ефектна страва для святкового столу.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="BgImage"></section>
     </main>
 
     <footer class="site-footer section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h4 class="text-white mb-4 me-5">Хрустка кухня</h4>
-                    <div style="
-                      background-color: #fafafa;
-                      padding: 25px 20px;
-                      text-align: center;
-                      font-size: 14px;
-                      color: #777;
-                      border-top: 1px solid #f0f0f0;
-                    ">
-                      <p style="margin: 0 0 10px 0; font-weight: 500; color: #555;">
-                        © 2025 Домашні кулінарні рецепти
-                      </p>
-                      
-                      <nav style="margin-top: 15px;">
-                        <a href="about-ua.html" style="
-                          margin: 0 12px;
-                          color: #666;
-                          text-decoration: none;
-                          transition: color 0.2s;
-                        ">Про нас</a>
-                        
-                        <a href="mailto:korovinkonstantin0@gmail.com" style="
-                          margin: 0 12px;
-                          color: #666;
-                          text-decoration: none;
-                          transition: color 0.2s;
-                        ">Контакти</a>
-                        
-                        <a href="privacy-ua.html" style="
-                          margin: 0 12px;
-                          color: #666;
-                          text-decoration: none;
-                          transition: color 0.2s;
-                        ">Політика конфіденційності</a>
-                      </nav>
-                      
-                      <div style="margin-top: 20px; color: #aaa; font-size: 12px;">
-                        Усі права захищено
-                      </div>
-                    </div>
-                    <div style="text-align:center; margin-top: 2rem;">
-                      <img 
-                        src="https://hits.sh/crispy-cuisine-7334c.web.app.svg?style=flat-square&label=Перегляди&color=blue&logo=github" 
-                        alt="Перегляди"
-                      />
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h4 class="text-white mb-4 me-5">Хрустка кухня</h4>
+            <div
+              style="
+                background-color: #fafafa;
+                padding: 25px 20px;
+                text-align: center;
+                font-size: 14px;
+                color: #777;
+                border-top: 1px solid #f0f0f0;
+              "
+            >
+              <p
+                style="
+                  margin: 0 0 10px 0;
+                  font-weight: 500;
+                  color: #555;
+                "
+              >
+                © 2025 Домашні кулінарні рецепти
+              </p>
+
+              <nav style="margin-top: 15px">
+                <a
+                  href="about-ua.html"
+                  style="
+                    margin: 0 12px;
+                    color: #666;
+                    text-decoration: none;
+                    transition: color 0.2s;
+                  "
+                  >Про нас</a
+                >
+
+                <a
+                  href="mailto:korovinkonstantin0@gmail.com"
+                  style="
+                    margin: 0 12px;
+                    color: #666;
+                    text-decoration: none;
+                    transition: color 0.2s;
+                  "
+                  >Контакти</a
+                >
+
+                <a
+                  href="privacy-ua.html"
+                  style="
+                    margin: 0 12px;
+                    color: #666;
+                    text-decoration: none;
+                    transition: color 0.2s;
+                  "
+                  >Політика конфіденційності</a
+                >
+              </nav>
+
+              <div
+                style="
+                  margin-top: 20px;
+                  color: #aaa;
+                  font-size: 12px;
+                "
+              >
+                Усі права захищено
+              </div>
             </div>
+            <div style="text-align: center; margin-top: 2rem">
+              <img
+                src="https://hits.sh/crispy-cuisine-7334c.web.app.svg?style=flat-square&label=Перегляди&color=blue&logo=github"
+                alt="Перегляди"
+              />
+            </div>
+          </div>
         </div>
+      </div>
     </footer>
 
     <!-- JAVASCRIPT FILES -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/custom.js"></script>
-    
+
     <script>
-        // Фільтрація рецептів
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const filterableElements = document.querySelectorAll('.filterable');
-            
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Видаляємо активний клас з усіх кнопок
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    // Додаємо активний клас до поточної кнопки
-                    this.classList.add('active');
-                    
-                    const filter = this.getAttribute('data-filter');
-                    
-                    // Фільтруємо елементи
-                    filterableElements.forEach(element => {
-                        if (filter === 'all') {
-                            element.classList.remove('hidden');
-                        } else {
-                            const categories = element.getAttribute('data-category').split(' ');
-                            if (categories.includes(filter)) {
-                                element.classList.remove('hidden');
-                            } else {
-                                element.classList.add('hidden');
-                            }
-                        }
-                    });
-                });
-            });
-            
-            // Функціонал для кнопки "Поділитися"
-            document.getElementById('shareRecipe').addEventListener('click', function() {
-                if (navigator.share) {
-                    navigator.share({
-                        title: 'Рецепт фаршированої курки - Хрустка кухня',
-                        text: 'Святкова фарширована курка з яблуками та горіхами - рецепт від Хрусткої кухні',
-                        url: window.location.href
-                    })
-                    .then(() => console.log('Успішно поділилися'))
-                    .catch(error => console.log('Помилка поділу:', error));
+      // Фільтрація рецептів
+      document.addEventListener("DOMContentLoaded", function () {
+        const filterButtons = document.querySelectorAll(".filter-btn");
+        const filterableElements = document.querySelectorAll(".filterable");
+
+        filterButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            // Видаляємо активний клас з усіх кнопок
+            filterButtons.forEach((btn) => btn.classList.remove("active"));
+            // Додаємо активний клас до поточної кнопки
+            this.classList.add("active");
+
+            const filter = this.getAttribute("data-filter");
+
+            // Фільтруємо елементи
+            filterableElements.forEach((element) => {
+              if (filter === "all") {
+                element.classList.remove("hidden");
+              } else {
+                const categories = element
+                  .getAttribute("data-category")
+                  .split(" ");
+                if (categories.includes(filter)) {
+                  element.classList.remove("hidden");
                 } else {
-                    alert('Функція "Поділитися" не підтримується вашим браузером');
+                  element.classList.add("hidden");
                 }
+              }
             });
+          });
         });
+
+        // Функціонал для кнопки "Поділитися"
+        document
+          .getElementById("shareRecipe")
+          .addEventListener("click", function () {
+            if (navigator.share) {
+              navigator
+                .share({
+                  title: "Рецепт фаршированої курки - Хрустка кухня",
+                  text: "Святкова фарширована курка з яблуками та горіхами - рецепт від Хрусткої кухні",
+                  url: window.location.href,
+                })
+                .then(() => console.log("Успішно поділилися"))
+                .catch((error) => console.log("Помилка поділу:", error));
+            } else {
+              alert(
+                'Функція "Поділитися" не підтримується вашим браузером'
+              );
+            }
+          });
+      });
     </script>
-</body>
+  </body>
 </html>
